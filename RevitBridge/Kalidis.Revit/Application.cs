@@ -39,7 +39,10 @@ public class Application : IExternalApplication
         try
         {
             if (sender is UIApplication uiApp)
+            {
                 BridgeService.TryProcess(uiApp);
+                MaxBridgeService.TryProcess(uiApp);
+            }
         }
         catch
         {
