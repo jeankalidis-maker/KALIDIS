@@ -1,6 +1,6 @@
 {
-  "ativo": false,
-  "id": "remoto-inicial",
+  "ativo": true,
+  "id": "teste-remoto-20260819-1636",
   "acao": "listar",
-  "busca": "__KALIDIS_SEM_COMANDO__"
+  "busca": "cuba"
 }
