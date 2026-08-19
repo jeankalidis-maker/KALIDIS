@@ -22,6 +22,65 @@
 - regenerar
 - salvar
 
+## Leitura geométrica rica
+
+- snapshot_elemento
+- snapshot_ambiente
+- analisar_proximidade
+- detectar_aberturas_sem_cuba
+
+Esses comandos retornam coordenadas, bounding boxes, localização, rotação, nível, host, família, tipo, parâmetros e resumo geométrico dos elementos. Quando possível, o resumo geométrico inclui sólidos, volumes, áreas, faces planas e loops de contorno. Coordenadas e dimensões são devolvidas em milímetros.
+
+### Snapshot de um ambiente
+
+```json
+{
+  "id": "room-1",
+  "acao": "snapshot_ambiente",
+  "busca": "Banho Bebê 1"
+}
+```
+
+O retorno inclui dados do ambiente, limites, categorias presentes e os elementos detectados dentro ou muito próximos do ambiente.
+
+### Snapshot de elemento
+
+```json
+{
+  "id": "elem-1",
+  "acao": "snapshot_elemento",
+  "elementIds": [308243]
+}
+```
+
+Também pode usar `busca` por categoria, nome, família, tipo ou parâmetros.
+
+### Análise de proximidade
+
+```json
+{
+  "id": "near-1",
+  "acao": "analisar_proximidade",
+  "elementIds": [308243],
+  "x": 1000
+}
+```
+
+`x` é o raio de busca em milímetros. Se omitido, usa 1000 mm.
+
+### Detectar aberturas de bancada sem cuba
+
+```json
+{
+  "id": "holes-1",
+  "acao": "detectar_aberturas_sem_cuba",
+  "busca": "Banho Bebê 1",
+  "x": 220
+}
+```
+
+O serviço procura faces horizontais com loops internos na geometria dos elementos do ambiente, trata esses loops como candidatos a aberturas e compara seus centros com as cubas/lavatórios detectados. `x` é a tolerância de ocupação em milímetros. O resultado informa quais aberturas parecem ocupadas e quais parecem estar sem cuba. Como famílias podem modelar furos de maneiras diferentes, esse detector é geométrico e deve ser validado antes de alterações destrutivas.
+
 ## Camada avançada
 
 - espelhar
@@ -191,10 +250,12 @@ Tubos e dutos usam `nivel`, `tipo`, `sistema` e dois pontos. Eletrodutos e bande
 
 ## Unidades
 
-Coordenadas, deslocamentos e elevações do bridge são informados em milímetros. Ângulos do núcleo são em graus.
+Coordenadas, deslocamentos, raios e elevações do bridge são informados em milímetros. Ângulos do núcleo são em graus.
 
 ## Limites reais
 
 A Revit API é ampla, mas não existe uma função única que represente literalmente todo comando da interface. Algumas operações são específicas de categoria, hospedagem, sistema, sketch, grupo, vínculo, worksharing, fase, design option ou contexto de vista. A camada `comando_revit` amplia muito a cobertura usando `PostableCommand`, enquanto as ações programáticas permitem automação sem interação para os casos implementados.
+
+A leitura geométrica também depende de como cada família foi modelada. Um furo pode aparecer como loop interno de uma face, como void de família ou por outra construção. Por isso, o KALIDIS retorna os dados geométricos e a inferência, mas alterações devem usar o resultado da leitura para confirmar o alvo antes de gravar no modelo.
 
 Operações de escrita usam `Transaction`. Restrições do próprio modelo podem impedir uma ação específica; nesse caso o erro é retornado em `C:\KALIDIS\Bridge\resultado.json`.
