@@ -11,6 +11,7 @@ public class Application : IExternalApplication
         application.ControlledApplication.DocumentOpened += OnDocumentOpened;
         application.Idling += OnIdling;
         BridgeService.EnsureFiles();
+        RemoteBridgeService.EnsureFiles();
         return Result.Succeeded;
     }
 
@@ -27,6 +28,7 @@ public class Application : IExternalApplication
         {
             InventoryService.Generate(e.Document);
             BridgeService.EnsureFiles();
+            RemoteBridgeService.EnsureFiles();
         }
         catch
         {
@@ -38,6 +40,10 @@ public class Application : IExternalApplication
     {
         try
         {
+            // Rede/Git roda em background; as chamadas à API do Revit continuam
+            // exclusivamente no contexto seguro do Idling abaixo.
+            RemoteBridgeService.Tick();
+
             if (sender is UIApplication uiApp)
             {
                 BridgeService.TryProcess(uiApp);
