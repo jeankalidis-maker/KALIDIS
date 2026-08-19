@@ -1,8 +1,22 @@
 {
-  "id": null,
-  "sucesso": false,
-  "mensagem": "Aguardando o primeiro resultado remoto do Revit.",
-  "quantidade": 0,
-  "elementIds": [],
-  "erro": null
+  "id": "teste-remoto-20260819-1636",
+  "sucesso": true,
+  "mensagem": "12 elemento(s) encontrado(s).",
+  "quantidade": 12,
+  "elementIds": [
+    308243,
+    308244,
+    308245,
+    308582,
+    484492,
+    484944,
+    484945,
+    599562,
+    828712,
+    828722,
+    828723,
+    828724
+  ],
+  "erro": null,
+  "dados": null
 }
