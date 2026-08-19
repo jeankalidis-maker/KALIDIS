@@ -48,6 +48,7 @@ public class Application : IExternalApplication
             {
                 BridgeService.TryProcess(uiApp);
                 MaxBridgeService.TryProcess(uiApp);
+                GeometryBridgeService.TryProcess(uiApp);
             }
         }
         catch
