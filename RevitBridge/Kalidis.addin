@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Name>KALIDIS Revit Bridge</Name>
+    <Assembly>C:\KALIDIS\RevitBridge\Kalidis.Revit.dll</Assembly>
+    <AddInId>6D74A4D7-82D6-4A1C-B2BC-0E6B6D2DFB25</AddInId>
+    <FullClassName>Kalidis.Revit.Command</FullClassName>
+    <Text>KALIDIS</Text>
+    <VendorId>KALIDIS</VendorId>
+    <VendorDescription>KALIDIS Revit Bridge</VendorDescription>
+  </AddIn>
+</RevitAddIns>
