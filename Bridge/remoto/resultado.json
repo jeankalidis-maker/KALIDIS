@@ -1,22 +1,22 @@
 {
-  "id": "teste-remoto-20260819-1636",
+  "id": "banho-bebe1-info-20260819-1645",
   "sucesso": true,
-  "mensagem": "12 elemento(s) encontrado(s).",
-  "quantidade": 12,
+  "mensagem": "Informa\u00E7\u00F5es de 1 elemento(s).",
+  "quantidade": 1,
   "elementIds": [
-    308243,
-    308244,
-    308245,
-    308582,
-    484492,
-    484944,
-    484945,
-    599562,
-    828712,
-    828722,
-    828723,
-    828724
+    598947
   ],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "elementId": 598947,
+      "categoria": "Ambientes",
+      "nome": "BANHO BEB\u00CA 1 21",
+      "classe": "Room",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    }
+  ]
 }
