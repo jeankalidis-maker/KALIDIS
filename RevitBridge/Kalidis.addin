@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <RevitAddIns>
+  <AddIn Type="Application">
+    <Name>KALIDIS Revit Bridge Auto</Name>
+    <Assembly>C:\KALIDIS\RevitBridge\Kalidis.Revit.dll</Assembly>
+    <AddInId>2A1D7C0A-77B5-4F54-8FE2-413A4C6D3A80</AddInId>
+    <FullClassName>Kalidis.Revit.Application</FullClassName>
+    <VendorId>KALIDIS</VendorId>
+    <VendorDescription>KALIDIS Revit Bridge - Automatic inventory</VendorDescription>
+  </AddIn>
+
   <AddIn Type="Command">
     <Name>KALIDIS Revit Bridge</Name>
     <Assembly>C:\KALIDIS\RevitBridge\Kalidis.Revit.dll</Assembly>
