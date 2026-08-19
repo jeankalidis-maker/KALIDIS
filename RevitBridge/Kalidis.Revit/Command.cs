@@ -26,44 +26,86 @@ public class Command : IExternalCommand
             ? doc.Title + " (ainda não salvo)"
             : doc.PathName;
 
-        int paredes = CountInstances(doc, BuiltInCategory.OST_Walls);
-        int pisos = CountInstances(doc, BuiltInCategory.OST_Floors);
-        int portas = CountInstances(doc, BuiltInCategory.OST_Doors);
-        int janelas = CountInstances(doc, BuiltInCategory.OST_Windows);
-        int ambientes = CountInstances(doc, BuiltInCategory.OST_Rooms);
-        int mobiliario = CountInstances(doc, BuiltInCategory.OST_Furniture);
-        int equipamentos = CountInstances(doc, BuiltInCategory.OST_MechanicalEquipment);
-        int instanciasFamilia = new FilteredElementCollector(doc)
+        var elementos = new FilteredElementCollector(doc)
+            .WhereElementIsNotElementType()
+            .ToElements();
+
+        var porCategoria = elementos
+            .Where(e => e.Category != null)
+            .GroupBy(e => e.Category!.Name)
+            .Select(g => new { Categoria = g.Key, Quantidade = g.Count() })
+            .OrderByDescending(x => x.Quantidade)
+            .ThenBy(x => x.Categoria)
+            .ToList();
+
+        var familias = new FilteredElementCollector(doc)
             .OfClass(typeof(FamilyInstance))
             .WhereElementIsNotElementType()
-            .GetElementCount();
+            .Cast<FamilyInstance>()
+            .GroupBy(fi => new
+            {
+                Familia = fi.Symbol?.Family?.Name ?? "(sem família)",
+                Tipo = fi.Symbol?.Name ?? "(sem tipo)",
+                Categoria = fi.Category?.Name ?? "(sem categoria)"
+            })
+            .Select(g => new
+            {
+                g.Key.Categoria,
+                g.Key.Familia,
+                g.Key.Tipo,
+                Quantidade = g.Count()
+            })
+            .OrderBy(x => x.Categoria)
+            .ThenBy(x => x.Familia)
+            .ThenBy(x => x.Tipo)
+            .ToList();
 
-        StringBuilder sb = new();
-        sb.AppendLine("Conexão com o Revit OK.");
-        sb.AppendLine();
-        sb.AppendLine($"Projeto ativo:\n{arquivo}");
-        sb.AppendLine();
-        sb.AppendLine("LEITURA DO MODELO");
-        sb.AppendLine($"Paredes: {paredes}");
-        sb.AppendLine($"Pisos: {pisos}");
-        sb.AppendLine($"Portas: {portas}");
-        sb.AppendLine($"Janelas: {janelas}");
-        sb.AppendLine($"Ambientes: {ambientes}");
-        sb.AppendLine($"Mobiliário: {mobiliario}");
-        sb.AppendLine($"Equipamentos mecânicos: {equipamentos}");
-        sb.AppendLine($"Instâncias de famílias: {instanciasFamilia}");
-        sb.AppendLine();
-        sb.AppendLine("KALIDIS Revit Bridge v0.2");
+        string pastaRelatorios = @"C:\KALIDIS\Reports";
+        Directory.CreateDirectory(pastaRelatorios);
+        string caminhoCsv = Path.Combine(pastaRelatorios, "inventario_modelo.csv");
 
-        TaskDialog.Show("KALIDIS - Leitura do Modelo", sb.ToString());
+        StringBuilder csv = new();
+        csv.AppendLine("SECAO;CATEGORIA;FAMILIA;TIPO;QUANTIDADE");
+
+        foreach (var item in porCategoria)
+            csv.AppendLine($"CATEGORIA;{Esc(item.Categoria)};;;{item.Quantidade}");
+
+        foreach (var item in familias)
+            csv.AppendLine($"FAMILIA;{Esc(item.Categoria)};{Esc(item.Familia)};{Esc(item.Tipo)};{item.Quantidade}");
+
+        File.WriteAllText(caminhoCsv, csv.ToString(), new UTF8Encoding(true));
+
+        int totalComCategoria = porCategoria.Sum(x => x.Quantidade);
+        int totalFamilias = familias.Sum(x => x.Quantidade);
+
+        StringBuilder resumo = new();
+        resumo.AppendLine("Conexão com o Revit OK.");
+        resumo.AppendLine();
+        resumo.AppendLine($"Projeto ativo:\n{arquivo}");
+        resumo.AppendLine();
+        resumo.AppendLine("INVENTÁRIO COMPLETO");
+        resumo.AppendLine($"Elementos com categoria: {totalComCategoria}");
+        resumo.AppendLine($"Categorias encontradas: {porCategoria.Count}");
+        resumo.AppendLine($"Instâncias de famílias: {totalFamilias}");
+        resumo.AppendLine($"Famílias/tipos distintos: {familias.Count}");
+        resumo.AppendLine();
+        resumo.AppendLine("TOP 15 CATEGORIAS:");
+
+        foreach (var item in porCategoria.Take(15))
+            resumo.AppendLine($"{item.Categoria}: {item.Quantidade}");
+
+        resumo.AppendLine();
+        resumo.AppendLine($"Relatório salvo em:\n{caminhoCsv}");
+        resumo.AppendLine();
+        resumo.AppendLine("KALIDIS Revit Bridge v0.3");
+
+        TaskDialog.Show("KALIDIS - Inventário Completo", resumo.ToString());
         return Result.Succeeded;
     }
 
-    private static int CountInstances(Document doc, BuiltInCategory category)
+    private static string Esc(string value)
     {
-        return new FilteredElementCollector(doc)
-            .OfCategory(category)
-            .WhereElementIsNotElementType()
-            .GetElementCount();
+        string v = value.Replace(";", ",").Replace("\r", " ").Replace("\n", " ");
+        return v;
     }
 }
