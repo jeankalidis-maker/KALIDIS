@@ -1,0 +1,8 @@
+{
+  "id": null,
+  "sucesso": false,
+  "mensagem": "Aguardando o primeiro resultado remoto do Revit.",
+  "quantidade": 0,
+  "elementIds": [],
+  "erro": null
+}
