@@ -42,23 +42,24 @@ public class Application : IExternalApplication
     {
         try
         {
-            // Git/rede permanece fora das operações de transação do Revit.
+            // Rede/Git fica fora da API do Revit e apenas agenda trabalho em background.
             RemoteBridgeService.Tick();
 
             if (sender is not UIApplication uiApp) return;
 
-            if (!CommandReplayGuard.TryReadCurrent(out CommandReplayGuard.CommandEnvelope? command, out string? readError) || command == null)
+            if (!CommandReplayGuard.TryReadCurrent(out CommandReplayGuard.CommandEnvelope? command, out _) || command == null)
                 return;
             if (!command.Active) return;
-
-            if (!CommandReplayGuard.TryAcquire(command, out _))
-                return;
+            if (!CommandReplayGuard.TryAcquire(command, out _)) return;
 
             bool routed = false;
             string? routingError = null;
 
             try
             {
+                // IMPORTANTE: exatamente um serviço processa cada comando.
+                // O anti-replay global decide se o comando pode rodar; os serviços
+                // não são mais encadeados no mesmo Idling.
                 if (SmartBatchBridgeService.IsCommand())
                 {
                     SmartBatchBridgeService.TryProcess(uiApp);
@@ -79,10 +80,14 @@ public class Application : IExternalApplication
                     GeometryBridgeService.TryProcess(uiApp);
                     routed = true;
                 }
+                else if (MaxBridgeService.IsCommand())
+                {
+                    MaxBridgeService.TryProcess(uiApp);
+                    routed = true;
+                }
                 else
                 {
                     BridgeService.TryProcess(uiApp);
-                    MaxBridgeService.TryProcess(uiApp);
                     routed = true;
                 }
             }
@@ -113,7 +118,7 @@ public class Application : IExternalApplication
         }
         catch
         {
-            // O bridge nunca deve travar a interface do Revit.
+            // O bridge nunca deve derrubar a interface por exceção gerenciada.
         }
     }
 
