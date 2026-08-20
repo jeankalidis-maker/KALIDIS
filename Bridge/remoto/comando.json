@@ -1,6 +1,6 @@
 {
   "ativo": true,
-  "id": "revisar-alinhamento-aberturas-bb1-20260820-1001",
-  "acao": "detectar_aberturas_sem_cuba",
-  "busca": "Banho Bebe 1"
+  "id": "bb1-remover-cuba-duplicada-20260820-1012",
+  "acao": "excluir",
+  "elementIds": [891546]
 }
