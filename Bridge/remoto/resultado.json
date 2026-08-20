@@ -1,9 +1,26 @@
 {
-  "id": "bb2-executar-alinhar-recortar-20260820-1518",
-  "sucesso": false,
-  "mensagem": "Falha ao alinhar cubas e ajustar recortes.",
-  "quantidade": 0,
-  "elementIds": [],
-  "erro": "Failed to commit the edit scope.",
-  "dados": null
+  "id": "bb2-alinhar-primeiro-20260820-1520",
+  "sucesso": true,
+  "mensagem": "Lote conclu\u00EDdo: 1 a\u00E7\u00E3o(\u00F5es) executada(s).",
+  "quantidade": 3,
+  "elementIds": [
+    891903,
+    891907,
+    891910
+  ],
+  "erro": null,
+  "dados": [
+    {
+      "id": "bb2-mover-3-cubas",
+      "acao": "mover",
+      "sucesso": true,
+      "mensagem": "3 elemento(s) movido(s).",
+      "elementIds": [
+        891903,
+        891907,
+        891910
+      ],
+      "erro": null
+    }
+  ]
 }
