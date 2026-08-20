@@ -40,8 +40,6 @@ public static class RemoteBridgeService
         Directory.CreateDirectory(@"C:\KALIDIS\Bridge");
         Directory.CreateDirectory(Path.GetDirectoryName(RepoResultPath)!);
 
-        // Não sobrescrever o diagnóstico a cada Idling.
-        // O estado inicial só é criado quando ainda não existe.
         if (!File.Exists(StatePath))
             WriteState("iniciado", null, null);
     }
@@ -59,7 +57,7 @@ public static class RemoteBridgeService
                 return;
 
             _pollRunning = true;
-            _nextPollUtc = DateTime.UtcNow.AddSeconds(2);
+            _nextPollUtc = DateTime.UtcNow.AddMilliseconds(500);
         }
 
         _ = Task.Run(async () =>
@@ -155,14 +153,12 @@ public static class RemoteBridgeService
 
         try
         {
-            // Atualiza o clone para reduzir conflitos com o comando que veio do GitHub.
             await RunGitAsync("pull --rebase --autostash");
 
             Directory.CreateDirectory(Path.GetDirectoryName(RepoResultPath)!);
             await File.WriteAllTextAsync(RepoResultPath, raw.Trim() + Environment.NewLine, new UTF8Encoding(false));
             await RunGitAsync("add Bridge/remoto/resultado.json");
 
-            // Verifica pelo exit code do git diff, sem depender do idioma do Git.
             (int diffCode, string diffOutput) = await RunProcessAsync(
                 "git",
                 $"-C \"{RepoPath}\" diff --cached --quiet -- Bridge/remoto/resultado.json");
@@ -177,15 +173,12 @@ public static class RemoteBridgeService
                 throw new InvalidOperationException($"git diff --cached falhou ({diffCode}): {diffOutput}");
             }
 
-            // Só marca como processado DEPOIS de publicação bem-sucedida.
-            // Assim, qualquer falha de pull/commit/push é tentada novamente no próximo ciclo.
             _lastPushedResultId = id;
             _lastResultWriteUtc = writeUtc;
             WriteState("resultado_publicado", id, null);
         }
         catch (Exception ex)
         {
-            // Não atualizar _lastResultWriteUtc aqui: queremos retry automático.
             WriteState("erro_publicar_resultado", id, ex.Message);
         }
     }
@@ -230,7 +223,7 @@ public static class RemoteBridgeService
             Directory.CreateDirectory(Path.GetDirectoryName(StatePath)!);
             var state = new
             {
-                versao = "0.9-remoto",
+                versao = "1.0-remoto-rapido",
                 status,
                 comandoId = id,
                 ultimoResultadoPublicado = _lastPushedResultId,
@@ -243,7 +236,6 @@ public static class RemoteBridgeService
         }
         catch
         {
-            // Estado nunca pode derrubar o add-in.
         }
     }
 
