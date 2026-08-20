@@ -1,8 +1,8 @@
 {
   "ativo": true,
-  "id": "bb2-diagnostico-alinhar-recortar-20260820-1516",
+  "id": "bb2-executar-alinhar-recortar-20260820-1518",
   "acao": "alinhar_recortar_cubas_bancada",
   "bancadaId": 598815,
   "cubaIds": [891903, 891907, 891910],
-  "executar": false
+  "executar": true
 }
