@@ -6,6 +6,8 @@ namespace Kalidis.Revit;
 
 public class Application : IExternalApplication
 {
+    private const string CommandPath = @"C:\KALIDIS\Bridge\comando.json";
+
     public Result OnStartup(UIControlledApplication application)
     {
         application.ControlledApplication.DocumentOpened += OnDocumentOpened;
@@ -46,14 +48,37 @@ public class Application : IExternalApplication
 
             if (sender is UIApplication uiApp)
             {
-                BridgeService.TryProcess(uiApp);
-                MaxBridgeService.TryProcess(uiApp);
-                GeometryBridgeService.TryProcess(uiApp);
+                if (IsGeometryCommand())
+                {
+                    GeometryBridgeService.TryProcess(uiApp);
+                }
+                else
+                {
+                    BridgeService.TryProcess(uiApp);
+                    MaxBridgeService.TryProcess(uiApp);
+                }
             }
         }
         catch
         {
             // Bridge não pode travar a interface do Revit.
+        }
+    }
+
+    private static bool IsGeometryCommand()
+    {
+        try
+        {
+            if (!File.Exists(CommandPath)) return false;
+            string raw = File.ReadAllText(CommandPath);
+            return raw.Contains("snapshot_ambiente", StringComparison.OrdinalIgnoreCase) ||
+                   raw.Contains("snapshot_elemento", StringComparison.OrdinalIgnoreCase) ||
+                   raw.Contains("analisar_proximidade", StringComparison.OrdinalIgnoreCase) ||
+                   raw.Contains("detectar_aberturas_sem_cuba", StringComparison.OrdinalIgnoreCase);
+        }
+        catch
+        {
+            return false;
         }
     }
 }
