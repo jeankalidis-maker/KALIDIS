@@ -6,11 +6,9 @@ namespace Kalidis.Revit;
 
 /// <summary>
 /// Ponte remota KALIDIS via GitHub.
-/// - Lê comandos em main/Bridge/remoto/comando.json.
-/// - Entrega o comando ao bridge local.
-/// - Publica resultados em uma branch exclusiva (bridge-results), usando um clone
-///   local separado para não disputar o repositório de desenvolvimento nem exigir
-///   pull/rebase a cada resposta.
+/// - Comandos: branch exclusiva bridge-commands, detectada por SHA via git ls-remote.
+/// - Resultados: branch exclusiva bridge-results, publicada por clone local separado.
+/// - Não usa raw.githubusercontent.com para leitura de comandos.
 ///
 /// Nenhuma chamada à API do Revit é feita em thread de fundo. A execução no modelo
 /// continua sendo feita no contexto seguro do Idling.
@@ -18,41 +16,37 @@ namespace Kalidis.Revit;
 public static class RemoteBridgeService
 {
     private const string RepositoryUrl = "https://github.com/jeankalidis-maker/KALIDIS.git";
-    private const string RemoteCommandUrl = "https://raw.githubusercontent.com/jeankalidis-maker/KALIDIS/main/Bridge/remoto/comando.json";
     private const string LocalCommandPath = @"C:\KALIDIS\Bridge\comando.json";
     private const string LocalResultPath = @"C:\KALIDIS\Bridge\resultado.json";
     private const string StatePath = @"C:\KALIDIS\Bridge\remoto.estado.json";
     private const string LogPath = @"C:\KALIDIS\Bridge\remoto.log";
 
-    // Clone EXCLUSIVO para resultados. Não toca em C:\Users\naose\KALIDIS.
+    private const string CommandRepoPath = @"C:\KALIDIS\BridgeCommandsRepo";
+    private const string CommandBranch = "bridge-commands";
+    private const string CommandFilePath = "Bridge/remoto/comando.json";
+
     private const string ResultRepoPath = @"C:\KALIDIS\BridgeResultsRepo";
     private const string RepoResultPath = @"C:\KALIDIS\BridgeResultsRepo\Bridge\remoto\resultado.json";
     private const string ResultBranch = "bridge-results";
-
-    private static readonly HttpClient Http = new()
-    {
-        Timeout = TimeSpan.FromSeconds(8)
-    };
 
     private static readonly object Sync = new();
     private static DateTime _nextPollUtc = DateTime.MinValue;
     private static bool _pollRunning;
     private static DateTime _lastResultWriteUtc = DateTime.MinValue;
     private static string? _lastRemoteCommandId;
+    private static string? _lastRemoteCommandSha;
     private static string? _lastPushedResultId;
 
     public static void EnsureFiles()
     {
         Directory.CreateDirectory(@"C:\KALIDIS\Bridge");
+        Directory.CreateDirectory(Path.GetDirectoryName(CommandRepoPath)!);
         Directory.CreateDirectory(Path.GetDirectoryName(ResultRepoPath)!);
 
         if (!File.Exists(StatePath))
             WriteState("iniciado", null, null);
     }
 
-    /// <summary>
-    /// Chamado no Idling. Rede/Git ficam em background.
-    /// </summary>
     public static void Tick()
     {
         EnsureFiles();
@@ -63,7 +57,7 @@ public static class RemoteBridgeService
                 return;
 
             _pollRunning = true;
-            _nextPollUtc = DateTime.UtcNow.AddMilliseconds(500);
+            _nextPollUtc = DateTime.UtcNow.AddSeconds(1);
         }
 
         _ = Task.Run(async () =>
@@ -86,32 +80,105 @@ public static class RemoteBridgeService
 
     private static async Task PullRemoteCommandAsync()
     {
-        string raw;
         try
         {
-            raw = await Http.GetStringAsync(RemoteCommandUrl + "?t=" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+            await EnsureCommandRepoAsync();
+
+            (int lsCode, string lsOutput) = await RunProcessAsync(
+                "git",
+                $"-C \"{CommandRepoPath}\" ls-remote origin refs/heads/{CommandBranch}",
+                CommandRepoPath);
+
+            if (lsCode != 0)
+            {
+                WriteState("sem_conexao_comando", _lastRemoteCommandId, lsOutput);
+                return;
+            }
+
+            string? remoteSha = ParseLsRemoteSha(lsOutput);
+            if (string.IsNullOrWhiteSpace(remoteSha))
+            {
+                WriteState("branch_comandos_sem_sha", _lastRemoteCommandId, lsOutput);
+                return;
+            }
+
+            if (string.Equals(remoteSha, _lastRemoteCommandSha, StringComparison.OrdinalIgnoreCase))
+                return;
+
+            await RunCommandGitAsync($"fetch --depth 1 origin {CommandBranch}");
+
+            (int showCode, string raw) = await RunProcessAsync(
+                "git",
+                $"-C \"{CommandRepoPath}\" show FETCH_HEAD:{CommandFilePath}",
+                CommandRepoPath);
+
+            if (showCode != 0 || string.IsNullOrWhiteSpace(raw))
+                throw new InvalidOperationException($"Não foi possível ler {CommandFilePath} na branch {CommandBranch}: {raw}");
+
+            using JsonDocument json = JsonDocument.Parse(raw);
+            JsonElement root = json.RootElement;
+
+            bool ativo = !root.TryGetProperty("ativo", out JsonElement ativoEl) || ativoEl.ValueKind != JsonValueKind.False;
+            string? id = root.TryGetProperty("id", out JsonElement idEl) ? idEl.GetString() : null;
+
+            _lastRemoteCommandSha = remoteSha;
+
+            if (!ativo || string.IsNullOrWhiteSpace(id))
+            {
+                WriteState("comando_ignorado", id, null);
+                return;
+            }
+
+            if (string.Equals(id, _lastRemoteCommandId, StringComparison.Ordinal))
+                return;
+
+            Directory.CreateDirectory(Path.GetDirectoryName(LocalCommandPath)!);
+            File.WriteAllText(LocalCommandPath, raw.Trim() + Environment.NewLine, new UTF8Encoding(false));
+
+            _lastRemoteCommandId = id;
+            WriteState("comando_recebido_rapido", id, null);
         }
         catch (Exception ex)
         {
-            WriteState("sem_conexao_comando", _lastRemoteCommandId, ex.Message);
-            return;
+            WriteState("erro_ler_comando", _lastRemoteCommandId, ex.Message);
         }
+    }
 
-        if (string.IsNullOrWhiteSpace(raw)) return;
-
-        using JsonDocument json = JsonDocument.Parse(raw);
-        JsonElement root = json.RootElement;
-
-        bool ativo = !root.TryGetProperty("ativo", out JsonElement ativoEl) || ativoEl.ValueKind != JsonValueKind.False;
-        string? id = root.TryGetProperty("id", out JsonElement idEl) ? idEl.GetString() : null;
-
-        if (!ativo || string.IsNullOrWhiteSpace(id) || string.Equals(id, _lastRemoteCommandId, StringComparison.Ordinal))
+    private static async Task EnsureCommandRepoAsync()
+    {
+        if (Directory.Exists(Path.Combine(CommandRepoPath, ".git")))
             return;
 
-        Directory.CreateDirectory(Path.GetDirectoryName(LocalCommandPath)!);
-        File.WriteAllText(LocalCommandPath, raw.Trim() + Environment.NewLine, new UTF8Encoding(false));
-        _lastRemoteCommandId = id;
-        WriteState("comando_recebido", id, null);
+        if (Directory.Exists(CommandRepoPath) && Directory.EnumerateFileSystemEntries(CommandRepoPath).Any())
+            throw new InvalidOperationException($"A pasta {CommandRepoPath} existe, mas não é um repositório Git vazio/válido.");
+
+        Directory.CreateDirectory(CommandRepoPath);
+
+        (int initCode, string initOutput) = await RunProcessAsync(
+            "git",
+            $"-C \"{CommandRepoPath}\" init",
+            CommandRepoPath);
+
+        if (initCode != 0)
+            throw new InvalidOperationException($"git init do canal de comandos falhou ({initCode}): {initOutput}");
+
+        (int remoteCode, string remoteOutput) = await RunProcessAsync(
+            "git",
+            $"-C \"{CommandRepoPath}\" remote add origin \"{RepositoryUrl}\"",
+            CommandRepoPath);
+
+        if (remoteCode != 0)
+            throw new InvalidOperationException($"git remote add origin falhou ({remoteCode}): {remoteOutput}");
+
+        WriteState("canal_comandos_pronto", _lastRemoteCommandId, null);
+    }
+
+    private static string? ParseLsRemoteSha(string output)
+    {
+        if (string.IsNullOrWhiteSpace(output)) return null;
+        string firstLine = output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty;
+        string[] parts = firstLine.Split(new[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length > 0 ? parts[0].Trim() : null;
     }
 
     private static async Task PublishLocalResultAsync()
@@ -175,7 +242,6 @@ public static class RemoteBridgeService
                 }
                 catch
                 {
-                    // Recuperação rara caso a branch exclusiva tenha sido alterada externamente.
                     await RunResultGitAsync($"pull --rebase origin {ResultBranch}");
                     await RunResultGitAsync($"push origin HEAD:{ResultBranch}");
                 }
@@ -191,7 +257,6 @@ public static class RemoteBridgeService
         }
         catch (Exception ex)
         {
-            // Não marca como processado: haverá retry automático no próximo Tick.
             WriteState("erro_publicar_resultado", id, ex.Message);
         }
     }
@@ -202,7 +267,7 @@ public static class RemoteBridgeService
             return;
 
         if (Directory.Exists(ResultRepoPath) && Directory.EnumerateFileSystemEntries(ResultRepoPath).Any())
-            throw new InvalidOperationException($"A pasta {ResultRepoPath} existe, mas não é um repositório Git vazio/valido.");
+            throw new InvalidOperationException($"A pasta {ResultRepoPath} existe, mas não é um repositório Git vazio/válido.");
 
         Directory.CreateDirectory(Path.GetDirectoryName(ResultRepoPath)!);
         WriteState("criando_clone_resultados", _lastRemoteCommandId, null);
@@ -220,6 +285,19 @@ public static class RemoteBridgeService
 
     private static string SanitizeForCommit(string value)
         => value.Replace("\"", "").Replace("\r", " ").Replace("\n", " ");
+
+    private static async Task<string> RunCommandGitAsync(string arguments)
+    {
+        (int code, string output) = await RunProcessAsync(
+            "git",
+            $"-C \"{CommandRepoPath}\" {arguments}",
+            CommandRepoPath);
+
+        if (code != 0)
+            throw new InvalidOperationException($"git {arguments} falhou ({code}): {output}");
+
+        return output;
+    }
 
     private static async Task<string> RunResultGitAsync(string arguments)
     {
@@ -266,10 +344,12 @@ public static class RemoteBridgeService
             Directory.CreateDirectory(Path.GetDirectoryName(StatePath)!);
             var state = new
             {
-                versao = "1.1-remoto-branch-resultados",
+                versao = "1.2-remoto-branches-sha",
                 status,
                 comandoId = id,
+                ultimoComandoSha = _lastRemoteCommandSha,
                 ultimoResultadoPublicado = _lastPushedResultId,
+                branchComandos = CommandBranch,
                 branchResultados = ResultBranch,
                 atualizadoEm = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 erro
@@ -287,7 +367,7 @@ public static class RemoteBridgeService
     {
         try
         {
-            string line = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | {status} | id={id ?? "-"} | erro={erro ?? "-"}";
+            string line = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | {status} | id={id ?? "-"} | sha={_lastRemoteCommandSha ?? "-"} | erro={erro ?? "-"}";
             File.AppendAllText(LogPath, line + Environment.NewLine, new UTF8Encoding(false));
         }
         catch
