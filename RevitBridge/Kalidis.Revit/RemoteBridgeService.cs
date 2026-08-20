@@ -19,6 +19,7 @@ public static class RemoteBridgeService
     private const string LocalCommandPath = @"C:\KALIDIS\Bridge\comando.json";
     private const string LocalResultPath = @"C:\KALIDIS\Bridge\resultado.json";
     private const string StatePath = @"C:\KALIDIS\Bridge\remoto.estado.json";
+    private const string LogPath = @"C:\KALIDIS\Bridge\remoto.log";
     private const string RepoPath = @"C:\Users\naose\KALIDIS";
     private const string RepoResultPath = @"C:\Users\naose\KALIDIS\Bridge\remoto\resultado.json";
 
@@ -38,7 +39,11 @@ public static class RemoteBridgeService
     {
         Directory.CreateDirectory(@"C:\KALIDIS\Bridge");
         Directory.CreateDirectory(Path.GetDirectoryName(RepoResultPath)!);
-        WriteState("iniciado", null, null);
+
+        // Não sobrescrever o diagnóstico a cada Idling.
+        // O estado inicial só é criado quando ainda não existe.
+        if (!File.Exists(StatePath))
+            WriteState("iniciado", null, null);
     }
 
     /// <summary>
@@ -122,20 +127,31 @@ public static class RemoteBridgeService
             if (json.RootElement.TryGetProperty("id", out JsonElement idEl))
                 id = idEl.GetString();
         }
-        catch
+        catch (Exception ex)
         {
+            WriteState("resultado_json_invalido", null, ex.Message);
             return;
         }
 
-        _lastResultWriteUtc = writeUtc;
-        if (string.IsNullOrWhiteSpace(id) || string.Equals(id, _lastPushedResultId, StringComparison.Ordinal))
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            WriteState("resultado_sem_id", null, null);
             return;
+        }
+
+        if (string.Equals(id, _lastPushedResultId, StringComparison.Ordinal))
+        {
+            _lastResultWriteUtc = writeUtc;
+            return;
+        }
 
         if (!Directory.Exists(Path.Combine(RepoPath, ".git")))
         {
             WriteState("resultado_local_sem_repo_git", id, $"Repositório local não encontrado em {RepoPath}");
             return;
         }
+
+        WriteState("resultado_detectado", id, null);
 
         try
         {
@@ -144,22 +160,32 @@ public static class RemoteBridgeService
 
             Directory.CreateDirectory(Path.GetDirectoryName(RepoResultPath)!);
             await File.WriteAllTextAsync(RepoResultPath, raw.Trim() + Environment.NewLine, new UTF8Encoding(false));
-
             await RunGitAsync("add Bridge/remoto/resultado.json");
-            string commitOutput = await RunGitAllowNoopAsync($"commit -m \"bridge: resultado {SanitizeForCommit(id)}\"");
 
-            // Se não havia mudança, ainda marcamos como publicado; caso contrário fazemos push.
-            if (!commitOutput.Contains("nothing to commit", StringComparison.OrdinalIgnoreCase) &&
-                !commitOutput.Contains("nada a enviar", StringComparison.OrdinalIgnoreCase))
+            // Verifica pelo exit code do git diff, sem depender do idioma do Git.
+            (int diffCode, string diffOutput) = await RunProcessAsync(
+                "git",
+                $"-C \"{RepoPath}\" diff --cached --quiet -- Bridge/remoto/resultado.json");
+
+            if (diffCode == 1)
             {
+                await RunGitAsync($"commit -m \"bridge: resultado {SanitizeForCommit(id)}\"");
                 await RunGitAsync("push");
             }
+            else if (diffCode != 0)
+            {
+                throw new InvalidOperationException($"git diff --cached falhou ({diffCode}): {diffOutput}");
+            }
 
+            // Só marca como processado DEPOIS de publicação bem-sucedida.
+            // Assim, qualquer falha de pull/commit/push é tentada novamente no próximo ciclo.
             _lastPushedResultId = id;
+            _lastResultWriteUtc = writeUtc;
             WriteState("resultado_publicado", id, null);
         }
         catch (Exception ex)
         {
+            // Não atualizar _lastResultWriteUtc aqui: queremos retry automático.
             WriteState("erro_publicar_resultado", id, ex.Message);
         }
     }
@@ -172,19 +198,6 @@ public static class RemoteBridgeService
         (int code, string output) = await RunProcessAsync("git", $"-C \"{RepoPath}\" {arguments}");
         if (code != 0)
             throw new InvalidOperationException($"git {arguments} falhou ({code}): {output}");
-        return output;
-    }
-
-    private static async Task<string> RunGitAllowNoopAsync(string arguments)
-    {
-        (int code, string output) = await RunProcessAsync("git", $"-C \"{RepoPath}\" {arguments}");
-        if (code != 0 &&
-            !output.Contains("nothing to commit", StringComparison.OrdinalIgnoreCase) &&
-            !output.Contains("nothing added", StringComparison.OrdinalIgnoreCase) &&
-            !output.Contains("nada a enviar", StringComparison.OrdinalIgnoreCase))
-        {
-            throw new InvalidOperationException($"git {arguments} falhou ({code}): {output}");
-        }
         return output;
     }
 
@@ -217,7 +230,7 @@ public static class RemoteBridgeService
             Directory.CreateDirectory(Path.GetDirectoryName(StatePath)!);
             var state = new
             {
-                versao = "0.8-remoto",
+                versao = "0.9-remoto",
                 status,
                 comandoId = id,
                 ultimoResultadoPublicado = _lastPushedResultId,
@@ -226,10 +239,23 @@ public static class RemoteBridgeService
             };
             string json = JsonSerializer.Serialize(state, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(StatePath, json + Environment.NewLine, new UTF8Encoding(false));
+            AppendLog(status, id, erro);
         }
         catch
         {
             // Estado nunca pode derrubar o add-in.
+        }
+    }
+
+    private static void AppendLog(string status, string? id, string? erro)
+    {
+        try
+        {
+            string line = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | {status} | id={id ?? "-"} | erro={erro ?? "-"}";
+            File.AppendAllText(LogPath, line + Environment.NewLine, new UTF8Encoding(false));
+        }
+        catch
+        {
         }
     }
 }
