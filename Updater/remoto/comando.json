@@ -1,6 +1,5 @@
 {
   "ativo": true,
-  "id": "diag-agente-20260820-1629",
-  "acao": "diagnostico",
-  "linhas": 220
+  "id": "revit-status-20260820-1630",
+  "acao": "revit_status"
 }
