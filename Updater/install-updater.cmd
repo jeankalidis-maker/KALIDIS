@@ -16,6 +16,11 @@ if not exist "%PROJECT%" (
   exit /b 1
 )
 
+echo [KALIDIS] Encerrando instancia anterior do updater, se existir...
+taskkill /IM Kalidis.Updater.exe /F >nul 2>&1
+rem Aguarda o Windows liberar DLL/EXE antes de publicar por cima.
+timeout /T 2 /NOBREAK >nul
+
 echo [KALIDIS] Compilando updater...
 dotnet publish "%PROJECT%" -c Release -r win-x64 --self-contained false -o "%INSTALL%"
 if errorlevel 1 (
