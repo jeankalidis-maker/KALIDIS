@@ -1,78 +1,9 @@
 {
-  "id": "bb2-diagnostico-alinhar-recortar-20260820-1516",
-  "sucesso": true,
-  "mensagem": "Diagn\u00F3stico conclu\u00EDdo; nenhuma altera\u00E7\u00E3o executada.",
-  "quantidade": 3,
-  "elementIds": [
-    891903,
-    891907,
-    891910
-  ],
-  "erro": null,
-  "dados": {
-    "bancadaId": 598815,
-    "sketchId": 598814,
-    "diagnostics": [
-      {
-        "cubaId": 891903,
-        "aberturaCentroMm": {
-          "x": 23701.89,
-          "y": 16223.19,
-          "z": 0
-        },
-        "cubaCentroAtualMm": {
-          "x": 23651.89,
-          "y": 14383.19,
-          "z": 810
-        },
-        "deslocamentoMm": {
-          "x": 50,
-          "y": 1840,
-          "z": 0
-        },
-        "perimetroAberturaMm": 2600,
-        "perimetroCubaMm": 2565.4
-      },
-      {
-        "cubaId": 891907,
-        "aberturaCentroMm": {
-          "x": 23701.89,
-          "y": 15263.19,
-          "z": 0
-        },
-        "cubaCentroAtualMm": {
-          "x": 23651.89,
-          "y": 15343.19,
-          "z": 810
-        },
-        "deslocamentoMm": {
-          "x": 50,
-          "y": -80,
-          "z": 0
-        },
-        "perimetroAberturaMm": 2600,
-        "perimetroCubaMm": 2565.4
-      },
-      {
-        "cubaId": 891910,
-        "aberturaCentroMm": {
-          "x": 23701.89,
-          "y": 14303.19,
-          "z": 0
-        },
-        "cubaCentroAtualMm": {
-          "x": 23651.89,
-          "y": 16303.19,
-          "z": 810
-        },
-        "deslocamentoMm": {
-          "x": 50,
-          "y": -2000,
-          "z": 0
-        },
-        "perimetroAberturaMm": 2600,
-        "perimetroCubaMm": 2565.4
-      }
-    ]
-  }
+  "id": "bb2-executar-alinhar-recortar-20260820-1518",
+  "sucesso": false,
+  "mensagem": "Falha ao alinhar cubas e ajustar recortes.",
+  "quantidade": 0,
+  "elementIds": [],
+  "erro": "Failed to commit the edit scope.",
+  "dados": null
 }
