@@ -1,6 +1,10 @@
 {
   "ativo": true,
-  "id": "bb2-detectar-cubas-bancada-20260820-1510",
-  "acao": "detectar_aberturas_sem_cuba",
-  "busca": "Banho Bebe 2"
+  "id": "bb2-criar-3-cubas-20260820-1513",
+  "acao": "lote",
+  "acoes": [
+    { "id": "bb2-cuba-1", "acao": "copiar", "elementIds": [828712], "x": 20025.0, "y": 4832.5, "z": -60.0 },
+    { "id": "bb2-cuba-2", "acao": "copiar", "elementIds": [828712], "x": 20025.0, "y": 5792.5, "z": -60.0 },
+    { "id": "bb2-cuba-3", "acao": "copiar", "elementIds": [828712], "x": 20025.0, "y": 6752.5, "z": -60.0 }
+  ]
 }
