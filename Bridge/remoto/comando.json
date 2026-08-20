@@ -1,6 +1,47 @@
 {
   "ativo": true,
-  "id": "bb1-reler-cubas-pos-alinhamento-20260820-1048",
-  "acao": "detectar_aberturas_sem_cuba",
-  "busca": "Banho Bebe 1"
+  "id": "bb1-corrigir-alinhamento-absoluto-20260820-1050",
+  "acao": "lote",
+  "acoes": [
+    {
+      "id": "corrigir-828712",
+      "acao": "mover",
+      "elementIds": [828712],
+      "x": -487.11,
+      "y": 27.69,
+      "z": 0
+    },
+    {
+      "id": "corrigir-891513",
+      "acao": "mover",
+      "elementIds": [891513],
+      "x": 256.796,
+      "y": 40.675,
+      "z": 0
+    },
+    {
+      "id": "corrigir-891540",
+      "acao": "mover",
+      "elementIds": [891540],
+      "x": 256.796,
+      "y": 40.675,
+      "z": 0
+    },
+    {
+      "id": "corrigir-891543",
+      "acao": "mover",
+      "elementIds": [891543],
+      "x": 256.796,
+      "y": 40.675,
+      "z": 0
+    },
+    {
+      "id": "corrigir-891576",
+      "acao": "mover",
+      "elementIds": [891576],
+      "x": 257.636,
+      "y": 39.415,
+      "z": 0
+    }
+  ]
 }
