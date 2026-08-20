@@ -48,7 +48,11 @@ public class Application : IExternalApplication
 
             if (sender is UIApplication uiApp)
             {
-                if (FastBatchBridgeService.IsBatchCommand())
+                if (SmartBatchBridgeService.IsCommand())
+                {
+                    SmartBatchBridgeService.TryProcess(uiApp);
+                }
+                else if (FastBatchBridgeService.IsBatchCommand())
                 {
                     FastBatchBridgeService.TryProcess(uiApp);
                 }
