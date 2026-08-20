@@ -1,6 +1,29 @@
 {
   "ativo": true,
-  "id": "bb2-validar-cubas-20260820-1545",
-  "acao": "detectar_aberturas_sem_cuba",
-  "busca": "Banho Bebe 2"
+  "id": "bb2-corrigir-repeticao-segura-20260820-1558",
+  "acao": "lote_encadeado",
+  "atomico": true,
+  "acoes": [
+    {
+      "id": "validar-cubas",
+      "acao": "validar_editabilidade",
+      "elementIds": [891903, 891907, 891910],
+      "obrigatoria": true
+    },
+    {
+      "id": "corrigir-deslocamento",
+      "acao": "mover",
+      "elementIds": [891903, 891907, 891910],
+      "x": 82.56,
+      "y": -27.92,
+      "z": 0.0,
+      "obrigatoria": true
+    },
+    {
+      "id": "descrever-final",
+      "acao": "descrever_elementos",
+      "elementIds": [891903, 891907, 891910],
+      "obrigatoria": true
+    }
+  ]
 }
