@@ -1,10 +1,6 @@
 {
   "ativo": true,
-  "id": "bb2-alinhar-pos-rotacao-20260820-1528",
-  "acao": "lote",
-  "acoes": [
-    { "id": "bb2-alinhar-891903", "acao": "mover", "elementIds": [891903], "x": -41.28, "y": 13.96, "z": 0.0 },
-    { "id": "bb2-alinhar-891907", "acao": "mover", "elementIds": [891907], "x": -41.28, "y": 13.96, "z": 0.0 },
-    { "id": "bb2-alinhar-891910", "acao": "mover", "elementIds": [891910], "x": -41.28, "y": 13.96, "z": 0.0 }
-  ]
+  "id": "bb2-snapshot-chuveiros-20260820-1539",
+  "acao": "snapshot_ambiente",
+  "busca": "Banho Bebe 2"
 }
