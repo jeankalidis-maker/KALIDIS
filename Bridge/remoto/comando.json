@@ -1,9 +1,6 @@
 {
   "ativo": true,
-  "id": "copiar-cuba-bb1-4-20260820-0958",
-  "acao": "copiar",
-  "elementIds": [828712],
-  "x": 3786.994,
-  "y": -13.995,
-  "z": 0
+  "id": "revisar-alinhamento-aberturas-bb1-20260820-1001",
+  "acao": "detectar_aberturas_sem_cuba",
+  "busca": "Banho Bebe 1"
 }
