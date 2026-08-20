@@ -48,27 +48,41 @@ public class Application : IExternalApplication
 
             if (sender is UIApplication uiApp)
             {
+                string? commandId = CommandReplayGuard.CurrentCommandId();
+                if (CommandReplayGuard.IsAlreadyProcessed(commandId))
+                    return;
+
+                bool routed = false;
+
                 if (SmartBatchBridgeService.IsCommand())
                 {
                     SmartBatchBridgeService.TryProcess(uiApp);
+                    routed = true;
                 }
                 else if (FastBatchBridgeService.IsBatchCommand())
                 {
                     FastBatchBridgeService.TryProcess(uiApp);
+                    routed = true;
                 }
                 else if (BancadaCubaBridgeService.IsCommand())
                 {
                     BancadaCubaBridgeService.TryProcess(uiApp);
+                    routed = true;
                 }
                 else if (IsGeometryCommand())
                 {
                     GeometryBridgeService.TryProcess(uiApp);
+                    routed = true;
                 }
                 else
                 {
                     BridgeService.TryProcess(uiApp);
                     MaxBridgeService.TryProcess(uiApp);
+                    routed = true;
                 }
+
+                if (routed)
+                    CommandReplayGuard.MarkProcessed(commandId);
             }
         }
         catch
