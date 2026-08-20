@@ -1,11 +1,466 @@
 {
-  "id": "copiar-cuba-bb1-4-20260820-0958",
+  "id": "revisar-alinhamento-aberturas-bb1-20260820-1001",
   "sucesso": true,
-  "mensagem": "1 c\u00F3pia(s) criada(s).",
-  "quantidade": 1,
+  "mensagem": "Detectadas 21 abertura(s), sendo 4 sem cuba no ambiente \u0027BANHO BEB\u00CA 1 21\u0027.",
+  "quantidade": 4,
   "elementIds": [
-    891576
+    840706,
+    840755
   ],
   "erro": null,
-  "dados": null
+  "dados": {
+    "ambiente": {
+      "value": 598947,
+      "name": "BANHO BEB\u00CA 1 21",
+      "number": "21"
+    },
+    "toleranciaOcupacaoMm": 220,
+    "cubasDetectadas": [
+      {
+        "elementId": 828712,
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "tipo": "\u00DAnico",
+        "ponto": {
+          "x": 3586.886,
+          "y": 9570.695,
+          "z": 900
+        }
+      },
+      {
+        "elementId": 891513,
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "tipo": "\u00DAnico",
+        "ponto": {
+          "x": 4572.13,
+          "y": 9558.45,
+          "z": 900
+        }
+      },
+      {
+        "elementId": 891540,
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "tipo": "\u00DAnico",
+        "ponto": {
+          "x": 5505.33,
+          "y": 9558.45,
+          "z": 900
+        }
+      },
+      {
+        "elementId": 891543,
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "tipo": "\u00DAnico",
+        "ponto": {
+          "x": 6438.53,
+          "y": 9558.45,
+          "z": 900
+        }
+      },
+      {
+        "elementId": 891546,
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "tipo": "\u00DAnico",
+        "ponto": {
+          "x": 6438.53,
+          "y": 9558.45,
+          "z": 900
+        }
+      },
+      {
+        "elementId": 891576,
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "tipo": "\u00DAnico",
+        "ponto": {
+          "x": 7373.88,
+          "y": 9556.7,
+          "z": 900
+        }
+      }
+    ],
+    "aberturasDetectadas": [
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 3735.57,
+          "y": 9563.64,
+          "z": 900
+        },
+        "perimetroMm": 2664.8,
+        "ocupada": true,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 148.8
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 4472.84,
+          "y": 9547.06,
+          "z": 900
+        },
+        "perimetroMm": 2633,
+        "ocupada": true,
+        "cubaMaisProximaId": 891513,
+        "distanciaCubaMm": 99.9
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 5406.04,
+          "y": 9547.06,
+          "z": 900
+        },
+        "perimetroMm": 2633,
+        "ocupada": true,
+        "cubaMaisProximaId": 891540,
+        "distanciaCubaMm": 99.9
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 6339.24,
+          "y": 9547.06,
+          "z": 900
+        },
+        "perimetroMm": 2633,
+        "ocupada": true,
+        "cubaMaisProximaId": 891543,
+        "distanciaCubaMm": 99.9
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 7274.31,
+          "y": 9545.73,
+          "z": 900
+        },
+        "perimetroMm": 2634.3,
+        "ocupada": true,
+        "cubaMaisProximaId": 891576,
+        "distanciaCubaMm": 100.2
+      },
+      {
+        "elementoBancadaId": 828712,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 3573.2,
+          "y": 9572.87,
+          "z": 870
+        },
+        "perimetroMm": 2565.3,
+        "ocupada": true,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 13.9
+      },
+      {
+        "elementoBancadaId": 828712,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 3588.69,
+          "y": 9640.94,
+          "z": 655
+        },
+        "perimetroMm": 281.9,
+        "ocupada": true,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 70.3
+      },
+      {
+        "elementoBancadaId": 840706,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 4491.89,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 891513,
+        "distanciaCubaMm": 282.5
+      },
+      {
+        "elementoBancadaId": 840706,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 4636.89,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 891513,
+        "distanciaCubaMm": 278.5
+      },
+      {
+        "elementoBancadaId": 840755,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 6748.49,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 891543,
+        "distanciaCubaMm": 411.6
+      },
+      {
+        "elementoBancadaId": 840755,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 6893.49,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 891543,
+        "distanciaCubaMm": 529.5
+      },
+      {
+        "elementoBancadaId": 891513,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 4558.44,
+          "y": 9560.62,
+          "z": 870
+        },
+        "perimetroMm": 2565.3,
+        "ocupada": true,
+        "cubaMaisProximaId": 891513,
+        "distanciaCubaMm": 13.9
+      },
+      {
+        "elementoBancadaId": 891513,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 4573.93,
+          "y": 9628.7,
+          "z": 655
+        },
+        "perimetroMm": 281.9,
+        "ocupada": true,
+        "cubaMaisProximaId": 891513,
+        "distanciaCubaMm": 70.3
+      },
+      {
+        "elementoBancadaId": 891540,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 5491.64,
+          "y": 9560.62,
+          "z": 870
+        },
+        "perimetroMm": 2565.3,
+        "ocupada": true,
+        "cubaMaisProximaId": 891540,
+        "distanciaCubaMm": 13.9
+      },
+      {
+        "elementoBancadaId": 891540,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 5507.13,
+          "y": 9628.7,
+          "z": 655
+        },
+        "perimetroMm": 281.9,
+        "ocupada": true,
+        "cubaMaisProximaId": 891540,
+        "distanciaCubaMm": 70.3
+      },
+      {
+        "elementoBancadaId": 891543,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 6424.84,
+          "y": 9560.62,
+          "z": 870
+        },
+        "perimetroMm": 2565.3,
+        "ocupada": true,
+        "cubaMaisProximaId": 891543,
+        "distanciaCubaMm": 13.9
+      },
+      {
+        "elementoBancadaId": 891543,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 6440.33,
+          "y": 9628.7,
+          "z": 655
+        },
+        "perimetroMm": 281.9,
+        "ocupada": true,
+        "cubaMaisProximaId": 891543,
+        "distanciaCubaMm": 70.3
+      },
+      {
+        "elementoBancadaId": 891546,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 6424.84,
+          "y": 9560.62,
+          "z": 870
+        },
+        "perimetroMm": 2565.3,
+        "ocupada": true,
+        "cubaMaisProximaId": 891543,
+        "distanciaCubaMm": 13.9
+      },
+      {
+        "elementoBancadaId": 891546,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 6440.33,
+          "y": 9628.7,
+          "z": 655
+        },
+        "perimetroMm": 281.9,
+        "ocupada": true,
+        "cubaMaisProximaId": 891543,
+        "distanciaCubaMm": 70.3
+      },
+      {
+        "elementoBancadaId": 891576,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 7360.19,
+          "y": 9558.87,
+          "z": 870
+        },
+        "perimetroMm": 2565.3,
+        "ocupada": true,
+        "cubaMaisProximaId": 891576,
+        "distanciaCubaMm": 13.9
+      },
+      {
+        "elementoBancadaId": 891576,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 7375.68,
+          "y": 9626.95,
+          "z": 655
+        },
+        "perimetroMm": 281.9,
+        "ocupada": true,
+        "cubaMaisProximaId": 891576,
+        "distanciaCubaMm": 70.3
+      }
+    ],
+    "aberturasSemCuba": [
+      {
+        "elementoBancadaId": 840706,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 4491.89,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 891513,
+        "distanciaCubaMm": 282.5
+      },
+      {
+        "elementoBancadaId": 840706,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 4636.89,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 891513,
+        "distanciaCubaMm": 278.5
+      },
+      {
+        "elementoBancadaId": 840755,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 6748.49,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 891543,
+        "distanciaCubaMm": 411.6
+      },
+      {
+        "elementoBancadaId": 840755,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 6893.49,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 891543,
+        "distanciaCubaMm": 529.5
+      }
+    ]
+  }
 }
