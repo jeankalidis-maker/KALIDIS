@@ -1,6 +1,47 @@
 {
   "ativo": true,
-  "id": "bb1-remover-cuba-duplicada-20260820-1012",
-  "acao": "excluir",
-  "elementIds": [891546]
+  "id": "bb1-alinhar-5-cubas-20260820-1017",
+  "acao": "lote",
+  "acoes": [
+    {
+      "id": "alinhar-cuba-828712",
+      "acao": "mover",
+      "elementIds": [828712],
+      "x": 162.37,
+      "y": -9.23,
+      "z": 0
+    },
+    {
+      "id": "alinhar-cuba-891513",
+      "acao": "mover",
+      "elementIds": [891513],
+      "x": -85.60,
+      "y": -13.56,
+      "z": 0
+    },
+    {
+      "id": "alinhar-cuba-891540",
+      "acao": "mover",
+      "elementIds": [891540],
+      "x": -85.60,
+      "y": -13.56,
+      "z": 0
+    },
+    {
+      "id": "alinhar-cuba-891543",
+      "acao": "mover",
+      "elementIds": [891543],
+      "x": -85.60,
+      "y": -13.56,
+      "z": 0
+    },
+    {
+      "id": "alinhar-cuba-891576",
+      "acao": "mover",
+      "elementIds": [891576],
+      "x": -85.88,
+      "y": -13.14,
+      "z": 0
+    }
+  ]
 }
