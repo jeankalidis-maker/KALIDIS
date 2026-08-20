@@ -1,5 +1,6 @@
 {
   "ativo": true,
-  "id": "revit-status-20260820-1633",
-  "acao": "revit_status"
+  "id": "diag-pos-crash-revit-20260820-1636",
+  "acao": "diagnostico",
+  "linhas": 300
 }
