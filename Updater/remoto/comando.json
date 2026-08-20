@@ -1,6 +1,6 @@
 {
-  "ativo": false,
-  "id": "bootstrap-updater-agent",
-  "acao": "status",
-  "linhas": 120
+  "ativo": true,
+  "id": "diag-agente-20260820-1629",
+  "acao": "diagnostico",
+  "linhas": 220
 }
