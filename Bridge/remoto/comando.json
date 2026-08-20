@@ -1,6 +1,6 @@
 {
   "ativo": true,
-  "id": "bb2-snapshot-chuveiros-20260820-1539",
-  "acao": "snapshot_ambiente",
+  "id": "bb2-validar-cubas-20260820-1545",
+  "acao": "detectar_aberturas_sem_cuba",
   "busca": "Banho Bebe 2"
 }
