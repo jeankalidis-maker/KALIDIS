@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
@@ -8,7 +9,9 @@ namespace Kalidis.Revit;
 /// Ponte remota KALIDIS via GitHub.
 /// - Comandos: branch exclusiva bridge-commands, detectada por SHA via git ls-remote.
 /// - Resultados: branch exclusiva bridge-results, publicada por clone local separado.
-/// - Não usa raw.githubusercontent.com para leitura de comandos.
+/// - Deduplicação de resultado por SHA-256 do conteúdo, não por timestamp.
+/// - Escrita atômica do resultado remoto para evitar arquivo parcial/vazio.
+/// - Sincroniza o clone de resultados com origin antes de cada publicação.
 ///
 /// Nenhuma chamada à API do Revit é feita em thread de fundo. A execução no modelo
 /// continua sendo feita no contexto seguro do Idling.
@@ -32,10 +35,10 @@ public static class RemoteBridgeService
     private static readonly object Sync = new();
     private static DateTime _nextPollUtc = DateTime.MinValue;
     private static bool _pollRunning;
-    private static DateTime _lastResultWriteUtc = DateTime.MinValue;
     private static string? _lastRemoteCommandId;
     private static string? _lastRemoteCommandSha;
     private static string? _lastPushedResultId;
+    private static string? _lastPushedResultHash;
 
     public static void EnsureFiles()
     {
@@ -133,7 +136,9 @@ public static class RemoteBridgeService
                 return;
 
             Directory.CreateDirectory(Path.GetDirectoryName(LocalCommandPath)!);
-            File.WriteAllText(LocalCommandPath, raw.Trim() + Environment.NewLine, new UTF8Encoding(false));
+            string commandTmp = LocalCommandPath + ".tmp";
+            await File.WriteAllTextAsync(commandTmp, raw.Trim() + Environment.NewLine, new UTF8Encoding(false));
+            File.Move(commandTmp, LocalCommandPath, true);
 
             _lastRemoteCommandId = id;
             WriteState("comando_recebido_rapido", id, null);
@@ -185,18 +190,31 @@ public static class RemoteBridgeService
     {
         if (!File.Exists(LocalResultPath)) return;
 
-        DateTime writeUtc = File.GetLastWriteTimeUtc(LocalResultPath);
-        if (writeUtc <= _lastResultWriteUtc) return;
+        string raw;
+        try
+        {
+            raw = await File.ReadAllTextAsync(LocalResultPath, Encoding.UTF8);
+        }
+        catch (IOException)
+        {
+            // Serviço do Revit pode estar concluindo a escrita neste exato instante.
+            // O próximo Tick tentará novamente.
+            return;
+        }
 
-        string raw = await File.ReadAllTextAsync(LocalResultPath, Encoding.UTF8);
-        if (string.IsNullOrWhiteSpace(raw)) return;
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            WriteState("resultado_local_vazio_ignorado", null, null);
+            return;
+        }
 
-        string? id = null;
+        string? id;
         try
         {
             using JsonDocument json = JsonDocument.Parse(raw);
-            if (json.RootElement.TryGetProperty("id", out JsonElement idEl))
-                id = idEl.GetString();
+            id = json.RootElement.TryGetProperty("id", out JsonElement idEl) && idEl.ValueKind == JsonValueKind.String
+                ? idEl.GetString()
+                : null;
         }
         catch (Exception ex)
         {
@@ -210,20 +228,28 @@ public static class RemoteBridgeService
             return;
         }
 
-        if (string.Equals(id, _lastPushedResultId, StringComparison.Ordinal))
-        {
-            _lastResultWriteUtc = writeUtc;
+        string normalized = raw.Trim() + Environment.NewLine;
+        string resultHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(normalized))).ToLowerInvariant();
+
+        if (string.Equals(resultHash, _lastPushedResultHash, StringComparison.OrdinalIgnoreCase))
             return;
-        }
 
         WriteState("resultado_detectado", id, null);
 
         try
         {
             await EnsureResultRepoAsync();
+            await SyncResultRepoAsync();
 
             Directory.CreateDirectory(Path.GetDirectoryName(RepoResultPath)!);
-            await File.WriteAllTextAsync(RepoResultPath, raw.Trim() + Environment.NewLine, new UTF8Encoding(false));
+            string tmpPath = RepoResultPath + ".tmp";
+            await File.WriteAllTextAsync(tmpPath, normalized, new UTF8Encoding(false));
+            File.Move(tmpPath, RepoResultPath, true);
+
+            // Segurança adicional: nunca stage/push se o arquivo final estiver vazio.
+            FileInfo info = new(RepoResultPath);
+            if (!info.Exists || info.Length == 0)
+                throw new InvalidOperationException("Resultado remoto ficou vazio antes do stage; publicação cancelada.");
 
             await RunResultGitAsync("add Bridge/remoto/resultado.json");
 
@@ -242,7 +268,22 @@ public static class RemoteBridgeService
                 }
                 catch
                 {
-                    await RunResultGitAsync($"pull --rebase origin {ResultBranch}");
+                    // Se outra publicação avançou a branch, sincroniza e reaplica o resultado local.
+                    await SyncResultRepoAsync();
+                    await File.WriteAllTextAsync(tmpPath, normalized, new UTF8Encoding(false));
+                    File.Move(tmpPath, RepoResultPath, true);
+                    await RunResultGitAsync("add Bridge/remoto/resultado.json");
+
+                    (int retryDiff, string retryOutput) = await RunProcessAsync(
+                        "git",
+                        $"-C \"{ResultRepoPath}\" diff --cached --quiet -- Bridge/remoto/resultado.json",
+                        ResultRepoPath);
+
+                    if (retryDiff == 1)
+                        await RunResultGitAsync($"commit -m \"bridge: resultado {SanitizeForCommit(id)} retry\"");
+                    else if (retryDiff != 0)
+                        throw new InvalidOperationException($"git diff retry falhou ({retryDiff}): {retryOutput}");
+
                     await RunResultGitAsync($"push origin HEAD:{ResultBranch}");
                 }
             }
@@ -252,13 +293,20 @@ public static class RemoteBridgeService
             }
 
             _lastPushedResultId = id;
-            _lastResultWriteUtc = writeUtc;
-            WriteState("resultado_publicado_rapido", id, null);
+            _lastPushedResultHash = resultHash;
+            WriteState("resultado_publicado_hash", id, null);
         }
         catch (Exception ex)
         {
             WriteState("erro_publicar_resultado", id, ex.Message);
         }
+    }
+
+    private static async Task SyncResultRepoAsync()
+    {
+        await RunResultGitAsync($"fetch origin {ResultBranch}");
+        await RunResultGitAsync($"reset --hard origin/{ResultBranch}");
+        await RunResultGitAsync("clean -f -- Bridge/remoto/resultado.json.tmp");
     }
 
     private static async Task EnsureResultRepoAsync()
@@ -344,11 +392,12 @@ public static class RemoteBridgeService
             Directory.CreateDirectory(Path.GetDirectoryName(StatePath)!);
             var state = new
             {
-                versao = "1.2-remoto-branches-sha",
+                versao = "1.3-remoto-result-hash-atomic",
                 status,
                 comandoId = id,
                 ultimoComandoSha = _lastRemoteCommandSha,
                 ultimoResultadoPublicado = _lastPushedResultId,
+                ultimoResultadoHash = _lastPushedResultHash,
                 branchComandos = CommandBranch,
                 branchResultados = ResultBranch,
                 atualizadoEm = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
@@ -367,7 +416,7 @@ public static class RemoteBridgeService
     {
         try
         {
-            string line = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | {status} | id={id ?? "-"} | sha={_lastRemoteCommandSha ?? "-"} | erro={erro ?? "-"}";
+            string line = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | status={status} | id={id ?? "-"} | commandSha={_lastRemoteCommandSha ?? "-"} | resultHash={_lastPushedResultHash ?? "-"} | erro={erro ?? "-"}";
             File.AppendAllText(LogPath, line + Environment.NewLine, new UTF8Encoding(false));
         }
         catch
