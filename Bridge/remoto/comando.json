@@ -1,6 +1,6 @@
 {
   "ativo": true,
-  "id": "bb2-identificar-chuveiros-retry-20260820-1602",
-  "acao": "snapshot_ambiente",
-  "busca": "Banho Bebe 2"
+  "id": "listar-chuveiros-20260820-1603",
+  "acao": "listar",
+  "busca": "chuveiro"
 }
