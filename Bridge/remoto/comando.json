@@ -1,6 +1,6 @@
 {
   "ativo": true,
-  "id": "snapshot-banho-bebe1-20260820-0840",
-  "acao": "snapshot_ambiente",
-  "busca": "Banho Bebê 1"
+  "id": "detectar-bb1-20260820-0852",
+  "acao": "detectar_aberturas_sem_cuba",
+  "busca": "Banho Bebe 1"
 }
