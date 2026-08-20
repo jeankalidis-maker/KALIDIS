@@ -8,6 +8,16 @@ public class Application : IExternalApplication
 {
     private const string CommandPath = @"C:\KALIDIS\Bridge\comando.json";
 
+    private static readonly string[] MaxActions =
+    {
+        "listar_comandos_revit", "comando_revit",
+        "espelhar", "definir_escala_vista", "criar_nivel", "criar_eixo",
+        "criar_parede", "criar_piso", "criar_forro", "criar_ambiente",
+        "carregar_familia", "inserir_familia", "criar_material", "atribuir_material",
+        "criar_vista_3d", "duplicar_vista", "criar_folha",
+        "criar_tubo", "criar_duto", "criar_eletroduto", "criar_bandeja"
+    };
+
     public Result OnStartup(UIControlledApplication application)
     {
         application.ControlledApplication.DocumentOpened += OnDocumentOpened;
@@ -42,7 +52,6 @@ public class Application : IExternalApplication
     {
         try
         {
-            // Rede/Git fica fora da API do Revit e apenas agenda trabalho em background.
             RemoteBridgeService.Tick();
 
             if (sender is not UIApplication uiApp) return;
@@ -57,9 +66,6 @@ public class Application : IExternalApplication
 
             try
             {
-                // IMPORTANTE: exatamente um serviço processa cada comando.
-                // O anti-replay global decide se o comando pode rodar; os serviços
-                // não são mais encadeados no mesmo Idling.
                 if (SmartBatchBridgeService.IsCommand())
                 {
                     SmartBatchBridgeService.TryProcess(uiApp);
@@ -80,7 +86,7 @@ public class Application : IExternalApplication
                     GeometryBridgeService.TryProcess(uiApp);
                     routed = true;
                 }
-                else if (MaxBridgeService.IsCommand())
+                else if (IsMaxCommand())
                 {
                     MaxBridgeService.TryProcess(uiApp);
                     routed = true;
@@ -132,6 +138,21 @@ public class Application : IExternalApplication
                    raw.Contains("snapshot_elemento", StringComparison.OrdinalIgnoreCase) ||
                    raw.Contains("analisar_proximidade", StringComparison.OrdinalIgnoreCase) ||
                    raw.Contains("detectar_aberturas_sem_cuba", StringComparison.OrdinalIgnoreCase);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool IsMaxCommand()
+    {
+        try
+        {
+            if (!File.Exists(CommandPath)) return false;
+            string raw = File.ReadAllText(CommandPath);
+            return MaxActions.Any(action => raw.Contains($"\"acao\": \"{action}\"", StringComparison.OrdinalIgnoreCase) ||
+                                            raw.Contains($"\"acao\":\"{action}\"", StringComparison.OrdinalIgnoreCase));
         }
         catch
         {
