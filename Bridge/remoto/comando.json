@@ -1,6 +1,9 @@
 {
   "ativo": true,
-  "id": "detectar-bb1-20260820-0931",
-  "acao": "detectar_aberturas_sem_cuba",
-  "busca": "Banho Bebe 1"
+  "id": "copiar-cuba-bb1-1-20260820-0934",
+  "acao": "copiar",
+  "elementIds": [828712],
+  "x": 985.244,
+  "y": -12.245,
+  "z": 0
 }
