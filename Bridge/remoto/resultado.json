@@ -1,119 +1,173 @@
 {
-  "id": "bb1-diagnostico-pos-correcao-20260820-1508",
+  "id": "bb2-detectar-cubas-bancada-20260820-1510",
   "sucesso": true,
-  "mensagem": "Diagn\u00F3stico conclu\u00EDdo; nenhuma altera\u00E7\u00E3o executada.",
+  "mensagem": "Detectadas 5 abertura(s), sendo 5 sem cuba no ambiente \u0027BANHO BEB\u00CA 2 24\u0027.",
   "quantidade": 5,
   "elementIds": [
-    828712,
-    891513,
-    891540,
-    891543,
-    891576
+    598815,
+    840950
   ],
   "erro": null,
   "dados": {
-    "bancadaId": 598793,
-    "sketchId": 598792,
-    "diagnostics": [
+    "ambiente": {
+      "value": 598939,
+      "name": "BANHO BEB\u00CA 2 24",
+      "number": "24"
+    },
+    "toleranciaOcupacaoMm": 220,
+    "cubasDetectadas": [],
+    "aberturasDetectadas": [
       {
-        "cubaId": 828712,
-        "aberturaCentroMm": {
-          "x": 3626.89,
-          "y": 9550.69,
-          "z": -0
+        "elementoBancadaId": 598815,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 23651.89,
+          "y": 14383.19,
+          "z": 840
         },
-        "cubaCentroAtualMm": {
-          "x": 3626.89,
-          "y": 9550.69,
-          "z": 655
-        },
-        "deslocamentoMm": {
-          "x": -0,
-          "y": 0,
-          "z": 0
-        },
-        "perimetroAberturaMm": 2552.8,
-        "perimetroCubaMm": 2552.8
+        "perimetroMm": 2600,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
       },
       {
-        "cubaId": 891513,
-        "aberturaCentroMm": {
-          "x": 4560.09,
-          "y": 9550.69,
-          "z": -0
+        "elementoBancadaId": 598815,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 23651.89,
+          "y": 15343.19,
+          "z": 840
         },
-        "cubaCentroAtualMm": {
-          "x": 4560.09,
-          "y": 9550.69,
-          "z": 655
-        },
-        "deslocamentoMm": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "perimetroAberturaMm": 2552.8,
-        "perimetroCubaMm": 2552.8
+        "perimetroMm": 2600,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
       },
       {
-        "cubaId": 891540,
-        "aberturaCentroMm": {
-          "x": 5493.29,
-          "y": 9550.69,
-          "z": -0
+        "elementoBancadaId": 598815,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 23651.89,
+          "y": 16303.19,
+          "z": 840
         },
-        "cubaCentroAtualMm": {
-          "x": 5493.29,
-          "y": 9550.69,
-          "z": 655
-        },
-        "deslocamentoMm": {
-          "x": -0,
-          "y": 0,
-          "z": 0
-        },
-        "perimetroAberturaMm": 2552.8,
-        "perimetroCubaMm": 2552.8
+        "perimetroMm": 2600,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
       },
       {
-        "cubaId": 891543,
-        "aberturaCentroMm": {
-          "x": 6426.49,
-          "y": 9550.69,
-          "z": -0
+        "elementoBancadaId": 840950,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 23398.29,
+          "y": 15748.19,
+          "z": 700
         },
-        "cubaCentroAtualMm": {
-          "x": 6426.49,
-          "y": 9550.69,
-          "z": 655
-        },
-        "deslocamentoMm": {
-          "x": -0,
-          "y": 0,
-          "z": 0
-        },
-        "perimetroAberturaMm": 2552.8,
-        "perimetroCubaMm": 2552.8
+        "perimetroMm": 2278,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
       },
       {
-        "cubaId": 891576,
-        "aberturaCentroMm": {
-          "x": 7360.09,
-          "y": 9550.69,
-          "z": -0
+        "elementoBancadaId": 840950,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 23398.29,
+          "y": 15973.19,
+          "z": 700
         },
-        "cubaCentroAtualMm": {
-          "x": 7360.09,
-          "y": 9550.69,
-          "z": 655
+        "perimetroMm": 2278,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
+      }
+    ],
+    "aberturasSemCuba": [
+      {
+        "elementoBancadaId": 598815,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 23651.89,
+          "y": 14383.19,
+          "z": 840
         },
-        "deslocamentoMm": {
-          "x": -0,
-          "y": 0,
-          "z": 0
+        "perimetroMm": 2600,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
+      },
+      {
+        "elementoBancadaId": 598815,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 23651.89,
+          "y": 15343.19,
+          "z": 840
         },
-        "perimetroAberturaMm": 2552.8,
-        "perimetroCubaMm": 2552.8
+        "perimetroMm": 2600,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
+      },
+      {
+        "elementoBancadaId": 598815,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 23651.89,
+          "y": 16303.19,
+          "z": 840
+        },
+        "perimetroMm": 2600,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
+      },
+      {
+        "elementoBancadaId": 840950,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 23398.29,
+          "y": 15748.19,
+          "z": 700
+        },
+        "perimetroMm": 2278,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
+      },
+      {
+        "elementoBancadaId": 840950,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 23398.29,
+          "y": 15973.19,
+          "z": 700
+        },
+        "perimetroMm": 2278,
+        "ocupada": false,
+        "cubaMaisProximaId": null,
+        "distanciaCubaMm": null
       }
     ]
   }
