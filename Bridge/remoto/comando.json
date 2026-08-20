@@ -1,6 +1,10 @@
 {
   "ativo": true,
-  "id": "bb2-reler-posicoes-20260820-1522",
-  "acao": "detectar_aberturas_sem_cuba",
-  "busca": "Banho Bebe 2"
+  "id": "bb2-rotacionar-3-cubas-menos90-20260820-1525",
+  "acao": "lote",
+  "acoes": [
+    { "id": "bb2-rot-1", "acao": "rotacionar", "elementIds": [891903], "angulo": -90 },
+    { "id": "bb2-rot-2", "acao": "rotacionar", "elementIds": [891907], "angulo": -90 },
+    { "id": "bb2-rot-3", "acao": "rotacionar", "elementIds": [891910], "angulo": -90 }
+  ]
 }
