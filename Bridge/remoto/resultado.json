@@ -1,7 +1,7 @@
 {
   "id": "snapshot-banho-bebe1-20260819-1659",
   "sucesso": false,
-  "mensagem": "Nenhum documento Revit ativo.",
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: snapshot_ambiente",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
