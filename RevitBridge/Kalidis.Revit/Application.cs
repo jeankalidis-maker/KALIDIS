@@ -52,6 +52,10 @@ public class Application : IExternalApplication
                 {
                     FastBatchBridgeService.TryProcess(uiApp);
                 }
+                else if (BancadaCubaBridgeService.IsCommand())
+                {
+                    BancadaCubaBridgeService.TryProcess(uiApp);
+                }
                 else if (IsGeometryCommand())
                 {
                     GeometryBridgeService.TryProcess(uiApp);
