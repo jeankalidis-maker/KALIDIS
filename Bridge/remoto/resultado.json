@@ -1,9 +1,322 @@
 {
-  "id": "detectar-bb1-20260820-0852",
-  "sucesso": false,
-  "mensagem": "Ambiente n\u00C3\u00A3o encontrado. Informe o ambiente em \u0027busca\u0027.",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "detectar-bb1-20260820-0910",
+  "sucesso": true,
+  "mensagem": "Detectadas 11 abertura(s), sendo 8 sem cuba no ambiente \u0027BANHO BEB\u00CA 1 21\u0027.",
+  "quantidade": 8,
+  "elementIds": [
+    598793,
+    840706,
+    840755
+  ],
   "erro": null,
-  "dados": null
+  "dados": {
+    "ambiente": {
+      "value": 598947,
+      "name": "BANHO BEB\u00CA 1 21",
+      "number": "21"
+    },
+    "toleranciaOcupacaoMm": 220,
+    "cubasDetectadas": [
+      {
+        "elementId": 828712,
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "tipo": "\u00DAnico",
+        "ponto": {
+          "x": 3586.886,
+          "y": 9570.695,
+          "z": 900
+        }
+      }
+    ],
+    "aberturasDetectadas": [
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 3735.57,
+          "y": 9563.64,
+          "z": 900
+        },
+        "perimetroMm": 2664.8,
+        "ocupada": true,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 148.8
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 4572.13,
+          "y": 9558.45,
+          "z": 900
+        },
+        "perimetroMm": 2411.9,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 985.3
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 5505.33,
+          "y": 9558.45,
+          "z": 900
+        },
+        "perimetroMm": 2411.9,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 1918.5
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 6438.53,
+          "y": 9558.45,
+          "z": 900
+        },
+        "perimetroMm": 2411.9,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 2851.7
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 7373.88,
+          "y": 9556.7,
+          "z": 900
+        },
+        "perimetroMm": 2411.9,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 3787
+      },
+      {
+        "elementoBancadaId": 828712,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 3573.2,
+          "y": 9572.87,
+          "z": 870
+        },
+        "perimetroMm": 2565.3,
+        "ocupada": true,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 13.9
+      },
+      {
+        "elementoBancadaId": 828712,
+        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+        "nome": "\u00DAnico",
+        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
+        "centro": {
+          "x": 3588.69,
+          "y": 9640.94,
+          "z": 655
+        },
+        "perimetroMm": 281.9,
+        "ocupada": true,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 70.3
+      },
+      {
+        "elementoBancadaId": 840706,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 4491.89,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 941.2
+      },
+      {
+        "elementoBancadaId": 840706,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 4636.89,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 1081.4
+      },
+      {
+        "elementoBancadaId": 840755,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 6748.49,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 3172.2
+      },
+      {
+        "elementoBancadaId": 840755,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 6893.49,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 3316.7
+      }
+    ],
+    "aberturasSemCuba": [
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 4572.13,
+          "y": 9558.45,
+          "z": 900
+        },
+        "perimetroMm": 2411.9,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 985.3
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 5505.33,
+          "y": 9558.45,
+          "z": 900
+        },
+        "perimetroMm": 2411.9,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 1918.5
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 6438.53,
+          "y": 9558.45,
+          "z": 900
+        },
+        "perimetroMm": 2411.9,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 2851.7
+      },
+      {
+        "elementoBancadaId": 598793,
+        "categoria": "Pisos",
+        "nome": "Bancada 2 cm",
+        "familia": null,
+        "centro": {
+          "x": 7373.88,
+          "y": 9556.7,
+          "z": 900
+        },
+        "perimetroMm": 2411.9,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 3787
+      },
+      {
+        "elementoBancadaId": 840706,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 4491.89,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 941.2
+      },
+      {
+        "elementoBancadaId": 840706,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 4636.89,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 1081.4
+      },
+      {
+        "elementoBancadaId": 840755,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 6748.49,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 3172.2
+      },
+      {
+        "elementoBancadaId": 840755,
+        "categoria": "Portas",
+        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 1,7",
+        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
+        "centro": {
+          "x": 6893.49,
+          "y": 9829.29,
+          "z": 700
+        },
+        "perimetroMm": 1478,
+        "ocupada": false,
+        "cubaMaisProximaId": 828712,
+        "distanciaCubaMm": 3316.7
+      }
+    ]
+  }
 }
