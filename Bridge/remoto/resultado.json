@@ -1,391 +1,44 @@
 {
-  "id": "bb2-reler-posicoes-20260820-1522",
+  "id": "bb2-rotacionar-3-cubas-menos90-20260820-1525",
   "sucesso": true,
-  "mensagem": "Detectadas 14 abertura(s), sendo 8 sem cuba no ambiente \u0027BANHO BEB\u00CA 2 24\u0027.",
-  "quantidade": 8,
+  "mensagem": "Lote conclu\u00EDdo: 3 a\u00E7\u00E3o(\u00F5es) executada(s).",
+  "quantidade": 3,
   "elementIds": [
-    598815,
-    840950,
-    891906,
-    891909,
-    891912
+    891903,
+    891907,
+    891910
   ],
   "erro": null,
-  "dados": {
-    "ambiente": {
-      "value": 598939,
-      "name": "BANHO BEB\u00CA 2 24",
-      "number": "24"
+  "dados": [
+    {
+      "id": "bb2-rot-1",
+      "acao": "rotacionar",
+      "sucesso": true,
+      "mensagem": "1 elemento(s) rotacionado(s).",
+      "elementIds": [
+        891903
+      ],
+      "erro": null
     },
-    "toleranciaOcupacaoMm": 220,
-    "cubasDetectadas": [
-      {
-        "elementId": 891903,
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "tipo": "\u00DAnico",
-        "ponto": {
-          "x": 23701.886,
-          "y": 14292.695,
-          "z": 840
-        }
-      },
-      {
-        "elementId": 891907,
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "tipo": "\u00DAnico",
-        "ponto": {
-          "x": 23701.886,
-          "y": 15252.695,
-          "z": 840
-        }
-      },
-      {
-        "elementId": 891910,
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "tipo": "\u00DAnico",
-        "ponto": {
-          "x": 23701.886,
-          "y": 16212.695,
-          "z": 840
-        }
-      }
-    ],
-    "aberturasDetectadas": [
-      {
-        "elementoBancadaId": 598815,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23665.77,
-          "y": 13916.62,
-          "z": 840
-        },
-        "perimetroMm": 2058.3,
-        "ocupada": false,
-        "cubaMaisProximaId": 891903,
-        "distanciaCubaMm": 377.8
-      },
-      {
-        "elementoBancadaId": 598815,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23721.12,
-          "y": 15738.99,
-          "z": 840
-        },
-        "perimetroMm": 2761.3,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 474.1
-      },
-      {
-        "elementoBancadaId": 598815,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23738,
-          "y": 16594.81,
-          "z": 840
-        },
-        "perimetroMm": 2193,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 383.8
-      },
-      {
-        "elementoBancadaId": 840950,
-        "categoria": "Portas",
-        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
-        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
-        "centro": {
-          "x": 23398.29,
-          "y": 15748.19,
-          "z": 700
-        },
-        "perimetroMm": 2278,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 554.9
-      },
-      {
-        "elementoBancadaId": 840950,
-        "categoria": "Portas",
-        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
-        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
-        "centro": {
-          "x": 23398.29,
-          "y": 15973.19,
-          "z": 700
-        },
-        "perimetroMm": 2278,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 386.7
-      },
-      {
-        "elementoBancadaId": 891903,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23688.2,
-          "y": 14294.87,
-          "z": 810
-        },
-        "perimetroMm": 2565.3,
-        "ocupada": true,
-        "cubaMaisProximaId": 891903,
-        "distanciaCubaMm": 13.9
-      },
-      {
-        "elementoBancadaId": 891903,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23703.69,
-          "y": 14362.94,
-          "z": 595
-        },
-        "perimetroMm": 281.9,
-        "ocupada": true,
-        "cubaMaisProximaId": 891903,
-        "distanciaCubaMm": 70.3
-      },
-      {
-        "elementoBancadaId": 891906,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23406.89,
-          "y": 14234.89,
-          "z": 840
-        },
-        "perimetroMm": 1179.4,
-        "ocupada": false,
-        "cubaMaisProximaId": 891903,
-        "distanciaCubaMm": 300.6
-      },
-      {
-        "elementoBancadaId": 891907,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23688.2,
-          "y": 15254.87,
-          "z": 810
-        },
-        "perimetroMm": 2565.3,
-        "ocupada": true,
-        "cubaMaisProximaId": 891907,
-        "distanciaCubaMm": 13.9
-      },
-      {
-        "elementoBancadaId": 891907,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23703.69,
-          "y": 15322.94,
-          "z": 595
-        },
-        "perimetroMm": 281.9,
-        "ocupada": true,
-        "cubaMaisProximaId": 891907,
-        "distanciaCubaMm": 70.3
-      },
-      {
-        "elementoBancadaId": 891909,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23406.89,
-          "y": 15194.89,
-          "z": 840
-        },
-        "perimetroMm": 1179.4,
-        "ocupada": false,
-        "cubaMaisProximaId": 891907,
-        "distanciaCubaMm": 300.6
-      },
-      {
-        "elementoBancadaId": 891910,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23688.2,
-          "y": 16214.87,
-          "z": 810
-        },
-        "perimetroMm": 2565.3,
-        "ocupada": true,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 13.9
-      },
-      {
-        "elementoBancadaId": 891910,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23703.69,
-          "y": 16282.94,
-          "z": 595
-        },
-        "perimetroMm": 281.9,
-        "ocupada": true,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 70.3
-      },
-      {
-        "elementoBancadaId": 891912,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23406.89,
-          "y": 16154.89,
-          "z": 840
-        },
-        "perimetroMm": 1179.4,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 300.6
-      }
-    ],
-    "aberturasSemCuba": [
-      {
-        "elementoBancadaId": 598815,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23665.77,
-          "y": 13916.62,
-          "z": 840
-        },
-        "perimetroMm": 2058.3,
-        "ocupada": false,
-        "cubaMaisProximaId": 891903,
-        "distanciaCubaMm": 377.8
-      },
-      {
-        "elementoBancadaId": 598815,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23721.12,
-          "y": 15738.99,
-          "z": 840
-        },
-        "perimetroMm": 2761.3,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 474.1
-      },
-      {
-        "elementoBancadaId": 598815,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23738,
-          "y": 16594.81,
-          "z": 840
-        },
-        "perimetroMm": 2193,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 383.8
-      },
-      {
-        "elementoBancadaId": 840950,
-        "categoria": "Portas",
-        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
-        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
-        "centro": {
-          "x": 23398.29,
-          "y": 15748.19,
-          "z": 700
-        },
-        "perimetroMm": 2278,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 554.9
-      },
-      {
-        "elementoBancadaId": 840950,
-        "categoria": "Portas",
-        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
-        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
-        "centro": {
-          "x": 23398.29,
-          "y": 15973.19,
-          "z": 700
-        },
-        "perimetroMm": 2278,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 386.7
-      },
-      {
-        "elementoBancadaId": 891906,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23406.89,
-          "y": 14234.89,
-          "z": 840
-        },
-        "perimetroMm": 1179.4,
-        "ocupada": false,
-        "cubaMaisProximaId": 891903,
-        "distanciaCubaMm": 300.6
-      },
-      {
-        "elementoBancadaId": 891909,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23406.89,
-          "y": 15194.89,
-          "z": 840
-        },
-        "perimetroMm": 1179.4,
-        "ocupada": false,
-        "cubaMaisProximaId": 891907,
-        "distanciaCubaMm": 300.6
-      },
-      {
-        "elementoBancadaId": 891912,
-        "categoria": "Pisos",
-        "nome": "Bancada 2 cm",
-        "familia": null,
-        "centro": {
-          "x": 23406.89,
-          "y": 16154.89,
-          "z": 840
-        },
-        "perimetroMm": 1179.4,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 300.6
-      }
-    ]
-  }
+    {
+      "id": "bb2-rot-2",
+      "acao": "rotacionar",
+      "sucesso": true,
+      "mensagem": "1 elemento(s) rotacionado(s).",
+      "elementIds": [
+        891907
+      ],
+      "erro": null
+    },
+    {
+      "id": "bb2-rot-3",
+      "acao": "rotacionar",
+      "sucesso": true,
+      "mensagem": "1 elemento(s) rotacionado(s).",
+      "elementIds": [
+        891910
+      ],
+      "erro": null
+    }
+  ]
 }
