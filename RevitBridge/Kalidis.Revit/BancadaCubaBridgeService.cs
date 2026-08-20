@@ -201,9 +201,11 @@ public static class BancadaCubaBridgeService
             tx.Start();
             foreach (PlanItem p in plan)
                 ElementTransformUtils.MoveElement(doc, p.Sink.Element.Id, p.Delta);
+
+            // Regenerate exige documento modificável; por isso ocorre dentro da transação.
+            doc.Regenerate();
             tx.Commit();
         }
-        doc.Regenerate();
 
         // 3) Validação simples de sobreposição pelos centros finais.
         var finalCenters = plan.Select(p => p.Target.Center).ToArray();
