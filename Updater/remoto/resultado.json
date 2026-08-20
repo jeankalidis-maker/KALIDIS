@@ -1,15 +1,20 @@
 {
-  "id": "revit-status-20260820-1633",
+  "id": "diag-pos-crash-revit-20260820-1636",
   "sucesso": true,
-  "mensagem": "Status do Revit coletado.",
+  "mensagem": "Diagnostico coletado.",
   "dados": {
-    "aberto": true,
-    "processos": [
-      {
-        "id": 6168,
-        "processName": "Revit"
-      }
-    ]
+    "state": {
+      "status": "atualizado",
+      "targetCommit": "60c740883143d6c2c81d3011723a574671a8ceba",
+      "installedCommit": "60c740883143d6c2c81d3011723a574671a8ceba",
+      "dllSha256": "5a22fc60624702e4655a9368b27be13d4e338ec27360232380107380f8f09e64",
+      "updatedAt": "2026-08-20 16:36:42",
+      "error": null
+    },
+    "revitAberto": false,
+    "log": "2026-08-20 16:16:15 | Kalidis.Updater iniciado.\r\n2026-08-20 16:16:31 | DLL instalada com sucesso. commit=3c75136717291ebd1ce555dae2aaa40095cf0e8c hash=ea2e65622c14449597b621cf4a28a731b5768e2d57e90c9f29b929498b95a35b\r\n2026-08-20 16:17:41 | DLL instalada com sucesso. commit=fda1509ae2d7cd81c66d65f048917ff9514687e2 hash=aebb5a71bce44e056de30eef1bfc072a9c29155a69a9892761064dd1a62d61f4\r\n2026-08-20 16:19:21 | DLL instalada com sucesso. commit=333e41b967f3da2413409ae1c9a79ff24731b2aa hash=8069bdd8fce3abd514b9ea7f493f2ae96d3b48b174fb80e6672b11ef4f254dc5\r\n2026-08-20 16:19:29 | Kalidis.Updater iniciado.\r\n2026-08-20 16:29:00 | Kalidis.Updater iniciado.\r\n2026-08-20 16:29:12 | DLL instalada com sucesso. commit=60c740883143d6c2c81d3011723a574671a8ceba hash=5a22fc60624702e4655a9368b27be13d4e338ec27360232380107380f8f09e64",
+    "installedDllExists": true,
+    "installedDllSha256": "5a22fc60624702e4655a9368b27be13d4e338ec27360232380107380f8f09e64"
   },
-  "executadoEm": "2026-08-20 16:34:26"
+  "executadoEm": "2026-08-20 16:37:03"
 }
