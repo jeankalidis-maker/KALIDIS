@@ -1,6 +1,8 @@
 {
   "ativo": true,
-  "id": "bb1-validar-alinhamento-recortes-20260820-1052",
-  "acao": "detectar_aberturas_sem_cuba",
-  "busca": "Banho Bebe 1"
+  "id": "bb1-diagnostico-alinhar-recortar-20260820-1416",
+  "acao": "alinhar_recortar_cubas_bancada",
+  "bancadaId": 598793,
+  "cubaIds": [828712, 891513, 891540, 891543, 891576],
+  "executar": false
 }
