@@ -1,7 +1,7 @@
 {
-  "id": "listar-chuveiros-20260820-1603",
+  "id": "info-chuveiros-20260820-1604",
   "sucesso": true,
-  "mensagem": "32 elemento(s) encontrado(s).",
+  "mensagem": "Informa\u00E7\u00F5es de 32 elemento(s).",
   "quantidade": 32,
   "elementIds": [
     308302,
@@ -38,5 +38,326 @@
     859652
   ],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "elementId": 308302,
+      "categoria": null,
+      "nome": "Deca_Chuveiro",
+      "classe": "Family",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 308303,
+      "categoria": null,
+      "nome": "Deca_Chuveiro",
+      "classe": "Element",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 308304,
+      "categoria": "Componentes de legenda",
+      "nome": "Componente da legenda - Deca_Chuveiro (3D)",
+      "classe": "Element",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 308537,
+      "categoria": null,
+      "nome": "Chuveiro",
+      "classe": "SharedParameterElement",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 598614,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 598616,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 598617,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 598661,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 598663,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 598664,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 598809,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 598811,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 598812,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 644712,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1992.C.CT_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 308583,
+      "fixado": false,
+      "familia": "Deca_Chuveiro",
+      "tipo": "1992.C.CT_Cromado CR10"
+    },
+    {
+      "elementId": 857910,
+      "categoria": null,
+      "nome": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "classe": "Family",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 857915,
+      "categoria": null,
+      "nome": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "classe": "Element",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 857916,
+      "categoria": "Componentes de legenda",
+      "nome": "Componente da legenda - Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto (3D)",
+      "classe": "Element",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 859387,
+      "categoria": "Grupos de modelo",
+      "nome": "Pergolado chuveiro",
+      "classe": "Group",
+      "tipoId": 857972,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 859422,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    },
+    {
+      "elementId": 859424,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    },
+    {
+      "elementId": 859444,
+      "categoria": "Grupos de modelo",
+      "nome": "Pergolado chuveiro",
+      "classe": "Group",
+      "tipoId": 857972,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 859479,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    },
+    {
+      "elementId": 859481,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    },
+    {
+      "elementId": 859501,
+      "categoria": "Grupos de modelo",
+      "nome": "Pergolado chuveiro",
+      "classe": "Group",
+      "tipoId": 857972,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 859536,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    },
+    {
+      "elementId": 859538,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    },
+    {
+      "elementId": 859558,
+      "categoria": "Grupos de modelo",
+      "nome": "Pergolado chuveiro",
+      "classe": "Group",
+      "tipoId": 857972,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 859593,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    },
+    {
+      "elementId": 859595,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    },
+    {
+      "elementId": 859615,
+      "categoria": "Grupos de modelo",
+      "nome": "Pergolado chuveiro",
+      "classe": "Group",
+      "tipoId": 857972,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 859650,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    },
+    {
+      "elementId": 859652,
+      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
+      "nome": "1998.C.TET_Cromado CR10",
+      "classe": "FamilyInstance",
+      "tipoId": 857941,
+      "fixado": true,
+      "familia": "Deca_Chuveiro Aquamax _1998.TET_Tubo de Teto",
+      "tipo": "1998.C.TET_Cromado CR10"
+    }
+  ]
 }
