@@ -1,206 +1,170 @@
 {
-  "id": "bb2-validar-cubas-20260820-1545",
+  "id": "bb2-corrigir-repeticao-segura-20260820-1558",
   "sucesso": true,
-  "mensagem": "Detectadas 8 abertura(s), sendo 2 sem cuba no ambiente \u0027BANHO BEB\u00CA 2 24\u0027.",
-  "quantidade": 2,
+  "mensagem": "Lote encadeado conclu\u00EDdo: 3 etapa(s).",
+  "quantidade": 3,
   "elementIds": [
-    840950
+    891903,
+    891907,
+    891910
   ],
   "erro": null,
   "dados": {
-    "ambiente": {
-      "value": 598939,
-      "name": "BANHO BEB\u00CA 2 24",
-      "number": "24"
-    },
-    "toleranciaOcupacaoMm": 220,
-    "cubasDetectadas": [
+    "atomico": true,
+    "revertido": false,
+    "variaveis": {},
+    "etapas": [
       {
-        "elementId": 891903,
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "tipo": "\u00DAnico",
-        "ponto": {
-          "x": 23578.046,
-          "y": 14334.575,
-          "z": 840
+        "id": "validar-cubas",
+        "acao": "validar_editabilidade",
+        "sucesso": true,
+        "mensagem": "3 elemento(s) validados para edi\u00E7\u00E3o.",
+        "elementIds": [
+          891903,
+          891907,
+          891910
+        ],
+        "erro": null,
+        "dados": {
+          "elementos": [
+            {
+              "elementId": 891903,
+              "exists": true,
+              "name": "\u00DAnico",
+              "category": "Pe\u00E7as hidrossanit\u00E1rias",
+              "typeId": 828747,
+              "pinned": false,
+              "groupId": null,
+              "hostId": 598815,
+              "ownedByOtherUser": false
+            },
+            {
+              "elementId": 891907,
+              "exists": true,
+              "name": "\u00DAnico",
+              "category": "Pe\u00E7as hidrossanit\u00E1rias",
+              "typeId": 828747,
+              "pinned": false,
+              "groupId": null,
+              "hostId": 598815,
+              "ownedByOtherUser": false
+            },
+            {
+              "elementId": 891910,
+              "exists": true,
+              "name": "\u00DAnico",
+              "category": "Pe\u00E7as hidrossanit\u00E1rias",
+              "typeId": 828747,
+              "pinned": false,
+              "groupId": null,
+              "hostId": 598815,
+              "ownedByOtherUser": false
+            }
+          ]
         }
       },
       {
-        "elementId": 891907,
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "tipo": "\u00DAnico",
-        "ponto": {
-          "x": 23578.046,
-          "y": 15294.575,
-          "z": 840
+        "id": "corrigir-deslocamento",
+        "acao": "mover",
+        "sucesso": true,
+        "mensagem": "3 elemento(s) movido(s).",
+        "elementIds": [
+          891903,
+          891907,
+          891910
+        ],
+        "erro": null,
+        "dados": {
+          "deltaMm": {
+            "x": 82.56,
+            "y": -27.92,
+            "z": 0
+          },
+          "post": [
+            {
+              "elementId": 891903,
+              "exists": true,
+              "name": "\u00DAnico",
+              "category": "Pe\u00E7as hidrossanit\u00E1rias",
+              "typeId": 828747,
+              "pinned": false,
+              "groupId": null,
+              "hostId": 598815,
+              "ownedByOtherUser": false
+            },
+            {
+              "elementId": 891907,
+              "exists": true,
+              "name": "\u00DAnico",
+              "category": "Pe\u00E7as hidrossanit\u00E1rias",
+              "typeId": 828747,
+              "pinned": false,
+              "groupId": null,
+              "hostId": 598815,
+              "ownedByOtherUser": false
+            },
+            {
+              "elementId": 891910,
+              "exists": true,
+              "name": "\u00DAnico",
+              "category": "Pe\u00E7as hidrossanit\u00E1rias",
+              "typeId": 828747,
+              "pinned": false,
+              "groupId": null,
+              "hostId": 598815,
+              "ownedByOtherUser": false
+            }
+          ]
         }
       },
       {
-        "elementId": 891910,
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "tipo": "\u00DAnico",
-        "ponto": {
-          "x": 23578.046,
-          "y": 16254.575,
-          "z": 840
+        "id": "descrever-final",
+        "acao": "descrever_elementos",
+        "sucesso": true,
+        "mensagem": "3 elemento(s) descrito(s).",
+        "elementIds": [
+          891903,
+          891907,
+          891910
+        ],
+        "erro": null,
+        "dados": {
+          "elementos": [
+            {
+              "elementId": 891903,
+              "exists": true,
+              "name": "\u00DAnico",
+              "category": "Pe\u00E7as hidrossanit\u00E1rias",
+              "typeId": 828747,
+              "pinned": false,
+              "groupId": null,
+              "hostId": 598815,
+              "ownedByOtherUser": false
+            },
+            {
+              "elementId": 891907,
+              "exists": true,
+              "name": "\u00DAnico",
+              "category": "Pe\u00E7as hidrossanit\u00E1rias",
+              "typeId": 828747,
+              "pinned": false,
+              "groupId": null,
+              "hostId": 598815,
+              "ownedByOtherUser": false
+            },
+            {
+              "elementId": 891910,
+              "exists": true,
+              "name": "\u00DAnico",
+              "category": "Pe\u00E7as hidrossanit\u00E1rias",
+              "typeId": 828747,
+              "pinned": false,
+              "groupId": null,
+              "hostId": 598815,
+              "ownedByOtherUser": false
+            }
+          ]
         }
-      }
-    ],
-    "aberturasDetectadas": [
-      {
-        "elementoBancadaId": 840950,
-        "categoria": "Portas",
-        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
-        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
-        "centro": {
-          "x": 23398.29,
-          "y": 15748.19,
-          "z": 700
-        },
-        "perimetroMm": 2278,
-        "ocupada": false,
-        "cubaMaisProximaId": 891907,
-        "distanciaCubaMm": 487.9
-      },
-      {
-        "elementoBancadaId": 840950,
-        "categoria": "Portas",
-        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
-        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
-        "centro": {
-          "x": 23398.29,
-          "y": 15973.19,
-          "z": 700
-        },
-        "perimetroMm": 2278,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 333.9
-      },
-      {
-        "elementoBancadaId": 891903,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23580.22,
-          "y": 14348.26,
-          "z": 810
-        },
-        "perimetroMm": 2565.3,
-        "ocupada": true,
-        "cubaMaisProximaId": 891903,
-        "distanciaCubaMm": 13.9
-      },
-      {
-        "elementoBancadaId": 891903,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23648.3,
-          "y": 14332.77,
-          "z": 595
-        },
-        "perimetroMm": 281.9,
-        "ocupada": true,
-        "cubaMaisProximaId": 891903,
-        "distanciaCubaMm": 70.3
-      },
-      {
-        "elementoBancadaId": 891907,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23580.22,
-          "y": 15308.26,
-          "z": 810
-        },
-        "perimetroMm": 2565.3,
-        "ocupada": true,
-        "cubaMaisProximaId": 891907,
-        "distanciaCubaMm": 13.9
-      },
-      {
-        "elementoBancadaId": 891907,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23648.3,
-          "y": 15292.77,
-          "z": 595
-        },
-        "perimetroMm": 281.9,
-        "ocupada": true,
-        "cubaMaisProximaId": 891907,
-        "distanciaCubaMm": 70.3
-      },
-      {
-        "elementoBancadaId": 891910,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23580.22,
-          "y": 16268.26,
-          "z": 810
-        },
-        "perimetroMm": 2565.3,
-        "ocupada": true,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 13.9
-      },
-      {
-        "elementoBancadaId": 891910,
-        "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-        "nome": "\u00DAnico",
-        "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-        "centro": {
-          "x": 23648.3,
-          "y": 16252.77,
-          "z": 595
-        },
-        "perimetroMm": 281.9,
-        "ocupada": true,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 70.3
-      }
-    ],
-    "aberturasSemCuba": [
-      {
-        "elementoBancadaId": 840950,
-        "categoria": "Portas",
-        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
-        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
-        "centro": {
-          "x": 23398.29,
-          "y": 15748.19,
-          "z": 700
-        },
-        "perimetroMm": 2278,
-        "ocupada": false,
-        "cubaMaisProximaId": 891907,
-        "distanciaCubaMm": 487.9
-      },
-      {
-        "elementoBancadaId": 840950,
-        "categoria": "Portas",
-        "nome": "PORTA DE ALUM\u00CDNIO PARA BANCADA 2,50",
-        "familia": "Porta de correr dupla envidra\u00E7ada sem revestimento",
-        "centro": {
-          "x": 23398.29,
-          "y": 15973.19,
-          "z": 700
-        },
-        "perimetroMm": 2278,
-        "ocupada": false,
-        "cubaMaisProximaId": 891910,
-        "distanciaCubaMm": 333.9
       }
     ]
   }
