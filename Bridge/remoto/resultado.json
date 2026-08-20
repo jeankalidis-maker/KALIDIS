@@ -1,22 +1,9 @@
 {
-  "id": "banho-bebe1-info-20260819-1645",
-  "sucesso": true,
-  "mensagem": "Informa\u00E7\u00F5es de 1 elemento(s).",
-  "quantidade": 1,
-  "elementIds": [
-    598947
-  ],
+  "id": "snapshot-banho-bebe1-20260819-1659",
+  "sucesso": false,
+  "mensagem": "Nenhum documento Revit ativo.",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
-  "dados": [
-    {
-      "elementId": 598947,
-      "categoria": "Ambientes",
-      "nome": "BANHO BEB\u00CA 1 21",
-      "classe": "Room",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    }
-  ]
+  "dados": null
 }
