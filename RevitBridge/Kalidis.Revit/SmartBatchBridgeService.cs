@@ -6,21 +6,9 @@ using Autodesk.Revit.UI;
 namespace Kalidis.Revit;
 
 /// <summary>
-/// Lote encadeado para operações Revit simples. Cada etapa pode salvar os IDs
-/// produzidos e etapas seguintes podem reutilizá-los por nome.
-///
-/// Exemplo:
-/// {
-///   "id":"exemplo",
-///   "acao":"lote_encadeado",
-///   "atomico":true,
-///   "acoes":[
-///     {"id":"copiar","acao":"copiar","elementIds":[123],"x":1000,"salvarComo":"novos"},
-///     {"id":"girar","acao":"rotacionar","usarIdsDe":"novos","angulo":90},
-///     {"id":"mover","acao":"mover","usarIdsDe":"novos","y":500},
-///     {"id":"validar","acao":"validar_quantidade","usarIdsDe":"novos","quantidadeEsperada":1}
-///   ]
-/// }
+/// Lote encadeado robusto. Uma etapa pode salvar IDs e as próximas reutilizá-los.
+/// Inclui TransactionGroup atômico, preflight de documento/elementos, proteção de
+/// grupos/worksharing, tratamento de Pinned e validações pós-operação.
 /// </summary>
 public static class SmartBatchBridgeService
 {
@@ -32,6 +20,7 @@ public static class SmartBatchBridgeService
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true,
         WriteIndented = true
     };
 
@@ -61,7 +50,7 @@ public static class SmartBatchBridgeService
         {
             using JsonDocument json = JsonDocument.Parse(raw);
             JsonElement root = json.RootElement;
-            commandId = root.TryGetProperty("id", out JsonElement idEl) ? idEl.GetString() : null;
+            commandId = GetString(root, "id");
 
             if (!root.TryGetProperty("acao", out JsonElement acaoEl) ||
                 !string.Equals(acaoEl.GetString(), Action, StringComparison.OrdinalIgnoreCase))
@@ -88,6 +77,9 @@ public static class SmartBatchBridgeService
 
     private static object Execute(Document doc, JsonElement root, string? commandId)
     {
+        RevitExecutionSafety.SafetyResult docCheck = RevitExecutionSafety.CheckDocument(doc, mutation: true);
+        if (!docCheck.Success) return Fail(commandId, docCheck.Error ?? "Documento não editável.");
+
         if (!root.TryGetProperty("acoes", out JsonElement actionsEl) || actionsEl.ValueKind != JsonValueKind.Array)
             return Fail(commandId, "Lote encadeado sem ações.");
 
@@ -116,12 +108,14 @@ public static class SmartBatchBridgeService
                     "mover" => Move(doc, action, vars, stepId),
                     "rotacionar" => Rotate(doc, action, vars, stepId),
                     "validar_quantidade" => ValidateCount(doc, action, vars, stepId),
-                    _ => new StepResult(stepId, name, false, $"Ação encadeada não suportada: {name}", Array.Empty<long>(), null)
+                    "validar_editabilidade" => ValidateEditability(doc, action, vars, stepId),
+                    "descrever_elementos" => DescribeElements(doc, action, vars, stepId),
+                    _ => new StepResult(stepId, name, false, $"Ação encadeada não suportada: {name}", Array.Empty<long>(), null, null)
                 };
             }
             catch (Exception ex)
             {
-                step = new StepResult(stepId, name, false, "Falha na etapa.", Array.Empty<long>(), ex.Message);
+                step = new StepResult(stepId, name, false, "Falha na etapa.", Array.Empty<long>(), ex.Message, null);
             }
 
             steps.Add(step);
@@ -179,7 +173,10 @@ public static class SmartBatchBridgeService
     {
         List<ElementId> source = ResolveIds(doc, action, vars);
         if (source.Count == 0)
-            return new StepResult(id, "copiar", false, "Nenhum elemento válido para copiar.", Array.Empty<long>(), null);
+            return StepResult.Fail(id, "copiar", "Nenhum elemento válido para copiar.");
+
+        RevitExecutionSafety.SafetyResult safety = RevitExecutionSafety.CheckElements(doc, source, allowGrouped: true);
+        if (!safety.Success) return StepResult.Fail(id, "copiar", safety.Error ?? "Preflight falhou.");
 
         XYZ delta = new(Mm(GetDouble(action, "x")), Mm(GetDouble(action, "y")), Mm(GetDouble(action, "z")));
         List<ElementId> created = new();
@@ -188,53 +185,85 @@ public static class SmartBatchBridgeService
         tx.Start();
         foreach (ElementId sourceId in source)
             created.AddRange(ElementTransformUtils.CopyElement(doc, sourceId, delta));
+        doc.Regenerate();
         tx.Commit();
 
+        object[] post = created.Select(x => RevitExecutionSafety.DescribeElement(doc, x)).ToArray();
         return new StepResult(id, "copiar", created.Count > 0,
             $"{created.Count} cópia(s) criada(s).", created.Select(x => x.Value).ToArray(),
-            created.Count > 0 ? null : "O Revit não criou cópias.");
+            created.Count > 0 ? null : "O Revit não criou cópias.", new { post });
     }
 
     private static StepResult Move(Document doc, JsonElement action, Dictionary<string, List<ElementId>> vars, string? id)
     {
         List<ElementId> ids = ResolveIds(doc, action, vars);
-        if (ids.Count == 0)
-            return new StepResult(id, "mover", false, "Nenhum elemento válido para mover.", Array.Empty<long>(), null);
+        if (ids.Count == 0) return StepResult.Fail(id, "mover", "Nenhum elemento válido para mover.");
+
+        bool allowGrouped = GetBool(action, "permitirElementoEmGrupo", false);
+        bool autoUnpin = GetBool(action, "desafixarAutomaticamente", true);
+        RevitExecutionSafety.SafetyResult safety = RevitExecutionSafety.CheckElements(doc, ids, allowGrouped);
+        if (!safety.Success) return StepResult.Fail(id, "mover", safety.Error ?? "Preflight falhou.");
 
         XYZ delta = new(Mm(GetDouble(action, "x")), Mm(GetDouble(action, "y")), Mm(GetDouble(action, "z")));
+        List<(Element element, bool repin)> prepared = new();
+
         using Transaction tx = new(doc, "KALIDIS - Encadeado mover");
         tx.Start();
         foreach (ElementId elementId in ids)
+        {
+            Element element = doc.GetElement(elementId)!;
+            if (!RevitExecutionSafety.TryPrepareForTransform(element, autoUnpin, out bool repin, out string? error))
+                throw new InvalidOperationException(error);
+            prepared.Add((element, repin));
             ElementTransformUtils.MoveElement(doc, elementId, delta);
+        }
         doc.Regenerate();
+        foreach ((Element element, bool repin) in prepared)
+            RevitExecutionSafety.RestorePinned(element, repin);
         tx.Commit();
 
-        return new StepResult(id, "mover", true, $"{ids.Count} elemento(s) movido(s).", ids.Select(x => x.Value).ToArray(), null);
+        object[] post = ids.Select(x => RevitExecutionSafety.DescribeElement(doc, x)).ToArray();
+        return new StepResult(id, "mover", true, $"{ids.Count} elemento(s) movido(s).",
+            ids.Select(x => x.Value).ToArray(), null,
+            new { deltaMm = new { x = GetDouble(action, "x"), y = GetDouble(action, "y"), z = GetDouble(action, "z") }, post });
     }
 
     private static StepResult Rotate(Document doc, JsonElement action, Dictionary<string, List<ElementId>> vars, string? id)
     {
         List<ElementId> ids = ResolveIds(doc, action, vars);
-        if (ids.Count == 0)
-            return new StepResult(id, "rotacionar", false, "Nenhum elemento válido para rotacionar.", Array.Empty<long>(), null);
+        if (ids.Count == 0) return StepResult.Fail(id, "rotacionar", "Nenhum elemento válido para rotacionar.");
         if (!TryGetDouble(action, "angulo", out double angle))
-            return new StepResult(id, "rotacionar", false, "Informe angulo em graus.", Array.Empty<long>(), null);
+            return StepResult.Fail(id, "rotacionar", "Informe angulo em graus.");
+
+        bool allowGrouped = GetBool(action, "permitirElementoEmGrupo", false);
+        bool autoUnpin = GetBool(action, "desafixarAutomaticamente", true);
+        RevitExecutionSafety.SafetyResult safety = RevitExecutionSafety.CheckElements(doc, ids, allowGrouped);
+        if (!safety.Success) return StepResult.Fail(id, "rotacionar", safety.Error ?? "Preflight falhou.");
 
         double radians = angle * Math.PI / 180.0;
+        List<(Element element, bool repin)> prepared = new();
+
         using Transaction tx = new(doc, "KALIDIS - Encadeado rotacionar");
         tx.Start();
         foreach (ElementId elementId in ids)
         {
-            Element? element = doc.GetElement(elementId);
-            if (element == null) continue;
+            Element element = doc.GetElement(elementId)!;
+            if (!RevitExecutionSafety.TryPrepareForTransform(element, autoUnpin, out bool repin, out string? error))
+                throw new InvalidOperationException(error);
+            prepared.Add((element, repin));
+
             XYZ p = ElementPoint(element);
             Line axis = Line.CreateBound(p, p + XYZ.BasisZ);
             ElementTransformUtils.RotateElement(doc, elementId, axis, radians);
         }
         doc.Regenerate();
+        foreach ((Element element, bool repin) in prepared)
+            RevitExecutionSafety.RestorePinned(element, repin);
         tx.Commit();
 
-        return new StepResult(id, "rotacionar", true, $"{ids.Count} elemento(s) rotacionado(s).", ids.Select(x => x.Value).ToArray(), null);
+        object[] post = ids.Select(x => RevitExecutionSafety.DescribeElement(doc, x)).ToArray();
+        return new StepResult(id, "rotacionar", true, $"{ids.Count} elemento(s) rotacionado(s).",
+            ids.Select(x => x.Value).ToArray(), null, new { angulo = angle, post });
     }
 
     private static StepResult ValidateCount(Document doc, JsonElement action, Dictionary<string, List<ElementId>> vars, string? id)
@@ -244,14 +273,34 @@ public static class SmartBatchBridgeService
         bool ok = ids.Count == expected;
         return new StepResult(id, "validar_quantidade", ok,
             ok ? $"Quantidade validada: {ids.Count}." : $"Esperado {expected}, encontrado {ids.Count}.",
-            ids.Select(x => x.Value).ToArray(), ok ? null : "Validação de quantidade falhou.");
+            ids.Select(x => x.Value).ToArray(), ok ? null : "Validação de quantidade falhou.",
+            new { esperado = expected, encontrado = ids.Count });
+    }
+
+    private static StepResult ValidateEditability(Document doc, JsonElement action, Dictionary<string, List<ElementId>> vars, string? id)
+    {
+        List<ElementId> ids = ResolveIds(doc, action, vars);
+        bool allowGrouped = GetBool(action, "permitirElementoEmGrupo", false);
+        RevitExecutionSafety.SafetyResult safety = RevitExecutionSafety.CheckElements(doc, ids, allowGrouped);
+        return new StepResult(id, "validar_editabilidade", safety.Success,
+            safety.Success ? $"{ids.Count} elemento(s) validados para edição." : "Validação de editabilidade falhou.",
+            ids.Select(x => x.Value).ToArray(), safety.Error,
+            new { elementos = ids.Select(x => RevitExecutionSafety.DescribeElement(doc, x)).ToArray() });
+    }
+
+    private static StepResult DescribeElements(Document doc, JsonElement action, Dictionary<string, List<ElementId>> vars, string? id)
+    {
+        List<ElementId> ids = ResolveIds(doc, action, vars);
+        return new StepResult(id, "descrever_elementos", true, $"{ids.Count} elemento(s) descrito(s).",
+            ids.Select(x => x.Value).ToArray(), null,
+            new { elementos = ids.Select(x => RevitExecutionSafety.DescribeElement(doc, x)).ToArray() });
     }
 
     private static List<ElementId> ResolveIds(Document doc, JsonElement action, Dictionary<string, List<ElementId>> vars)
     {
         string? use = GetString(action, "usarIdsDe");
         if (!string.IsNullOrWhiteSpace(use) && vars.TryGetValue(use, out List<ElementId>? saved))
-            return saved.Where(x => doc.GetElement(x) != null).ToList();
+            return saved.Where(x => doc.GetElement(x) != null).Distinct().ToList();
 
         if (!action.TryGetProperty("elementIds", out JsonElement idsEl) || idsEl.ValueKind != JsonValueKind.Array)
             return new List<ElementId>();
@@ -260,6 +309,7 @@ public static class SmartBatchBridgeService
             .Where(x => x.TryGetInt64(out _))
             .Select(x => new ElementId(x.GetInt64()))
             .Where(x => doc.GetElement(x) != null)
+            .Distinct()
             .ToList();
     }
 
@@ -277,6 +327,11 @@ public static class SmartBatchBridgeService
     private static long GetLong(JsonElement e, string name)
         => e.TryGetProperty(name, out JsonElement p) && p.TryGetInt64(out long v) ? v : 0;
 
+    private static bool GetBool(JsonElement e, string name, bool defaultValue)
+        => e.TryGetProperty(name, out JsonElement p) && (p.ValueKind == JsonValueKind.True || p.ValueKind == JsonValueKind.False)
+            ? p.GetBoolean()
+            : defaultValue;
+
     private static double GetDouble(JsonElement e, string name)
         => TryGetDouble(e, name, out double v) ? v : 0.0;
 
@@ -292,5 +347,16 @@ public static class SmartBatchBridgeService
     private static object Fail(string? id, string message, string? error = null)
         => new { id, sucesso = false, mensagem = message, quantidade = 0, elementIds = Array.Empty<long>(), erro = error, dados = (object?)null };
 
-    private sealed record StepResult(string? Id, string Acao, bool Sucesso, string Mensagem, long[] ElementIds, string? Erro);
+    private sealed record StepResult(
+        string? Id,
+        string Acao,
+        bool Sucesso,
+        string Mensagem,
+        long[] ElementIds,
+        string? Erro,
+        object? Dados)
+    {
+        public static StepResult Fail(string? id, string action, string error)
+            => new(id, action, false, error, Array.Empty<long>(), error, null);
+    }
 }
