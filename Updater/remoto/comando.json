@@ -1,6 +1,5 @@
 {
   "ativo": true,
-  "id": "diag-fechado-20260820-1639",
-  "acao": "diagnostico",
-  "linhas": 400
+  "id": "forcar-atualizacao-pos-crash-20260820-1644",
+  "acao": "forcar_atualizacao"
 }
