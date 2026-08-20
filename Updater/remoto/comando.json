@@ -1,0 +1,6 @@
+{
+  "ativo": false,
+  "id": "bootstrap-updater-agent",
+  "acao": "status",
+  "linhas": 120
+}
