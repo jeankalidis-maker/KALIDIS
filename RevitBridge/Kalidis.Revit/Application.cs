@@ -48,7 +48,11 @@ public class Application : IExternalApplication
 
             if (sender is UIApplication uiApp)
             {
-                if (IsGeometryCommand())
+                if (FastBatchBridgeService.IsBatchCommand())
+                {
+                    FastBatchBridgeService.TryProcess(uiApp);
+                }
+                else if (IsGeometryCommand())
                 {
                     GeometryBridgeService.TryProcess(uiApp);
                 }
