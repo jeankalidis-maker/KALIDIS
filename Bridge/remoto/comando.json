@@ -1,8 +1,6 @@
 {
   "ativo": true,
-  "id": "bb1-diagnostico-pos-correcao-20260820-1508",
-  "acao": "alinhar_recortar_cubas_bancada",
-  "bancadaId": 598793,
-  "cubaIds": [828712, 891513, 891540, 891543, 891576],
-  "executar": false
+  "id": "bb2-detectar-cubas-bancada-20260820-1510",
+  "acao": "detectar_aberturas_sem_cuba",
+  "busca": "Banho Bebe 2"
 }
