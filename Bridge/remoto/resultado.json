@@ -1,12 +1,66 @@
 {
-  "id": "bb1-remover-cuba-duplicada-20260820-1012",
+  "id": "bb1-alinhar-5-cubas-20260820-1017",
   "sucesso": true,
-  "mensagem": "2 elemento(s) removido(s), incluindo depend\u00EAncias do Revit quando aplic\u00E1vel.",
-  "quantidade": 2,
+  "mensagem": "Lote conclu\u00EDdo: 5 a\u00E7\u00E3o(\u00F5es) executada(s).",
+  "quantidade": 5,
   "elementIds": [
-    891546,
-    891549
+    828712,
+    891513,
+    891540,
+    891543,
+    891576
   ],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "id": "alinhar-cuba-828712",
+      "acao": "mover",
+      "sucesso": true,
+      "mensagem": "1 elemento(s) movido(s).",
+      "elementIds": [
+        828712
+      ],
+      "erro": null
+    },
+    {
+      "id": "alinhar-cuba-891513",
+      "acao": "mover",
+      "sucesso": true,
+      "mensagem": "1 elemento(s) movido(s).",
+      "elementIds": [
+        891513
+      ],
+      "erro": null
+    },
+    {
+      "id": "alinhar-cuba-891540",
+      "acao": "mover",
+      "sucesso": true,
+      "mensagem": "1 elemento(s) movido(s).",
+      "elementIds": [
+        891540
+      ],
+      "erro": null
+    },
+    {
+      "id": "alinhar-cuba-891543",
+      "acao": "mover",
+      "sucesso": true,
+      "mensagem": "1 elemento(s) movido(s).",
+      "elementIds": [
+        891543
+      ],
+      "erro": null
+    },
+    {
+      "id": "alinhar-cuba-891576",
+      "acao": "mover",
+      "sucesso": true,
+      "mensagem": "1 elemento(s) movido(s).",
+      "elementIds": [
+        891576
+      ],
+      "erro": null
+    }
+  ]
 }
