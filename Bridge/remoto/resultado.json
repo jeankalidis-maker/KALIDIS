@@ -1,7 +1,7 @@
 {
-  "id": "bb1-executar-alinhar-recortar-20260820-1434",
+  "id": "bb1-diagnostico-pos-correcao-20260820-1508",
   "sucesso": true,
-  "mensagem": "5 cuba(s) alinhada(s) e 5 recorte(s) ajustado(s) pela geometria real das cubas.",
+  "mensagem": "Diagn\u00F3stico conclu\u00EDdo; nenhuma altera\u00E7\u00E3o executada.",
   "quantidade": 5,
   "elementIds": [
     828712,
@@ -14,9 +14,6 @@
   "dados": {
     "bancadaId": 598793,
     "sketchId": 598792,
-    "cubas": 5,
-    "recortes": 5,
-    "distanciaMinimaEntreCentrosMm": 933.2,
     "diagnostics": [
       {
         "cubaId": 828712,
@@ -51,7 +48,7 @@
           "z": 655
         },
         "deslocamentoMm": {
-          "x": -0,
+          "x": 0,
           "y": 0,
           "z": 0
         },
