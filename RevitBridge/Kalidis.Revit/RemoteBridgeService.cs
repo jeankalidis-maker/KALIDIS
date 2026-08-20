@@ -6,22 +6,28 @@ namespace Kalidis.Revit;
 
 /// <summary>
 /// Ponte remota KALIDIS via GitHub.
-/// - Lê comandos publicados em Bridge/remoto/comando.json (repositório público).
-/// - Entrega o comando para o bridge local já existente.
-/// - Publica o resultado local em Bridge/remoto/resultado.json usando o Git local.
+/// - Lê comandos em main/Bridge/remoto/comando.json.
+/// - Entrega o comando ao bridge local.
+/// - Publica resultados em uma branch exclusiva (bridge-results), usando um clone
+///   local separado para não disputar o repositório de desenvolvimento nem exigir
+///   pull/rebase a cada resposta.
 ///
 /// Nenhuma chamada à API do Revit é feita em thread de fundo. A execução no modelo
-/// continua sendo feita pelo BridgeService/MaxBridgeService no evento Idling.
+/// continua sendo feita no contexto seguro do Idling.
 /// </summary>
 public static class RemoteBridgeService
 {
+    private const string RepositoryUrl = "https://github.com/jeankalidis-maker/KALIDIS.git";
     private const string RemoteCommandUrl = "https://raw.githubusercontent.com/jeankalidis-maker/KALIDIS/main/Bridge/remoto/comando.json";
     private const string LocalCommandPath = @"C:\KALIDIS\Bridge\comando.json";
     private const string LocalResultPath = @"C:\KALIDIS\Bridge\resultado.json";
     private const string StatePath = @"C:\KALIDIS\Bridge\remoto.estado.json";
     private const string LogPath = @"C:\KALIDIS\Bridge\remoto.log";
-    private const string RepoPath = @"C:\Users\naose\KALIDIS";
-    private const string RepoResultPath = @"C:\Users\naose\KALIDIS\Bridge\remoto\resultado.json";
+
+    // Clone EXCLUSIVO para resultados. Não toca em C:\Users\naose\KALIDIS.
+    private const string ResultRepoPath = @"C:\KALIDIS\BridgeResultsRepo";
+    private const string RepoResultPath = @"C:\KALIDIS\BridgeResultsRepo\Bridge\remoto\resultado.json";
+    private const string ResultBranch = "bridge-results";
 
     private static readonly HttpClient Http = new()
     {
@@ -38,14 +44,14 @@ public static class RemoteBridgeService
     public static void EnsureFiles()
     {
         Directory.CreateDirectory(@"C:\KALIDIS\Bridge");
-        Directory.CreateDirectory(Path.GetDirectoryName(RepoResultPath)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(ResultRepoPath)!);
 
         if (!File.Exists(StatePath))
             WriteState("iniciado", null, null);
     }
 
     /// <summary>
-    /// Deve ser chamado no Idling. Apenas agenda I/O de rede/Git em background.
+    /// Chamado no Idling. Rede/Git ficam em background.
     /// </summary>
     public static void Tick()
     {
@@ -143,30 +149,36 @@ public static class RemoteBridgeService
             return;
         }
 
-        if (!Directory.Exists(Path.Combine(RepoPath, ".git")))
-        {
-            WriteState("resultado_local_sem_repo_git", id, $"Repositório local não encontrado em {RepoPath}");
-            return;
-        }
-
         WriteState("resultado_detectado", id, null);
 
         try
         {
-            await RunGitAsync("pull --rebase --autostash");
+            await EnsureResultRepoAsync();
 
             Directory.CreateDirectory(Path.GetDirectoryName(RepoResultPath)!);
             await File.WriteAllTextAsync(RepoResultPath, raw.Trim() + Environment.NewLine, new UTF8Encoding(false));
-            await RunGitAsync("add Bridge/remoto/resultado.json");
+
+            await RunResultGitAsync("add Bridge/remoto/resultado.json");
 
             (int diffCode, string diffOutput) = await RunProcessAsync(
                 "git",
-                $"-C \"{RepoPath}\" diff --cached --quiet -- Bridge/remoto/resultado.json");
+                $"-C \"{ResultRepoPath}\" diff --cached --quiet -- Bridge/remoto/resultado.json",
+                ResultRepoPath);
 
             if (diffCode == 1)
             {
-                await RunGitAsync($"commit -m \"bridge: resultado {SanitizeForCommit(id)}\"");
-                await RunGitAsync("push");
+                await RunResultGitAsync($"commit -m \"bridge: resultado {SanitizeForCommit(id)}\"");
+
+                try
+                {
+                    await RunResultGitAsync($"push origin HEAD:{ResultBranch}");
+                }
+                catch
+                {
+                    // Recuperação rara caso a branch exclusiva tenha sido alterada externamente.
+                    await RunResultGitAsync($"pull --rebase origin {ResultBranch}");
+                    await RunResultGitAsync($"push origin HEAD:{ResultBranch}");
+                }
             }
             else if (diffCode != 0)
             {
@@ -175,26 +187,57 @@ public static class RemoteBridgeService
 
             _lastPushedResultId = id;
             _lastResultWriteUtc = writeUtc;
-            WriteState("resultado_publicado", id, null);
+            WriteState("resultado_publicado_rapido", id, null);
         }
         catch (Exception ex)
         {
+            // Não marca como processado: haverá retry automático no próximo Tick.
             WriteState("erro_publicar_resultado", id, ex.Message);
         }
+    }
+
+    private static async Task EnsureResultRepoAsync()
+    {
+        if (Directory.Exists(Path.Combine(ResultRepoPath, ".git")))
+            return;
+
+        if (Directory.Exists(ResultRepoPath) && Directory.EnumerateFileSystemEntries(ResultRepoPath).Any())
+            throw new InvalidOperationException($"A pasta {ResultRepoPath} existe, mas não é um repositório Git vazio/valido.");
+
+        Directory.CreateDirectory(Path.GetDirectoryName(ResultRepoPath)!);
+        WriteState("criando_clone_resultados", _lastRemoteCommandId, null);
+
+        (int code, string output) = await RunProcessAsync(
+            "git",
+            $"clone --branch {ResultBranch} --single-branch --depth 1 \"{RepositoryUrl}\" \"{ResultRepoPath}\"",
+            @"C:\KALIDIS");
+
+        if (code != 0)
+            throw new InvalidOperationException($"git clone da branch {ResultBranch} falhou ({code}): {output}");
+
+        WriteState("clone_resultados_pronto", _lastRemoteCommandId, null);
     }
 
     private static string SanitizeForCommit(string value)
         => value.Replace("\"", "").Replace("\r", " ").Replace("\n", " ");
 
-    private static async Task<string> RunGitAsync(string arguments)
+    private static async Task<string> RunResultGitAsync(string arguments)
     {
-        (int code, string output) = await RunProcessAsync("git", $"-C \"{RepoPath}\" {arguments}");
+        (int code, string output) = await RunProcessAsync(
+            "git",
+            $"-C \"{ResultRepoPath}\" {arguments}",
+            ResultRepoPath);
+
         if (code != 0)
             throw new InvalidOperationException($"git {arguments} falhou ({code}): {output}");
+
         return output;
     }
 
-    private static async Task<(int ExitCode, string Output)> RunProcessAsync(string fileName, string arguments)
+    private static async Task<(int ExitCode, string Output)> RunProcessAsync(
+        string fileName,
+        string arguments,
+        string workingDirectory)
     {
         using Process process = new();
         process.StartInfo = new ProcessStartInfo
@@ -205,7 +248,7 @@ public static class RemoteBridgeService
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             CreateNoWindow = true,
-            WorkingDirectory = RepoPath
+            WorkingDirectory = workingDirectory
         };
 
         process.Start();
@@ -223,10 +266,11 @@ public static class RemoteBridgeService
             Directory.CreateDirectory(Path.GetDirectoryName(StatePath)!);
             var state = new
             {
-                versao = "1.0-remoto-rapido",
+                versao = "1.1-remoto-branch-resultados",
                 status,
                 comandoId = id,
                 ultimoResultadoPublicado = _lastPushedResultId,
+                branchResultados = ResultBranch,
                 atualizadoEm = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 erro
             };
