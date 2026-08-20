@@ -42,18 +42,23 @@ public class Application : IExternalApplication
     {
         try
         {
-            // Rede/Git roda em background; as chamadas à API do Revit continuam
-            // exclusivamente no contexto seguro do Idling abaixo.
+            // Git/rede permanece fora das operações de transação do Revit.
             RemoteBridgeService.Tick();
 
-            if (sender is UIApplication uiApp)
+            if (sender is not UIApplication uiApp) return;
+
+            if (!CommandReplayGuard.TryReadCurrent(out CommandReplayGuard.CommandEnvelope? command, out string? readError) || command == null)
+                return;
+            if (!command.Active) return;
+
+            if (!CommandReplayGuard.TryAcquire(command, out _))
+                return;
+
+            bool routed = false;
+            string? routingError = null;
+
+            try
             {
-                string? commandId = CommandReplayGuard.CurrentCommandId();
-                if (CommandReplayGuard.IsAlreadyProcessed(commandId))
-                    return;
-
-                bool routed = false;
-
                 if (SmartBatchBridgeService.IsCommand())
                 {
                     SmartBatchBridgeService.TryProcess(uiApp);
@@ -80,14 +85,35 @@ public class Application : IExternalApplication
                     MaxBridgeService.TryProcess(uiApp);
                     routed = true;
                 }
+            }
+            catch (Exception ex)
+            {
+                routingError = ex.Message;
+            }
 
-                if (routed)
-                    CommandReplayGuard.MarkProcessed(commandId);
+            if (!routed)
+            {
+                string message = routingError ?? "Nenhum serviço aceitou o comando.";
+                CommandReplayGuard.WriteGuardFailure(command, message);
+                CommandReplayGuard.Complete(command, false, message);
+                return;
+            }
+
+            if (CommandReplayGuard.TryReadMatchingResult(command, out bool success, out string? resultMessage))
+            {
+                CommandReplayGuard.Complete(command, success, resultMessage);
+            }
+            else
+            {
+                string message = routingError ??
+                    "O serviço foi roteado, mas não publicou um resultado com o mesmo ID. Execução bloqueada contra replay; use novo ID após diagnóstico.";
+                CommandReplayGuard.WriteGuardFailure(command, message);
+                CommandReplayGuard.Complete(command, false, message);
             }
         }
         catch
         {
-            // Bridge não pode travar a interface do Revit.
+            // O bridge nunca deve travar a interface do Revit.
         }
     }
 
