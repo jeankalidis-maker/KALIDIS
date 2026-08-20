@@ -1,8 +1,6 @@
 {
   "ativo": true,
-  "id": "bb2-alinhar-primeiro-20260820-1520",
-  "acao": "lote",
-  "acoes": [
-    { "id": "bb2-mover-3-cubas", "acao": "mover", "elementIds": [891903, 891907, 891910], "x": 50.0, "y": -80.0, "z": 0.0 }
-  ]
+  "id": "bb2-reler-posicoes-20260820-1522",
+  "acao": "detectar_aberturas_sem_cuba",
+  "busca": "Banho Bebe 2"
 }
