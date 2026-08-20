@@ -1,9 +1,123 @@
 {
   "id": "bb1-executar-alinhar-recortar-20260820-1434",
-  "sucesso": false,
-  "mensagem": "Falha ao alinhar cubas e ajustar recortes.",
-  "quantidade": 0,
-  "elementIds": [],
-  "erro": "Modification of the document is forbidden.  Typically, this is because there is no open transaction;  consult documentation for Document.IsModified for other possible causes.",
-  "dados": null
+  "sucesso": true,
+  "mensagem": "5 cuba(s) alinhada(s) e 5 recorte(s) ajustado(s) pela geometria real das cubas.",
+  "quantidade": 5,
+  "elementIds": [
+    828712,
+    891513,
+    891540,
+    891543,
+    891576
+  ],
+  "erro": null,
+  "dados": {
+    "bancadaId": 598793,
+    "sketchId": 598792,
+    "cubas": 5,
+    "recortes": 5,
+    "distanciaMinimaEntreCentrosMm": 933.2,
+    "diagnostics": [
+      {
+        "cubaId": 828712,
+        "aberturaCentroMm": {
+          "x": 3626.89,
+          "y": 9550.69,
+          "z": -0
+        },
+        "cubaCentroAtualMm": {
+          "x": 3626.89,
+          "y": 9550.69,
+          "z": 655
+        },
+        "deslocamentoMm": {
+          "x": -0,
+          "y": 0,
+          "z": 0
+        },
+        "perimetroAberturaMm": 2552.8,
+        "perimetroCubaMm": 2552.8
+      },
+      {
+        "cubaId": 891513,
+        "aberturaCentroMm": {
+          "x": 4560.09,
+          "y": 9550.69,
+          "z": -0
+        },
+        "cubaCentroAtualMm": {
+          "x": 4560.09,
+          "y": 9550.69,
+          "z": 655
+        },
+        "deslocamentoMm": {
+          "x": -0,
+          "y": 0,
+          "z": 0
+        },
+        "perimetroAberturaMm": 2552.8,
+        "perimetroCubaMm": 2552.8
+      },
+      {
+        "cubaId": 891540,
+        "aberturaCentroMm": {
+          "x": 5493.29,
+          "y": 9550.69,
+          "z": -0
+        },
+        "cubaCentroAtualMm": {
+          "x": 5493.29,
+          "y": 9550.69,
+          "z": 655
+        },
+        "deslocamentoMm": {
+          "x": -0,
+          "y": 0,
+          "z": 0
+        },
+        "perimetroAberturaMm": 2552.8,
+        "perimetroCubaMm": 2552.8
+      },
+      {
+        "cubaId": 891543,
+        "aberturaCentroMm": {
+          "x": 6426.49,
+          "y": 9550.69,
+          "z": -0
+        },
+        "cubaCentroAtualMm": {
+          "x": 6426.49,
+          "y": 9550.69,
+          "z": 655
+        },
+        "deslocamentoMm": {
+          "x": -0,
+          "y": 0,
+          "z": 0
+        },
+        "perimetroAberturaMm": 2552.8,
+        "perimetroCubaMm": 2552.8
+      },
+      {
+        "cubaId": 891576,
+        "aberturaCentroMm": {
+          "x": 7360.09,
+          "y": 9550.69,
+          "z": -0
+        },
+        "cubaCentroAtualMm": {
+          "x": 7360.09,
+          "y": 9550.69,
+          "z": 655
+        },
+        "deslocamentoMm": {
+          "x": -0,
+          "y": 0,
+          "z": 0
+        },
+        "perimetroAberturaMm": 2552.8,
+        "perimetroCubaMm": 2552.8
+      }
+    ]
+  }
 }
