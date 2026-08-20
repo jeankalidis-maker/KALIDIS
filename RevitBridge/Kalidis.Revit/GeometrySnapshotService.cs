@@ -1,5 +1,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using System.Globalization;
+using System.Text;
 
 namespace Kalidis.Revit;
 
@@ -28,7 +30,7 @@ public static class GeometrySnapshotService
     {
         Room? room = FindRoom(doc, c.Busca);
         if (room == null)
-            return Fail(c.Id, "Ambiente não encontrado. Use 'busca' com o nome ou número do ambiente.");
+            return Fail(c.Id, "Ambiente não encontrado. Use 'busca' com o nome, número ou ElementId do ambiente.");
 
         var elements = ElementsInAndNearRoom(doc, room)
             .Where(e => e.Id != room.Id)
@@ -73,7 +75,6 @@ public static class GeometrySnapshotService
             return Fail(c.Id, "Nenhum elemento-alvo encontrado.");
 
         double radiusMm = c.X is > 0 ? c.X.Value : 1000.0;
-        double radius = Mm(radiusMm);
         var all = new FilteredElementCollector(doc)
             .WhereElementIsNotElementType()
             .ToElements()
@@ -120,7 +121,7 @@ public static class GeometrySnapshotService
     {
         Room? room = FindRoom(doc, c.Busca);
         if (room == null)
-            return Fail(c.Id, "Ambiente não encontrado. Informe o ambiente em 'busca'.");
+            return Fail(c.Id, "Ambiente não encontrado. Informe nome, número ou ElementId em 'busca'.");
 
         double toleranceMm = c.X is > 0 ? c.X.Value : 220.0;
         List<Element> roomElements = ElementsInAndNearRoom(doc, room).ToList();
@@ -142,8 +143,6 @@ public static class GeometrySnapshotService
         var openingCandidates = new List<OpeningCandidate>();
         foreach (Element e in roomElements)
         {
-            // Priorizamos bancadas, mobiliário, modelos genéricos e qualquer elemento
-            // cuja geometria apresente uma face horizontal com loops internos.
             foreach (var opening in ExtractHorizontalInnerLoops(e))
             {
                 openingCandidates.Add(new OpeningCandidate(
@@ -352,7 +351,6 @@ public static class GeometrySnapshotService
                     }
                     if (candidates.Count < 2) continue;
 
-                    // O maior perímetro é tratado como contorno externo; os demais, como aberturas.
                     int outer = candidates
                         .Select((x, i) => new { i, x.perimeter })
                         .OrderByDescending(x => x.perimeter)
@@ -362,7 +360,6 @@ public static class GeometrySnapshotService
                     {
                         if (i == outer) continue;
                         var c = candidates[i];
-                        // Ignora microloops que normalmente são detalhes geométricos irrelevantes.
                         if (c.perimeter < 120) continue;
                         result.Add(new InnerLoop(c.center, ToMm(pf.Origin.Z), c.perimeter));
                     }
@@ -409,15 +406,33 @@ public static class GeometrySnapshotService
 
     private static Room? FindRoom(Document doc, string? query)
     {
-        string q = (query ?? string.Empty).Trim();
-        if (q.Length == 0) return null;
-        return new FilteredElementCollector(doc)
+        string raw = RepairMojibake((query ?? string.Empty).Trim());
+        if (raw.Length == 0) return null;
+
+        if (long.TryParse(raw, out long elementId))
+        {
+            try
+            {
+                if (doc.GetElement(new ElementId(elementId)) is Room byId)
+                    return byId;
+            }
+            catch { }
+        }
+
+        string q = NormalizeText(raw);
+        var rooms = new FilteredElementCollector(doc)
             .OfCategory(BuiltInCategory.OST_Rooms)
             .WhereElementIsNotElementType()
             .Cast<Room>()
-            .FirstOrDefault(r =>
-                (!string.IsNullOrWhiteSpace(r.Name) && r.Name.Contains(q, StringComparison.OrdinalIgnoreCase)) ||
-                (!string.IsNullOrWhiteSpace(r.Number) && r.Number.Contains(q, StringComparison.OrdinalIgnoreCase)));
+            .ToList();
+
+        Room? exact = rooms.FirstOrDefault(r =>
+            NormalizeText(r.Name) == q || NormalizeText(r.Number) == q);
+        if (exact != null) return exact;
+
+        return rooms.FirstOrDefault(r =>
+            NormalizeText(r.Name).Contains(q, StringComparison.Ordinal) ||
+            NormalizeText(r.Number).Contains(q, StringComparison.Ordinal));
     }
 
     private static IEnumerable<Element> ElementsInAndNearRoom(Document doc, Room room)
@@ -431,7 +446,9 @@ public static class GeometrySnapshotService
             XYZ? p = RepresentativePoint(e);
             if (p != null)
             {
-                try { if (room.IsPointInRoom(p)) { yield return e; continue; } } catch { }
+                bool inside = false;
+                try { inside = room.IsPointInRoom(p); } catch { }
+                if (inside) { yield return e; continue; }
             }
 
             if (rb == null) continue;
@@ -451,7 +468,7 @@ public static class GeometrySnapshotService
         if (c.ElementIds is { Count: > 0 })
             return c.ElementIds.Select(id => doc.GetElement(new ElementId(id))).Where(e => e != null).Cast<Element>().ToList();
         if (string.IsNullOrWhiteSpace(c.Busca)) return new();
-        string n = c.Busca.Trim();
+        string n = RepairMojibake(c.Busca.Trim());
         return new FilteredElementCollector(doc)
             .WhereElementIsNotElementType()
             .ToElements()
@@ -573,9 +590,7 @@ public static class GeometrySnapshotService
             e is FamilyInstance fi ? fi.Symbol?.FamilyName : null,
             e is FamilyInstance fi2 ? fi2.Symbol?.Name : null
         }.Where(x => !string.IsNullOrWhiteSpace(x)));
-        return text.Contains("cuba", StringComparison.OrdinalIgnoreCase) ||
-               text.Contains("lavat", StringComparison.OrdinalIgnoreCase) ||
-               text.Contains("sink", StringComparison.OrdinalIgnoreCase);
+        return Contains(text, "cuba") || Contains(text, "lavat") || Contains(text, "sink");
     }
 
     private static bool ParameterContains(Parameter p, string needle)
@@ -584,8 +599,45 @@ public static class GeometrySnapshotService
         catch { return false; }
     }
 
-    private static bool Contains(string? value, string needle) =>
-        !string.IsNullOrWhiteSpace(value) && value.Contains(needle, StringComparison.OrdinalIgnoreCase);
+    private static bool Contains(string? value, string needle)
+    {
+        if (string.IsNullOrWhiteSpace(value) || string.IsNullOrWhiteSpace(needle)) return false;
+        return NormalizeText(value).Contains(NormalizeText(RepairMojibake(needle)), StringComparison.Ordinal);
+    }
+
+    private static string NormalizeText(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return string.Empty;
+        string repaired = RepairMojibake(value).Trim().Normalize(NormalizationForm.FormD);
+        var sb = new StringBuilder(repaired.Length);
+        bool previousSpace = false;
+        foreach (char ch in repaired)
+        {
+            if (CharUnicodeInfo.GetUnicodeCategory(ch) == UnicodeCategory.NonSpacingMark)
+                continue;
+            if (char.IsWhiteSpace(ch))
+            {
+                if (!previousSpace) sb.Append(' ');
+                previousSpace = true;
+                continue;
+            }
+            previousSpace = false;
+            sb.Append(char.ToLowerInvariant(ch));
+        }
+        return sb.ToString().Normalize(NormalizationForm.FormC);
+    }
+
+    private static string RepairMojibake(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return value;
+        if (!value.Contains('Ã') && !value.Contains('Â')) return value;
+        try
+        {
+            string repaired = Encoding.UTF8.GetString(Encoding.Latin1.GetBytes(value));
+            return repaired.Contains('\uFFFD') ? value : repaired;
+        }
+        catch { return value; }
+    }
 
     private static string SafeName(Element e)
     {
