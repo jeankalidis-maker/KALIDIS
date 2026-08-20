@@ -1,10 +1,8 @@
 {
   "ativo": true,
-  "id": "bb2-criar-3-cubas-20260820-1513",
-  "acao": "lote",
-  "acoes": [
-    { "id": "bb2-cuba-1", "acao": "copiar", "elementIds": [828712], "x": 20025.0, "y": 4832.5, "z": -60.0 },
-    { "id": "bb2-cuba-2", "acao": "copiar", "elementIds": [828712], "x": 20025.0, "y": 5792.5, "z": -60.0 },
-    { "id": "bb2-cuba-3", "acao": "copiar", "elementIds": [828712], "x": 20025.0, "y": 6752.5, "z": -60.0 }
-  ]
+  "id": "bb2-diagnostico-alinhar-recortar-20260820-1516",
+  "acao": "alinhar_recortar_cubas_bancada",
+  "bancadaId": 598815,
+  "cubaIds": [891903, 891907, 891910],
+  "executar": false
 }
