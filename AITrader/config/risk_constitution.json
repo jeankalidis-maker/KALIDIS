@@ -1,0 +1,15 @@
+{
+  "mode": "PAPER_TRADING",
+  "real_money_enabled": false,
+  "withdrawal_enabled": false,
+  "leverage_enabled": false,
+  "max_risk_per_trade_pct": 0.5,
+  "max_total_exposure_pct": 20.0,
+  "max_daily_loss_pct": 2.0,
+  "max_open_positions": 3,
+  "max_orders_per_hour": 10,
+  "max_consecutive_losses_before_pause": 4,
+  "mandatory_stop_loss": true,
+  "min_reward_risk_ratio": 1.5,
+  "allowed_markets": ["BTC/USDT", "ETH/USDT", "SOL/USDT"]
+}
