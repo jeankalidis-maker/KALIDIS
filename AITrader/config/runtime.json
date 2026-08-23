@@ -1,0 +1,11 @@
+{
+  "loop_interval_seconds": 5,
+  "max_cycles": 5,
+  "symbols": [
+    "BTC/USDT",
+    "ETH/USDT",
+    "SOL/USDT"
+  ],
+  "monitor_positions_every_cycle": true,
+  "research_trigger_no_trade_cycles": 2
+}
