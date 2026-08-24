@@ -1,17 +1,10 @@
 {
-  "id": "forcar-atualizacao-pos-buildfix-20260820-1648",
+  "id": "diag-20260824111323249-7f2643a029a74a1c8c6736cd9ca9780b",
   "sucesso": true,
-  "mensagem": "Ciclo de atualizacao executado.",
+  "mensagem": "revit_bridge_instalado: DLL instalada com sucesso.",
   "dados": {
-    "targetCommit": "0fc7e1100ac10fdd33c770e965a41256524e2702",
-    "state": {
-      "status": "instalado",
-      "targetCommit": "0fc7e1100ac10fdd33c770e965a41256524e2702",
-      "installedCommit": "0fc7e1100ac10fdd33c770e965a41256524e2702",
-      "dllSha256": "c04a6accd029d7b57954a8fca2a05d5c1fb3c3e673cef1f9d5b6d5bf34cf1cf8",
-      "updatedAt": "2026-08-20 16:51:07",
-      "error": null
-    }
+    "commit": "264b5d983846ff247a60278ab7695c83a941a429",
+    "dllSha256": "58156c479043e25dedfd6226ab6db47edbcca096beb3692fae723b7d7971a225"
   },
-  "executadoEm": "2026-08-20 16:51:11"
+  "executadoEm": "2026-08-24 08:13:23"
 }
