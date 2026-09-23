@@ -1,22 +1,12 @@
 {
-  "id": "teste-ponte-pos-updater-20260820-1622",
-  "sucesso": true,
-  "mensagem": "Informa\u00E7\u00F5es de 1 elemento(s).",
-  "quantidade": 1,
-  "elementIds": [
-    828712
-  ],
-  "erro": null,
-  "dados": [
-    {
-      "elementId": 828712,
-      "categoria": "Pe\u00E7as hidrossanit\u00E1rias",
-      "nome": "\u00DAnico",
-      "classe": "FamilyInstance",
-      "tipoId": 828747,
-      "fixado": false,
-      "familia": "Blocks_Cuba de Semiencaixe Simples_F03503PT",
-      "tipo": "\u00DAnico"
-    }
-  ]
+  "id": "teste-ponte-revit-aberto-20260820-1633",
+  "sucesso": false,
+  "mensagem": "O servi\u00E7o foi roteado, mas n\u00E3o publicou um resultado com o mesmo ID. Execu\u00E7\u00E3o bloqueada contra replay; use novo ID ap\u00F3s diagn\u00F3stico.",
+  "quantidade": 0,
+  "elementIds": [],
+  "erro": "KALIDIS_EXECUTION_GUARD",
+  "dados": {
+    "action": "info",
+    "commandHash": "75ddcfdba7db0ab7721e9bde51499ca6319adb62b8847de3ebc276953a4ee776"
+  }
 }
