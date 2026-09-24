@@ -1,12 +1,12 @@
 {
-  "id": "teste-ponte-revit-aberto-20260820-1633",
-  "sucesso": false,
-  "mensagem": "O servi\u00E7o foi roteado, mas n\u00E3o publicou um resultado com o mesmo ID. Execu\u00E7\u00E3o bloqueada contra replay; use novo ID ap\u00F3s diagn\u00F3stico.",
-  "quantidade": 0,
+  "id": "auditorio-criar-projeto-20260923-2058",
+  "sucesso": true,
+  "mensagem": "Projeto criado e salvo em C:\\Users\\naose\\Documents\\Auditorio_Campo_Grande_KALIDIS.rvt.",
+  "quantidade": 1,
   "elementIds": [],
-  "erro": "KALIDIS_EXECUTION_GUARD",
+  "erro": null,
   "dados": {
-    "action": "info",
-    "commandHash": "75ddcfdba7db0ab7721e9bde51499ca6319adb62b8847de3ebc276953a4ee776"
+    "arquivo": "C:\\Users\\naose\\Documents\\Auditorio_Campo_Grande_KALIDIS.rvt",
+    "titulo": "Auditorio_Campo_Grande_KALIDIS"
   }
 }
