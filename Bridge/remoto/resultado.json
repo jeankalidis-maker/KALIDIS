@@ -1,15 +1,11 @@
 {
-  "id": "aud-alturas-paredes-2024",
+  "id": "aud-converter-vidros-2025",
   "sucesso": true,
-  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 6 elemento(s).",
-  "quantidade": 6,
+  "mensagem": "Tipo alterado em 2 elemento(s) para \u0027Parede cortina 1\u0027.",
+  "quantidade": 2,
   "elementIds": [
     469721,
-    469722,
-    469723,
-    469724,
-    469725,
-    469726
+    469725
   ],
   "erro": null,
   "dados": null
