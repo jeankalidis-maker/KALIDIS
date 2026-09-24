@@ -1,11 +1,9 @@
 {
-  "id": "aud-parapet-back-2041",
-  "sucesso": true,
-  "mensagem": "Parede criada.",
-  "quantidade": 1,
-  "elementIds": [
-    469779
-  ],
+  "id": "aud-parapet-left-2041",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_parede",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
