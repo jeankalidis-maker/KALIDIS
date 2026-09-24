@@ -1,12 +1,10 @@
 {
-  "id": "aud-upper-heights-ref-2031",
+  "id": "aud-upper-glass-ref-2031",
   "sucesso": true,
-  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 3 elemento(s).",
-  "quantidade": 3,
+  "mensagem": "Tipo alterado em 1 elemento(s) para \u0027Parede cortina 1\u0027.",
+  "quantidade": 1,
   "elementIds": [
-    469732,
-    469733,
-    469734
+    469732
   ],
   "erro": null,
   "dados": null
