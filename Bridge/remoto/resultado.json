@@ -1,7 +1,7 @@
 {
-  "id": "aud-piso-tipo-150-2038",
+  "id": "aud-lista-perfis-cobertura-2040",
   "sucesso": false,
-  "mensagem": "Tipo n\u00E3o encontrado: Gen\u00E9rico 150 mm",
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: listar_tipos_estruturais",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
