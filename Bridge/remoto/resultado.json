@@ -1,11 +1,9 @@
 {
-  "id": "aud-upper-glass-ref-2031",
-  "sucesso": true,
-  "mensagem": "Tipo alterado em 1 elemento(s) para \u0027Parede cortina 1\u0027.",
-  "quantidade": 1,
-  "elementIds": [
-    469732
-  ],
+  "id": "aud-vigas-secundarias-2035",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_vigas_estruturais_lote",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
