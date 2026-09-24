@@ -1,9 +1,14 @@
 {
-  "id": "aud-parapet-left-2041",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_parede",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "aud-parapet-height-2042",
+  "sucesso": true,
+  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 4 elemento(s).",
+  "quantidade": 4,
+  "elementIds": [
+    469777,
+    469778,
+    469779,
+    469791
+  ],
   "erro": null,
   "dados": null
 }
