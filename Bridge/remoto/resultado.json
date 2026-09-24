@@ -1,9 +1,11 @@
 {
-  "id": "aud-lista-perfis-cobertura-2040",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: listar_tipos_estruturais",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "aud-parapet-front-2041",
+  "sucesso": true,
+  "mensagem": "Parede criada.",
+  "quantidade": 1,
+  "elementIds": [
+    469777
+  ],
   "erro": null,
   "dados": null
 }
