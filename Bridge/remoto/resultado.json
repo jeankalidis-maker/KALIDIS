@@ -1,11 +1,22 @@
 {
-  "id": "aud-pilares-internos-2224",
+  "id": "aud-vigas-piso-2225",
   "sucesso": true,
-  "mensagem": "2 pilar(es) estrutural(is) criado(s).",
-  "quantidade": 2,
+  "mensagem": "13 elemento(s) estrutural(is) criado(s).",
+  "quantidade": 13,
   "elementIds": [
-    469586,
-    469587
+    469589,
+    469591,
+    469593,
+    469595,
+    469597,
+    469599,
+    469601,
+    469603,
+    469605,
+    469607,
+    469609,
+    469611,
+    469613
   ],
   "erro": null,
   "dados": null
