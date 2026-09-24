@@ -1,7 +1,7 @@
 {
-  "id": "auditorio-inventario-20260923-2217",
-  "sucesso": true,
-  "mensagem": "Invent\u00E1rio gerado: 742 elementos, 33 categorias, 0 inst\u00E2ncias de fam\u00EDlias.",
+  "id": "aud-nivel-auditorio-2219",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_nivel",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
