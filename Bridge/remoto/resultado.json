@@ -1,9 +1,13 @@
 {
-  "id": "aud-upper-p6p8-ref-2030",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_parede",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "aud-upper-heights-ref-2031",
+  "sucesso": true,
+  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 3 elemento(s).",
+  "quantidade": 3,
+  "elementIds": [
+    469732,
+    469733,
+    469734
+  ],
   "erro": null,
   "dados": null
 }
