@@ -1,24 +1,10 @@
 {
-  "id": "aud-comentario-tercas-2044",
+  "id": "aud-vista-arq-2044",
   "sucesso": true,
-  "mensagem": "Par\u00E2metro \u0027Coment\u00E1rios\u0027 alterado em 15 elemento(s).",
-  "quantidade": 15,
+  "mensagem": "Vista 3D criada: KALIDIS - Arquitetura Refer\u00EAncia.",
+  "quantidade": 1,
   "elementIds": [
-    469825,
-    469826,
-    469827,
-    469828,
-    469829,
-    469830,
-    469831,
-    469832,
-    469833,
-    469834,
-    469835,
-    469836,
-    469837,
-    469838,
-    469839
+    469854
   ],
   "erro": null,
   "dados": null
