@@ -1,102 +1,11 @@
 {
-  "id": "aud-snapshot-wall-2238",
+  "id": "aud-altura-p1p5-corrigir-2009",
   "sucesso": true,
-  "mensagem": "Snapshot geom\u00E9trico de 1 elemento(s).",
+  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 1 elemento(s).",
   "quantidade": 1,
   "elementIds": [
     469701
   ],
   "erro": null,
-  "dados": [
-    {
-      "elementId": 469701,
-      "uniqueId": "43c6adf0-e804-47e5-aea9-9fe08ec6a3df-00072ac5",
-      "categoria": "Paredes",
-      "classe": "Wall",
-      "nome": "Parede cortina 1",
-      "familia": null,
-      "tipo": "Parede cortina 1",
-      "typeId": 366,
-      "nivel": "N\u00EDvel 1",
-      "hostId": null,
-      "fixado": false,
-      "ponto": {
-        "x": 0,
-        "y": 4600,
-        "z": 0
-      },
-      "bbox": {
-        "min": {
-          "x": -500,
-          "y": 0,
-          "z": 0
-        },
-        "max": {
-          "x": 500,
-          "y": 9200,
-          "z": 4000
-        },
-        "centro": {
-          "x": 0,
-          "y": 4600,
-          "z": 2000
-        },
-        "tamanho": {
-          "x": 1000,
-          "y": 9200,
-          "z": 4000
-        }
-      },
-      "localizacao": {
-        "tipo": "curva",
-        "inicio": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "fim": {
-          "x": 0,
-          "y": 9200,
-          "z": 0
-        },
-        "comprimentoMm": 9200
-      },
-      "parametros": {
-        "Categoria": "Paredes",
-        "Se\u00E7\u00E3o transversal": "Vertical",
-        "Exportar para IFC": "Por tipo",
-        "IfcGUID": "13ngtmw0H7vQwfd_2EmOaQ",
-        "Deslocamento": "0",
-        "\u00C2ngulo": "0.00\u00B0",
-        "N\u00FAmero": "4",
-        "Justifica\u00E7\u00E3o": "In\u00EDcio",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "\u00C1rea": "37 m\u00B2",
-        "Fase demolida": "Nenhum",
-        "Fase criada": "Constru\u00E7\u00E3o nova",
-        "Comprimento": "9200",
-        "Fam\u00EDlia e tipo": "Parede cortina: Parede cortina 1",
-        "Fam\u00EDlia": "Parede cortina",
-        "Tipo": "Parede cortina 1",
-        "ID de tipo": "366",
-        "Relativo \u00E0 massa": "N\u00E3o",
-        "Estrutural": "N\u00E3o",
-        "Uso estrutural": "N\u00E3o de aparelho de apoio",
-        "A base est\u00E1 anexada": "N\u00E3o",
-        "O topo est\u00E1 anexado": "N\u00E3o",
-        "Deslocamento superior": "0",
-        "Deslocamento da base": "0",
-        "Restri\u00E7\u00E3o da base": "N\u00EDvel 1",
-        "Altura desconectada": "4000",
-        "Restri\u00E7\u00E3o superior": "N\u00E3o conectado",
-        "Delimita\u00E7\u00E3o de ambientes": "Sim"
-      },
-      "geometria": {
-        "quantidadeSolidos": 0,
-        "volumeM3": 0,
-        "areaSuperficialM2": 0,
-        "facesPlanas": []
-      }
-    }
-  ]
+  "dados": null
 }
