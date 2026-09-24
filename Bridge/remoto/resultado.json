@@ -1,28 +1,25 @@
 {
-  "id": "aud-tercas-z-2046",
+  "id": "aud-remover-tercas-ub-2047",
   "sucesso": true,
-  "mensagem": "15 ter\u00E7a(s) em perfil Z formadas a frio criada(s).",
+  "mensagem": "15 elemento(s) removido(s), incluindo depend\u00EAncias do Revit quando aplic\u00E1vel.",
   "quantidade": 15,
   "elementIds": [
-    469863,
-    469864,
-    469865,
-    469866,
-    469867,
-    469868,
-    469869,
-    469870,
-    469871,
-    469872,
-    469873,
-    469874,
-    469875,
-    469876,
-    469877
+    469825,
+    469826,
+    469827,
+    469828,
+    469829,
+    469830,
+    469831,
+    469832,
+    469833,
+    469834,
+    469835,
+    469836,
+    469837,
+    469838,
+    469839
   ],
   "erro": null,
-  "dados": {
-    "perfil": "Z 200x75x20x2,65 mm",
-    "status": "PRELIMINAR"
-  }
+  "dados": null
 }
