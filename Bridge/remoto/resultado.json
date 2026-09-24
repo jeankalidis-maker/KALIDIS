@@ -1,23 +1,9 @@
 {
-  "id": "aud-vigas-piso-2225",
-  "sucesso": true,
-  "mensagem": "13 elemento(s) estrutural(is) criado(s).",
-  "quantidade": 13,
-  "elementIds": [
-    469589,
-    469591,
-    469593,
-    469595,
-    469597,
-    469599,
-    469601,
-    469603,
-    469605,
-    469607,
-    469609,
-    469611,
-    469613
-  ],
+  "id": "aud-vigas-cobertura-2226",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_vigas_estruturais_lote",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
