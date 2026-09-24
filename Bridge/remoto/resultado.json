@@ -1,9 +1,11 @@
 {
-  "id": "aud-eixo-A-2220",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_eixo",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "aud-eixo-B-2220",
+  "sucesso": true,
+  "mensagem": "Eixo criado: B.",
+  "quantidade": 1,
+  "elementIds": [
+    469559
+  ],
   "erro": null,
   "dados": null
 }
