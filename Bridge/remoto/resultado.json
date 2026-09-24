@@ -1,9 +1,12 @@
 {
-  "id": "aud-pilares-perimetrais-2223",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_pilares_estruturais_lote",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "aud-pilares-internos-2224",
+  "sucesso": true,
+  "mensagem": "2 pilar(es) estrutural(is) criado(s).",
+  "quantidade": 2,
+  "elementIds": [
+    469586,
+    469587
+  ],
   "erro": null,
   "dados": null
 }
