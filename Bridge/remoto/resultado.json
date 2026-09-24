@@ -1,12 +1,9 @@
 {
-  "id": "aud-converter-vidros-2025",
-  "sucesso": true,
-  "mensagem": "Tipo alterado em 2 elemento(s) para \u0027Parede cortina 1\u0027.",
-  "quantidade": 2,
-  "elementIds": [
-    469721,
-    469725
-  ],
+  "id": "aud-wall-p5p6-superior-2026",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_parede",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
