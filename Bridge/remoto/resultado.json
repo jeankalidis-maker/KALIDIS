@@ -1,11 +1,9 @@
 {
-  "id": "aud-altura-p1p5-corrigir-2009",
-  "sucesso": true,
-  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 1 elemento(s).",
-  "quantidade": 1,
-  "elementIds": [
-    469701
-  ],
+  "id": "aud-wall-p5p6-terreo-2013",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_parede",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
