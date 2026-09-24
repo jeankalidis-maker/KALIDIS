@@ -1,9 +1,9 @@
 {
-  "id": "aud-eixo-B-final-2222",
+  "id": "aud-pilares-perimetrais-2223",
   "sucesso": false,
-  "mensagem": "Falha em criar_eixo",
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_pilares_estruturais_lote",
   "quantidade": 0,
   "elementIds": [],
-  "erro": "Name must be unique.\r\nParameter name: name",
+  "erro": null,
   "dados": null
 }
