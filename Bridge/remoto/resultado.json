@@ -1,7 +1,7 @@
 {
-  "id": "aud-vigas-secundarias-2035",
+  "id": "aud-piso-auditorio-2036",
   "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_vigas_estruturais_lote",
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_piso",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
