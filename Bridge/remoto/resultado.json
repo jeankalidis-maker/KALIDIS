@@ -1,9 +1,22 @@
 {
-  "id": "aud-salvar-2228",
+  "id": "aud-inspecionar-tipo-coluna-2230",
   "sucesso": true,
-  "mensagem": "Documento salvo.",
-  "quantidade": 0,
-  "elementIds": [],
+  "mensagem": "Informa\u00E7\u00F5es de 1 elemento(s).",
+  "quantidade": 1,
+  "elementIds": [
+    1315
+  ],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "elementId": 1315,
+      "categoria": "Pilares estruturais",
+      "nome": "305x305x97UC",
+      "classe": "FamilySymbol",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    }
+  ]
 }
