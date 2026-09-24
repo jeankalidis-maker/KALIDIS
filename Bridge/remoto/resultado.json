@@ -1,13 +1,24 @@
 {
-  "id": "aud-parapet-height-2042",
+  "id": "aud-tercas-cobertura-2043",
   "sucesso": true,
-  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 4 elemento(s).",
-  "quantidade": 4,
+  "mensagem": "15 elemento(s) estrutural(is) criado(s).",
+  "quantidade": 15,
   "elementIds": [
-    469777,
-    469778,
-    469779,
-    469791
+    469825,
+    469826,
+    469827,
+    469828,
+    469829,
+    469830,
+    469831,
+    469832,
+    469833,
+    469834,
+    469835,
+    469836,
+    469837,
+    469838,
+    469839
   ],
   "erro": null,
   "dados": null
