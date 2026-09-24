@@ -1,11 +1,9 @@
 {
-  "id": "aud-vista-arq-2044",
+  "id": "aud-salvar-etapa-arq-2045",
   "sucesso": true,
-  "mensagem": "Vista 3D criada: KALIDIS - Arquitetura Refer\u00EAncia.",
-  "quantidade": 1,
-  "elementIds": [
-    469854
-  ],
+  "mensagem": "Documento salvo.",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
