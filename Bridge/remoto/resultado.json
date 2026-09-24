@@ -1,24 +1,10 @@
 {
-  "id": "aud-tercas-cobertura-2043",
+  "id": "aud-comentario-piso-2044",
   "sucesso": true,
-  "mensagem": "15 elemento(s) estrutural(is) criado(s).",
-  "quantidade": 15,
+  "mensagem": "Par\u00E2metro \u0027Coment\u00E1rios\u0027 alterado em 1 elemento(s).",
+  "quantidade": 1,
   "elementIds": [
-    469825,
-    469826,
-    469827,
-    469828,
-    469829,
-    469830,
-    469831,
-    469832,
-    469833,
-    469834,
-    469835,
-    469836,
-    469837,
-    469838,
-    469839
+    469763
   ],
   "erro": null,
   "dados": null
