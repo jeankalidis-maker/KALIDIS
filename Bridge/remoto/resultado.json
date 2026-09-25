@@ -1,9 +1,13 @@
 {
-  "id": "aud-gc-front-2116",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_parede",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "aud-gc-height-2117",
+  "sucesso": true,
+  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 3 elemento(s).",
+  "quantidade": 3,
+  "elementIds": [
+    469964,
+    469965,
+    469966
+  ],
   "erro": null,
   "dados": null
 }
