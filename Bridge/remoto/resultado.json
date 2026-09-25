@@ -1,24 +1,10 @@
 {
-  "id": "aud-remover-piso-vigas-2113",
+  "id": "aud-floor-left-2114",
   "sucesso": true,
-  "mensagem": "15 elemento(s) removido(s), incluindo depend\u00EAncias do Revit quando aplic\u00E1vel.",
-  "quantidade": 15,
+  "mensagem": "Piso criado.",
+  "quantidade": 1,
   "elementIds": [
-    469740,
-    469746,
-    469752,
-    469761,
-    469762,
-    469763,
-    469764,
-    469765,
-    469766,
-    469767,
-    469772,
-    469773,
-    469774,
-    469775,
-    469776
+    469899
   ],
   "erro": null,
   "dados": null
