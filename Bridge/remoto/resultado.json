@@ -1,8 +1,8 @@
 {
-  "id": "aud-native-floorplan-2129",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: comando_revit",
-  "quantidade": 0,
+  "id": "aud-native-floorplan-2130",
+  "sucesso": true,
+  "mensagem": "Comando nativo FloorPlan enviado ao Revit.",
+  "quantidade": 1,
   "elementIds": [],
   "erro": null,
   "dados": null
