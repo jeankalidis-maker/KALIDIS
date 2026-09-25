@@ -1,11 +1,9 @@
 {
-  "id": "aud-floor-thickness-2108",
+  "id": "aud-inventario-atual-2109",
   "sucesso": true,
-  "mensagem": "Par\u00E2metro \u0027Espessura-padr\u00E3o\u0027 alterado em 0 elemento(s).",
-  "quantidade": 1,
-  "elementIds": [
-    628
-  ],
+  "mensagem": "Invent\u00E1rio gerado: 855 elementos, 43 categorias, 49 inst\u00E2ncias de fam\u00EDlias.",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
