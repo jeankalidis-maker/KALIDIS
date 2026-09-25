@@ -1,11 +1,339 @@
 {
-  "id": "aud-default3d-detail-2147",
+  "id": "aud-confirm-views-2149",
   "sucesso": true,
-  "mensagem": "Par\u00E2metro \u0027N\u00EDvel de detalhe\u0027 alterado em 1 elemento(s).",
-  "quantidade": 1,
+  "mensagem": "Snapshot geom\u00E9trico de 4 elemento(s).",
+  "quantidade": 4,
   "elementIds": [
-    469577
+    469972,
+    469982,
+    469577,
+    469994
   ],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "elementId": 469972,
+      "uniqueId": "42d5ce6d-5c9a-427a-997c-7caccf60537c-00072bd4",
+      "categoria": "Vistas",
+      "classe": "ViewPlan",
+      "nome": "ARQ - N\u00CDVEL 1 - T\u00C9RREO",
+      "familia": null,
+      "tipo": "Planta de piso",
+      "typeId": 31114,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 0,
+        "y": 0,
+        "z": -152415.24
+      },
+      "bbox": {
+        "min": {
+          "x": -30480,
+          "y": -30480,
+          "z": -304800
+        },
+        "max": {
+          "x": 30480,
+          "y": 30480,
+          "z": -30.48
+        },
+        "centro": {
+          "x": 0,
+          "y": 0,
+          "z": -152415.24
+        },
+        "tamanho": {
+          "x": 60960,
+          "y": 60960,
+          "z": 304769.52
+        }
+      },
+      "localizacao": null,
+      "parametros": {
+        "Mostrar linhas ocultas": "Por disciplina",
+        "Deslocamento simb\u00F3lico da coluna": "305",
+        "Categoria": "Vistas",
+        "Fam\u00EDlia": "Planta de piso",
+        "Fam\u00EDlia e tipo": "Planta de piso: Planta de piso",
+        "Tipo": "Planta de piso",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Caixa de escopo": "Nenhum",
+        "Filtro da fase": "Mostrar tudo",
+        "Fase": "Constru\u00E7\u00E3o nova",
+        "Visibilidade de pe\u00E7as": "Mostrar original",
+        "N\u00EDvel de detalhe": "Alto",
+        "N\u00FAmero de detalhe": "-",
+        "N\u00FAmero da folha": "---",
+        "Faixa: N\u00EDvel superior": "N\u00E3o delimitado",
+        "Caminho do sol": "N\u00E3o",
+        "Estilo de exibi\u00E7\u00E3o de an\u00E1lise padr\u00E3o": "Nenhum",
+        "Cole\u00E7\u00E3o de folhas": "\u003CNenhum\u003E",
+        "Nome da folha": "---",
+        "Cole\u00E7\u00E3o de folhas de refer\u00EAncia": "\u003CNenhum\u003E",
+        "Modelo de vista": "Nenhum",
+        "Localiza\u00E7\u00E3o do esquema de cor": "Plano de fundo",
+        "Depend\u00EAncia": "Independente",
+        "Recorte de profundidade": "0",
+        "Orienta\u00E7\u00E3o da subjac\u00EAncia": "Olhar para baixo",
+        "Orienta\u00E7\u00E3o": "Norte do projeto",
+        "N\u00EDvel associado": "N\u00EDvel 1",
+        "Disciplina": "Coordena\u00E7\u00E3o",
+        "Exibir modelo": "Normal",
+        "Exibi\u00E7\u00E3o de uni\u00E3o de parede": "Limpar todas as uni\u00F5es de paredes",
+        "Faixa: N\u00EDvel base": "Nenhum",
+        "Escala da vista": " 1 : 50",
+        "Valor de escala    1:": "50",
+        "Nenhum": "469980",
+        "Nome da vista": "ARQ - N\u00CDVEL 1 - T\u00C9RREO",
+        "Recorte de anota\u00E7\u00E3o": "N\u00E3o",
+        "Regi\u00E3o de recorte vis\u00EDvel": "N\u00E3o",
+        "Recortar vista": "N\u00E3o",
+        "ID de tipo": "31114"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 469982,
+      "uniqueId": "42d5ce6d-5c9a-427a-997c-7caccf60537c-00072bde",
+      "categoria": "Vistas",
+      "classe": "ViewPlan",
+      "nome": "ARQ - N\u00CDVEL 2 - AUDIT\u00D3RIO",
+      "familia": null,
+      "tipo": "Planta de piso",
+      "typeId": 31114,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 0,
+        "y": 0,
+        "z": -152415.24
+      },
+      "bbox": {
+        "min": {
+          "x": -30480,
+          "y": -30480,
+          "z": -304800
+        },
+        "max": {
+          "x": 30480,
+          "y": 30480,
+          "z": -30.48
+        },
+        "centro": {
+          "x": 0,
+          "y": 0,
+          "z": -152415.24
+        },
+        "tamanho": {
+          "x": 60960,
+          "y": 60960,
+          "z": 304769.52
+        }
+      },
+      "localizacao": null,
+      "parametros": {
+        "Mostrar linhas ocultas": "Por disciplina",
+        "Deslocamento simb\u00F3lico da coluna": "305",
+        "Categoria": "Vistas",
+        "Fam\u00EDlia": "Planta de piso",
+        "Fam\u00EDlia e tipo": "Planta de piso: Planta de piso",
+        "Tipo": "Planta de piso",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Caixa de escopo": "Nenhum",
+        "Filtro da fase": "Mostrar tudo",
+        "Fase": "Constru\u00E7\u00E3o nova",
+        "Visibilidade de pe\u00E7as": "Mostrar original",
+        "N\u00EDvel de detalhe": "Alto",
+        "N\u00FAmero de detalhe": "-",
+        "N\u00FAmero da folha": "---",
+        "Faixa: N\u00EDvel superior": "N\u00E3o delimitado",
+        "Caminho do sol": "N\u00E3o",
+        "Estilo de exibi\u00E7\u00E3o de an\u00E1lise padr\u00E3o": "Nenhum",
+        "Cole\u00E7\u00E3o de folhas": "\u003CNenhum\u003E",
+        "Nome da folha": "---",
+        "Cole\u00E7\u00E3o de folhas de refer\u00EAncia": "\u003CNenhum\u003E",
+        "Modelo de vista": "Nenhum",
+        "Localiza\u00E7\u00E3o do esquema de cor": "Plano de fundo",
+        "Depend\u00EAncia": "Independente",
+        "Recorte de profundidade": "0",
+        "Orienta\u00E7\u00E3o da subjac\u00EAncia": "Olhar para baixo",
+        "Orienta\u00E7\u00E3o": "Norte do projeto",
+        "N\u00EDvel associado": "N\u00EDvel Audit\u00F3rio",
+        "Disciplina": "Coordena\u00E7\u00E3o",
+        "Exibir modelo": "Normal",
+        "Exibi\u00E7\u00E3o de uni\u00E3o de parede": "Limpar todas as uni\u00F5es de paredes",
+        "Faixa: N\u00EDvel base": "Nenhum",
+        "Escala da vista": " 1 : 50",
+        "Valor de escala    1:": "50",
+        "Nenhum": "469990",
+        "Nome da vista": "ARQ - N\u00CDVEL 2 - AUDIT\u00D3RIO",
+        "Recorte de anota\u00E7\u00E3o": "N\u00E3o",
+        "Regi\u00E3o de recorte vis\u00EDvel": "N\u00E3o",
+        "Recortar vista": "N\u00E3o",
+        "ID de tipo": "31114"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 469577,
+      "uniqueId": "bd4bfb0f-fc53-4bfc-996a-a00515b7e727-00072a49",
+      "categoria": "Vistas",
+      "classe": "View3D",
+      "nome": "{3D}",
+      "familia": null,
+      "tipo": "Vista 3D",
+      "typeId": 31121,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 0,
+        "y": 0,
+        "z": -152415.24
+      },
+      "bbox": {
+        "min": {
+          "x": -30480,
+          "y": -30480,
+          "z": -304800
+        },
+        "max": {
+          "x": 30480,
+          "y": 30480,
+          "z": -30.48
+        },
+        "centro": {
+          "x": 0,
+          "y": 0,
+          "z": -152415.24
+        },
+        "tamanho": {
+          "x": 60960,
+          "y": 60960,
+          "z": 304769.52
+        }
+      },
+      "localizacao": null,
+      "parametros": {
+        "Mostrar linhas ocultas": "Por disciplina",
+        "Categoria": "Vistas",
+        "Fam\u00EDlia": "Vista 3D",
+        "Fam\u00EDlia e tipo": "Vista 3D: Vista 3D",
+        "Tipo": "Vista 3D",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Caixa de escopo": "Nenhum",
+        "Filtro da fase": "Mostrar tudo",
+        "Fase": "Constru\u00E7\u00E3o nova",
+        "Visibilidade de pe\u00E7as": "Mostrar original",
+        "N\u00EDvel de detalhe": "Alto",
+        "N\u00FAmero de detalhe": "-",
+        "N\u00FAmero da folha": "---",
+        "Estilo de exibi\u00E7\u00E3o de an\u00E1lise padr\u00E3o": "Nenhum",
+        "Cole\u00E7\u00E3o de folhas": "\u003CNenhum\u003E",
+        "Nome da folha": "---",
+        "Modelo de vista": "Nenhum",
+        "Orienta\u00E7\u00E3o bloqueada": "N\u00E3o",
+        "Depend\u00EAncia": "Independente",
+        "Posi\u00E7\u00E3o da c\u00E2mera": "Ajustada",
+        "Disciplina": "Coordena\u00E7\u00E3o",
+        "Escala da vista": " 1 : 100",
+        "Valor de escala    1:": "100",
+        "Nenhum": "-1",
+        "Caixa de corte": "N\u00E3o",
+        "Nome da vista": "{3D}",
+        "Recorte afastado ativo": "N\u00E3o",
+        "Deslocamento do recorte afastado": "304800",
+        "Recorte de anota\u00E7\u00E3o": "N\u00E3o",
+        "Regi\u00E3o de recorte vis\u00EDvel": "N\u00E3o",
+        "Recortar vista": "N\u00E3o",
+        "Modo de proje\u00E7\u00E3o": "Ortogonal",
+        "Eleva\u00E7\u00E3o alvo": "998",
+        "Eleva\u00E7\u00E3o do olho": "17496",
+        "ID de tipo": "31121"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 469994,
+      "uniqueId": "42d5ce6d-5c9a-427a-997c-7caccf60537c-00072bea",
+      "categoria": "Vistas",
+      "classe": "View3D",
+      "nome": "ARQ\u002BEST - 3D COORDENA\u00C7\u00C3O",
+      "familia": null,
+      "tipo": "Vista 3D",
+      "typeId": 31121,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 0,
+        "y": 0,
+        "z": -152415.24
+      },
+      "bbox": {
+        "min": {
+          "x": -30480,
+          "y": -30480,
+          "z": -304800
+        },
+        "max": {
+          "x": 30480,
+          "y": 30480,
+          "z": -30.48
+        },
+        "centro": {
+          "x": 0,
+          "y": 0,
+          "z": -152415.24
+        },
+        "tamanho": {
+          "x": 60960,
+          "y": 60960,
+          "z": 304769.52
+        }
+      },
+      "localizacao": null,
+      "parametros": {
+        "Mostrar linhas ocultas": "Por disciplina",
+        "Categoria": "Vistas",
+        "Fam\u00EDlia": "Vista 3D",
+        "Fam\u00EDlia e tipo": "Vista 3D: Vista 3D",
+        "Tipo": "Vista 3D",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Caixa de escopo": "Nenhum",
+        "Filtro da fase": "Mostrar tudo",
+        "Fase": "Constru\u00E7\u00E3o nova",
+        "Visibilidade de pe\u00E7as": "Mostrar original",
+        "N\u00EDvel de detalhe": "M\u00E9dio",
+        "N\u00FAmero de detalhe": "-",
+        "N\u00FAmero da folha": "---",
+        "Estilo de exibi\u00E7\u00E3o de an\u00E1lise padr\u00E3o": "Nenhum",
+        "Cole\u00E7\u00E3o de folhas": "\u003CNenhum\u003E",
+        "Nome da folha": "---",
+        "Modelo de vista": "Nenhum",
+        "Orienta\u00E7\u00E3o bloqueada": "N\u00E3o",
+        "Depend\u00EAncia": "Independente",
+        "Posi\u00E7\u00E3o da c\u00E2mera": "Ajustada",
+        "Disciplina": "Coordena\u00E7\u00E3o",
+        "Escala da vista": " 1 : 100",
+        "Valor de escala    1:": "100",
+        "Nenhum": "-1",
+        "Caixa de corte": "N\u00E3o",
+        "Nome da vista": "ARQ\u002BEST - 3D COORDENA\u00C7\u00C3O",
+        "Recorte afastado ativo": "N\u00E3o",
+        "Deslocamento do recorte afastado": "304800",
+        "Recorte de anota\u00E7\u00E3o": "N\u00E3o",
+        "Regi\u00E3o de recorte vis\u00EDvel": "N\u00E3o",
+        "Recortar vista": "N\u00E3o",
+        "Modo de proje\u00E7\u00E3o": "Ortogonal",
+        "Eleva\u00E7\u00E3o alvo": "998",
+        "Eleva\u00E7\u00E3o do olho": "17496",
+        "ID de tipo": "31121"
+      },
+      "geometria": null
+    }
+  ]
 }
