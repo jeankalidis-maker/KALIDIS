@@ -1,23 +1,152 @@
 {
-  "id": "aud-list-coord-2131",
+  "id": "aud-snapshot-coord-2132",
   "sucesso": true,
-  "mensagem": "13 elemento(s) encontrado(s).",
-  "quantidade": 13,
+  "mensagem": "Snapshot geom\u00E9trico de 6 elemento(s).",
+  "quantidade": 6,
   "elementIds": [
     41294,
     140510,
     219648,
     219649,
     219650,
-    220082,
-    220083,
-    220084,
-    411879,
-    439336,
-    461688,
-    461689,
-    461769
+    411879
   ],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "elementId": 41294,
+      "uniqueId": "d440f35c-7d1c-492a-a917-91b51f87e4c3-0000a14e",
+      "categoria": null,
+      "classe": "GraphicsStyle",
+      "nome": "Coordenadas de ponto",
+      "familia": null,
+      "tipo": null,
+      "typeId": -1,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": null,
+      "bbox": null,
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "-1",
+        "Op\u00E7\u00E3o de desenho": "-1"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 140510,
+      "uniqueId": "5533c968-e756-45fe-b5b5-1ef3169a1ec8-000224de",
+      "categoria": null,
+      "classe": "Element",
+      "nome": "Configura\u00E7\u00E3o de coordena\u00E7\u00E3o de projeto",
+      "familia": null,
+      "tipo": null,
+      "typeId": -1,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": null,
+      "bbox": null,
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "-1",
+        "Op\u00E7\u00E3o de desenho": "-1"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 219648,
+      "uniqueId": "94d9746b-9cf5-433f-88e3-bb77bf909203-00035a00",
+      "categoria": null,
+      "classe": "GraphicsStyle",
+      "nome": "Sistema de coordenadas local",
+      "familia": null,
+      "tipo": null,
+      "typeId": -1,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": null,
+      "bbox": null,
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "-1",
+        "Op\u00E7\u00E3o de desenho": "-1"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 219649,
+      "uniqueId": "94d9746b-9cf5-433f-88e3-bb77bf909203-00035a01",
+      "categoria": null,
+      "classe": "GraphicsStyle",
+      "nome": "Sistema de coordenadas local",
+      "familia": null,
+      "tipo": null,
+      "typeId": -1,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": null,
+      "bbox": null,
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "-1",
+        "Op\u00E7\u00E3o de desenho": "-1"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 219650,
+      "uniqueId": "94d9746b-9cf5-433f-88e3-bb77bf909203-00035a02",
+      "categoria": null,
+      "classe": "GraphicsStyle",
+      "nome": "Sistema de coordenadas local",
+      "familia": null,
+      "tipo": null,
+      "typeId": -1,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": null,
+      "bbox": null,
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "-1",
+        "Op\u00E7\u00E3o de desenho": "-1"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 411879,
+      "uniqueId": "0fa2982e-0586-4734-b06b-9a5cba001c6c-000648e7",
+      "categoria": "Vistas",
+      "classe": "View3D",
+      "nome": "Modelo anal\u00EDtico com o sistema de coordenadas locais exibido",
+      "familia": null,
+      "tipo": null,
+      "typeId": -1,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": null,
+      "bbox": null,
+      "localizacao": null,
+      "parametros": {
+        "Mostrar linhas ocultas": "Por disciplina",
+        "Categoria": "Vistas",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Filtro da fase": "Mostrar tudo",
+        "Visibilidade de pe\u00E7as": "Mostrar original",
+        "N\u00EDvel de detalhe": "M\u00E9dio",
+        "Caminho do sol": "N\u00E3o",
+        "Modelo de vista": "Nenhum",
+        "Disciplina": "Estrutural",
+        "Escala da vista": " 1 : 100",
+        "Valor de escala    1:": "100"
+      },
+      "geometria": null
+    }
+  ]
 }
