@@ -1,11 +1,9 @@
 {
-  "id": "aud-floor-left-2114",
-  "sucesso": true,
-  "mensagem": "Piso criado.",
-  "quantidade": 1,
-  "elementIds": [
-    469899
-  ],
+  "id": "aud-floor-right-2114",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_piso",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
