@@ -1,9 +1,23 @@
 {
-  "id": "aud-native-floorplan-2130",
+  "id": "aud-list-coord-2131",
   "sucesso": true,
-  "mensagem": "Comando nativo FloorPlan enviado ao Revit.",
-  "quantidade": 1,
-  "elementIds": [],
+  "mensagem": "13 elemento(s) encontrado(s).",
+  "quantidade": 13,
+  "elementIds": [
+    41294,
+    140510,
+    219648,
+    219649,
+    219650,
+    220082,
+    220083,
+    220084,
+    411879,
+    439336,
+    461688,
+    461689,
+    461769
+  ],
   "erro": null,
   "dados": null
 }
