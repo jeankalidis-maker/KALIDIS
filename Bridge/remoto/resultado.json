@@ -1,16 +1,9 @@
 {
-  "id": "aud-create-coord-terreo-2140",
-  "sucesso": true,
-  "mensagem": "Planta de coordena\u00E7\u00E3o criada/configurada: ARQ\u002BEST - T\u00C9RREO.",
-  "quantidade": 1,
-  "elementIds": [
-    469972
-  ],
+  "id": "aud-create-coord-auditorio-2140",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_planta_coordenacao",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
-  "dados": {
-    "nome": "ARQ\u002BEST - T\u00C9RREO",
-    "nivel": "N\u00EDvel 1",
-    "disciplina": "Coordena\u00E7\u00E3o",
-    "escala": 50
-  }
+  "dados": null
 }
