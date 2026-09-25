@@ -1,7 +1,7 @@
 {
-  "id": "aud-tijolo-superior-2103",
+  "id": "aud-cobertura-galvalume-2104",
   "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: aplicar_tijolo_aparente",
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_cobertura_galvalume",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
