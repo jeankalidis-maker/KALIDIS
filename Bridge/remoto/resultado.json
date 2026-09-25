@@ -1,44 +1,11 @@
 {
-  "id": "aud-snapshot-floor-type-2107",
+  "id": "aud-floor-thickness-2108",
   "sucesso": true,
-  "mensagem": "Snapshot geom\u00E9trico de 1 elemento(s).",
+  "mensagem": "Par\u00E2metro \u0027Espessura-padr\u00E3o\u0027 alterado em 0 elemento(s).",
   "quantidade": 1,
   "elementIds": [
     628
   ],
   "erro": null,
-  "dados": [
-    {
-      "elementId": 628,
-      "uniqueId": "74e46f31-7d48-47ee-9207-931708e57a52-00000274",
-      "categoria": "Pisos",
-      "classe": "FloorType",
-      "nome": "Gen\u00E9rico 300 mm",
-      "familia": null,
-      "tipo": null,
-      "typeId": -1,
-      "nivel": null,
-      "hostId": null,
-      "fixado": false,
-      "ponto": null,
-      "bbox": null,
-      "localizacao": null,
-      "parametros": {
-        "Categoria": "Pisos",
-        "Exportar tipo para IFC": "Padr\u00E3o",
-        "Tipo IfcGUID": "1qv6ynVKX7xf87anS8vNWc",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "Material estrutural": "\u003CPor categoria\u003E",
-        "Rugosidade": "3",
-        "Absor\u00E7\u00E3o": "0.7",
-        "Preenchimento de cor em escala de baixa resolu\u00E7\u00E3o": "0",
-        "Padr\u00E3o de preenchimento em escala de baixa resolu\u00E7\u00E3o": "-1",
-        "Nome da fam\u00EDlia": "Piso",
-        "Nome do tipo": "Gen\u00E9rico 300 mm",
-        "Espessura-padr\u00E3o": "300",
-        "Fun\u00E7\u00E3o": "Interior"
-      },
-      "geometria": null
-    }
-  ]
+  "dados": null
 }
