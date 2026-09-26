@@ -1,11 +1,9 @@
 {
-  "id": "ref-front-ground-curtain-2624",
-  "sucesso": true,
-  "mensagem": "Tipo alterado em 1 elemento(s) para \u0027Parede cortina 1\u0027.",
-  "quantidade": 1,
-  "elementIds": [
-    471272
-  ],
-  "erro": null,
+  "id": "ref-left-ground-create-2625",
+  "sucesso": false,
+  "mensagem": "Falha em criar_parede",
+  "quantidade": 0,
+  "elementIds": [],
+  "erro": "The referenced object is not valid, possibly because it has been deleted from the database, or its creation was undone.",
   "dados": null
 }
