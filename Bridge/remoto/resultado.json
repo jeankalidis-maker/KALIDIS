@@ -1,11 +1,16 @@
 {
-  "id": "aud-floor-back-D-2213",
+  "id": "aud-stair-D-2213",
   "sucesso": true,
-  "mensagem": "Piso criado.",
+  "mensagem": "Escada met\u00E1lica interna preliminar criada.",
   "quantidade": 1,
   "elementIds": [
-    470029
+    470035
   ],
   "erro": null,
-  "dados": null
+  "dados": {
+    "espelhos": 18,
+    "alturaEspelho": 166.66666666666666,
+    "piso": 280,
+    "largura": 1400
+  }
 }
