@@ -1,9 +1,16 @@
 {
-  "id": "facade-save-before-3001",
+  "id": "facade-brick-upper-3002",
   "sucesso": true,
-  "mensagem": "Documento salvo.",
-  "quantidade": 0,
-  "elementIds": [],
+  "mensagem": "Tijolo aparente aplicado em 4 parede(s).",
+  "quantidade": 4,
+  "elementIds": [
+    471242,
+    471246,
+    471248,
+    471251
+  ],
   "erro": null,
-  "dados": null
+  "dados": {
+    "tipo": "ALVENARIA TIJOLO APARENTE 200mm - KALIDIS"
+  }
 }
