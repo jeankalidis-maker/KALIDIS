@@ -1,11 +1,1911 @@
 {
-  "id": "ref-wall-u-left-glass-2603",
+  "id": "ref-check-new-walls-2604",
   "sucesso": true,
-  "mensagem": "Parede criada.",
-  "quantidade": 1,
+  "mensagem": "Snapshot geom\u00E9trico de 6 elemento(s).",
+  "quantidade": 6,
   "elementIds": [
-    471244
+    471240,
+    471241,
+    471242,
+    471243,
+    471244,
+    471245
   ],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "elementId": 471240,
+      "uniqueId": "c9d212f6-aeca-4031-a47c-67e055f38d2e-000730c8",
+      "categoria": "Paredes",
+      "classe": "Wall",
+      "nome": "Gen\u00E9rico - 200 mm",
+      "familia": null,
+      "tipo": "Gen\u00E9rico - 200 mm",
+      "typeId": 1044,
+      "nivel": "N\u00EDvel Audit\u00F3rio",
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 2500,
+        "y": 0,
+        "z": 3000
+      },
+      "bbox": {
+        "min": {
+          "x": -100,
+          "y": -100,
+          "z": 3000
+        },
+        "max": {
+          "x": 5000,
+          "y": 100,
+          "z": 7000
+        },
+        "centro": {
+          "x": 2450,
+          "y": 0,
+          "z": 5000
+        },
+        "tamanho": {
+          "x": 5100,
+          "y": 200,
+          "z": 4000
+        }
+      },
+      "localizacao": {
+        "tipo": "curva",
+        "inicio": {
+          "x": 0,
+          "y": 0,
+          "z": 3000
+        },
+        "fim": {
+          "x": 5000,
+          "y": 0,
+          "z": 3000
+        },
+        "comprimentoMm": 5000
+      },
+      "parametros": {
+        "Categoria": "Paredes",
+        "Se\u00E7\u00E3o transversal": "Vertical",
+        "Exportar para IFC": "Por tipo",
+        "IfcGUID": "39qXBshif0CQHyP_1LzBtc",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Dist\u00E2ncia da extens\u00E3o da base": "0",
+        "Dist\u00E2ncia da extens\u00E3o superior": "0",
+        "Volume": "4.06 m\u00B3",
+        "\u00C1rea": "20 m\u00B2",
+        "Fase demolida": "Nenhum",
+        "Fase criada": "Constru\u00E7\u00E3o nova",
+        "Comprimento": "5000",
+        "Fam\u00EDlia e tipo": "Parede b\u00E1sica: Gen\u00E9rico - 200 mm",
+        "Fam\u00EDlia": "Parede b\u00E1sica",
+        "Tipo": "Gen\u00E9rico - 200 mm",
+        "ID de tipo": "1044",
+        "Relativo \u00E0 massa": "N\u00E3o",
+        "Estrutural": "N\u00E3o",
+        "Linha de localiza\u00E7\u00E3o": "Linha central da parede",
+        "Uso estrutural": "N\u00E3o de aparelho de apoio",
+        "A base est\u00E1 anexada": "N\u00E3o",
+        "O topo est\u00E1 anexado": "N\u00E3o",
+        "Deslocamento superior": "0",
+        "Deslocamento da base": "0",
+        "Restri\u00E7\u00E3o da base": "N\u00EDvel Audit\u00F3rio",
+        "Altura desconectada": "4000",
+        "Restri\u00E7\u00E3o superior": "N\u00E3o conectado",
+        "Delimita\u00E7\u00E3o de ambientes": "Sim"
+      },
+      "geometria": {
+        "quantidadeSolidos": 1,
+        "volumeM3": 4.064,
+        "areaSuperficialM2": 44.36,
+        "facesPlanas": [
+          {
+            "normal": {
+              "x": 0,
+              "y": -1,
+              "z": 0
+            },
+            "origem": {
+              "x": 0,
+              "y": -100,
+              "z": 3000
+            },
+            "areaM2": 20.32,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 9,
+                "centro": {
+                  "x": 1077.778,
+                  "y": -100,
+                  "z": 5311.111
+                },
+                "perimetroMm": 18600,
+                "pontos": [
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 1,
+              "z": -0
+            },
+            "origem": {
+              "x": 0,
+              "y": 100,
+              "z": 3000
+            },
+            "areaM2": 20.32,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 11,
+                "centro": {
+                  "x": 900,
+                  "y": 100,
+                  "z": 5254.545
+                },
+                "perimetroMm": 18600,
+                "pontos": [
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": -1
+            },
+            "origem": {
+              "x": 0,
+              "y": -100,
+              "z": 3000
+            },
+            "areaM2": 1.02,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 10,
+                "centro": {
+                  "x": 1980,
+                  "y": 20,
+                  "z": 3000
+                },
+                "perimetroMm": 31000,
+                "pontos": [
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            },
+            "origem": {
+              "x": 5000,
+              "y": -100,
+              "z": 3000
+            },
+            "areaM2": 0.8,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 5000,
+                  "y": 0,
+                  "z": 5000
+                },
+                "perimetroMm": 24410,
+                "pontos": [
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": -0,
+              "z": 1
+            },
+            "origem": {
+              "x": 5000,
+              "y": -100,
+              "z": 7000
+            },
+            "areaM2": 1.02,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 10,
+                "centro": {
+                  "x": 1980,
+                  "y": 20,
+                  "z": 7000
+                },
+                "perimetroMm": 31008,
+                "pontos": [
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 7000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 1
+            },
+            "origem": {
+              "x": 0,
+              "y": -100,
+              "z": 6000
+            },
+            "areaM2": 0.04,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 6000
+                },
+                "perimetroMm": 1600,
+                "pontos": [
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -0,
+              "y": -0,
+              "z": -1
+            },
+            "origem": {
+              "x": 0,
+              "y": -100,
+              "z": 6400
+            },
+            "areaM2": 0.04,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 6400
+                },
+                "perimetroMm": 1600,
+                "pontos": [
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6400
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -1,
+              "y": 0,
+              "z": 0
+            },
+            "origem": {
+              "x": -100,
+              "y": 0,
+              "z": 3000
+            },
+            "areaM2": 0.6,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": -100,
+                  "y": 0,
+                  "z": 4500
+                },
+                "perimetroMm": 18426.6,
+                "pontos": [
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -1,
+              "y": -0,
+              "z": -0
+            },
+            "origem": {
+              "x": 100,
+              "y": 9200,
+              "z": 6000
+            },
+            "areaM2": 0.08000000000000015,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 100,
+                  "y": 0,
+                  "z": 6200
+                },
+                "perimetroMm": 2988.9,
+                "pontos": [
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 100,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 6000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -1,
+              "y": 0,
+              "z": 0
+            },
+            "origem": {
+              "x": -100,
+              "y": 0,
+              "z": 3000
+            },
+            "areaM2": 0.12000000000000008,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": -100,
+                  "y": 0,
+                  "z": 6700
+                },
+                "perimetroMm": 4129.8,
+                "pontos": [
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6400
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "elementId": 471241,
+      "uniqueId": "c9d212f6-aeca-4031-a47c-67e055f38d2e-000730c9",
+      "categoria": null,
+      "classe": "Element",
+      "nome": "",
+      "familia": null,
+      "tipo": null,
+      "typeId": -1,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": null,
+      "bbox": null,
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "-1",
+        "Op\u00E7\u00E3o de desenho": "-1"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 471242,
+      "uniqueId": "c9d212f6-aeca-4031-a47c-67e055f38d2e-000730ca",
+      "categoria": "Paredes",
+      "classe": "Wall",
+      "nome": "Gen\u00E9rico - 200 mm",
+      "familia": null,
+      "tipo": "Gen\u00E9rico - 200 mm",
+      "typeId": 1044,
+      "nivel": "N\u00EDvel Audit\u00F3rio",
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 10000,
+        "y": 0,
+        "z": 3000
+      },
+      "bbox": {
+        "min": {
+          "x": 5000,
+          "y": -100,
+          "z": 3000
+        },
+        "max": {
+          "x": 15000,
+          "y": 100,
+          "z": 7000
+        },
+        "centro": {
+          "x": 10000,
+          "y": 0,
+          "z": 5000
+        },
+        "tamanho": {
+          "x": 10000,
+          "y": 200,
+          "z": 4000
+        }
+      },
+      "localizacao": {
+        "tipo": "curva",
+        "inicio": {
+          "x": 5000,
+          "y": 0,
+          "z": 3000
+        },
+        "fim": {
+          "x": 15000,
+          "y": 0,
+          "z": 3000
+        },
+        "comprimentoMm": 10000
+      },
+      "parametros": {
+        "Categoria": "Paredes",
+        "Se\u00E7\u00E3o transversal": "Vertical",
+        "Exportar para IFC": "Por tipo",
+        "IfcGUID": "39qXBshif0CQHyP_1LzBta",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Dist\u00E2ncia da extens\u00E3o da base": "0",
+        "Dist\u00E2ncia da extens\u00E3o superior": "0",
+        "Volume": "7.92 m\u00B3",
+        "\u00C1rea": "40 m\u00B2",
+        "Fase demolida": "Nenhum",
+        "Fase criada": "Constru\u00E7\u00E3o nova",
+        "Comprimento": "10000",
+        "Fam\u00EDlia e tipo": "Parede b\u00E1sica: Gen\u00E9rico - 200 mm",
+        "Fam\u00EDlia": "Parede b\u00E1sica",
+        "Tipo": "Gen\u00E9rico - 200 mm",
+        "ID de tipo": "1044",
+        "Relativo \u00E0 massa": "N\u00E3o",
+        "Estrutural": "N\u00E3o",
+        "Linha de localiza\u00E7\u00E3o": "Linha central da parede",
+        "Uso estrutural": "N\u00E3o de aparelho de apoio",
+        "A base est\u00E1 anexada": "N\u00E3o",
+        "O topo est\u00E1 anexado": "N\u00E3o",
+        "Deslocamento superior": "0",
+        "Deslocamento da base": "0",
+        "Restri\u00E7\u00E3o da base": "N\u00EDvel Audit\u00F3rio",
+        "Altura desconectada": "4000",
+        "Restri\u00E7\u00E3o superior": "N\u00E3o conectado",
+        "Delimita\u00E7\u00E3o de ambientes": "Sim"
+      },
+      "geometria": {
+        "quantidadeSolidos": 1,
+        "volumeM3": 7.92,
+        "areaSuperficialM2": 84.76,
+        "facesPlanas": [
+          {
+            "normal": {
+              "x": 0,
+              "y": -1,
+              "z": 0
+            },
+            "origem": {
+              "x": 5000,
+              "y": -100,
+              "z": 3000
+            },
+            "areaM2": 39.6,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 7,
+                "centro": {
+                  "x": 10657.143,
+                  "y": -100,
+                  "z": 5057.143
+                },
+                "perimetroMm": 27800,
+                "pontos": [
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 1,
+              "z": -0
+            },
+            "origem": {
+              "x": 5000,
+              "y": 100,
+              "z": 3000
+            },
+            "areaM2": 39.6,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 5,
+                "centro": {
+                  "x": 8960,
+                  "y": 100,
+                  "z": 4600
+                },
+                "perimetroMm": 27800,
+                "pontos": [
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": -1
+            },
+            "origem": {
+              "x": 5000,
+              "y": -100,
+              "z": 3000
+            },
+            "areaM2": 1.98,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 9950,
+                  "y": 0,
+                  "z": 3000
+                },
+                "perimetroMm": 59800,
+                "pontos": [
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": -0,
+              "z": 1
+            },
+            "origem": {
+              "x": 15000,
+              "y": -100,
+              "z": 7000
+            },
+            "areaM2": 1.98,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 9950,
+                  "y": 0,
+                  "z": 7000
+                },
+                "perimetroMm": 59800,
+                "pontos": [
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -1,
+              "y": 0,
+              "z": 0
+            },
+            "origem": {
+              "x": 5000,
+              "y": -100,
+              "z": 7000
+            },
+            "areaM2": 0.8,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 5000,
+                  "y": 0,
+                  "z": 5000
+                },
+                "perimetroMm": 24420,
+                "pontos": [
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 5000,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 5000,
+                    "y": 100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 1,
+              "y": -0,
+              "z": -0
+            },
+            "origem": {
+              "x": 14900,
+              "y": 0,
+              "z": 3000
+            },
+            "areaM2": 0.8,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 12,
+                "centro": {
+                  "x": 14900,
+                  "y": -33.333,
+                  "z": 5400
+                },
+                "perimetroMm": 24449.1,
+                "pontos": [
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 14900,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 6400
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 14900,
+                    "y": -100,
+                    "z": 6000
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "elementId": 471243,
+      "uniqueId": "c9d212f6-aeca-4031-a47c-67e055f38d2e-000730cb",
+      "categoria": null,
+      "classe": "Element",
+      "nome": "",
+      "familia": null,
+      "tipo": null,
+      "typeId": -1,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": null,
+      "bbox": null,
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "-1",
+        "Op\u00E7\u00E3o de desenho": "-1"
+      },
+      "geometria": null
+    },
+    {
+      "elementId": 471244,
+      "uniqueId": "c9d212f6-aeca-4031-a47c-67e055f38d2e-000730cc",
+      "categoria": "Paredes",
+      "classe": "Wall",
+      "nome": "Gen\u00E9rico - 200 mm",
+      "familia": null,
+      "tipo": "Gen\u00E9rico - 200 mm",
+      "typeId": 1044,
+      "nivel": "N\u00EDvel Audit\u00F3rio",
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 0,
+        "y": 2300,
+        "z": 3000
+      },
+      "bbox": {
+        "min": {
+          "x": -100,
+          "y": 0,
+          "z": 3000
+        },
+        "max": {
+          "x": 100,
+          "y": 4600,
+          "z": 7000
+        },
+        "centro": {
+          "x": 0,
+          "y": 2300,
+          "z": 5000
+        },
+        "tamanho": {
+          "x": 200,
+          "y": 4600,
+          "z": 4000
+        }
+      },
+      "localizacao": {
+        "tipo": "curva",
+        "inicio": {
+          "x": 0,
+          "y": 0,
+          "z": 3000
+        },
+        "fim": {
+          "x": 0,
+          "y": 4600,
+          "z": 3000
+        },
+        "comprimentoMm": 4600
+      },
+      "parametros": {
+        "Categoria": "Paredes",
+        "Se\u00E7\u00E3o transversal": "Vertical",
+        "Exportar para IFC": "Por tipo",
+        "IfcGUID": "39qXBshif0CQHyP_1LzBtY",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Dist\u00E2ncia da extens\u00E3o da base": "0",
+        "Dist\u00E2ncia da extens\u00E3o superior": "0",
+        "Volume": "3.60 m\u00B3",
+        "\u00C1rea": "18 m\u00B2",
+        "Fase demolida": "Nenhum",
+        "Fase criada": "Constru\u00E7\u00E3o nova",
+        "Comprimento": "4600",
+        "Fam\u00EDlia e tipo": "Parede b\u00E1sica: Gen\u00E9rico - 200 mm",
+        "Fam\u00EDlia": "Parede b\u00E1sica",
+        "Tipo": "Gen\u00E9rico - 200 mm",
+        "ID de tipo": "1044",
+        "Relativo \u00E0 massa": "N\u00E3o",
+        "Estrutural": "N\u00E3o",
+        "Linha de localiza\u00E7\u00E3o": "Linha central da parede",
+        "Uso estrutural": "N\u00E3o de aparelho de apoio",
+        "A base est\u00E1 anexada": "N\u00E3o",
+        "O topo est\u00E1 anexado": "N\u00E3o",
+        "Deslocamento superior": "0",
+        "Deslocamento da base": "0",
+        "Restri\u00E7\u00E3o da base": "N\u00EDvel Audit\u00F3rio",
+        "Altura desconectada": "4000",
+        "Restri\u00E7\u00E3o superior": "N\u00E3o conectado",
+        "Delimita\u00E7\u00E3o de ambientes": "Sim"
+      },
+      "geometria": {
+        "quantidadeSolidos": 1,
+        "volumeM3": 3.6,
+        "areaSuperficialM2": 39.4,
+        "facesPlanas": [
+          {
+            "normal": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            },
+            "origem": {
+              "x": 100,
+              "y": 0,
+              "z": 3000
+            },
+            "areaM2": 18.000000000000004,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 5,
+                "centro": {
+                  "x": 100,
+                  "y": 1900,
+                  "z": 5400
+                },
+                "perimetroMm": 17000,
+                "pontos": [
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 7000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -1,
+              "y": 0,
+              "z": 0
+            },
+            "origem": {
+              "x": -100,
+              "y": 0,
+              "z": 3000
+            },
+            "areaM2": 18.000000000000004,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 7,
+                "centro": {
+                  "x": -100,
+                  "y": 1385.714,
+                  "z": 5057.143
+                },
+                "perimetroMm": 17000,
+                "pontos": [
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": -1
+            },
+            "origem": {
+              "x": 100,
+              "y": 0,
+              "z": 3000
+            },
+            "areaM2": 0.9,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 0,
+                  "y": 2350,
+                  "z": 3000
+                },
+                "perimetroMm": 27400,
+                "pontos": [
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 1,
+              "z": -0
+            },
+            "origem": {
+              "x": 100,
+              "y": 4600,
+              "z": 3000
+            },
+            "areaM2": 0.8,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 0,
+                  "y": 4600,
+                  "z": 5000
+                },
+                "perimetroMm": 24410,
+                "pontos": [
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 7000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 1
+            },
+            "origem": {
+              "x": 100,
+              "y": 4600,
+              "z": 7000
+            },
+            "areaM2": 0.9,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 0,
+                  "y": 2350,
+                  "z": 7000
+                },
+                "perimetroMm": 27408.9,
+                "pontos": [
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 4600,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 4600,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 7000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -0,
+              "y": -1,
+              "z": 0
+            },
+            "origem": {
+              "x": 0,
+              "y": 100,
+              "z": 3000
+            },
+            "areaM2": 0.8,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 12,
+                "centro": {
+                  "x": -33.333,
+                  "y": 100,
+                  "z": 5400
+                },
+                "perimetroMm": 24449.1,
+                "pontos": [
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6400
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 6000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": -100,
+                    "y": 100,
+                    "z": 3000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 7000
+                  },
+                  {
+                    "x": 100,
+                    "y": 100,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "elementId": 471245,
+      "uniqueId": "c9d212f6-aeca-4031-a47c-67e055f38d2e-000730cd",
+      "categoria": null,
+      "classe": "Element",
+      "nome": "",
+      "familia": null,
+      "tipo": null,
+      "typeId": -1,
+      "nivel": null,
+      "hostId": null,
+      "fixado": false,
+      "ponto": null,
+      "bbox": null,
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "-1",
+        "Op\u00E7\u00E3o de desenho": "-1"
+      },
+      "geometria": null
+    }
+  ]
 }
