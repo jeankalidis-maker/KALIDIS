@@ -1,16 +1,9 @@
 {
-  "id": "aud-stair-D-2213",
-  "sucesso": true,
-  "mensagem": "Escada met\u00E1lica interna preliminar criada.",
-  "quantidade": 1,
-  "elementIds": [
-    470035
-  ],
+  "id": "aud-create-beams-D-opening-2214",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_vigas_estruturais_lote",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
-  "dados": {
-    "espelhos": 18,
-    "alturaEspelho": 166.66666666666666,
-    "piso": 280,
-    "largura": 1400
-  }
+  "dados": null
 }
