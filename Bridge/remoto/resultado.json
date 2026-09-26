@@ -1,9 +1,11 @@
 {
-  "id": "aud-save-real-seats-2517",
+  "id": "aud-create-right-glass-wall-2518",
   "sucesso": true,
-  "mensagem": "Documento salvo.",
-  "quantidade": 0,
-  "elementIds": [],
+  "mensagem": "Parede criada.",
+  "quantidade": 1,
+  "elementIds": [
+    471236
+  ],
   "erro": null,
   "dados": null
 }
