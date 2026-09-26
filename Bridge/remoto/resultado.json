@@ -1,36 +1,9 @@
 {
-  "id": "facade-apply-final-3015",
-  "sucesso": true,
-  "mensagem": "Fachada de refer\u00EAncia criada: 15,00 x 9,20 m; dois pavimentos de 3,00 m; vidro frontal/lateral esquerdo e tijolo aparente no volume superior.",
-  "quantidade": 8,
-  "elementIds": [
-    471375,
-    471377,
-    471379,
-    471381,
-    471383,
-    471384,
-    471385,
-    471386
-  ],
+  "id": "brick-orient-check-3101",
+  "sucesso": false,
+  "mensagem": "Nenhum elemento encontrado para snapshot.",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
-  "dados": {
-    "largura": 15000,
-    "comprimento": 9200,
-    "peDireito": 3000,
-    "vidro": [
-      "frente 0-5m t\u00E9rreo",
-      "frente 0-5m superior",
-      "lateral esquerda 0-4,6m t\u00E9rreo",
-      "lateral esquerda 0-4,6m superior"
-    ],
-    "tijolo": [
-      "frente 5-15m superior",
-      "lateral esquerda 4,6-9,2m superior",
-      "lateral direita superior",
-      "traseira superior"
-    ],
-    "terreoRestanteAberto": true,
-    "materialTijolo": "Tijolo, Assentamento em Linha"
-  }
+  "dados": null
 }
