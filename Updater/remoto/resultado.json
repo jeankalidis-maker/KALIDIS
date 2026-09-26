@@ -1,10 +1,10 @@
 {
-  "id": "diag-20260824111323249-7f2643a029a74a1c8c6736cd9ca9780b",
+  "id": "diag-20260926182534677-314c7a66d8c248718217adefd0c78b49",
   "sucesso": true,
   "mensagem": "revit_bridge_instalado: DLL instalada com sucesso.",
   "dados": {
-    "commit": "264b5d983846ff247a60278ab7695c83a941a429",
-    "dllSha256": "58156c479043e25dedfd6226ab6db47edbcca096beb3692fae723b7d7971a225"
+    "commit": "a83bd96558a23fdb8438364d83cfbb4dfaa99a5a",
+    "dllSha256": "e2bfcf834e838da1a8e0a632e073accee53257ad07ab9473c7d531ea8fc6a590"
   },
-  "executadoEm": "2026-08-24 08:13:23"
+  "executadoEm": "2026-09-26 15:25:34"
 }
