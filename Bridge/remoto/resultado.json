@@ -1,11 +1,15 @@
 {
-  "id": "ref-copy-ground-glass-2610",
+  "id": "ref-height-3m-2611",
   "sucesso": true,
-  "mensagem": "2 c\u00F3pia(s) criada(s).",
-  "quantidade": 2,
+  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 6 elemento(s).",
+  "quantidade": 6,
   "elementIds": [
-    471264,
-    471266
+    471240,
+    471242,
+    471244,
+    471246,
+    471248,
+    471251
   ],
   "erro": null,
   "dados": null
