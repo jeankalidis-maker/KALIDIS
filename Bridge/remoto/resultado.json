@@ -1,9 +1,100 @@
 {
-  "id": "facade-save-pre-finalreload-3012",
+  "id": "facade-bridge-test-3014",
   "sucesso": true,
-  "mensagem": "Documento salvo.",
-  "quantidade": 0,
+  "mensagem": "15 tipo(s) estrutural(is) encontrado(s).",
+  "quantidade": 15,
   "elementIds": [],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "categoria": "Pilar",
+      "familia": "CU-Coluna universal-Coluna",
+      "tipo": "305x305x97UC",
+      "id": 1315
+    },
+    {
+      "categoria": "Pilar",
+      "familia": "CU-Coluna universal-Coluna",
+      "tipo": "356x368x129UC",
+      "id": 72808
+    },
+    {
+      "categoria": "Pilar",
+      "familia": "CU-Coluna universal-Coluna",
+      "tipo": "254x254x73UC",
+      "id": 72810
+    },
+    {
+      "categoria": "Pilar",
+      "familia": "CU-Coluna universal-Coluna",
+      "tipo": "203x203x52UC",
+      "id": 72812
+    },
+    {
+      "categoria": "Pilar",
+      "familia": "M_Concreto-Retangular-Coluna",
+      "tipo": "300 x 450mm",
+      "id": 135243
+    },
+    {
+      "categoria": "Pilar",
+      "familia": "M_Concreto-Retangular-Coluna",
+      "tipo": "450 x 600mm",
+      "id": 135245
+    },
+    {
+      "categoria": "Pilar",
+      "familia": "M_Concreto-Retangular-Coluna",
+      "tipo": "600 x 750mm",
+      "id": 135247
+    },
+    {
+      "categoria": "Viga",
+      "familia": "VU-Viga universal",
+      "tipo": "305x165x40UB",
+      "id": 68912
+    },
+    {
+      "categoria": "Viga",
+      "familia": "Concreto-Viga Retangular",
+      "tipo": "400 x 800mm",
+      "id": 69975
+    },
+    {
+      "categoria": "Viga",
+      "familia": "Concreto-Viga Retangular",
+      "tipo": "300 x 600mm",
+      "id": 69977
+    },
+    {
+      "categoria": "Viga",
+      "familia": "VU-Viga universal",
+      "tipo": "406x178x60UB",
+      "id": 71873
+    },
+    {
+      "categoria": "Viga",
+      "familia": "VU-Viga universal",
+      "tipo": "356x171x51UB",
+      "id": 71875
+    },
+    {
+      "categoria": "Viga",
+      "familia": "VU-Viga universal",
+      "tipo": "254x102x28UB",
+      "id": 71877
+    },
+    {
+      "categoria": "Viga",
+      "familia": "HSS-Se\u00E7\u00E3o Estrutural Oca",
+      "tipo": "HSS152.4X152.4X9.5",
+      "id": 73776
+    },
+    {
+      "categoria": "Viga",
+      "familia": "HSS-Se\u00E7\u00E3o Estrutural Oca",
+      "tipo": "HSS203.2X203.2X9.5",
+      "id": 82580
+    }
+  ]
 }
