@@ -1,9 +1,9 @@
 {
-  "id": "ref-left-ground-create-2625",
+  "id": "ref-scan-left-ground-2626",
   "sucesso": false,
-  "mensagem": "Falha em criar_parede",
+  "mensagem": "Nenhum elemento encontrado para snapshot.",
   "quantidade": 0,
   "elementIds": [],
-  "erro": "The referenced object is not valid, possibly because it has been deleted from the database, or its creation was undone.",
+  "erro": null,
   "dados": null
 }
