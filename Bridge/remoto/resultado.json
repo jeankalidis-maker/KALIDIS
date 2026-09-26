@@ -1,10 +1,10 @@
 {
-  "id": "aud-rotate-real-chair-seed-2505",
+  "id": "aud-copy-row1-s2-2507",
   "sucesso": true,
-  "mensagem": "1 elemento(s) rotacionado(s) em 90\u00B0.",
+  "mensagem": "1 c\u00F3pia(s) criada(s).",
   "quantidade": 1,
   "elementIds": [
-    471086
+    471087
   ],
   "erro": null,
   "dados": null
