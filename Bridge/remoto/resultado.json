@@ -1,9 +1,50 @@
 {
-  "id": "aud-save-before-dll-fix-2352",
-  "sucesso": true,
-  "mensagem": "Documento salvo.",
+  "id": "bb1-alinhar-5-cubas-20260820-1017",
+  "sucesso": false,
+  "mensagem": "Lote conclu\u00EDdo com falhas: 0/5 a\u00E7\u00E3o(\u00F5es) com sucesso.",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "id": "alinhar-cuba-828712",
+      "acao": "mover",
+      "sucesso": false,
+      "mensagem": "0 elemento(s) movido(s).",
+      "elementIds": [],
+      "erro": "Nenhum elemento foi movido."
+    },
+    {
+      "id": "alinhar-cuba-891513",
+      "acao": "mover",
+      "sucesso": false,
+      "mensagem": "0 elemento(s) movido(s).",
+      "elementIds": [],
+      "erro": "Nenhum elemento foi movido."
+    },
+    {
+      "id": "alinhar-cuba-891540",
+      "acao": "mover",
+      "sucesso": false,
+      "mensagem": "0 elemento(s) movido(s).",
+      "elementIds": [],
+      "erro": "Nenhum elemento foi movido."
+    },
+    {
+      "id": "alinhar-cuba-891543",
+      "acao": "mover",
+      "sucesso": false,
+      "mensagem": "0 elemento(s) movido(s).",
+      "elementIds": [],
+      "erro": "Nenhum elemento foi movido."
+    },
+    {
+      "id": "alinhar-cuba-891576",
+      "acao": "mover",
+      "sucesso": false,
+      "mensagem": "0 elemento(s) movido(s).",
+      "elementIds": [],
+      "erro": "Nenhum elemento foi movido."
+    }
+  ]
 }
