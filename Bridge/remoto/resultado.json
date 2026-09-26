@@ -1,7 +1,7 @@
 {
-  "id": "ref-scan-left-ground-2626",
-  "sucesso": false,
-  "mensagem": "Nenhum elemento encontrado para snapshot.",
+  "id": "facade-save-before-3001",
+  "sucesso": true,
+  "mensagem": "Documento salvo.",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
