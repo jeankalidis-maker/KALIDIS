@@ -1,10 +1,18 @@
 {
-  "id": "facade-find-existing-brick-walltype-3007",
+  "id": "facade-list-curtain-types-3008",
   "sucesso": true,
-  "mensagem": "1 elemento(s) encontrado(s).",
-  "quantidade": 1,
+  "mensagem": "9 elemento(s) encontrado(s).",
+  "quantidade": 9,
   "elementIds": [
-    414902
+    125,
+    126,
+    19062,
+    31720,
+    414887,
+    458666,
+    471240,
+    471244,
+    471272
   ],
   "erro": null,
   "dados": null
