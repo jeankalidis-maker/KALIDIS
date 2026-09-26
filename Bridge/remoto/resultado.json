@@ -1,7 +1,7 @@
 {
-  "id": "aud-create-interiors-2351",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_interiores_auditorio",
+  "id": "aud-save-before-dll-fix-2352",
+  "sucesso": true,
+  "mensagem": "Documento salvo.",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
