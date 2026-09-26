@@ -1,24 +1,10 @@
 {
-  "id": "ref-delete-wrong-walls-2602",
+  "id": "ref-wall-u-front-glass-2603",
   "sucesso": true,
-  "mensagem": "15 elemento(s) removido(s), incluindo depend\u00EAncias do Revit quando aplic\u00E1vel.",
-  "quantidade": 15,
+  "mensagem": "Parede criada.",
+  "quantidade": 1,
   "elementIds": [
-    470057,
-    470058,
-    470059,
-    470060,
-    470061,
-    470062,
-    470063,
-    470064,
-    470065,
-    470066,
-    470067,
-    470068,
-    470069,
-    471238,
-    471239
+    471240
   ],
   "erro": null,
   "dados": null
