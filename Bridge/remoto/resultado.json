@@ -1,15 +1,11 @@
 {
-  "id": "ref-height-3m-2611",
+  "id": "ref-glass-type-2612",
   "sucesso": true,
-  "mensagem": "Par\u00E2metro \u0027Altura desconectada\u0027 alterado em 6 elemento(s).",
-  "quantidade": 6,
+  "mensagem": "Tipo alterado em 2 elemento(s) para \u0027Parede cortina 1\u0027.",
+  "quantidade": 2,
   "elementIds": [
     471240,
-    471242,
-    471244,
-    471246,
-    471248,
-    471251
+    471244
   ],
   "erro": null,
   "dados": null
