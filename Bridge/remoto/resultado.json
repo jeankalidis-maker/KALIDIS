@@ -1,288 +1,19 @@
 {
-  "id": "aud-check-recent-2211",
+  "id": "aud-check-recent2-2212",
   "sucesso": true,
-  "mensagem": "Snapshot geom\u00E9trico de 12 elemento(s).",
-  "quantidade": 12,
+  "mensagem": "Snapshot geom\u00E9trico de 4 elemento(s).",
+  "quantidade": 4,
   "elementIds": [
-    470015,
-    470016,
-    470017,
-    470018,
-    470019,
-    470020,
-    470021,
-    470022,
-    470023,
-    470024,
-    470025,
-    470026
+    470011,
+    470012,
+    470013,
+    470014
   ],
   "erro": null,
   "dados": [
     {
-      "elementId": 470015,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072bff",
-      "categoria": "\u003CCroqui\u003E",
-      "classe": "ModelLine",
-      "nome": "Linhas do modelo",
-      "familia": null,
-      "tipo": null,
-      "typeId": -1,
-      "nivel": null,
-      "hostId": null,
-      "fixado": false,
-      "ponto": {
-        "x": 13200,
-        "y": 4600,
-        "z": 3000
-      },
-      "bbox": {
-        "min": {
-          "x": 13200,
-          "y": 0,
-          "z": 3000
-        },
-        "max": {
-          "x": 13200,
-          "y": 9200,
-          "z": 3000
-        },
-        "centro": {
-          "x": 13200,
-          "y": 4600,
-          "z": 3000
-        },
-        "tamanho": {
-          "x": 0,
-          "y": 9200,
-          "z": 0
-        }
-      },
-      "localizacao": {
-        "tipo": "curva",
-        "inicio": {
-          "x": 13200,
-          "y": 0,
-          "z": 3000
-        },
-        "fim": {
-          "x": 13200,
-          "y": 9200,
-          "z": 3000
-        },
-        "comprimentoMm": 9200
-      },
-      "parametros": {
-        "Categoria": "Linhas: \u003CCroqui\u003E",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "Inclina\u00E7\u00E3o": "4.76\u00B0",
-        "Viga de a\u00E7o em balan\u00E7o": "0",
-        "Concreto em balan\u00E7o": "0",
-        "N\u00EDvel": "Nenhum",
-        "Deslocamento da base": "0",
-        "Defina a inclina\u00E7\u00E3o": "N\u00E3o",
-        "Define a altura constante": "N\u00E3o",
-        "Comprimento": "9200"
-      },
-      "geometria": null
-    },
-    {
-      "elementId": 470016,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c00",
-      "categoria": "\u003CCroqui\u003E",
-      "classe": "ModelLine",
-      "nome": "Linhas do modelo",
-      "familia": null,
-      "tipo": null,
-      "typeId": -1,
-      "nivel": null,
-      "hostId": null,
-      "fixado": false,
-      "ponto": {
-        "x": 6600,
-        "y": 9200,
-        "z": 3000
-      },
-      "bbox": {
-        "min": {
-          "x": 0,
-          "y": 9200,
-          "z": 3000
-        },
-        "max": {
-          "x": 13200,
-          "y": 9200,
-          "z": 3000
-        },
-        "centro": {
-          "x": 6600,
-          "y": 9200,
-          "z": 3000
-        },
-        "tamanho": {
-          "x": 13200,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "localizacao": {
-        "tipo": "curva",
-        "inicio": {
-          "x": 13200,
-          "y": 9200,
-          "z": 3000
-        },
-        "fim": {
-          "x": 0,
-          "y": 9200,
-          "z": 3000
-        },
-        "comprimentoMm": 13200
-      },
-      "parametros": {
-        "Categoria": "Linhas: \u003CCroqui\u003E",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "Inclina\u00E7\u00E3o": "4.76\u00B0",
-        "Viga de a\u00E7o em balan\u00E7o": "0",
-        "Concreto em balan\u00E7o": "0",
-        "N\u00EDvel": "Nenhum",
-        "Deslocamento da base": "0",
-        "Defina a inclina\u00E7\u00E3o": "N\u00E3o",
-        "Define a altura constante": "N\u00E3o",
-        "Comprimento": "13200"
-      },
-      "geometria": null
-    },
-    {
-      "elementId": 470017,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c01",
-      "categoria": "\u003CCroqui\u003E",
-      "classe": "ModelLine",
-      "nome": "Linhas do modelo",
-      "familia": null,
-      "tipo": null,
-      "typeId": -1,
-      "nivel": null,
-      "hostId": null,
-      "fixado": false,
-      "ponto": {
-        "x": 0,
-        "y": 4600,
-        "z": 3000
-      },
-      "bbox": {
-        "min": {
-          "x": 0,
-          "y": 0,
-          "z": 3000
-        },
-        "max": {
-          "x": 0,
-          "y": 9200,
-          "z": 3000
-        },
-        "centro": {
-          "x": 0,
-          "y": 4600,
-          "z": 3000
-        },
-        "tamanho": {
-          "x": 0,
-          "y": 9200,
-          "z": 0
-        }
-      },
-      "localizacao": {
-        "tipo": "curva",
-        "inicio": {
-          "x": 0,
-          "y": 9200,
-          "z": 3000
-        },
-        "fim": {
-          "x": 0,
-          "y": 0,
-          "z": 3000
-        },
-        "comprimentoMm": 9200
-      },
-      "parametros": {
-        "Categoria": "Linhas: \u003CCroqui\u003E",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "Inclina\u00E7\u00E3o": "4.76\u00B0",
-        "Viga de a\u00E7o em balan\u00E7o": "0",
-        "Concreto em balan\u00E7o": "0",
-        "N\u00EDvel": "Nenhum",
-        "Deslocamento da base": "0",
-        "Defina a inclina\u00E7\u00E3o": "N\u00E3o",
-        "Define a altura constante": "N\u00E3o",
-        "Comprimento": "9200"
-      },
-      "geometria": null
-    },
-    {
-      "elementId": 470018,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c02",
-      "categoria": "\u003CCroqui\u003E",
-      "classe": "ModelLine",
-      "nome": "Arestas da dire\u00E7\u00E3o do v\u00E3o",
-      "familia": null,
-      "tipo": null,
-      "typeId": -1,
-      "nivel": null,
-      "hostId": null,
-      "fixado": false,
-      "ponto": {
-        "x": 6600,
-        "y": 4600,
-        "z": 3000
-      },
-      "bbox": {
-        "min": {
-          "x": 3533.333,
-          "y": 4477.333,
-          "z": 3000
-        },
-        "max": {
-          "x": 9666.667,
-          "y": 4722.667,
-          "z": 3000
-        },
-        "centro": {
-          "x": 6600,
-          "y": 4600,
-          "z": 3000
-        },
-        "tamanho": {
-          "x": 6133.33,
-          "y": 245.33,
-          "z": 0
-        }
-      },
-      "localizacao": {
-        "tipo": "curva",
-        "inicio": {
-          "x": 3533.333,
-          "y": 4600,
-          "z": 3000
-        },
-        "fim": {
-          "x": 9666.667,
-          "y": 4600,
-          "z": 3000
-        },
-        "comprimentoMm": 6133.33
-      },
-      "parametros": {
-        "Categoria": "Linhas: \u003CCroqui\u003E",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "Comprimento": "6133"
-      },
-      "geometria": null
-    },
-    {
-      "elementId": 470019,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c03",
+      "elementId": 470011,
+      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072bfb",
       "categoria": null,
       "classe": "SketchPlane",
       "nome": "N\u00EDvel Audit\u00F3rio",
@@ -302,8 +33,8 @@
       "geometria": null
     },
     {
-      "elementId": 470020,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c04",
+      "elementId": 470012,
+      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072bfc",
       "categoria": null,
       "classe": "Sketch",
       "nome": "Croqui",
@@ -314,29 +45,29 @@
       "hostId": null,
       "fixado": false,
       "ponto": {
-        "x": 14100,
-        "y": 1350,
+        "x": 6600,
+        "y": 4600,
         "z": 3000
       },
       "bbox": {
         "min": {
-          "x": 13200,
+          "x": 0,
           "y": 0,
           "z": 3000
         },
         "max": {
-          "x": 15000,
-          "y": 2700,
+          "x": 13200,
+          "y": 9200,
           "z": 3000
         },
         "centro": {
-          "x": 14100,
-          "y": 1350,
+          "x": 6600,
+          "y": 4600,
           "z": 3000
         },
         "tamanho": {
-          "x": 1800,
-          "y": 2700,
+          "x": 13200,
+          "y": 9200,
           "z": 0
         }
       },
@@ -348,8 +79,8 @@
       "geometria": null
     },
     {
-      "elementId": 470021,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c05",
+      "elementId": 470013,
+      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072bfd",
       "categoria": "Pisos",
       "classe": "Floor",
       "nome": "Gen\u00E9rico 300 mm",
@@ -360,29 +91,29 @@
       "hostId": null,
       "fixado": false,
       "ponto": {
-        "x": 14100,
-        "y": 1350,
+        "x": 6600,
+        "y": 4600,
         "z": 2850
       },
       "bbox": {
         "min": {
-          "x": 13200,
+          "x": 0,
           "y": 0,
           "z": 2700
         },
         "max": {
-          "x": 15000,
-          "y": 2700,
+          "x": 13200,
+          "y": 9200,
           "z": 3000
         },
         "centro": {
-          "x": 14100,
-          "y": 1350,
+          "x": 6600,
+          "y": 4600,
           "z": 2850
         },
         "tamanho": {
-          "x": 1800,
-          "y": 2700,
+          "x": 13200,
+          "y": 9200,
           "z": 300
         }
       },
@@ -390,11 +121,11 @@
       "parametros": {
         "Categoria": "Pisos",
         "Exportar para IFC": "Por tipo",
-        "IfcGUID": "2k5OgNFzDDUOTbReWz$wJV",
+        "IfcGUID": "2k5OgNFzDDUOTbReWz$wCd",
         "Existe associa\u00E7\u00E3o": "N\u00E3o",
         "Op\u00E7\u00E3o de desenho": "-1",
-        "Volume": "1.46 m\u00B3",
-        "\u00C1rea": "5 m\u00B2",
+        "Volume": "36.43 m\u00B3",
+        "\u00C1rea": "121 m\u00B2",
         "Fase demolida": "Nenhum",
         "Fase criada": "Constru\u00E7\u00E3o nova",
         "N\u00EDvel": "N\u00EDvel Audit\u00F3rio",
@@ -403,7 +134,7 @@
         "Tipo": "Gen\u00E9rico 300 mm",
         "ID de tipo": "628",
         "Estrutural": "N\u00E3o",
-        "Per\u00EDmetro": "9000",
+        "Per\u00EDmetro": "44800",
         "Altura do deslocamento do n\u00EDvel": "0",
         "Espessura": "300",
         "Relativo \u00E0 massa": "N\u00E3o",
@@ -415,8 +146,8 @@
       },
       "geometria": {
         "quantidadeSolidos": 1,
-        "volumeM3": 1.458,
-        "areaSuperficialM2": 12.42,
+        "volumeM3": 36.432,
+        "areaSuperficialM2": 256.32,
         "facesPlanas": [
           {
             "normal": {
@@ -425,11 +156,11 @@
               "z": -1
             },
             "origem": {
-              "x": 13200,
+              "x": 0,
               "y": 0,
               "z": 2700
             },
-            "areaM2": 4.86,
+            "areaM2": 121.44,
             "horizontal": true,
             "quantidadeLoops": 1,
             "loops": [
@@ -437,34 +168,34 @@
                 "indice": 0,
                 "quantidadePontos": 5,
                 "centro": {
-                  "x": 14280,
-                  "y": 1080,
+                  "x": 7920,
+                  "y": 3680,
                   "z": 2700
                 },
-                "perimetroMm": 9000,
+                "perimetroMm": 44800,
                 "pontos": [
                   {
-                    "x": 15000,
-                    "y": 0,
-                    "z": 2700
-                  },
-                  {
                     "x": 13200,
                     "y": 0,
                     "z": 2700
                   },
                   {
+                    "x": 0,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
                     "x": 13200,
-                    "y": 2700,
+                    "y": 9200,
                     "z": 2700
                   },
                   {
-                    "x": 15000,
-                    "y": 2700,
-                    "z": 2700
-                  },
-                  {
-                    "x": 15000,
+                    "x": 13200,
                     "y": 0,
                     "z": 2700
                   }
@@ -479,11 +210,11 @@
               "z": 1
             },
             "origem": {
-              "x": 13200,
+              "x": 0,
               "y": 0,
               "z": 3000
             },
-            "areaM2": 4.86,
+            "areaM2": 121.44,
             "horizontal": true,
             "quantidadeLoops": 1,
             "loops": [
@@ -491,34 +222,34 @@
                 "indice": 0,
                 "quantidadePontos": 5,
                 "centro": {
-                  "x": 14280,
-                  "y": 1080,
+                  "x": 7920,
+                  "y": 3680,
                   "z": 3000
                 },
-                "perimetroMm": 9000,
+                "perimetroMm": 44800,
                 "pontos": [
                   {
-                    "x": 15000,
-                    "y": 0,
-                    "z": 3000
-                  },
-                  {
-                    "x": 15000,
-                    "y": 2700,
-                    "z": 3000
-                  },
-                  {
-                    "x": 13200,
-                    "y": 2700,
-                    "z": 3000
-                  },
-                  {
                     "x": 13200,
                     "y": 0,
                     "z": 3000
                   },
                   {
-                    "x": 15000,
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
                     "y": 0,
                     "z": 3000
                   }
@@ -533,11 +264,11 @@
               "z": 0
             },
             "origem": {
-              "x": 15000,
+              "x": 13200,
               "y": 0,
               "z": 2700
             },
-            "areaM2": 0.54,
+            "areaM2": 3.96,
             "horizontal": false,
             "quantidadeLoops": 1,
             "loops": [
@@ -545,14 +276,19 @@
                 "indice": 0,
                 "quantidadePontos": 8,
                 "centro": {
-                  "x": 14100,
+                  "x": 6600,
                   "y": 0,
                   "z": 2850
                 },
-                "perimetroMm": 11400,
+                "perimetroMm": 79800,
                 "pontos": [
                   {
-                    "x": 15000,
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 0,
                     "y": 0,
                     "z": 2700
                   },
@@ -562,12 +298,12 @@
                     "z": 2700
                   },
                   {
-                    "x": 15000,
+                    "x": 13200,
                     "y": 0,
-                    "z": 2700
+                    "z": 3000
                   },
                   {
-                    "x": 15000,
+                    "x": 0,
                     "y": 0,
                     "z": 3000
                   },
@@ -577,17 +313,12 @@
                     "z": 3000
                   },
                   {
-                    "x": 15000,
+                    "x": 0,
                     "y": 0,
                     "z": 3000
                   },
                   {
-                    "x": 13200,
-                    "y": 0,
-                    "z": 3000
-                  },
-                  {
-                    "x": 13200,
+                    "x": 0,
                     "y": 0,
                     "z": 2700
                   }
@@ -602,11 +333,11 @@
               "z": 0
             },
             "origem": {
-              "x": 13200,
+              "x": 0,
               "y": 0,
               "z": 2700
             },
-            "areaM2": 0.81,
+            "areaM2": 2.7600000000000002,
             "horizontal": false,
             "quantidadeLoops": 1,
             "loops": [
@@ -614,50 +345,50 @@
                 "indice": 0,
                 "quantidadePontos": 8,
                 "centro": {
-                  "x": 13200,
-                  "y": 1350,
+                  "x": 0,
+                  "y": 4600,
                   "z": 2850
                 },
-                "perimetroMm": 16833.2,
+                "perimetroMm": 55809.8,
                 "pontos": [
                   {
-                    "x": 13200,
+                    "x": 0,
                     "y": 0,
                     "z": 2700
                   },
                   {
-                    "x": 13200,
-                    "y": 2700,
+                    "x": 0,
+                    "y": 9200,
                     "z": 2700
                   },
                   {
-                    "x": 13200,
+                    "x": 0,
                     "y": 0,
                     "z": 3000
                   },
                   {
-                    "x": 13200,
+                    "x": 0,
                     "y": 0,
                     "z": 2700
                   },
                   {
-                    "x": 13200,
-                    "y": 2700,
+                    "x": 0,
+                    "y": 9200,
                     "z": 3000
                   },
                   {
-                    "x": 13200,
+                    "x": 0,
                     "y": 0,
                     "z": 3000
                   },
                   {
-                    "x": 13200,
-                    "y": 2700,
+                    "x": 0,
+                    "y": 9200,
                     "z": 3000
                   },
                   {
-                    "x": 13200,
-                    "y": 2700,
+                    "x": 0,
+                    "y": 9200,
                     "z": 2700
                   }
                 ]
@@ -671,11 +402,11 @@
               "z": 0
             },
             "origem": {
-              "x": 13200,
-              "y": 2700,
+              "x": 0,
+              "y": 9200,
               "z": 2700
             },
-            "areaM2": 0.54,
+            "areaM2": 3.96,
             "horizontal": false,
             "quantidadeLoops": 1,
             "loops": [
@@ -683,50 +414,50 @@
                 "indice": 0,
                 "quantidadePontos": 8,
                 "centro": {
-                  "x": 14100,
-                  "y": 2700,
+                  "x": 6600,
+                  "y": 9200,
                   "z": 2850
                 },
-                "perimetroMm": 11449.7,
+                "perimetroMm": 79806.8,
                 "pontos": [
                   {
-                    "x": 13200,
-                    "y": 2700,
-                    "z": 2700
-                  },
-                  {
-                    "x": 15000,
-                    "y": 2700,
+                    "x": 0,
+                    "y": 9200,
                     "z": 2700
                   },
                   {
                     "x": 13200,
-                    "y": 2700,
-                    "z": 3000
-                  },
-                  {
-                    "x": 13200,
-                    "y": 2700,
+                    "y": 9200,
                     "z": 2700
                   },
                   {
-                    "x": 15000,
-                    "y": 2700,
+                    "x": 0,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
                     "z": 3000
                   },
                   {
                     "x": 13200,
-                    "y": 2700,
+                    "y": 9200,
                     "z": 3000
                   },
                   {
-                    "x": 15000,
-                    "y": 2700,
-                    "z": 3000
-                  },
-                  {
-                    "x": 15000,
-                    "y": 2700,
+                    "x": 13200,
+                    "y": 9200,
                     "z": 2700
                   }
                 ]
@@ -740,11 +471,11 @@
               "z": -0
             },
             "origem": {
-              "x": 15000,
-              "y": 2700,
+              "x": 13200,
+              "y": 9200,
               "z": 2700
             },
-            "areaM2": 0.81,
+            "areaM2": 2.7600000000000002,
             "horizontal": false,
             "quantidadeLoops": 1,
             "loops": [
@@ -752,49 +483,49 @@
                 "indice": 0,
                 "quantidadePontos": 8,
                 "centro": {
-                  "x": 15000,
-                  "y": 1350,
+                  "x": 13200,
+                  "y": 4600,
                   "z": 2850
                 },
-                "perimetroMm": 16866.5,
+                "perimetroMm": 55819.6,
                 "pontos": [
                   {
-                    "x": 15000,
-                    "y": 2700,
+                    "x": 13200,
+                    "y": 9200,
                     "z": 2700
                   },
                   {
-                    "x": 15000,
+                    "x": 13200,
                     "y": 0,
                     "z": 2700
                   },
                   {
-                    "x": 15000,
-                    "y": 2700,
+                    "x": 13200,
+                    "y": 9200,
                     "z": 3000
                   },
                   {
-                    "x": 15000,
-                    "y": 2700,
+                    "x": 13200,
+                    "y": 9200,
                     "z": 2700
                   },
                   {
-                    "x": 15000,
+                    "x": 13200,
                     "y": 0,
                     "z": 3000
                   },
                   {
-                    "x": 15000,
-                    "y": 2700,
+                    "x": 13200,
+                    "y": 9200,
                     "z": 3000
                   },
                   {
-                    "x": 15000,
+                    "x": 13200,
                     "y": 0,
                     "z": 2700
                   },
                   {
-                    "x": 15000,
+                    "x": 13200,
                     "y": 0,
                     "z": 3000
                   }
@@ -806,8 +537,8 @@
       }
     },
     {
-      "elementId": 470022,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c06",
+      "elementId": 470014,
+      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072bfe",
       "categoria": "\u003CCroqui\u003E",
       "classe": "ModelLine",
       "nome": "Linhas do modelo",
@@ -818,162 +549,28 @@
       "hostId": null,
       "fixado": false,
       "ponto": {
-        "x": 14100,
+        "x": 6600,
         "y": 0,
         "z": 3000
       },
       "bbox": {
         "min": {
-          "x": 13200,
-          "y": 0,
-          "z": 3000
-        },
-        "max": {
-          "x": 15000,
-          "y": 0,
-          "z": 3000
-        },
-        "centro": {
-          "x": 14100,
-          "y": 0,
-          "z": 3000
-        },
-        "tamanho": {
-          "x": 1800,
-          "y": 0,
-          "z": 0
-        }
-      },
-      "localizacao": {
-        "tipo": "curva",
-        "inicio": {
-          "x": 13200,
-          "y": 0,
-          "z": 3000
-        },
-        "fim": {
-          "x": 15000,
-          "y": 0,
-          "z": 3000
-        },
-        "comprimentoMm": 1800
-      },
-      "parametros": {
-        "Categoria": "Linhas: \u003CCroqui\u003E",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "Inclina\u00E7\u00E3o": "4.76\u00B0",
-        "Viga de a\u00E7o em balan\u00E7o": "0",
-        "Concreto em balan\u00E7o": "0",
-        "N\u00EDvel": "Nenhum",
-        "Deslocamento da base": "0",
-        "Defina a inclina\u00E7\u00E3o": "N\u00E3o",
-        "Define a altura constante": "N\u00E3o",
-        "Comprimento": "1800"
-      },
-      "geometria": null
-    },
-    {
-      "elementId": 470023,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c07",
-      "categoria": "\u003CCroqui\u003E",
-      "classe": "ModelLine",
-      "nome": "Linhas do modelo",
-      "familia": null,
-      "tipo": null,
-      "typeId": -1,
-      "nivel": null,
-      "hostId": null,
-      "fixado": false,
-      "ponto": {
-        "x": 15000,
-        "y": 1350,
-        "z": 3000
-      },
-      "bbox": {
-        "min": {
-          "x": 15000,
-          "y": 0,
-          "z": 3000
-        },
-        "max": {
-          "x": 15000,
-          "y": 2700,
-          "z": 3000
-        },
-        "centro": {
-          "x": 15000,
-          "y": 1350,
-          "z": 3000
-        },
-        "tamanho": {
           "x": 0,
-          "y": 2700,
-          "z": 0
-        }
-      },
-      "localizacao": {
-        "tipo": "curva",
-        "inicio": {
-          "x": 15000,
           "y": 0,
           "z": 3000
         },
-        "fim": {
-          "x": 15000,
-          "y": 2700,
-          "z": 3000
-        },
-        "comprimentoMm": 2700
-      },
-      "parametros": {
-        "Categoria": "Linhas: \u003CCroqui\u003E",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "Inclina\u00E7\u00E3o": "4.76\u00B0",
-        "Viga de a\u00E7o em balan\u00E7o": "0",
-        "Concreto em balan\u00E7o": "0",
-        "N\u00EDvel": "Nenhum",
-        "Deslocamento da base": "0",
-        "Defina a inclina\u00E7\u00E3o": "N\u00E3o",
-        "Define a altura constante": "N\u00E3o",
-        "Comprimento": "2700"
-      },
-      "geometria": null
-    },
-    {
-      "elementId": 470024,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c08",
-      "categoria": "\u003CCroqui\u003E",
-      "classe": "ModelLine",
-      "nome": "Linhas do modelo",
-      "familia": null,
-      "tipo": null,
-      "typeId": -1,
-      "nivel": null,
-      "hostId": null,
-      "fixado": false,
-      "ponto": {
-        "x": 14100,
-        "y": 2700,
-        "z": 3000
-      },
-      "bbox": {
-        "min": {
-          "x": 13200,
-          "y": 2700,
-          "z": 3000
-        },
         "max": {
-          "x": 15000,
-          "y": 2700,
+          "x": 13200,
+          "y": 0,
           "z": 3000
         },
         "centro": {
-          "x": 14100,
-          "y": 2700,
+          "x": 6600,
+          "y": 0,
           "z": 3000
         },
         "tamanho": {
-          "x": 1800,
+          "x": 13200,
           "y": 0,
           "z": 0
         }
@@ -981,75 +578,8 @@
       "localizacao": {
         "tipo": "curva",
         "inicio": {
-          "x": 15000,
-          "y": 2700,
-          "z": 3000
-        },
-        "fim": {
-          "x": 13200,
-          "y": 2700,
-          "z": 3000
-        },
-        "comprimentoMm": 1800
-      },
-      "parametros": {
-        "Categoria": "Linhas: \u003CCroqui\u003E",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "Inclina\u00E7\u00E3o": "4.76\u00B0",
-        "Viga de a\u00E7o em balan\u00E7o": "0",
-        "Concreto em balan\u00E7o": "0",
-        "N\u00EDvel": "Nenhum",
-        "Deslocamento da base": "0",
-        "Defina a inclina\u00E7\u00E3o": "N\u00E3o",
-        "Define a altura constante": "N\u00E3o",
-        "Comprimento": "1800"
-      },
-      "geometria": null
-    },
-    {
-      "elementId": 470025,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c09",
-      "categoria": "\u003CCroqui\u003E",
-      "classe": "ModelLine",
-      "nome": "Linhas do modelo",
-      "familia": null,
-      "tipo": null,
-      "typeId": -1,
-      "nivel": null,
-      "hostId": null,
-      "fixado": false,
-      "ponto": {
-        "x": 13200,
-        "y": 1350,
-        "z": 3000
-      },
-      "bbox": {
-        "min": {
-          "x": 13200,
-          "y": 0,
-          "z": 3000
-        },
-        "max": {
-          "x": 13200,
-          "y": 2700,
-          "z": 3000
-        },
-        "centro": {
-          "x": 13200,
-          "y": 1350,
-          "z": 3000
-        },
-        "tamanho": {
           "x": 0,
-          "y": 2700,
-          "z": 0
-        }
-      },
-      "localizacao": {
-        "tipo": "curva",
-        "inicio": {
-          "x": 13200,
-          "y": 2700,
+          "y": 0,
           "z": 3000
         },
         "fim": {
@@ -1057,7 +587,7 @@
           "y": 0,
           "z": 3000
         },
-        "comprimentoMm": 2700
+        "comprimentoMm": 13200
       },
       "parametros": {
         "Categoria": "Linhas: \u003CCroqui\u003E",
@@ -1069,67 +599,7 @@
         "Deslocamento da base": "0",
         "Defina a inclina\u00E7\u00E3o": "N\u00E3o",
         "Define a altura constante": "N\u00E3o",
-        "Comprimento": "2700"
-      },
-      "geometria": null
-    },
-    {
-      "elementId": 470026,
-      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c0a",
-      "categoria": "\u003CCroqui\u003E",
-      "classe": "ModelLine",
-      "nome": "Arestas da dire\u00E7\u00E3o do v\u00E3o",
-      "familia": null,
-      "tipo": null,
-      "typeId": -1,
-      "nivel": null,
-      "hostId": null,
-      "fixado": false,
-      "ponto": {
-        "x": 14100,
-        "y": 1350,
-        "z": 3000
-      },
-      "bbox": {
-        "min": {
-          "x": 13500,
-          "y": 1326,
-          "z": 3000
-        },
-        "max": {
-          "x": 14700,
-          "y": 1374,
-          "z": 3000
-        },
-        "centro": {
-          "x": 14100,
-          "y": 1350,
-          "z": 3000
-        },
-        "tamanho": {
-          "x": 1200,
-          "y": 48,
-          "z": 0
-        }
-      },
-      "localizacao": {
-        "tipo": "curva",
-        "inicio": {
-          "x": 13500,
-          "y": 1350,
-          "z": 3000
-        },
-        "fim": {
-          "x": 14700,
-          "y": 1350,
-          "z": 3000
-        },
-        "comprimentoMm": 1200
-      },
-      "parametros": {
-        "Categoria": "Linhas: \u003CCroqui\u003E",
-        "Op\u00E7\u00E3o de desenho": "-1",
-        "Comprimento": "1200"
+        "Comprimento": "13200"
       },
       "geometria": null
     }
