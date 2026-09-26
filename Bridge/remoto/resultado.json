@@ -1,9 +1,12 @@
 {
-  "id": "ref-g-left-glass-2606",
-  "sucesso": false,
-  "mensagem": "Falha em criar_parede",
-  "quantidade": 0,
-  "elementIds": [],
-  "erro": "The referenced object is not valid, possibly because it has been deleted from the database, or its creation was undone.",
+  "id": "ref-copy-ground-glass-2608",
+  "sucesso": true,
+  "mensagem": "2 c\u00F3pia(s) criada(s).",
+  "quantidade": 2,
+  "elementIds": [
+    471258,
+    471260
+  ],
+  "erro": null,
   "dados": null
 }
