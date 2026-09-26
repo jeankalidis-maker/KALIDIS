@@ -1,10 +1,11 @@
 {
-  "id": "ref-ground-front-glass-2618",
+  "id": "ref-copy-curtain-ground-2620",
   "sucesso": true,
-  "mensagem": "Parede criada.",
-  "quantidade": 1,
+  "mensagem": "2 c\u00F3pia(s) criada(s).",
+  "quantidade": 2,
   "elementIds": [
-    471272
+    471275,
+    471278
   ],
   "erro": null,
   "dados": null
