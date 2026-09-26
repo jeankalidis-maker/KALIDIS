@@ -1,9 +1,11 @@
 {
-  "id": "aud-wall-upper-left-brick-2215",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: criar_parede",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "aud-wall-upper-back-brick-2215",
+  "sucesso": true,
+  "mensagem": "Parede criada.",
+  "quantidade": 1,
+  "elementIds": [
+    470061
+  ],
   "erro": null,
   "dados": null
 }
