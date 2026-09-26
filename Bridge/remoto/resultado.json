@@ -1,12 +1,9 @@
 {
-  "id": "ref-glass-type-2612",
-  "sucesso": true,
-  "mensagem": "Tipo alterado em 2 elemento(s) para \u0027Parede cortina 1\u0027.",
-  "quantidade": 2,
-  "elementIds": [
-    471240,
-    471244
-  ],
+  "id": "ref-check-ground-copies-2613",
+  "sucesso": false,
+  "mensagem": "Nenhum elemento encontrado para snapshot.",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
