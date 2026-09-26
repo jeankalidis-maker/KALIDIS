@@ -1,9 +1,12 @@
 {
-  "id": "bridge-health-save-2609",
-  "sucesso": false,
-  "mensagem": "Falha ao executar \u0027salvar\u0027.",
-  "quantidade": 0,
-  "elementIds": [],
-  "erro": "Saving failed.",
+  "id": "ref-copy-ground-glass-2610",
+  "sucesso": true,
+  "mensagem": "2 c\u00F3pia(s) criada(s).",
+  "quantidade": 2,
+  "elementIds": [
+    471264,
+    471266
+  ],
+  "erro": null,
   "dados": null
 }
