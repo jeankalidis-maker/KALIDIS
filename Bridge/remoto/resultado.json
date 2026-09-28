@@ -1,8 +1,8 @@
 {
-  "id": "dn142b-load-no-catalog-20260928-0820",
-  "sucesso": false,
-  "mensagem": "Revit n\u00E3o carregou a fam\u00EDlia.",
-  "quantidade": 0,
+  "id": "abrir-autodesk-family-light-20260928-0825",
+  "sucesso": true,
+  "mensagem": "Comando nativo LoadAutodeskFamily enviado ao Revit.",
+  "quantidade": 1,
   "elementIds": [],
   "erro": null,
   "dados": null
