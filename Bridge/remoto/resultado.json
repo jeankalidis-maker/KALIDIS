@@ -1,9 +1,26 @@
 {
-  "id": "inserir-dn142b-auditorio-20260928-0804",
-  "sucesso": false,
-  "mensagem": "S\u00EDmbolo DN142B n\u00E3o encontrado no projeto.",
-  "quantidade": 0,
+  "id": "teste-bridge-startpage-20260928-0856",
+  "sucesso": true,
+  "mensagem": "16 comandos nativos dispon\u00EDveis no enum PostableCommand.",
+  "quantidade": 16,
   "elementIds": [],
   "erro": null,
-  "dados": null
+  "dados": [
+    "DormerOpening",
+    "HideBoundaryOpenEnds",
+    "LoadAsGroupIntoOpenProjects",
+    "OpenCloudModel",
+    "OpenFamily",
+    "OpenIFC",
+    "OpenIFCOptions",
+    "Opening",
+    "OpeningByFace",
+    "OpenProject",
+    "OpenRevitFile",
+    "OpenSampleFiles",
+    "ShaftOpening",
+    "ShowBoundaryOpenEnds",
+    "VerticalOpening",
+    "WallOpening"
+  ]
 }
