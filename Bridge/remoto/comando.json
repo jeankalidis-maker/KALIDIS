@@ -1,5 +1,5 @@
 {
-  "id": "recriar-forro-auditorio-remoto-20260927-2237",
-  "acao": "recriar_forro_auditorio",
-  "ativo": true
+  "id": "remote-paused-forro-20260927-2240",
+  "acao": "info",
+  "ativo": false
 }
