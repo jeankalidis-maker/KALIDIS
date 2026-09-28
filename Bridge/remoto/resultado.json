@@ -1,18 +1,9 @@
 {
-  "id": "listar-family-native-20260928-0736",
+  "id": "salvar-antes-update-luz-20260928-0740",
   "sucesso": true,
-  "mensagem": "8 comandos nativos dispon\u00EDveis no enum PostableCommand.",
-  "quantidade": 8,
+  "mensagem": "Documento salvo.",
+  "quantidade": 0,
   "elementIds": [],
   "erro": null,
-  "dados": [
-    "FamilyCategoryAndParameters",
-    "FamilyTypes",
-    "LoadAutodeskFamily",
-    "LoadFamilyIntoProjectAndClose",
-    "NewFamily",
-    "OpenFamily",
-    "SaveAsFamily",
-    "SaveAsLibraryFamily"
-  ]
+  "dados": null
 }
