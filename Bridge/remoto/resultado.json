@@ -1,7 +1,7 @@
 {
-  "id": "carregar-dn142b-catalogo-20260928-0758",
+  "id": "recriar-forro-auditorio-remoto-20260927-2237",
   "sucesso": false,
-  "mensagem": "Revit n\u00E3o carregou o s\u00EDmbolo \u0027DN142B 20S_840 PSD-E F D200\u0027.",
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: recriar_forro_auditorio",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
