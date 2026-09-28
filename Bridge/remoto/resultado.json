@@ -1,11 +1,9 @@
 {
-  "id": "criar-forro-novo-20260927-2225",
-  "sucesso": true,
-  "mensagem": "Forro criado.",
-  "quantidade": 1,
-  "elementIds": [
-    471571
-  ],
+  "id": "corrigir-forro-novo-3d-20260927-2226",
+  "sucesso": false,
+  "mensagem": "Estrutura composta do tipo de forro n\u00E3o dispon\u00EDvel.",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
