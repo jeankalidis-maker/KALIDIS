@@ -1,8 +1,8 @@
 {
-  "id": "abrir-autodesk-family-light-20260928-0825",
-  "sucesso": true,
-  "mensagem": "Comando nativo LoadAutodeskFamily enviado ao Revit.",
-  "quantidade": 1,
+  "id": "carregar-dn142b-symbol-20260928-0755",
+  "sucesso": false,
+  "mensagem": "Revit n\u00E3o carregou o s\u00EDmbolo \u0027DN142B 20S_840 PSD-E F D200\u0027.",
+  "quantidade": 0,
   "elementIds": [],
   "erro": null,
   "dados": null
