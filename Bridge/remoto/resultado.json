@@ -1,7 +1,7 @@
 {
-  "id": "corrigir-forro-471571-remoto-20260927-2230",
-  "sucesso": false,
-  "mensagem": "Estrutura composta do tipo de forro n\u00E3o dispon\u00EDvel.",
+  "id": "save-before-forro-final-20260927-2231",
+  "sucesso": true,
+  "mensagem": "Documento salvo.",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
