@@ -1,20 +1,10 @@
 {
-  "id": "excluir-forro-antigo-remoto-20260927-2216",
+  "id": "criar-forro-novo-20260927-2225",
   "sucesso": true,
-  "mensagem": "11 elemento(s) removido(s), incluindo depend\u00EAncias do Revit quando aplic\u00E1vel.",
-  "quantidade": 11,
+  "mensagem": "Forro criado.",
+  "quantidade": 1,
   "elementIds": [
-    471480,
-    471481,
-    471482,
-    471483,
-    471484,
-    471485,
-    471486,
-    471487,
-    471488,
-    471489,
-    471490
+    471571
   ],
   "erro": null,
   "dados": null
