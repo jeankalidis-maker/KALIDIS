@@ -1,9 +1,19 @@
 {
-  "id": "recriar-forro-auditorio-remoto-20260927-2237",
-  "sucesso": false,
-  "mensagem": "Nenhum documento Revit ativo.",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "recriar-forro-final-agora-20260927-2222",
+  "sucesso": true,
+  "mensagem": "Forro antigo exclu\u00EDdo e novo forro liso de 50 mm criado.",
+  "quantidade": 1,
+  "elementIds": [
+    471594
+  ],
   "erro": null,
-  "dados": null
+  "dados": {
+    "tipoId": 471590,
+    "tipo": "KALIDIS - FORRO LISO 50mm",
+    "espessuraMm": 50,
+    "larguraMm": 15000,
+    "comprimentoMm": 9200,
+    "deslocamentoNivelMm": 2600,
+    "nivel": "N\u00EDvel Audit\u00F3rio"
+  }
 }
