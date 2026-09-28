@@ -1,7 +1,7 @@
 {
-  "id": "dn142b-load-final-20260928-0802",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: carregar_familia",
+  "id": "verificar-dn142b-carregado-20260928-0803",
+  "sucesso": true,
+  "mensagem": "0 elemento(s) encontrado(s).",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
