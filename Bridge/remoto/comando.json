@@ -1,6 +1,6 @@
 {
-  "ativo": true,
-  "id": "teste-ponte-revit-aberto-20260820-1633",
-  "acao": "info",
-  "elementIds": [828712]
+  "id": "forro-mostrar-vista-20260927-2140",
+  "acao": "mostrar_vista",
+  "elementIds": [471482],
+  "ativo": true
 }
