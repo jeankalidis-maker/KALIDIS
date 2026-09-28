@@ -1,6 +1,5 @@
 {
-  "id": "corrigir-forro-471571-remoto-20260927-2230",
-  "acao": "corrigir_forro_3d",
-  "elementIds": [471571],
+  "id": "recriar-forro-auditorio-remoto-20260927-2237",
+  "acao": "recriar_forro_auditorio",
   "ativo": true
 }
