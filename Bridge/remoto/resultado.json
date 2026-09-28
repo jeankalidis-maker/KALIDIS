@@ -1,26 +1,9 @@
 {
-  "id": "listar-open-native-20260928-0755",
-  "sucesso": true,
-  "mensagem": "16 comandos nativos dispon\u00EDveis no enum PostableCommand.",
-  "quantidade": 16,
+  "id": "carregar-dn142b-catalogo-20260928-0758",
+  "sucesso": false,
+  "mensagem": "Revit n\u00E3o carregou o s\u00EDmbolo \u0027DN142B 20S_840 PSD-E F D200\u0027.",
+  "quantidade": 0,
   "elementIds": [],
   "erro": null,
-  "dados": [
-    "DormerOpening",
-    "HideBoundaryOpenEnds",
-    "LoadAsGroupIntoOpenProjects",
-    "OpenCloudModel",
-    "OpenFamily",
-    "OpenIFC",
-    "OpenIFCOptions",
-    "Opening",
-    "OpeningByFace",
-    "OpenProject",
-    "OpenRevitFile",
-    "OpenSampleFiles",
-    "ShaftOpening",
-    "ShowBoundaryOpenEnds",
-    "VerticalOpening",
-    "WallOpening"
-  ]
+  "dados": null
 }
