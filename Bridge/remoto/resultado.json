@@ -1,7 +1,7 @@
 {
-  "id": "save-before-forro-final-20260927-2231",
-  "sucesso": true,
-  "mensagem": "Documento salvo.",
+  "id": "recriar-forro-final-50mm-20260927-2245",
+  "sucesso": false,
+  "mensagem": "Nenhum documento Revit ativo.",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
