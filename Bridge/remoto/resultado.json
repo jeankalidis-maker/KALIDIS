@@ -1,9 +1,21 @@
 {
-  "id": "criar-forro-novo-50mm-base-20260927-2220",
-  "sucesso": false,
-  "mensagem": "Nenhum documento Revit ativo.",
-  "quantidade": 0,
-  "elementIds": [],
+  "id": "excluir-forro-antigo-remoto-20260927-2216",
+  "sucesso": true,
+  "mensagem": "11 elemento(s) removido(s), incluindo depend\u00EAncias do Revit quando aplic\u00E1vel.",
+  "quantidade": 11,
+  "elementIds": [
+    471480,
+    471481,
+    471482,
+    471483,
+    471484,
+    471485,
+    471486,
+    471487,
+    471488,
+    471489,
+    471490
+  ],
   "erro": null,
   "dados": null
 }
