@@ -1,7 +1,7 @@
 {
-  "id": "verificar-dn142b-carregado-20260928-0803",
-  "sucesso": true,
-  "mensagem": "0 elemento(s) encontrado(s).",
+  "id": "inserir-dn142b-auditorio-final-20260928-0805",
+  "sucesso": false,
+  "mensagem": "S\u00EDmbolo DN142B n\u00E3o encontrado no projeto.",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
