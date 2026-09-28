@@ -1,7 +1,7 @@
 {
-  "id": "carregar-dn142b-20260927-2236",
-  "sucesso": false,
-  "mensagem": "Revit n\u00E3o carregou a fam\u00EDlia.",
+  "id": "buscar-dn142b-modelo-20260927-2240",
+  "sucesso": true,
+  "mensagem": "0 elemento(s) encontrado(s).",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
