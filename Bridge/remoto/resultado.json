@@ -1,19 +1,9 @@
 {
-  "id": "recriar-forro-auditorio-remoto-20260927-2237",
-  "sucesso": true,
-  "mensagem": "Forro antigo exclu\u00EDdo e novo forro liso de 50 mm criado.",
-  "quantidade": 1,
-  "elementIds": [
-    471620
-  ],
+  "id": "dn142b-load-corrected-20260928-0810",
+  "sucesso": false,
+  "mensagem": "Revit n\u00E3o carregou o s\u00EDmbolo \u0027DN142B 20S_840 PSD-E F D200\u0027.",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
-  "dados": {
-    "tipoId": 471590,
-    "tipo": "KALIDIS - FORRO LISO 50mm",
-    "espessuraMm": 50,
-    "larguraMm": 15000,
-    "comprimentoMm": 9200,
-    "deslocamentoNivelMm": 2600,
-    "nivel": "N\u00EDvel Audit\u00F3rio"
-  }
+  "dados": null
 }
