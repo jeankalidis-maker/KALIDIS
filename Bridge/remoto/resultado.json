@@ -1,9 +1,18 @@
 {
-  "id": "post-loadfamily-dn142b-20260927-2248",
-  "sucesso": false,
-  "mensagem": "PostableCommand desconhecido: LoadFamily",
-  "quantidade": 0,
+  "id": "listar-family-native-20260928-0736",
+  "sucesso": true,
+  "mensagem": "8 comandos nativos dispon\u00EDveis no enum PostableCommand.",
+  "quantidade": 8,
   "elementIds": [],
   "erro": null,
-  "dados": null
+  "dados": [
+    "FamilyCategoryAndParameters",
+    "FamilyTypes",
+    "LoadAutodeskFamily",
+    "LoadFamilyIntoProjectAndClose",
+    "NewFamily",
+    "OpenFamily",
+    "SaveAsFamily",
+    "SaveAsLibraryFamily"
+  ]
 }
