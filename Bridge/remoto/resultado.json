@@ -1,11 +1,9 @@
 {
-  "id": "listar-luminarias-exatas-20260927-2242",
-  "sucesso": true,
-  "mensagem": "1 elemento(s) encontrado(s).",
-  "quantidade": 1,
-  "elementIds": [
-    143
-  ],
+  "id": "inserir-dn142b-teste-20260927-2246",
+  "sucesso": false,
+  "mensagem": "S\u00EDmbolo de fam\u00EDlia n\u00E3o encontrado.",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
