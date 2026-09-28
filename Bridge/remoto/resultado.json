@@ -1,9 +1,11 @@
 {
-  "id": "buscar-dn142b-modelo-20260927-2240",
+  "id": "listar-luminarias-exatas-20260927-2242",
   "sucesso": true,
-  "mensagem": "0 elemento(s) encontrado(s).",
-  "quantidade": 0,
-  "elementIds": [],
+  "mensagem": "1 elemento(s) encontrado(s).",
+  "quantidade": 1,
+  "elementIds": [
+    143
+  ],
   "erro": null,
   "dados": null
 }
