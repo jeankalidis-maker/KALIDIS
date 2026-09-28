@@ -1,9 +1,26 @@
 {
-  "id": "salvar-antes-update-luz-20260928-0740",
+  "id": "listar-open-native-20260928-0755",
   "sucesso": true,
-  "mensagem": "Documento salvo.",
-  "quantidade": 0,
+  "mensagem": "16 comandos nativos dispon\u00EDveis no enum PostableCommand.",
+  "quantidade": 16,
   "elementIds": [],
   "erro": null,
-  "dados": null
+  "dados": [
+    "DormerOpening",
+    "HideBoundaryOpenEnds",
+    "LoadAsGroupIntoOpenProjects",
+    "OpenCloudModel",
+    "OpenFamily",
+    "OpenIFC",
+    "OpenIFCOptions",
+    "Opening",
+    "OpeningByFace",
+    "OpenProject",
+    "OpenRevitFile",
+    "OpenSampleFiles",
+    "ShaftOpening",
+    "ShowBoundaryOpenEnds",
+    "VerticalOpening",
+    "WallOpening"
+  ]
 }
