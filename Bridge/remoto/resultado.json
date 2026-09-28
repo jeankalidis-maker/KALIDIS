@@ -1,7 +1,7 @@
 {
-  "id": "aud-save-before-dll-fix-2352",
-  "sucesso": true,
-  "mensagem": "Documento salvo.",
+  "id": "criar-forro-novo-50mm-base-20260927-2220",
+  "sucesso": false,
+  "mensagem": "Nenhum documento Revit ativo.",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
