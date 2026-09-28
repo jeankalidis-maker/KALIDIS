@@ -1,26 +1,11 @@
 {
-  "id": "teste-bridge-startpage-20260928-0856",
+  "id": "carregar-dn142b-final-20260928-1848",
   "sucesso": true,
-  "mensagem": "16 comandos nativos dispon\u00EDveis no enum PostableCommand.",
-  "quantidade": 16,
-  "elementIds": [],
+  "mensagem": "S\u00EDmbolo carregado: DN142B 20S_840 PSD-E F D200 - DN142B 20S_840 PSD-E F D200.",
+  "quantidade": 1,
+  "elementIds": [
+    472946
+  ],
   "erro": null,
-  "dados": [
-    "DormerOpening",
-    "HideBoundaryOpenEnds",
-    "LoadAsGroupIntoOpenProjects",
-    "OpenCloudModel",
-    "OpenFamily",
-    "OpenIFC",
-    "OpenIFCOptions",
-    "Opening",
-    "OpeningByFace",
-    "OpenProject",
-    "OpenRevitFile",
-    "OpenSampleFiles",
-    "ShaftOpening",
-    "ShowBoundaryOpenEnds",
-    "VerticalOpening",
-    "WallOpening"
-  ]
+  "dados": null
 }
