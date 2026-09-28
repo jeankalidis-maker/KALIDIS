@@ -1,5 +1,6 @@
 {
-  "id": "reset-isolamento-forro-remoto-20260927-2148",
-  "acao": "reset_isolamento",
+  "id": "snapshot-tipo-forro-remoto-20260927-2158",
+  "acao": "snapshot_elemento",
+  "elementIds": [373],
   "ativo": true
 }
