@@ -1,7 +1,7 @@
 {
-  "id": "finalizar-interior-auditorio-20260929-2227",
+  "id": "mostrar-interior-final-20260929-2231",
   "sucesso": true,
-  "mensagem": "Interior do audit\u00F3rio finalizado: piso, revestimentos ac\u00FAsticos, palco, tela, p\u00FAlpito e rodap\u00E9s.",
+  "mensagem": "7 elemento(s) exibido(s) na vista ativa.",
   "quantidade": 7,
   "elementIds": [
     473370,
@@ -13,12 +13,5 @@
     473376
   ],
   "erro": null,
-  "dados": {
-    "poltronasExistentes": 150,
-    "piso": "carpete grafite",
-    "paredes": "grafite \u002B madeira",
-    "palco": true,
-    "tela": true,
-    "pulpito": true
-  }
+  "dados": null
 }
