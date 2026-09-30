@@ -1,7 +1,7 @@
 {
-  "id": "corrigir-tijolo-horizontal-20260929-2104",
-  "sucesso": false,
-  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: corrigir_tijolo_horizontal",
+  "id": "salvar-antes-tijolo-horizontal-20260929-2110",
+  "sucesso": true,
+  "mensagem": "Documento salvo.",
   "quantidade": 0,
   "elementIds": [],
   "erro": null,
