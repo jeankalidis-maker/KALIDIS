@@ -1,9 +1,198 @@
 {
-  "id": "salvar-antes-tijolo-horizontal-20260929-2110",
+  "id": "info-pisos-base-20260929-2120",
   "sucesso": true,
-  "mensagem": "Documento salvo.",
-  "quantidade": 0,
-  "elementIds": [],
+  "mensagem": "Informa\u00E7\u00F5es de 17 elemento(s).",
+  "quantidade": 17,
+  "elementIds": [
+    55,
+    56,
+    118223,
+    143170,
+    143171,
+    151502,
+    152335,
+    152336,
+    195040,
+    203856,
+    203859,
+    447600,
+    447601,
+    463815,
+    470013,
+    470021,
+    470029
+  ],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "elementId": 55,
+      "categoria": null,
+      "nome": "Pisos",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 56,
+      "categoria": null,
+      "nome": "Pisos",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 118223,
+      "categoria": "Configura\u00E7\u00F5es de tipo de espa\u00E7o",
+      "nome": "\u00C1trio - Primeiros tr\u00EAs pisos",
+      "classe": "HVACLoadSpaceType",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 143170,
+      "categoria": null,
+      "nome": "Pisos de massa",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 143171,
+      "categoria": null,
+      "nome": "Pisos de massa",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 151502,
+      "categoria": null,
+      "nome": "Pisos anal\u00EDticos",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 152335,
+      "categoria": null,
+      "nome": "Pisos/Espelhos",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 152336,
+      "categoria": null,
+      "nome": "Pisos/Espelhos",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 195040,
+      "categoria": null,
+      "nome": "N\u00FAmeros de pisos/espelhos da escada",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 203856,
+      "categoria": null,
+      "nome": "Pisos elevados",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 203859,
+      "categoria": null,
+      "nome": "Pisos internos",
+      "classe": "GraphicsStyle",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 447600,
+      "categoria": "Materiais",
+      "nome": "Superf\u00EDcie anal\u00EDtica \u2013 Pisos internos",
+      "classe": "Material",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 447601,
+      "categoria": null,
+      "nome": "Pisos internos",
+      "classe": "AppearanceAssetElement",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 463815,
+      "categoria": "Materiais",
+      "nome": "Pisos internos",
+      "classe": "Material",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 470013,
+      "categoria": "Pisos",
+      "nome": "Gen\u00E9rico 300 mm",
+      "classe": "Floor",
+      "tipoId": 628,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 470021,
+      "categoria": "Pisos",
+      "nome": "Gen\u00E9rico 300 mm",
+      "classe": "Floor",
+      "tipoId": 628,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 470029,
+      "categoria": "Pisos",
+      "nome": "Gen\u00E9rico 300 mm",
+      "classe": "Floor",
+      "tipoId": 628,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    }
+  ]
 }
