@@ -1,11 +1,9 @@
 {
-  "id": "selecionar-dn142b-apos-real-size",
-  "sucesso": true,
-  "mensagem": "1 elemento(s) selecionado(s).",
-  "quantidade": 1,
-  "elementIds": [
-    472961
-  ],
+  "id": "corrigir-tijolo-horizontal-20260929-2104",
+  "sucesso": false,
+  "mensagem": "A\u00E7\u00E3o ainda n\u00E3o suportada: corrigir_tijolo_horizontal",
+  "quantidade": 0,
+  "elementIds": [],
   "erro": null,
   "dados": null
 }
