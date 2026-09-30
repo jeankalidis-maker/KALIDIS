@@ -1,23 +1,9 @@
 {
-  "id": "info-pisos-base-20260929-2120",
+  "id": "snapshot-pisos-existentes-20260929-2122",
   "sucesso": true,
-  "mensagem": "Informa\u00E7\u00F5es de 17 elemento(s).",
-  "quantidade": 17,
+  "mensagem": "Snapshot geom\u00E9trico de 3 elemento(s).",
+  "quantidade": 3,
   "elementIds": [
-    55,
-    56,
-    118223,
-    143170,
-    143171,
-    151502,
-    152335,
-    152336,
-    195040,
-    203856,
-    203859,
-    447600,
-    447601,
-    463815,
     470013,
     470021,
     470029
@@ -25,174 +11,1378 @@
   "erro": null,
   "dados": [
     {
-      "elementId": 55,
-      "categoria": null,
-      "nome": "Pisos",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 56,
-      "categoria": null,
-      "nome": "Pisos",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 118223,
-      "categoria": "Configura\u00E7\u00F5es de tipo de espa\u00E7o",
-      "nome": "\u00C1trio - Primeiros tr\u00EAs pisos",
-      "classe": "HVACLoadSpaceType",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 143170,
-      "categoria": null,
-      "nome": "Pisos de massa",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 143171,
-      "categoria": null,
-      "nome": "Pisos de massa",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 151502,
-      "categoria": null,
-      "nome": "Pisos anal\u00EDticos",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 152335,
-      "categoria": null,
-      "nome": "Pisos/Espelhos",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 152336,
-      "categoria": null,
-      "nome": "Pisos/Espelhos",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 195040,
-      "categoria": null,
-      "nome": "N\u00FAmeros de pisos/espelhos da escada",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 203856,
-      "categoria": null,
-      "nome": "Pisos elevados",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 203859,
-      "categoria": null,
-      "nome": "Pisos internos",
-      "classe": "GraphicsStyle",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 447600,
-      "categoria": "Materiais",
-      "nome": "Superf\u00EDcie anal\u00EDtica \u2013 Pisos internos",
-      "classe": "Material",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 447601,
-      "categoria": null,
-      "nome": "Pisos internos",
-      "classe": "AppearanceAssetElement",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
-      "elementId": 463815,
-      "categoria": "Materiais",
-      "nome": "Pisos internos",
-      "classe": "Material",
-      "tipoId": -1,
-      "fixado": false,
-      "familia": null,
-      "tipo": null
-    },
-    {
       "elementId": 470013,
+      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072bfd",
       "categoria": "Pisos",
-      "nome": "Gen\u00E9rico 300 mm",
       "classe": "Floor",
-      "tipoId": 628,
-      "fixado": false,
+      "nome": "Gen\u00E9rico 300 mm",
       "familia": null,
-      "tipo": null
+      "tipo": "Gen\u00E9rico 300 mm",
+      "typeId": 628,
+      "nivel": "N\u00EDvel Audit\u00F3rio",
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 6600,
+        "y": 4600,
+        "z": 2850
+      },
+      "bbox": {
+        "min": {
+          "x": 0,
+          "y": 0,
+          "z": 2700
+        },
+        "max": {
+          "x": 13200,
+          "y": 9200,
+          "z": 3000
+        },
+        "centro": {
+          "x": 6600,
+          "y": 4600,
+          "z": 2850
+        },
+        "tamanho": {
+          "x": 13200,
+          "y": 9200,
+          "z": 300
+        }
+      },
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "Pisos",
+        "Exportar para IFC": "Por tipo",
+        "IfcGUID": "2k5OgNFzDDUOTbReWz$wCd",
+        "Existe associa\u00E7\u00E3o": "N\u00E3o",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Volume": "36.43 m\u00B3",
+        "\u00C1rea": "121 m\u00B2",
+        "Fase demolida": "Nenhum",
+        "Fase criada": "Constru\u00E7\u00E3o nova",
+        "N\u00EDvel": "N\u00EDvel Audit\u00F3rio",
+        "Fam\u00EDlia e tipo": "Piso: Gen\u00E9rico 300 mm",
+        "Fam\u00EDlia": "Piso",
+        "Tipo": "Gen\u00E9rico 300 mm",
+        "ID de tipo": "628",
+        "Estrutural": "N\u00E3o",
+        "Per\u00EDmetro": "44800",
+        "Altura do deslocamento do n\u00EDvel": "0",
+        "Espessura": "300",
+        "Relativo \u00E0 massa": "N\u00E3o",
+        "Eleva\u00E7\u00E3o no n\u00FAcleo inferior": "2700",
+        "Eleva\u00E7\u00E3o no n\u00FAcleo superior": "3000",
+        "Eleva\u00E7\u00E3o no topo": "3000",
+        "Eleva\u00E7\u00E3o na parte inferior": "2700",
+        "Delimita\u00E7\u00E3o de ambientes": "Sim"
+      },
+      "geometria": {
+        "quantidadeSolidos": 1,
+        "volumeM3": 36.432,
+        "areaSuperficialM2": 256.32,
+        "facesPlanas": [
+          {
+            "normal": {
+              "x": -0,
+              "y": 0,
+              "z": -1
+            },
+            "origem": {
+              "x": 0,
+              "y": 0,
+              "z": 2700
+            },
+            "areaM2": 121.44,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 5,
+                "centro": {
+                  "x": 7920,
+                  "y": 3680,
+                  "z": 2700
+                },
+                "perimetroMm": 44800,
+                "pontos": [
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 1
+            },
+            "origem": {
+              "x": 0,
+              "y": 0,
+              "z": 3000
+            },
+            "areaM2": 121.44,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 5,
+                "centro": {
+                  "x": 7920,
+                  "y": 3680,
+                  "z": 3000
+                },
+                "perimetroMm": 44800,
+                "pontos": [
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": -1,
+              "z": 0
+            },
+            "origem": {
+              "x": 13200,
+              "y": 0,
+              "z": 2700
+            },
+            "areaM2": 3.96,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 6600,
+                  "y": 0,
+                  "z": 2850
+                },
+                "perimetroMm": 79800,
+                "pontos": [
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -1,
+              "y": 0,
+              "z": 0
+            },
+            "origem": {
+              "x": 0,
+              "y": 0,
+              "z": 2700
+            },
+            "areaM2": 2.7600000000000002,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 0,
+                  "y": 4600,
+                  "z": 2850
+                },
+                "perimetroMm": 55809.8,
+                "pontos": [
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 1,
+              "z": 0
+            },
+            "origem": {
+              "x": 0,
+              "y": 9200,
+              "z": 2700
+            },
+            "areaM2": 3.96,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 6600,
+                  "y": 9200,
+                  "z": 2850
+                },
+                "perimetroMm": 79806.8,
+                "pontos": [
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 0,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 1,
+              "y": 0,
+              "z": -0
+            },
+            "origem": {
+              "x": 13200,
+              "y": 9200,
+              "z": 2700
+            },
+            "areaM2": 2.7600000000000002,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 13200,
+                  "y": 4600,
+                  "z": 2850
+                },
+                "perimetroMm": 55819.6,
+                "pontos": [
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "elementId": 470021,
+      "uniqueId": "ae158a97-3fd3-4d79-8765-6e883df888da-00072c05",
       "categoria": "Pisos",
-      "nome": "Gen\u00E9rico 300 mm",
       "classe": "Floor",
-      "tipoId": 628,
-      "fixado": false,
+      "nome": "Gen\u00E9rico 300 mm",
       "familia": null,
-      "tipo": null
+      "tipo": "Gen\u00E9rico 300 mm",
+      "typeId": 628,
+      "nivel": "N\u00EDvel Audit\u00F3rio",
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 14100,
+        "y": 1350,
+        "z": 2850
+      },
+      "bbox": {
+        "min": {
+          "x": 13200,
+          "y": 0,
+          "z": 2700
+        },
+        "max": {
+          "x": 15000,
+          "y": 2700,
+          "z": 3000
+        },
+        "centro": {
+          "x": 14100,
+          "y": 1350,
+          "z": 2850
+        },
+        "tamanho": {
+          "x": 1800,
+          "y": 2700,
+          "z": 300
+        }
+      },
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "Pisos",
+        "Exportar para IFC": "Por tipo",
+        "IfcGUID": "2k5OgNFzDDUOTbReWz$wJV",
+        "Existe associa\u00E7\u00E3o": "N\u00E3o",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Volume": "1.46 m\u00B3",
+        "\u00C1rea": "5 m\u00B2",
+        "Fase demolida": "Nenhum",
+        "Fase criada": "Constru\u00E7\u00E3o nova",
+        "N\u00EDvel": "N\u00EDvel Audit\u00F3rio",
+        "Fam\u00EDlia e tipo": "Piso: Gen\u00E9rico 300 mm",
+        "Fam\u00EDlia": "Piso",
+        "Tipo": "Gen\u00E9rico 300 mm",
+        "ID de tipo": "628",
+        "Estrutural": "N\u00E3o",
+        "Per\u00EDmetro": "9000",
+        "Altura do deslocamento do n\u00EDvel": "0",
+        "Espessura": "300",
+        "Relativo \u00E0 massa": "N\u00E3o",
+        "Eleva\u00E7\u00E3o no n\u00FAcleo inferior": "2700",
+        "Eleva\u00E7\u00E3o no n\u00FAcleo superior": "3000",
+        "Eleva\u00E7\u00E3o no topo": "3000",
+        "Eleva\u00E7\u00E3o na parte inferior": "2700",
+        "Delimita\u00E7\u00E3o de ambientes": "Sim"
+      },
+      "geometria": {
+        "quantidadeSolidos": 1,
+        "volumeM3": 1.458,
+        "areaSuperficialM2": 12.42,
+        "facesPlanas": [
+          {
+            "normal": {
+              "x": -0,
+              "y": 0,
+              "z": -1
+            },
+            "origem": {
+              "x": 13200,
+              "y": 0,
+              "z": 2700
+            },
+            "areaM2": 4.86,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 5,
+                "centro": {
+                  "x": 14280,
+                  "y": 1080,
+                  "z": 2700
+                },
+                "perimetroMm": 9000,
+                "pontos": [
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 1
+            },
+            "origem": {
+              "x": 13200,
+              "y": 0,
+              "z": 3000
+            },
+            "areaM2": 4.86,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 5,
+                "centro": {
+                  "x": 14280,
+                  "y": 1080,
+                  "z": 3000
+                },
+                "perimetroMm": 9000,
+                "pontos": [
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": -1,
+              "z": 0
+            },
+            "origem": {
+              "x": 15000,
+              "y": 0,
+              "z": 2700
+            },
+            "areaM2": 0.54,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 14100,
+                  "y": 0,
+                  "z": 2850
+                },
+                "perimetroMm": 11400,
+                "pontos": [
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -1,
+              "y": 0,
+              "z": 0
+            },
+            "origem": {
+              "x": 13200,
+              "y": 0,
+              "z": 2700
+            },
+            "areaM2": 0.81,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 13200,
+                  "y": 1350,
+                  "z": 2850
+                },
+                "perimetroMm": 16833.2,
+                "pontos": [
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 1,
+              "z": 0
+            },
+            "origem": {
+              "x": 13200,
+              "y": 2700,
+              "z": 2700
+            },
+            "areaM2": 0.54,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 14100,
+                  "y": 2700,
+                  "z": 2850
+                },
+                "perimetroMm": 11449.7,
+                "pontos": [
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 1,
+              "y": 0,
+              "z": -0
+            },
+            "origem": {
+              "x": 15000,
+              "y": 2700,
+              "z": 2700
+            },
+            "areaM2": 0.81,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 15000,
+                  "y": 1350,
+                  "z": 2850
+                },
+                "perimetroMm": 16866.5,
+                "pontos": [
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 2700,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 0,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "elementId": 470029,
+      "uniqueId": "17313fe6-53ff-4875-acd3-19fddd812c36-00072c0d",
       "categoria": "Pisos",
-      "nome": "Gen\u00E9rico 300 mm",
       "classe": "Floor",
-      "tipoId": 628,
-      "fixado": false,
+      "nome": "Gen\u00E9rico 300 mm",
       "familia": null,
-      "tipo": null
+      "tipo": "Gen\u00E9rico 300 mm",
+      "typeId": 628,
+      "nivel": "N\u00EDvel Audit\u00F3rio",
+      "hostId": null,
+      "fixado": false,
+      "ponto": {
+        "x": 14100,
+        "y": 8750,
+        "z": 2850
+      },
+      "bbox": {
+        "min": {
+          "x": 13200,
+          "y": 8300,
+          "z": 2700
+        },
+        "max": {
+          "x": 15000,
+          "y": 9200,
+          "z": 3000
+        },
+        "centro": {
+          "x": 14100,
+          "y": 8750,
+          "z": 2850
+        },
+        "tamanho": {
+          "x": 1800,
+          "y": 900,
+          "z": 300
+        }
+      },
+      "localizacao": null,
+      "parametros": {
+        "Categoria": "Pisos",
+        "Exportar para IFC": "Por tipo",
+        "IfcGUID": "0NCJ$cK$z8TQpJ6VtTXW0x",
+        "Existe associa\u00E7\u00E3o": "N\u00E3o",
+        "Op\u00E7\u00E3o de desenho": "-1",
+        "Volume": "0.49 m\u00B3",
+        "\u00C1rea": "2 m\u00B2",
+        "Fase demolida": "Nenhum",
+        "Fase criada": "Constru\u00E7\u00E3o nova",
+        "N\u00EDvel": "N\u00EDvel Audit\u00F3rio",
+        "Fam\u00EDlia e tipo": "Piso: Gen\u00E9rico 300 mm",
+        "Fam\u00EDlia": "Piso",
+        "Tipo": "Gen\u00E9rico 300 mm",
+        "ID de tipo": "628",
+        "Estrutural": "N\u00E3o",
+        "Per\u00EDmetro": "5400",
+        "Altura do deslocamento do n\u00EDvel": "0",
+        "Espessura": "300",
+        "Relativo \u00E0 massa": "N\u00E3o",
+        "Eleva\u00E7\u00E3o no n\u00FAcleo inferior": "2700",
+        "Eleva\u00E7\u00E3o no n\u00FAcleo superior": "3000",
+        "Eleva\u00E7\u00E3o no topo": "3000",
+        "Eleva\u00E7\u00E3o na parte inferior": "2700",
+        "Delimita\u00E7\u00E3o de ambientes": "Sim"
+      },
+      "geometria": {
+        "quantidadeSolidos": 1,
+        "volumeM3": 0.486,
+        "areaSuperficialM2": 4.86,
+        "facesPlanas": [
+          {
+            "normal": {
+              "x": -0,
+              "y": 0,
+              "z": -1
+            },
+            "origem": {
+              "x": 13200,
+              "y": 8300,
+              "z": 2700
+            },
+            "areaM2": 1.62,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 5,
+                "centro": {
+                  "x": 14280,
+                  "y": 8660,
+                  "z": 2700
+                },
+                "perimetroMm": 5400,
+                "pontos": [
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 1
+            },
+            "origem": {
+              "x": 13200,
+              "y": 8300,
+              "z": 3000
+            },
+            "areaM2": 1.62,
+            "horizontal": true,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 5,
+                "centro": {
+                  "x": 14280,
+                  "y": 8660,
+                  "z": 3000
+                },
+                "perimetroMm": 5400,
+                "pontos": [
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": -1,
+              "z": 0
+            },
+            "origem": {
+              "x": 15000,
+              "y": 8300,
+              "z": 2700
+            },
+            "areaM2": 0.54,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 14100,
+                  "y": 8300,
+                  "z": 2850
+                },
+                "perimetroMm": 11400,
+                "pontos": [
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": -1,
+              "y": 0,
+              "z": 0
+            },
+            "origem": {
+              "x": 13200,
+              "y": 8300,
+              "z": 2700
+            },
+            "areaM2": 0.27,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 13200,
+                  "y": 8750,
+                  "z": 2850
+                },
+                "perimetroMm": 6097.4,
+                "pontos": [
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 8300,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 0,
+              "y": 1,
+              "z": 0
+            },
+            "origem": {
+              "x": 13200,
+              "y": 9200,
+              "z": 2700
+            },
+            "areaM2": 0.54,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 14100,
+                  "y": 9200,
+                  "z": 2850
+                },
+                "perimetroMm": 11449.7,
+                "pontos": [
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 13200,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 2700
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "normal": {
+              "x": 1,
+              "y": 0,
+              "z": -0
+            },
+            "origem": {
+              "x": 15000,
+              "y": 9200,
+              "z": 2700
+            },
+            "areaM2": 0.27,
+            "horizontal": false,
+            "quantidadeLoops": 1,
+            "loops": [
+              {
+                "indice": 0,
+                "quantidadePontos": 8,
+                "centro": {
+                  "x": 15000,
+                  "y": 8750,
+                  "z": 2850
+                },
+                "perimetroMm": 6194.7,
+                "pontos": [
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 9200,
+                    "z": 3000
+                  },
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 2700
+                  },
+                  {
+                    "x": 15000,
+                    "y": 8300,
+                    "z": 3000
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
