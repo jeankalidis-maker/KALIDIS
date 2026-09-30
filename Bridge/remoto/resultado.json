@@ -1,9 +1,24 @@
 {
-  "id": "salvar-antes-interior-fix2-20260929-2225",
+  "id": "finalizar-interior-auditorio-20260929-2227",
   "sucesso": true,
-  "mensagem": "Documento salvo.",
-  "quantidade": 0,
-  "elementIds": [],
+  "mensagem": "Interior do audit\u00F3rio finalizado: piso, revestimentos ac\u00FAsticos, palco, tela, p\u00FAlpito e rodap\u00E9s.",
+  "quantidade": 7,
+  "elementIds": [
+    473370,
+    473371,
+    473372,
+    473373,
+    473374,
+    473375,
+    473376
+  ],
   "erro": null,
-  "dados": null
+  "dados": {
+    "poltronasExistentes": 150,
+    "piso": "carpete grafite",
+    "paredes": "grafite \u002B madeira",
+    "palco": true,
+    "tela": true,
+    "pulpito": true
+  }
 }
