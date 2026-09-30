@@ -1,17 +1,66 @@
 {
-  "id": "enquadrar-interior-final-20260929-2233",
+  "id": "listar-conceituais-auditorio-20260929-2236",
   "sucesso": true,
-  "mensagem": "7 elemento(s) selecionado(s).",
-  "quantidade": 7,
+  "mensagem": "Informa\u00E7\u00F5es de 5 elemento(s).",
+  "quantidade": 5,
   "elementIds": [
-    473370,
-    473371,
-    473372,
-    473373,
-    473374,
-    473375,
-    473376
+    470220,
+    470221,
+    470225,
+    470226,
+    470227
   ],
   "erro": null,
-  "dados": null
+  "dados": [
+    {
+      "elementId": 470220,
+      "categoria": "Modelos gen\u00E9ricos",
+      "nome": "PALCO AUDITORIO - CONCEITUAL",
+      "classe": "DirectShape",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 470221,
+      "categoria": "Modelos gen\u00E9ricos",
+      "nome": "TELA AUDITORIO - CONCEITUAL",
+      "classe": "DirectShape",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 470225,
+      "categoria": "Modelos gen\u00E9ricos",
+      "nome": "BALCAO RECEPCAO TERREO",
+      "classe": "DirectShape",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 470226,
+      "categoria": "Modelos gen\u00E9ricos",
+      "nome": "LOUNGE TERREO - MOBILIARIO",
+      "classe": "DirectShape",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 470227,
+      "categoria": "Modelos gen\u00E9ricos",
+      "nome": "BANCO FOYER SUPERIOR",
+      "classe": "DirectShape",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    }
+  ]
 }
