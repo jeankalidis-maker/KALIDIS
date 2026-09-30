@@ -1,9 +1,55 @@
 {
-  "id": "info-mat-0-20260929",
+  "id": "info-mat-3-20260929",
   "sucesso": true,
-  "mensagem": "Informa\u00E7\u00F5es de 0 elemento(s).",
-  "quantidade": 0,
-  "elementIds": [],
+  "mensagem": "Informa\u00E7\u00F5es de 4 elemento(s).",
+  "quantidade": 4,
+  "elementIds": [
+    530,
+    205637,
+    205638,
+    205639
+  ],
   "erro": null,
-  "dados": []
+  "dados": [
+    {
+      "elementId": 530,
+      "categoria": "Materiais",
+      "nome": "Placa de forro 600 x 1200",
+      "classe": "Material",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 205637,
+      "categoria": null,
+      "nome": "Azulejo ac\u00FAstico - Grade Exposta 2x4 Granulado Branco",
+      "classe": "AppearanceAssetElement",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 205638,
+      "categoria": "Recursos de materiais",
+      "nome": "Azulejo de forro ac\u00FAstico",
+      "classe": "PropertySetElement",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 205639,
+      "categoria": "Recursos de materiais",
+      "nome": "Azulejo ac\u00FAstico",
+      "classe": "PropertySetElement",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    }
+  ]
 }
