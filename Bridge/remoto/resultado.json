@@ -1,9 +1,9 @@
 {
-  "id": "finalizar-interior-auditorio-20260929-2218",
-  "sucesso": false,
-  "mensagem": "Falha em finalizar_interior_auditorio",
+  "id": "salvar-antes-interior-fix2-20260929-2225",
+  "sucesso": true,
+  "mensagem": "Documento salvo.",
   "quantidade": 0,
   "elementIds": [],
-  "erro": "Input compound structure has wrong EndCap condition for this element type.\r\nParameter name: srcStructure",
+  "erro": null,
   "dados": null
 }
