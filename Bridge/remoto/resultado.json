@@ -1,9 +1,9 @@
 {
-  "id": "teste-bridge-pos-trust-20260929-2217",
-  "sucesso": true,
-  "mensagem": "Invent\u00E1rio gerado: 1164 elementos, 48 categorias, 232 inst\u00E2ncias de fam\u00EDlias.",
+  "id": "finalizar-interior-auditorio-20260929-2218",
+  "sucesso": false,
+  "mensagem": "Falha em finalizar_interior_auditorio",
   "quantidade": 0,
   "elementIds": [],
-  "erro": null,
+  "erro": "Input compound structure has wrong EndCap condition for this element type.\r\nParameter name: srcStructure",
   "dados": null
 }
