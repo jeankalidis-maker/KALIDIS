@@ -1,20 +1,21 @@
 {
-  "id": "info-mat-3-20260929",
+  "id": "info-mat-5-20260929",
   "sucesso": true,
-  "mensagem": "Informa\u00E7\u00F5es de 4 elemento(s).",
-  "quantidade": 4,
+  "mensagem": "Informa\u00E7\u00F5es de 5 elemento(s).",
+  "quantidade": 5,
   "elementIds": [
-    530,
-    205637,
-    205638,
-    205639
+    529,
+    3322,
+    204505,
+    205635,
+    205636
   ],
   "erro": null,
   "dados": [
     {
-      "elementId": 530,
+      "elementId": 529,
       "categoria": "Materiais",
-      "nome": "Placa de forro 600 x 1200",
+      "nome": "Placa de gesso de parede",
       "classe": "Material",
       "tipoId": -1,
       "fixado": false,
@@ -22,9 +23,19 @@
       "tipo": null
     },
     {
-      "elementId": 205637,
+      "elementId": 3322,
       "categoria": null,
-      "nome": "Azulejo ac\u00FAstico - Grade Exposta 2x4 Granulado Branco",
+      "nome": "Argamassa-Gesso",
+      "classe": "FillPatternElement",
+      "tipoId": -1,
+      "fixado": false,
+      "familia": null,
+      "tipo": null
+    },
+    {
+      "elementId": 204505,
+      "categoria": null,
+      "nome": "Placa de gesso - Pintada de branco",
       "classe": "AppearanceAssetElement",
       "tipoId": -1,
       "fixado": false,
@@ -32,9 +43,9 @@
       "tipo": null
     },
     {
-      "elementId": 205638,
+      "elementId": 205635,
       "categoria": "Recursos de materiais",
-      "nome": "Azulejo de forro ac\u00FAstico",
+      "nome": "Placa de gesso de parede",
       "classe": "PropertySetElement",
       "tipoId": -1,
       "fixado": false,
@@ -42,9 +53,9 @@
       "tipo": null
     },
     {
-      "elementId": 205639,
+      "elementId": 205636,
       "categoria": "Recursos de materiais",
-      "nome": "Azulejo ac\u00FAstico",
+      "nome": "Placa de gesso",
       "classe": "PropertySetElement",
       "tipoId": -1,
       "fixado": false,
