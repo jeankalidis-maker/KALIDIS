@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {reviewOrthogonalPlan} from './orthogonal-plan-review.mjs';
+const a={heightMm:3000,perimeter:[[0,0],[8000,0],[8000,6000],[0,6000]],partitions:[{start:[4000,0],end:[4000,6000]}],rooms:[[2000,3000],[6000,3000]],doors:[{wallIndex:4,point:[4000,3000],widthMm:900}]};
+assert.equal(reviewOrthogonalPlan(a).areaMm2,48000000);
+assert.throws(()=>reviewOrthogonalPlan({...a,partitions:[...a.partitions,...a.partitions]}),/Overlapping/);
+assert.throws(()=>reviewOrthogonalPlan({...a,rooms:[[9000,3000]]}),/Room seed/);
+assert.throws(()=>reviewOrthogonalPlan({...a,doors:[{...a.doors[0],point:[4000,100]}]}),/Door/);
+const c={...a,perimeter:[[0,0],[8000,0],[8000,2000],[2000,2000],[2000,6000],[0,6000]],partitions:[{start:[1000,4000],end:[8000,4000]}],rooms:[[1000,1000]],doors:[]};
+assert.throws(()=>reviewOrthogonalPlan(c),/outside/);
+console.log('ORTHOGONAL_PLAN_REVIEW_TESTS=PASS');

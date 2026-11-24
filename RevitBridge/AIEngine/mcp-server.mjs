@@ -3,6 +3,7 @@
 import readline from 'node:readline';
 import {validate,loadRegistry} from './command-registry.mjs';
 import {batchPreflight} from './batch-preflight.mjs';
+import {reviewOrthogonalPlan} from './orthogonal-plan-review.mjs';
 import {checkBatchCapabilities,batchSchemaForEngine} from './engine-capabilities.mjs';
 import {legacyRead,legacyTool} from './legacy-read.mjs';
 import {reviewDynamoFile,dynamoReviewTool} from './dynamo-file-review.mjs';
@@ -67,6 +68,7 @@ async function callUnjournaled(name,args){
   const ext=(await resolvedExtensions()).get(name);
   if(!ext)throw Error('Unknown or unavailable reviewed tool');
   validate(ext.tool.inputSchema,args,name);
+  if(name==='orthogonal_plan')reviewOrthogonalPlan(args);
   const {expectedPath,commit=false,...arguments_}=args;
   if(name==="dynamo_audit"&&args.mode==="start"&&(commit!==true||args.executeReadOnlyGraph!==true))throw Error("Dynamo start requires explicit commit and executeReadOnlyGraph=true; event cannot roll back");
   if(name==="dynamo_audit"&&args.mode==="status"&&commit)throw Error("Status must be rollback-only");
@@ -80,7 +82,11 @@ async function callUnjournaled(name,args){
  validate(t.inputSchema,args,name);
  const catalog=await gateway('catalog');
  if(!catalog.result.ok||!catalog.result.implemented?.includes(name))throw Error('Tool not supported by active Revit engine');
- if(name==='batch')checkBatchCapabilities(args,catalog.result);
+ if(name==='batch'){
+  checkBatchCapabilities(args,catalog.result);
+  const preflight=batchPreflight(args,registry);
+  if(!preflight.ok)throw Error('Batch preflight rejected: '+JSON.stringify(preflight.issues));
+ }
  const {response,result}=await gateway(name,args);
  return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
 }
