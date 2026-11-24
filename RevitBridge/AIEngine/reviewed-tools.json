@@ -1323,5 +1323,80 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "2E0D55B98E9B",
+    "inspection": false,
+    "tool": {
+      "name": "routing_variant",
+      "description": "Duplicate pipe or duct type and assign explicit fitting rules to empty groups; original unchanged. Requires loaded compatible fittings and actual connectivity checks.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "typeId": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rules": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "properties": {
+                "group": {
+                  "type": "string",
+                  "enum": [
+                    "Elbows",
+                    "Junctions",
+                    "Transitions",
+                    "Unions"
+                  ]
+                },
+                "symbolId": {
+                  "type": "integer"
+                },
+                "minMm": {
+                  "type": "number"
+                },
+                "maxMm": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "group",
+                "symbolId",
+                "minMm",
+                "maxMm"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "typeId",
+          "name",
+          "rules"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
