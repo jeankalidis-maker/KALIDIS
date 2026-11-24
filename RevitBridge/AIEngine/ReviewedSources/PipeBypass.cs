@@ -37,9 +37,10 @@ public sealed class PipeBypass:IReviewedOperation{
   if(before>=clearance)throw new ArgumentException("Existing pipe already satisfies requested clearance");
   var side=XYZ.BasisZ.CrossProduct(dir)*offset;
   var points=new[]{start,start+dir*leg,start+dir*leg+side,end-dir*leg+side,end-dir*leg,end};
-  var deleted=d.Delete(id);if(deleted.Any(v=>v!=id))throw new InvalidOperationException("Unexpected dependent deletion");
-  d.Regenerate();
-  var pipes=new List<Pipe>();for(int i=0;i<5;i++){var p=Pipe.Create(d,system,type,level,points[i],points[i+1]);p.get_Parameter(BuiltInParameter.RBS_PIPE_DIAMETER_PARAM).Set(diameter);pipes.Add(p);}
+  void Disconnect(XYZ p,(ElementId id,int key,XYZ point) ext){var c=At(pipe,p);var n=(Pipe)d.GetElement(ext.id);var q=n.ConnectorManager.Lookup(ext.key);if(!c.IsConnectedTo(q))throw new InvalidOperationException("External reference changed");c.DisconnectFrom(q);}
+  Disconnect(start,e0);Disconnect(end,e1);d.Regenerate();
+  lc.Curve=Line.CreateBound(points[0],points[1]);d.Regenerate();
+  var pipes=new List<Pipe>{pipe};for(int i=1;i<5;i++){var p=Pipe.Create(d,system,type,level,points[i],points[i+1]);p.get_Parameter(BuiltInParameter.RBS_PIPE_DIAMETER_PARAM).Set(diameter);pipes.Add(p);}
   d.Regenerate();var fittings=new List<FamilyInstance>();
   for(int i=0;i<4;i++){var f=d.Create.NewElbowFitting(At(pipes[i],points[i+1]),At(pipes[i+1],points[i+1]));if(f==null)throw new InvalidOperationException("Elbow creation failed");fittings.Add(f);d.Regenerate();}
   void Connect(Pipe p,XYZ endpoint,(ElementId id,int key,XYZ point) ext){
@@ -52,6 +53,6 @@ public sealed class PipeBypass:IReviewedOperation{
   var after=all.Min(e=>obs.Min(o=>Gap(Bounds(e),o)));
   if(after<clearance-Mm(.01))throw new InvalidOperationException("Bypass clearance insufficient: "+Out(after));
   if(pipes.Any(p=>p.GetTypeId()!=type||Math.Abs(p.get_Parameter(BuiltInParameter.RBS_PIPE_DIAMETER_PARAM).AsDouble()-diameter)>Mm(.1)||Ends(p).Any(c=>!c.IsConnected))||fittings.Any(f=>f.MEPModel.ConnectorManager.Connectors.Cast<Connector>().Where(c=>c.ConnectorType==ConnectorType.End).Any(c=>!c.IsConnected)))throw new InvalidOperationException("Network verification failed");
-  return new{replacedId=id.Value,pipeIds=pipes.Select(p=>p.Id.Value).ToArray(),fittingIds=fittings.Select(f=>f.Id.Value).ToArray(),neighborIds=new[]{e0.id.Value,e1.id.Value},beforeGapMm=Out(before),afterGapMm=Out(after),externalEndpointsPreserved=true,note="Experimental horizontal offset with four elbows; explicit obstacles only, not hydraulic sizing or code certification. Original segment ID replaced."};
+  return new{preservedId=id.Value,pipeIds=pipes.Select(p=>p.Id.Value).ToArray(),fittingIds=fittings.Select(f=>f.Id.Value).ToArray(),neighborIds=new[]{e0.id.Value,e1.id.Value},beforeGapMm=Out(before),afterGapMm=Out(after),externalEndpointsPreserved=true,note="Experimental horizontal offset with four elbows; explicit obstacles only, not hydraulic sizing or code certification. Original segment ID preserved as first leg. New segments may require metadata review."};
  }
 }
