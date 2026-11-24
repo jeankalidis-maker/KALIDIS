@@ -49,10 +49,17 @@
   },
   {
     "name": "native_status",
-    "description": "Check availability of native Revit commands",
+    "description": "Search the native PostableCommand catalog; availability is contextual and does not prove autonomous execution.",
     "inputSchema": {
       "type": "object",
-      "properties": {},
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "availableOnly": {
+          "type": "boolean"
+        }
+      },
       "required": [],
       "additionalProperties": false
     },
@@ -1016,6 +1023,40 @@
       },
       "required": [
         "expectedPath"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "native_post",
+    "description": "Queue a reviewed native UI command in a designated test RVT. No generic command execution. Completion not verified.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string",
+          "enum": [
+            "TileViews",
+            "ThinLines",
+            "ProjectBrowser",
+            "TogglePropertiesPalette",
+            "SystemBrowser",
+            "ToggleRevealHiddenElementsMode"
+          ]
+        }
+      },
+      "required": [
+        "expectedPath",
+        "command"
       ],
       "additionalProperties": false
     },
