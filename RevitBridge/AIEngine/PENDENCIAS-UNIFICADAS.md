@@ -15,7 +15,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 008 [P] Validar reinício/reconexão, perda de conexão, timeout, fila ocupada e recuperação sem repetir escritas.
 
 ## B — Infraestrutura, segurança e autonomia
-- [ ] 009 [P] Completar schemas de todas as ferramentas de edição, validação de argumentos e compatibilidade entre versões; preflight em todos os clientes autorizados.
+- [ ] 009 [P] Completar schemas de todas as ferramentas de edição, validação de argumentos e compatibilidade entre versões; preflight em todos os clientes autorizados. **Preflight de formas nativas ampliado (128).**
 - [ ] 010 [P] Idempotência persistente e recuperação de resultados após interrupção, reconciliação de estado incerto e auditoria.
 - [ ] 011 [P] Desfazer/refazer para criação, edição, exclusão, tipos, famílias e operações dependentes (hoje movimento e comentário restritos).
 - [ ] 012 [P] Fila, controle de concorrência, telemetria, métricas e testes de carga em sessões longas.
@@ -30,8 +30,8 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 019 [P] Escadas com patamares, múltiplos lances, curvas e verificação de parâmetros de conforto e acessibilidade.
 - [ ] 020 [D] Paredes cortina completas: grids, painéis, montantes, portas e edição.
 - [ ] 021 [P] Telhados complexos, múltiplas águas, aberturas, encontros e anexação de paredes em configurações variadas.
-- [ ] 022 [P] Pisos, forros e paredes com curvas, furos, perfis irregulares, limites, alinhamentos e restrições avançadas.
-- [ ] 023 [P] Portas e janelas com famílias variadas, orientação, folgas, vãos livres, restrições e hospedagem em situações complexas.
+- [ ] 022 [P] Pisos, forros e paredes com curvas, furos, perfis irregulares, limites, alinhamentos e restrições avançadas. **Piso com furo e parede semicircular conferidos (128).**
+- [ ] 023 [P] Portas e janelas com famílias variadas, orientação, folgas, vãos livres, restrições e hospedagem em situações complexas. **Tres tipos de porta externa com host confirmado (128).**
 - [ ] 024 [P] Ambientes e áreas com curvas, limites complexos, fases, vazios e múltiplos níveis.
 - [ ] 025 [P] Fases, worksets, vínculos, coordenadas compartilhadas, templates e filtros: ampliar edição controlada e verificar resultados.
 - [x] 026 [V] Filtro nativo: imagens visivel/oculto/restaurado inspecionadas, avanco127.
@@ -50,9 +50,9 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 037 [P] Coordenação interdisciplinar com aberturas e shafts, suportes, isolamento, manutenção e interferências de redes complexas.
 
 ## E — Autocorreção geométrica e coordenação
-- [ ] 038 [F] Junção física de paredes e acabamento das extremidades: wall_join_finish / JoinGeometryUtils ainda sem validação positiva.
-- [ ] 039 [P] Reparo de paredes em L/T/X, curvas, múltiplos encontros e dependências de portas, janelas e elementos estruturais.
-- [ ] 040 [P] Detectar e corrigir perfis 3D, curvas, furos e degenerações além de polígonos XY.
+- [ ] 038 [F] Junção física de paredes e acabamento das extremidades: wall_join_finish / JoinGeometryUtils ainda sem validação positiva. **Join em X aceito; acabamento L e ensaio de sobreposicao pendentes; modal/estado incerto no ultimo ensaio (128).**
+- [ ] 039 [P] Reparo de paredes em L/T/X, curvas, múltiplos encontros e dependências de portas, janelas e elementos estruturais. **Join em X sem sobreposicao residual, mas sem prova de correcao de intersecao previa (128).**
+- [ ] 040 [P] Detectar e corrigir perfis 3D, curvas, furos e degenerações além de polígonos XY. **Rejeicao de furo externo e arco degenerado (128).**
 - [ ] 041 [P] Autocorreção de mobiliário em ambientes não retangulares, circulação, giro de portas, suportes e acessibilidade.
 - [ ] 042 [P] Validar reparo e interferência com vínculos RVT rotacionados/transladados e coordenadas compartilhadas.
 - [ ] 043 [P] Reparo de redes MEP conectadas com restrições e múltiplos obstáculos; ampliar bypass de tubos para outras configurações.
@@ -66,8 +66,8 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 049 [P] Cortes por void em blends/sweeps, múltiplos cortes, recortes complexos e verificação de volume resultante.
 - [ ] 050 [P] Sweeps complexos, trajetórias 3D e geometrias de revolução/loft além do escopo já testado.
 - [ ] 051 [P] Famílias hospedadas, aninhadas, conectores MEP, parâmetros de instância/tipo, materiais e níveis de detalhe.
-- [ ] 052 [P] Edição e atualização controlada de famílias existentes, recarga com preservação de tipos/instâncias e parâmetros.
-- [ ] 053 [P] Validação de todos os tipos de cada família, flex extremo, fórmulas e restrições; não apenas a geometria corrente.
+- [ ] 052 [P] Edição e atualização controlada de famílias existentes, recarga com preservação de tipos/instâncias e parâmetros. **Copia RFA editada sem recarga (128).**
+- [ ] 053 [P] Validação de todos os tipos de cada família, flex extremo, fórmulas e restrições; não apenas a geometria corrente. **Oito simbolos externos inventariados, sete instanciados (128).**
 - [ ] 054 [P] Gerar famílias complexas nativas a partir de imagem, desenho ou referência dimensional, com conferência física.
 
 ## G — Imagens, plantas e materiais
@@ -84,8 +84,8 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 ## H — Bibliotecas BIM e interoperabilidade
 - [ ] 064 [P] Ampliar catálogo além das quatro famílias de um repositório, com pesquisa real de fornecedores e categorias.
 - [ ] 065 [P] Verificar licenças, procedência, integridade, versões, dependências e compatibilidade RFA antes de importar.
-- [ ] 066 [P] Auditar todos os tipos, parâmetros, conectores, geometria e comportamento de famílias externas em projetos isolados.
-- [ ] 067 [P] Adaptar famílias importadas a padrões de projeto sem alterar os arquivos originais; evitar duplicatas.
+- [ ] 066 [P] Auditar todos os tipos, parâmetros, conectores, geometria e comportamento de famílias externas em projetos isolados. **Sete tipos com solidos medidos; perfil e conectores pendentes (128).**
+- [ ] 067 [P] Adaptar famílias importadas a padrões de projeto sem alterar os arquivos originais; evitar duplicatas. **Copia adaptada com tipo e metadado, original preservado; deduplicacao pendente (128).**
 - [x] 068 [V] Exportacao experimental Integrated121 validada em leitor independente web-ifc, geometria, unidades, categorias, propriedades selecionadas e relacoes (avanco126). Fidelidade de estilos e round-trip permanecem no item070.
 - [x] 069 [V] PDF renderizado e inspecionado em leitor independente e DWG aberto/auditado no AutoCAD Core Console, avanco127. Plotagem/fidelidade universal fora do ensaio.
 - [ ] 070 [P] Fluxo de importação/coordenação IFC, round-trip e interoperabilidade com outros formatos.

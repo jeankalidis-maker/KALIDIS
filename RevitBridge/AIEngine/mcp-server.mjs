@@ -3,6 +3,7 @@
 import readline from 'node:readline';
 import {validate,loadRegistry} from './command-registry.mjs';
 import {batchPreflight} from './batch-preflight.mjs';
+import {reviewNativeShape} from './native-shape-review.mjs';
 import {scopeAudit,scopeAuditTool} from './scope-audit.mjs';
 import {reviewEdits} from './edit-preflight.mjs';
 import {reviewFamilySpec} from './family-spec-review.mjs';
@@ -72,6 +73,7 @@ async function callUnjournaled(name,args){
   if(!ext)throw Error('Unknown or unavailable reviewed tool');
   validate(ext.tool.inputSchema,args,name);
   if(name==='orthogonal_plan')reviewOrthogonalPlan(args);
+  if(name==='native_shapes')reviewNativeShape(args);
   const {expectedPath,commit=false,...arguments_}=args;
   if(name==="dynamo_audit"&&args.mode==="start"&&(commit!==true||args.executeReadOnlyGraph!==true))throw Error("Dynamo start requires explicit commit and executeReadOnlyGraph=true; event cannot roll back");
   if(name==="dynamo_audit"&&args.mode==="status"&&commit)throw Error("Status must be rollback-only");
