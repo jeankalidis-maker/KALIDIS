@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {analyzeTopology} from './mep-network-review.mjs';
+const c=(ownerId,connectorId,peer)=>({ownerId,connectorId,isConnected:!!peer,physicalEndRefs:peer?[{ownerId:peer[0],connectorId:peer[1]}]:[]});
+const rows=[c(1,0),c(1,1,[2,0]),c(2,0,[1,1]),c(2,1)];
+let r=analyzeTopology([1,2],{connectors:rows});assert.equal(r.componentCount,1);assert.equal(r.components[0].openEnds,2);assert.equal(r.internallyConsistent,true);
+r=analyzeTopology([1,2,3],{connectors:[...rows,c(3,0),c(3,1)]});assert.equal(r.componentCount,2);
+r=analyzeTopology([1],{connectors:rows.slice(0,2)});assert.equal(r.closedScope,false);
+r=analyzeTopology([1,2],{connectors:[...rows.slice(0,2),c(2,0),c(2,1)]});assert.equal(r.internallyConsistent,false);
+assert.throws(()=>analyzeTopology([1,1],{connectors:[]}));
+console.log('MEP_NETWORK_REVIEW_TESTS=PASS');
