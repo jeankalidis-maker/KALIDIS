@@ -10,6 +10,11 @@ assert.equal(r.all.size,r.base.length+r.reviewed.length);
 assert.ok(r.all.has('orthogonal_plan'));assert.ok(r.all.has('family_catalog_load'));
 const schema={type:'object',properties:{items:{type:'array',minItems:1,items:{type:'integer',minimum:1}}},required:['items'],additionalProperties:false};
 validate(schema,{items:[1,2]});for(const v of [{items:[]},{items:[0]},{items:['2']},{items:[1],other:1},{}])assert.throws(()=>validate(schema,v));
+assert.throws(()=>validate({anyOf:[{type:'number'},{type:'string'}],minimum:10},2));
+assert.throws(()=>validate({oneOf:[{type:'number'},{type:'string'}],minLength:3},'x'));
+assert.throws(()=>validate({allOf:[{type:'number'},{minimum:2}]},1));
+validate({const:{a:1,b:2}},{b:2,a:1});
+assert.throws(()=>validate({type:'array',uniqueItems:true},[{a:1,b:2},{b:2,a:1}]));
 const dir=await mkdtemp(path.join(tmpdir(),'kalidis-journal-'));let count=0;
 try{
  const work=async()=>{count++;return {isError:false}};

@@ -2,7 +2,7 @@
 
 Base: histórico até o avanço 125, commit 6a0834d, 24/11/2026. Consolidação de lacunas, não declaração de que todo recurso listado tem código existente. Não reabre testes já aprovados no mesmo escopo. Itens adicionais de homologação são critérios de fechamento propostos, não funcionalidades previamente contratadas.
 
-Legenda: B = bloqueado; N = não validado no ambiente/escopo indicado; P = parcial; D = não implementado ou sem evidência de implementação; F = falha não resolvida. Todos os itens permanecem abertos até evidência de aceite.
+Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não validado no ambiente/escopo indicado; P = parcial; D = não implementado ou sem evidência de implementação; F = falha não resolvida. Todos os itens permanecem abertos até evidência de aceite.
 
 ## A — Implantação e conexão (prioridade crítica)
 - [ ] 001 [B] Instalar a DLL atualizada com backup, reinício normal e verificação do hash carregado.
@@ -58,7 +58,7 @@ Legenda: B = bloqueado; N = não validado no ambiente/escopo indicado; P = parci
 - [ ] 043 [P] Reparo de redes MEP conectadas com restrições e múltiplos obstáculos; ampliar bypass de tubos para outras configurações.
 - [ ] 044 [P] Clash detection global e priorização de conflitos, distinguir interseções intencionais, tolerâncias e falhas booleanas.
 - [ ] 045 [P] Reparos em lote com análise de dependências, preservação de elementos, rollback e auditoria antes/depois.
-- [ ] 046 [N] Decidir se a extensão OrthogonalPlanPreflight separada será aprovada/testada ou substituída pela validação do adaptador já operacional.
+- [x] 046 [V] Substituida pela validacao obrigatoria do adaptador (avancos123/126); prototipo C# separado arquivado, sem instalacao.
 
 ## F — Famílias RFA e parametrização
 - [ ] 047 [P] Parametrização geométrica generalizada de blends, sweeps, curvas não cilíndricas e geometrias compostas arbitrárias.
@@ -86,7 +86,7 @@ Legenda: B = bloqueado; N = não validado no ambiente/escopo indicado; P = parci
 - [ ] 065 [P] Verificar licenças, procedência, integridade, versões, dependências e compatibilidade RFA antes de importar.
 - [ ] 066 [P] Auditar todos os tipos, parâmetros, conectores, geometria e comportamento de famílias externas em projetos isolados.
 - [ ] 067 [P] Adaptar famílias importadas a padrões de projeto sem alterar os arquivos originais; evitar duplicatas.
-- [ ] 068 [N] Validar IFC exportado por importador independente: geometria, propriedades, unidades, categorias e relações.
+- [x] 068 [V] Exportacao experimental Integrated121 validada em leitor independente web-ifc, geometria, unidades, categorias, propriedades selecionadas e relacoes (avanco126). Fidelidade de estilos e round-trip permanecem no item070.
 - [ ] 069 [N] Validar qualidade e conteúdo das exportações PDF/DWG em ferramentas independentes, além de existência do arquivo.
 - [ ] 070 [P] Fluxo de importação/coordenação IFC, round-trip e interoperabilidade com outros formatos.
 
@@ -114,6 +114,6 @@ Legenda: B = bloqueado; N = não validado no ambiente/escopo indicado; P = parci
 
 ## Resumo
 
-88 itens abertos: 3 bloqueados, 10 não validados, 72 parciais, 2 sem implementação confirmada, 1 com falha não resolvida. Contagem de itens deste checklist, não percentual de cobertura da API Revit.
+86 itens abertos: 3 bloqueados, 8 nao validados, 72 parciais, 2 sem implementacao confirmada, 1 com falha nao resolvida. 2 encerrados de 88 (046 e 068). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.

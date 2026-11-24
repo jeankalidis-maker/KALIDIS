@@ -1,16 +1,22 @@
 // Original Kalidis command registry. No external dependencies.
 import {readFile} from 'node:fs/promises';
 import path from 'node:path';
+function canonical(value){
+ if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';
+ if(value!==null&&typeof value==='object')return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}';
+ return JSON.stringify(value);
+}
 export function validate(schema,value,label='arguments'){
  const fail=(reason)=>{throw new Error(label+': '+reason)};
  if(!schema||typeof schema!=='object')fail('invalid schema');
- if(schema.anyOf){if(!schema.anyOf.some(s=>{try{validate(s,value,label);return true}catch{return false}}))fail('no schema variant matches');return}
- if(schema.oneOf){if(schema.oneOf.filter(s=>{try{validate(s,value,label);return true}catch{return false}}).length!==1)fail('expected exactly one schema variant');return}
+ if(schema.anyOf){if(!schema.anyOf.some(s=>{try{validate(s,value,label);return true}catch{return false}}))fail('no schema variant matches')}
+ if(schema.oneOf){if(schema.oneOf.filter(s=>{try{validate(s,value,label);return true}catch{return false}}).length!==1)fail('expected exactly one schema variant')}
+ if(schema.allOf)for(const sub of schema.allOf)validate(sub,value,label);
  const kind=schema.type;
  const valid=k=>({string:()=>typeof value==='string',boolean:()=>typeof value==='boolean',integer:()=>Number.isSafeInteger(value),number:()=>typeof value==='number'&&Number.isFinite(value),array:()=>Array.isArray(value),object:()=>value!==null&&typeof value==='object'&&!Array.isArray(value),null:()=>value===null}[k]?.()??false);
  if(kind&&!(Array.isArray(kind)?kind.some(valid):valid(kind)))fail('invalid type');
- if(schema.enum&&!schema.enum.some(v=>JSON.stringify(v)===JSON.stringify(value)))fail('invalid enum');
- if(Object.hasOwn(schema,'const')&&JSON.stringify(value)!==JSON.stringify(schema.const))fail('invalid constant');
+ if(schema.enum&&!schema.enum.some(v=>canonical(v)===canonical(value)))fail('invalid enum');
+ if(Object.hasOwn(schema,'const')&&canonical(value)!==canonical(schema.const))fail('invalid constant');
  if(typeof value==='string'){
   if(value.length<(schema.minLength??0)||value.length>(schema.maxLength??Infinity))fail('invalid length');
   if(schema.pattern&&!new RegExp(schema.pattern).test(value))fail('invalid pattern');
@@ -20,7 +26,7 @@ export function validate(schema,value,label='arguments'){
  }
  if(Array.isArray(value)){
   if(value.length<(schema.minItems??0)||value.length>(schema.maxItems??Infinity))fail('invalid array length');
-  if(schema.uniqueItems&&new Set(value.map(v=>JSON.stringify(v))).size!==value.length)fail('duplicate items');
+  if(schema.uniqueItems&&new Set(value.map(canonical)).size!==value.length)fail('duplicate items');
   if(schema.items)value.forEach((v,i)=>validate(schema.items,v,label+'['+i+']'));
  }else if(value!==null&&typeof value==='object'){
   for(const k of schema.required??[])if(!Object.hasOwn(value,k))fail('missing '+k);
