@@ -2880,5 +2880,69 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "CF9F1BD198DD",
+    "inspection": false,
+    "tool": {
+      "name": "pipe_bypass",
+      "description": "Create horizontal offset bypass for a straight pipe connected directly to two external pipes. Preserve original ID as first leg; four elbows, fixed external endpoints and explicit obstacle clearance. New segments require metadata review. No hydraulic design certification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "offsetMm": {
+            "type": "number"
+          },
+          "endLegMm": {
+            "type": "number"
+          },
+          "minimumMm": {
+            "type": "number"
+          },
+          "obstacleIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 20
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "expectedMm",
+          "offsetMm",
+          "endLegMm",
+          "minimumMm",
+          "obstacleIds"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
