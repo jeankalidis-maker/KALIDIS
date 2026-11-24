@@ -15,11 +15,11 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 008 [P] Validar reinício/reconexão, perda de conexão, timeout, fila ocupada e recuperação sem repetir escritas. **Estado incerto reconciliado por leitura; limpeza com dependentes recusada (129).**
 
 ## B — Infraestrutura, segurança e autonomia
-- [ ] 009 [P] Completar schemas de todas as ferramentas de edição, validação de argumentos e compatibilidade entre versões; preflight em todos os clientes autorizados. **Preflight de formas nativas ampliado (128).** **Largura nativa de parede na prevalidacao de pares novos (129).**
+- [ ] 009 [P] Completar schemas de todas as ferramentas de edição, validação de argumentos e compatibilidade entre versões; preflight em todos os clientes autorizados. **Preflight de formas nativas ampliado (128).** **Largura nativa de parede na prevalidacao de pares novos (129).** **Schema curtain_wall registrado, capacidade ativa verificada (130).**
 - [ ] 010 [P] Idempotência persistente e recuperação de resultados após interrupção, reconciliação de estado incerto e auditoria. **Estado unknown persistido e replay recusado em teste (129).**
-- [ ] 011 [P] Desfazer/refazer para criação, edição, exclusão, tipos, famílias e operações dependentes (hoje movimento e comentário restritos).
+- [ ] 011 [P] Desfazer/refazer para criação, edição, exclusão, tipos, famílias e operações dependentes (hoje movimento e comentário restritos). **Fixacao reversivel com forward/undo/redo confirmada e estado restaurado (130).**
 - [ ] 012 [P] Fila, controle de concorrência, telemetria, métricas e testes de carga em sessões longas.
-- [ ] 013 [P] Planejamento multioperação com dependências, dry-run, checkpoints e verificação posterior, incluindo efeitos externos.
+- [ ] 013 [P] Planejamento multioperação com dependências, dry-run, checkpoints e verificação posterior, incluindo efeitos externos. **Fluxo de fixacao com previa e readback independente (130).**
 - [ ] 014 [P] Contexto de projeto persistente, unidades, identificação de elementos, seleção e proteção contra alterações concorrentes.
 - [ ] 015 [P] Fluxo autorizado para trabalhar em projetos reais fora do Sandbox, com cópia, escopo, permissões, backup e proteção de documentos.
 - [ ] 016 [P] Testar limites de confiança das extensões C#, versões, assinaturas, caminhos e permissões; não executar código arbitrário sem revisão.
@@ -28,7 +28,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 ## C — Arquitetura e documentação
 - [ ] 018 [P] Rampa nativa (categoria Ramp), em vez de somente piso inclinado, com geometria e patamares.
 - [ ] 019 [P] Escadas com patamares, múltiplos lances, curvas e verificação de parâmetros de conforto e acessibilidade.
-- [ ] 020 [D] Paredes cortina completas: grids, painéis, montantes, portas e edição.
+- [ ] 020 [P] Paredes cortina completas: grids, painéis, montantes, portas e edição. **Criacao reta, grelha e inventario nativos implementados e compilados, sem deploy; edicao de paineis/montantes/portas pendente (130).**
 - [ ] 021 [P] Telhados complexos, múltiplas águas, aberturas, encontros e anexação de paredes em configurações variadas.
 - [ ] 022 [P] Pisos, forros e paredes com curvas, furos, perfis irregulares, limites, alinhamentos e restrições avançadas. **Piso com furo e parede semicircular conferidos (128).**
 - [ ] 023 [P] Portas e janelas com famílias variadas, orientação, folgas, vãos livres, restrições e hospedagem em situações complexas. **Tres tipos de porta externa com host confirmado (128).**
@@ -108,12 +108,12 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 083 [P] Teste ponta a ponta de um projeto realista de arquitetura, estrutura, elétrica e hidráulica, com documentação e verificação independente.
 - [ ] 084 [P] Teste de desempenho, modelos grandes, sessões prolongadas, dados inconsistentes e falhas/reconexão.
 - [ ] 085 [P] Teste em cópias de projetos reais, incluindo links, worksharing e casos protegidos, com autorização explícita.
-- [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).**
-- [ ] 087 [P] Manual de instalação, operação, recuperação e limites; versão publicada, matriz de testes e critérios de aceite.
+- [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).** **Build novo motor 0 erros/4 avisos; catalogo122 ferramentas ativas (130).**
+- [ ] 087 [P] Manual de instalação, operação, recuperação e limites; versão publicada, matriz de testes e critérios de aceite. **Gates de instalacao, recuperacao e aceite documentados em RELEASE-RECOVERY.md (130).**
 - [ ] 088 [P] Homologação final pelo usuário: executar comandos pelo ChatGPT normal, sem Work, do pedido à verificação e entrega.
 
 ## Resumo
 
-84 itens abertos: 3 bloqueados, 5 nao validados, 73 parciais, 2 sem implementacao confirmada, 1 com falha nao resolvida. 4 encerrados de 88 (026, 046, 068, 069). Contagem deste checklist, nao percentual da API Revit.
+84 itens abertos: 3 bloqueados, 5 nao validados, 74 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 4 encerrados de 88 (026, 046, 068, 069). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.

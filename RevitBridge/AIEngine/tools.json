@@ -1844,5 +1844,114 @@
     "idempotentHint": true,
     "openWorldHint": false
   }
+},
+{
+  "name": "curtain_wall",
+  "description": "Create a straight native curtain wall with explicit grid line requests, or inspect an existing curtain wall in the local sandbox. Default rollback.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "expectedPath": {
+        "type": "string",
+        "minLength": 1
+      },
+      "mode": {
+        "type": "string",
+        "enum": [
+          "create",
+          "audit"
+        ]
+      },
+      "id": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "typeId": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "levelId": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "start": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "additionalProperties": false
+      },
+      "end": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "additionalProperties": false
+      },
+      "heightMm": {
+        "type": "number",
+        "minimum": 1000,
+        "maximum": 12000
+      },
+      "gridLines": {
+        "type": "array",
+        "maxItems": 30,
+        "items": {
+          "type": "object",
+          "properties": {
+            "isUGridLine": {
+              "type": "boolean"
+            },
+            "alongMm": {
+              "type": "number",
+              "minimum": 100
+            },
+            "heightMm": {
+              "type": "number",
+              "minimum": 100
+            }
+          },
+          "required": [
+            "isUGridLine",
+            "alongMm",
+            "heightMm"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "commit": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "expectedPath",
+      "mode"
+    ],
+    "additionalProperties": false
+  },
+  "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "idempotentHint": false,
+    "openWorldHint": false
+  }
 }
 ]

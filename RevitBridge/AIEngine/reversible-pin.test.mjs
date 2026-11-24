@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import {reversiblePin} from './reversible-pin.mjs';
+const a={expectedPath:'C:/Sandbox/Test.rvt',id:1,uniqueId:'id1',before:false,after:true,direction:'forward'};
+let pinned=false;const call=async(n,p)=>{if(n==='snapshot')return {path:a.expectedPath};if(n==='geometry_review')return {status:'RolledBack',result:{elements:[{id:1,uniqueId:'id1',pinned}]}};if(n==='edit_elements'){if(p.commit)pinned=p.steps[0].value;return {status:p.commit?'Committed':'RolledBack',results:[{elementId:1}]}};throw Error(n)};
+assert.equal((await reversiblePin(a,call)).pinned,false);
+assert.equal((await reversiblePin({...a,commit:true},call)).pinned,true);
+await assert.rejects(reversiblePin({...a,commit:true},call),/mismatch/);
+assert.equal((await reversiblePin({...a,direction:'undo',commit:true},call)).pinned,false);
+assert.equal((await reversiblePin({...a,direction:'redo',commit:true},call)).pinned,true);
+assert.equal((await reversiblePin({...a,direction:'undo',commit:true},call)).pinned,false);
+console.log('REVERSIBLE_PIN_TESTS=PASS');
