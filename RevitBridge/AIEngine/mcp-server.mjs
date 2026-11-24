@@ -2,13 +2,15 @@
 // Connects only to the authenticated loopback Revit gateway.
 import readline from 'node:readline';
 import {validate,loadRegistry} from './command-registry.mjs';
+import {batchPreflight} from './batch-preflight.mjs';
 import {once,operationStatus} from './operation-journal.mjs';
 import {readFile,lstat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=path.dirname(fileURLToPath(import.meta.url));
-const {base:manifest,reviewed}=await loadRegistry(root);
+const registry=await loadRegistry(root);
+const {base:manifest,reviewed}=registry;
 const extDir=path.join(process.env.LOCALAPPDATA||'','KalidisAIEngine','ReviewedExtensions');
 async function resolvedExtensions(){
  if(readonly)return new Map();
@@ -40,13 +42,14 @@ async function gateway(name,args={}){
  return {response,result};
 }
 const statusTool={name:'operation_status',description:'Read the local adapter journal for a requestId. Never retries a command or guarantees model state.',inputSchema:{type:'object',properties:{requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$'}},required:['requestId'],additionalProperties:false},annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
+const preflightTool={name:'batch_preflight',description:'Validate all 58 batch actions, argument schemas, alias dependencies and basic dimensions without executing Revit. Does not replace native transaction rollback.',inputSchema:registry.all.get('batch').tool.inputSchema,annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
 async function liveTools(){
  const {response,result}=await gateway('catalog');
  if(!response.ok||!result.ok||!Array.isArray(result.implemented))throw Error('Live Revit catalog unavailable');
  const live=new Set(result.implemented);
  const base=manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
  if(live.has('run_extension')&&live.has('extensions')&&!readonly)for(const x of (await resolvedExtensions()).values())base.push(x.tool);
- return [statusTool,...base.map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
+ return [statusTool,preflightTool,...base.map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
 }
 async function callUnjournaled(name,args){
  const t=tools.get(name);
@@ -72,6 +75,10 @@ async function callUnjournaled(name,args){
 }
 async function call(name,args){
  if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Invalid arguments');
+ if(name==='batch_preflight'){
+  const result=batchPreflight(args,registry);
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:!result.ok};
+ }
  if(name==='operation_status'){
   validate(statusTool.inputSchema,args,name);
   if(!process.env.LOCALAPPDATA)throw Error('LOCALAPPDATA required');
