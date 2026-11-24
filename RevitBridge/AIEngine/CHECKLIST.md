@@ -128,3 +128,10 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [V] Exportações reais do RVT teste: PDF 39722 bytes, DWG 18521 bytes + PCP 22648 bytes, IFC 91711 bytes; arquivos existentes e não vazios. Sem validação externa de conteúdo/qualidade.
 - [V] Dois eixos 326390/326391 (34 ms), cota 326393 (11 ms), forro 326403 (35 ms), porta hospedada 326410 (416 ms). Dry-run e commit verificados. Projeto original preservado.
 - [P] Reteste de telhado, blend, diagnóstico de conexões, estruturas avançadas e integrações completas. Sessão atual continua com DLL anterior.
+
+## Avanços 28 e 29 — estruturas, elétrica e escadas
+- [V] Dois pilares e viga, IDs 326417/326418/326420, 441 ms; eletroduto e eletrocalha 326426/326428, 31 ms; janela 326431, 299 ms; identificador ambiente 326434, 22 ms; texto e linha 326437/326438, 13 ms. Dry-run, commit, IDs e save verificados. Geometria, não dimensionamento de engenharia.
+- [V] Espelhamento mesa 326443 (58 ms), duplicação vista 326458 (44 ms), ocultar/reexibir em lote (13 ms), grupo metálico 326476 (161 ms). RVT salvo. Auditoria: três avisos de vazão MEP, sistemas ainda não conectados/comissionados. Não suprimidos.
+- [C] straight_stair: StairsEditScope, corrida reta, largura, verificação de espelhos e desnível, cancelamento dry-run, falhas recusadas. Mais 5 ações: railing, shaft_opening, wall_flip, conduit_sized, cable_tray_sized. Contratos consultados no RevitAPI.xml 2025 local. 52 ferramentas cadastradas e 58 ações batch; sessão atual 50 ferramentas. Build 6c6367e: 0 erros, 5 avisos, 7.17 s.
+- [V] Implantação lado a lado SHA256 0D8B2A8E91EC2AA5D5F04A9ED29D485BE6DA21991A2EF95D3CC465D3D1549EF4, backup confirmado, STAGE_EXIT=0. Projeto original preservado.
+- [P] Reinício normal para validar escada, guarda-corpo, shaft, elétrica dimensionada, telhado, Blend e diagnóstico de roteamento. Demais integrações completas ainda pendentes.
