@@ -18,7 +18,7 @@ $escaped=[Security.SecurityElement]::Escape($engine)
 $project=@"
 <Project Sdk="Microsoft.NET.Sdk">
 <PropertyGroup><TargetFramework>net8.0-windows</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><PlatformTarget>x64</PlatformTarget><AssemblyName>$name</AssemblyName><NuGetAudit>false</NuGetAudit></PropertyGroup>
-<ItemGroup><Reference Include="Kalidis.AIEngine"><HintPath>$escaped</HintPath><Private>false</Private></Reference><Reference Include="RevitAPI"><HintPath>C:\Program Files\Autodesk\Revit 2025\RevitAPI.dll</HintPath><Private>false</Private></Reference></ItemGroup>
+<ItemGroup><Reference Include="Kalidis.AIEngine"><HintPath>$escaped</HintPath><Private>false</Private></Reference><Reference Include="RevitAPI"><HintPath>C:\Program Files\Autodesk\Revit 2025\RevitAPI.dll</HintPath><Private>false</Private></Reference><Reference Include="RevitAPIUI"><HintPath>C:\Program Files\Autodesk\Revit 2025\RevitAPIUI.dll</HintPath><Private>false</Private></Reference></ItemGroup>
 </Project>
 "@
 $projectPath=Join-Path $work 'Operation.csproj'
