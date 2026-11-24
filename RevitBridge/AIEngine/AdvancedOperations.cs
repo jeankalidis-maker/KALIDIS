@@ -75,6 +75,56 @@ internal static class AdvancedOperations
                             fm.AssociateElementParameterToFamilyParameter(ep,fp);
                         }
                     }
+                    // Adapted from FamFab FamilyGenerator (MIT); see THIRD-PARTY-FamFab.txt.
+                    if(r.TryGetProperty("blends",out var blendSpec)){
+                        var blends=blendSpec.EnumerateArray().ToArray();
+                        if(blends.Length>50)throw new ArgumentException("Maximum 50 blends");
+                        foreach(var spec in blends){
+                            double bottom=dimension(spec,"bottomMm",-30000,30000),top=dimension(spec,"topMm",-30000,30000);
+                            if(top-bottom<Mm(1))throw new ArgumentException("Blend top must exceed bottom");
+                            CurveArray curves(string key){
+                                var pts=spec.GetProperty(key).EnumerateArray().Select(p=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),0)).ToArray();
+                                if(pts.Length<3||pts.Length>100)throw new ArgumentException("3-100 blend vertices");
+                                var ca=new CurveArray();for(int i=0;i<pts.Length;i++)ca.Append(Line.CreateBound(pts[i],pts[(i+1)%pts.Length]));return ca;
+                            }
+                            var baseCurves=curves("bottomPoints");var topCurves=curves("topPoints");
+                            if(baseCurves.Size!=topCurves.Size)throw new ArgumentException("Blend vertex counts must match");
+                            var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,XYZ.Zero));
+                            bool solid=!spec.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
+                            var blend=fd.FamilyCreate.NewBlend(solid,topCurves,baseCurves,plane);
+                            if(top>blend.BottomOffset){blend.TopOffset=top;blend.BottomOffset=bottom;}
+                            else{blend.BottomOffset=bottom;blend.TopOffset=top;}
+                        }
+                    }
+                    if(r.TryGetProperty("referencePlanes",out var planeSpec)){
+                        var planes=planeSpec.EnumerateArray().ToArray();
+                        if(planes.Length>50)throw new ArgumentException("Maximum 50 reference planes");
+                        var view=new FilteredElementCollector(fd).OfClass(typeof(ViewPlan)).Cast<ViewPlan>().FirstOrDefault(v=>!v.IsTemplate)??throw new InvalidOperationException("Family plan view required");
+                        var existing=new FilteredElementCollector(fd).OfClass(typeof(ReferencePlane)).Cast<ReferencePlane>().Select(p=>p.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                        foreach(var spec in planes){
+                            var name=S(spec,"name");if(!existing.Add(name))throw new ArgumentException("Duplicate reference plane "+name);
+                            double offset=dimension(spec,"offsetMm",-30000,30000),span=Mm(2000);
+                            var axis=S(spec,"axis");
+                            // In a plan view, vertical reference planes are represented by XY lines.
+                            XYZ a,b;
+                            if(axis=="x"){a=new XYZ(offset,-span,0);b=new XYZ(offset,span,0);}
+                            else if(axis=="y"){a=new XYZ(-span,offset,0);b=new XYZ(span,offset,0);}
+                            else throw new ArgumentException("Supported reference axes x or y");
+                            var plane=fd.FamilyCreate.NewReferencePlane(a,b,XYZ.BasisZ,view);plane.Name=name;
+                        }
+                    }
+                    if(r.TryGetProperty("parameters",out var paramSpec)){
+                        var defs=paramSpec.EnumerateArray().ToArray();
+                        if(defs.Length>100)throw new ArgumentException("Maximum 100 additional parameters");
+                        foreach(var def in defs){
+                            var name=S(def,"name");if(parameters.ContainsKey(name))throw new ArgumentException("Duplicate parameter");
+                            var kind=S(def,"kind");
+                            var spec=kind switch{"length"=>SpecTypeId.Length,"number"=>SpecTypeId.Number,"text"=>SpecTypeId.String.Text,_=>throw new ArgumentException("Unsupported parameter kind")};
+                            bool instance=def.TryGetProperty("instance",out var inst)&&inst.ValueKind==JsonValueKind.True;
+                            var fp=fm.AddParameter(name,GroupTypeId.Data,spec,instance);parameters.Add(name,fp);
+                            if(kind=="text")fm.Set(fp,S(def,"value"));else if(kind=="length")fm.Set(fp,dimension(def,"value",-30000,30000));else fm.Set(fp,def.GetProperty("value").GetDouble());
+                        }
+                    }
                     if(r.TryGetProperty("formulas",out var formulas))foreach(var f in formulas.EnumerateObject()){
                         if(!parameters.TryGetValue(f.Name,out var fp))throw new ArgumentException("Unknown formula parameter");
                         fm.SetFormula(fp,f.Value.GetString());
