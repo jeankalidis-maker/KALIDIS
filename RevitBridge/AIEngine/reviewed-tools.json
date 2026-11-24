@@ -2576,5 +2576,202 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "A9F833D4E0CE",
+    "inspection": false,
+    "tool": {
+      "name": "texture_scale",
+      "description": "Audit or duplicate a generic bitmap material with calibrated X/Y physical scale. Preserves source material. Rendering quality not certified.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "audit",
+              "duplicate"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sizeXmm": {
+            "type": "number"
+          },
+          "sizeYmm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "DA411F02960E",
+    "inspection": false,
+    "tool": {
+      "name": "hooked_set",
+      "description": "Create native experimental planar 135 degree hooked stirrup set with spacing and bounding-box clearance check. Not structural design or true cover certification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hostId": {
+            "type": "integer"
+          },
+          "typeId": {
+            "type": "integer"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "z": {
+            "type": "number"
+          },
+          "widthMm": {
+            "type": "number"
+          },
+          "lengthMm": {
+            "type": "number"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "spacingMm": {
+            "type": "number"
+          },
+          "minBoxCoverMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "hostId",
+          "typeId",
+          "x",
+          "y",
+          "z",
+          "widthMm",
+          "lengthMm",
+          "count",
+          "spacingMm",
+          "minBoxCoverMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "4DC9328597FA",
+    "inspection": false,
+    "tool": {
+      "name": "wall_gap_repair",
+      "description": "Diagnose or repair collinear extension of independent nonbearing straight wall to orthogonal anchor endpoint. Rejects protected dependencies; disables automatic join at repaired endpoint; centerline only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "anchorId": {
+            "type": "integer"
+          },
+          "end": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "anchorEnd": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "maxGapMm": {
+            "type": "number"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "diagnose",
+              "repair"
+            ]
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "anchorId",
+          "end",
+          "anchorEnd",
+          "expectedMm",
+          "maxGapMm",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
