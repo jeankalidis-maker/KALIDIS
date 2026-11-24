@@ -19,11 +19,12 @@ def run(engine, template, discipline):
         types=engine.call("types")["types"]
         kind="PipeType" if discipline=="pipe" else "DuctType"
         systemKind="PipingSystemType" if discipline=="pipe" else "MechanicalSystemType"
-        nameType="Standard" if discipline=="pipe" else "Rectangular Duct"
+        nameType="Standard" if discipline=="pipe" else "Mitered Elbows / Tees"
         print("TYPES",[(t["id"],t["name"],t["kind"]) for t in types if t["kind"] in (kind,systemKind)],flush=True)
         candidates=[t for t in types if t["kind"]==kind]
         if discipline=="duct":
-            candidates=[t for t in candidates if "rectangular" in t["name"].lower()]
+            # Discover rectangular compatibility by an actual rollback-only sized duct creation below.
+            candidates=[t for t in candidates if "tees" in t["name"].lower()]
         t=next((x for x in candidates if x["name"]==nameType),candidates[0] if candidates else None)
         if t is None:raise RuntimeError("No compatible type")
         systemName="Domestic Cold Water" if discipline=="pipe" else "Supply Air"
@@ -35,6 +36,18 @@ def run(engine, template, discipline):
             if discipline=="pipe":props.update(diameterMm=size)
             else:props.update(widthMm=size*6,heightMm=200)
             return props
+        if discipline=="duct":
+            compatible=[]
+            for candidate in candidates:
+                t=candidate
+                try:
+                    trial=engine.batch(p,[curve(xyz(-5000,0),xyz(-2000,0),"probe")],commit=False)
+                    if trial["verified"] and not trial["committed"]:compatible.append(t)
+                except RuntimeError as ex:
+                    if "timeout" in str(ex).lower() or "unknown" in str(ex).lower():raise
+            if not compatible:raise RuntimeError("No rectangular duct type passed rollback probe")
+            t=compatible[0]
+            print("COMPATIBLE_TYPE",t,flush=True)
         cases=[
           ("elbow",[curve(xyz(0,0),xyz(3000,0),"a"),curve(xyz(3000,0),xyz(3000,3000),"b")],xyz(3000,0)),
           ("union",[curve(xyz(0,6000),xyz(3000,6000),"a"),curve(xyz(3000,6000),xyz(6000,6000),"b")],xyz(3000,6000)),
