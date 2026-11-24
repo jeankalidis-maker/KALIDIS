@@ -31,3 +31,7 @@ V = validado em Revit; C = código compilado, não validado em sessão; P = pend
 Versão instalada: protótipo com catalog, snapshot, test_wall, batch, export_family.
 Commit 97a38f2895e119abfb34e4e8c5f9b393dfc17087 compilado em Windows com 0 erros, 3 avisos, 7.67 s; ainda não instalado.
 Não há evidência de validação de escrita no Revit. Não há cobertura percentual comprovada.
+
+## Validação MCP
+- [V] JSON-RPC initialize, tools/list (6 ferramentas somente leitura), snapshot real (81 famílias, 2 níveis), bloqueio de test_wall em read-only; processo 24324, exit 0, 6.52 s.
+- [C] Build avançado 97a38f2: 0 erros, 3 avisos, 7.67 s; ainda não instalado.
