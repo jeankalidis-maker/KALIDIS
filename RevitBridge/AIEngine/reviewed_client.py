@@ -28,6 +28,10 @@ OPERATIONS = {
     "native_material_schedule": ("9B40E496AB51", False),
     "closed_stirrup": ("8C624632C082", False),
     "layer_audit": ("6AF2D4EA2171", True),
+    "layer_variant": ("A91EADBEAC86", False),
+    "sheet_review": ("B180A9C5F7F8", False),
+    "material_appearance": ("427657519022", False),
+    "schedule_review": ("5E3C30C23E81", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
