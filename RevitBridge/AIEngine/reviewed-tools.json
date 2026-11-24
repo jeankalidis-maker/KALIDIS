@@ -3033,5 +3033,59 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "F343C0BEDF84",
+    "inspection": false,
+    "tool": {
+      "name": "family_catalog_audit",
+      "description": "Inspect isolated copy of one of four pinned MIT family files, current type solids and curves, without loading into project. Start requires explicit commit and inspectPinnedFile=true; poll status. Not a security certification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "start",
+              "status"
+            ]
+          },
+          "folder": {
+            "type": "string",
+            "minLength": 1
+          },
+          "inspectPinnedFile": {
+            "type": "boolean"
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "fileName": {
+            "type": "string",
+            "enum": [
+              "Column_Sqaure.rfa",
+              "I_Single-Flush.rfa",
+              "Mullion_Rectangle.rfa",
+              "Column_Square_Tollerance.rfa"
+            ]
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
