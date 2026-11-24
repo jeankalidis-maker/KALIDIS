@@ -19,6 +19,7 @@ OPERATIONS = {
     "mep_connect": ("459041107B73", False),
     "sloped_floor": ("D3B55A24150F", False),
     "material_takeoff": ("FB499380E8E7", True),
+    "paint_top_face": ("B7158B02BAE8", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
