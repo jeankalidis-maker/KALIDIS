@@ -21,6 +21,8 @@ OPERATIONS = {
     "material_takeoff": ("FB499380E8E7", True),
     "paint_top_face": ("B7158B02BAE8", False),
     "wall_attach_roof": ("14A6A6F23934", False),
+    "rebar_inventory": ("18C56F5D6B28", True),
+    "checked_wall_opening": ("3544CE89C7F1", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
