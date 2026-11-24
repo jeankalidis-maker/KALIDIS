@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {legacyRead} from './legacy-read.mjs';
+const a={expectedPath:'C:/Sandbox/Test.rvt',id:'x',acao:'listar',busca:'Wall'};
+const call=async n=>({snapshot:{path:a.expectedPath,title:'Test'},elements:{elements:[{id:1}]},element_info:{elements:[{id:1}]},list_categories:{categories:[{instanceCount:3}]}}[n]);
+assert.equal((await legacyRead(a,call)).quantidade,1);
+assert.equal((await legacyRead({expectedPath:a.expectedPath,id:'x',acao:'info',elementIds:[1]},call)).elementIds[0],1);
+assert.equal((await legacyRead({expectedPath:a.expectedPath,id:'x',acao:'inventario'},call)).quantidade,3);
+await assert.rejects(legacyRead({...a,acao:'excluir'},call));
+await assert.rejects(legacyRead({...a,expectedPath:'Other'},call));
+console.log('LEGACY_READ_TESTS=PASS');
