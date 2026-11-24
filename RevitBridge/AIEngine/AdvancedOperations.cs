@@ -70,7 +70,7 @@ internal static class AdvancedOperations
                         var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,relative?0:z)));
                         var ca=new CurveArray();
                         if(circular){
-                            double rad=dimension(shape,"radiusMm",10,10000);var center=new XYZ(0,0,z);ca.Append(Arc.Create(center,rad,0,Math.PI*2,XYZ.BasisX,XYZ.BasisY));
+                            double rad=dimension(shape,"radiusMm",10,10000);var center=new XYZ(0,0,z);if(shape.TryGetProperty("radiusParameter",out _)){ca.Append(Arc.Create(center,rad,0,Math.PI,XYZ.BasisX,XYZ.BasisY));ca.Append(Arc.Create(center,rad,Math.PI,Math.PI*2,XYZ.BasisX,XYZ.BasisY));}else ca.Append(Arc.Create(center,rad,0,Math.PI*2,XYZ.BasisX,XYZ.BasisY));
                             if(relative||shape.TryGetProperty("widthParameter",out _)||shape.TryGetProperty("depthParameter",out _))throw new ArgumentException("Circular profile does not support rectangular constraints or offset");
                         }else for(int i=0;i<points.Length;i++)ca.Append(Line.CreateBound(points[i],points[(i+1)%points.Length]));
                         var profile=new CurveArrArray();profile.Append(ca);
@@ -84,12 +84,25 @@ internal static class AdvancedOperations
                             var plan=new FilteredElementCollector(fd).OfClass(typeof(ViewPlan)).Cast<ViewPlan>().First(v=>!v.IsTemplate&&v.ViewType==ViewType.FloorPlan);
                             var curves=extrusion.Sketch.GetAllElements().Select(id=>fd.GetElement(id)).OfType<ModelCurve>().Where(c=>c.GeometryCurve is Arc).ToArray();
                             double radius=dimension(shape,"radiusMm",10,10000);
-                            var rim=extrusion.get_Geometry(new Options{ComputeReferences=true,DetailLevel=ViewDetailLevel.Fine}).OfType<Solid>().SelectMany(s=>s.Edges.Cast<Edge>()).Select(e=>new{edge=e,arc=e.AsCurve() as Arc}).Where(x=>x.arc!=null&&Math.Abs(x.arc.Radius-radius)<1e-6&&Math.Abs(x.arc.Normal.Z)>0.999&&x.edge.Reference!=null).OrderByDescending(x=>x.arc!.Center.Z).ToArray();
-                            if(rim.Length==0&&curves.Length==0)throw new InvalidOperationException("No referenceable circular edge or sketch arc");
-                            var arc=rim.Length>0?rim[0].arc!:(Arc)curves[0].GeometryCurve;
-                            var reference=rim.Length>0?rim[0].edge.Reference:arc.Reference??new Reference(curves[0]);
-                            var dim=fd.FamilyCreate.NewRadialDimension(plan,reference,arc.Center+XYZ.BasisX*arc.Radius*1.5);
-                            var fp=fm.AddParameter(name,GroupTypeId.Geometry,SpecTypeId.Length,false);dim.FamilyLabel=fp;fm.Set(fp,radius);parameters.Add(name,fp);fd.Regenerate();
+                            if(curves.Length!=2)throw new InvalidOperationException("Two native sketch semicircles required for driving radius");
+                            var fp=fm.AddParameter(name,GroupTypeId.Geometry,SpecTypeId.Length,false);fm.Set(fp,radius);parameters.Add(name,fp);
+                            foreach(var curve in curves){
+                                var arc=(Arc)curve.GeometryCurve;
+                                var reference=arc.Reference??new Reference(curve);
+                                var dim=fd.FamilyCreate.NewRadialDimension(plan,reference,arc.Center+(arc.Evaluate(.5,true)-arc.Center)*1.5);
+                                dim.FamilyLabel=fp;
+                            }
+                            fd.Regenerate();
+                            double ActualRadius(){
+                                var faces=extrusion.get_Geometry(new Options{DetailLevel=ViewDetailLevel.Fine}).OfType<Solid>().Where(x=>x.Volume>1e-9).SelectMany(x=>x.Faces.Cast<Face>()).OfType<CylindricalFace>().ToArray();
+                                if(faces.Length==0)throw new InvalidOperationException("Missing cylindrical face");
+                                return faces[0].get_Radius(0).GetLength();
+                            }
+                            // Check the driver in the actual family document before exporting.
+                            fm.Set(fp,radius*1.1);fd.Regenerate();
+                            if(Math.Abs(ActualRadius()-radius*1.1)>1e-5)throw new InvalidOperationException("Radius does not drive geometry");
+                            fm.Set(fp,radius);fd.Regenerate();
+                            if(Math.Abs(ActualRadius()-radius)>1e-5)throw new InvalidOperationException("Radius restoration failed");
                         }
                         if(relative){
                             var start=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_START_PARAM);var end=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_END_PARAM);
