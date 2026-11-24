@@ -3134,5 +3134,198 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "0BB07FE21ABD",
+    "inspection": false,
+    "tool": {
+      "name": "family_catalog_load",
+      "description": "Upgrade and load one of four pinned inspected MIT families into sandbox with unique identity. Start requires commit=true and loadPinnedFile=true; external event cannot roll back. Poll status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "start",
+              "status"
+            ]
+          },
+          "folder": {
+            "type": "string",
+            "minLength": 1
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "fileName": {
+            "type": "string",
+            "enum": [
+              "Column_Sqaure.rfa",
+              "I_Single-Flush.rfa",
+              "Mullion_Rectangle.rfa",
+              "Column_Square_Tollerance.rfa"
+            ]
+          },
+          "loadPinnedFile": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "E9CE1F85B2FF",
+    "inspection": false,
+    "tool": {
+      "name": "orthogonal_plan",
+      "description": "Build orthogonal multizone plan with confirmed perimeter, partitions, room seeds and door locations. Use orthogonal_raster.py for source coverage. Verifies native geometry and hosts; empty sandbox region only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "levelId": {
+            "type": "integer"
+          },
+          "wallTypeId": {
+            "type": "integer"
+          },
+          "floorTypeId": {
+            "type": "integer"
+          },
+          "doorTypeId": {
+            "type": "integer"
+          },
+          "heightMm": {
+            "type": "number"
+          },
+          "perimeter": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "minItems": 4,
+            "maxItems": 40
+          },
+          "partitions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "end": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 30
+          },
+          "rooms": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "minItems": 1,
+            "maxItems": 30
+          },
+          "doors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "wallIndex": {
+                  "type": "integer"
+                },
+                "point": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "widthMm": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "wallIndex",
+                "point",
+                "widthMm"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 30
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "levelId",
+          "wallTypeId",
+          "floorTypeId",
+          "doorTypeId",
+          "heightMm",
+          "perimeter",
+          "partitions",
+          "rooms",
+          "doors"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
