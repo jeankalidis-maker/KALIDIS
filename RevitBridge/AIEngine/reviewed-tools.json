@@ -1195,11 +1195,11 @@
     }
   },
   {
-    "sourcePrefix": "5E3C30C23E81",
+    "sourcePrefix": "847D785D8644",
     "inspection": false,
     "tool": {
       "name": "schedule_review",
-      "description": "Audit, sort, group or filter schedule; grouping does not automatically total fields",
+      "description": "Audit, sort, group, filter and explicitly total selected numeric schedule fields",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1216,7 +1216,8 @@
               "audit",
               "sort",
               "group",
-              "filter"
+              "filter",
+              "totals"
             ]
           },
           "fieldIndex": {
@@ -1234,6 +1235,14 @@
           },
           "commit": {
             "type": "boolean"
+          },
+          "fieldIndices": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 20
           }
         },
         "required": [
