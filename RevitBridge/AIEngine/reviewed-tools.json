@@ -1802,5 +1802,73 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "C3890549057C",
+    "inspection": false,
+    "tool": {
+      "name": "spatial_repair",
+      "description": "Discover nearby obstacles in selected local categories and diagnose or repair unhosted furniture clearance within explicit movement limit. Conservative bounds, no linked models or circulation certification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "diagnose",
+              "repair"
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 8
+          },
+          "minimumMm": {
+            "type": "number"
+          },
+          "maxMoveMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode",
+          "id",
+          "expectedMm",
+          "categoryIds",
+          "minimumMm",
+          "maxMoveMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
