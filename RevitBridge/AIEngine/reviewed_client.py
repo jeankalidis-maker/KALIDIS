@@ -41,6 +41,7 @@ OPERATIONS = {
     "auto_clearance_repair": ("4683C3604887", False),
     "spatial_repair": ("C3890549057C", False),
     "room_repair": ("E03C1ABA1063", False),
+    "polygon_repair": ("3DEA48D00B14", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
