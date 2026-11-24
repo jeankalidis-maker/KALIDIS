@@ -1576,5 +1576,27 @@
       "idempotentHint": true,
       "openWorldHint": false
     }
+  },
+  {
+    "name": "routing_preferences",
+    "description": "Inspect MEP curve type segment, elbow, junction, transition and union routing rules and resolved family parts",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "typeId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "typeId"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
   }
 ]
