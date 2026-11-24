@@ -16,7 +16,7 @@ def rectangular_room(level_id, wall_type_id, floor_type_id, x, y, width, length,
     if include_floor:
         if floor_type_id is None: raise ValueError("floor type required")
         steps.append(dict(action="floor",levelId=level_id,typeId=floor_type_id,points=pts,alias="floor"))
-    steps.append(dict(action="room",levelId=level_id,point=dict(x=x+width/2,y=y+length/2),name=name,alias="room"))
+    steps.append(dict(action="room",levelId=level_id,x=x+width/2,y=y+length/2,name=name,alias="room"))
     return steps
 
 def hosted_opening(steps, level_id, type_id, wall_alias, x, y, z):
@@ -30,7 +30,7 @@ def execute(expected_path, steps, commit=False):
 if __name__=="__main__":
     # Offline tests only: never call a live model from this entry point.
     s=rectangular_room(1,2,3,0,0,4000,5000,3000,"Sala")
-    assert len(s)==6 and s[-1]["point"]=={"x":2000,"y":2500}
+    assert len(s)==6 and (s[-1]["x"],s[-1]["y"])==(2000,2500)
     assert s[3]["end"]==s[0]["start"]
     t=hosted_opening(s,1,4,"wall1",1000,0,0)
     assert len(t)==7 and t[-1]["hostId"]=="$wall1" and len(s)==6
