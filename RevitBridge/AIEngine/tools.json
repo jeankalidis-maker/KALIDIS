@@ -1,0 +1,415 @@
+[
+  {
+    "name": "catalog",
+    "description": "Discover native command names and implemented actions",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "snapshot",
+    "description": "Read active project levels, wall types and families",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "types",
+    "description": "List element types and IDs",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "native_status",
+    "description": "Check availability of native Revit commands",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "library",
+    "description": "Search installed RFA and RFT libraries",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "family_info",
+    "description": "Inspect family types",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "familyId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "familyId"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "test_wall",
+    "description": "Create test wall; rollback by default",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "levelId": {
+          "type": "integer"
+        },
+        "wallTypeId": {
+          "type": "integer"
+        },
+        "commit": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "levelId",
+        "wallTypeId"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "batch",
+    "description": "Atomic model creation, up to 200 steps. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan. Coordinates mm.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "boolean"
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "required": [
+              "action"
+            ],
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "level",
+                  "wall",
+                  "floor",
+                  "ceiling",
+                  "room",
+                  "grid",
+                  "material",
+                  "view3d",
+                  "plan"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "expectedPath",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "export_family",
+    "description": "Export editable family to a new RFA in Sandbox",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "familyId": {
+          "type": "integer"
+        },
+        "fileName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "familyId",
+        "fileName"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "create_family",
+    "description": "Create rectangular extrusion family with height parameter",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "widthMm": {
+          "type": "number"
+        },
+        "lengthMm": {
+          "type": "number"
+        },
+        "heightMm": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "template",
+        "fileName",
+        "widthMm",
+        "lengthMm",
+        "heightMm"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "load_family",
+    "description": "Load staged family into test project",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "export_view",
+    "description": "Export current view PNG into Sandbox",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "fileName"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "save_test",
+    "description": "Save designated Sandbox RVT",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "expectedPath"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "sheet",
+    "description": "Create sheet",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "titleBlockId": {
+          "type": "integer"
+        },
+        "number": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "titleBlockId",
+        "number",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "schedule",
+    "description": "Create schedule",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "categoryId": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "categoryId",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  }
+]
