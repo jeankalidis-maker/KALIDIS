@@ -3,6 +3,7 @@
 import readline from 'node:readline';
 import {validate,loadRegistry} from './command-registry.mjs';
 import {batchPreflight} from './batch-preflight.mjs';
+import {reversibleMove,reversibleMoveTool} from './reversible-move.mjs';
 import {once,operationStatus} from './operation-journal.mjs';
 import {readFile,lstat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
@@ -50,7 +51,7 @@ async function liveTools(){
  const live=new Set(result.implemented);
  const base=manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
  if(live.has('run_extension')&&live.has('extensions')&&!readonly)for(const x of (await resolvedExtensions()).values())base.push(x.tool);
- return [statusTool,preflightTool,...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
+ return [statusTool,preflightTool,...(!readonly&&base.some(t=>t.name==="verified_move")&&base.some(t=>t.name==="geometry_review")?[reversibleMoveTool]:[]),...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
 }
 async function callUnjournaled(name,args){
  const t=tools.get(name);
@@ -76,6 +77,15 @@ async function callUnjournaled(name,args){
 }
 async function call(name,args){
  if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Invalid arguments');
+ if(name==='reversible_move'){
+  if(readonly)throw Error('Read-only session');
+  const result=await reversibleMove(args,async (n,a)=>{
+   const response=await callUnjournaled(n,a);
+   if(response.isError)throw Error(response.content[0].text);
+   return JSON.parse(response.content[0].text);
+  });
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
+ }
  if(name==='cancel_batch'){
   if(readonly)throw Error('Read-only session');
   validate(cancelTool.inputSchema,args,name);

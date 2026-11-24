@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {reversibleMove} from './reversible-move.mjs';
+let pos=[0,0,0],unique='test-unique',moves=0;
+const call=async (name,a)=>{
+ if(name==='geometry_review')return {status:'RolledBack',result:{elements:[{id:1,uniqueId:unique,locationMm:pos,pinned:false}]}};
+ moves++;assert.deepEqual(a.expectedMm,pos);if(a.commit)pos=a.targetMm;
+ return {status:a.commit?'Committed':'RolledBack',result:{verifiedInsideTransaction:true,afterMm:a.targetMm}};
+};
+const a={expectedPath:'C:/Sandbox/Test.rvt',id:1,uniqueId:unique,beforeMm:[0,0,0],afterMm:[1000,0,0],direction:'forward'};
+assert.equal((await reversibleMove(a,call)).committed,false);
+assert.deepEqual(pos,[0,0,0]);
+await reversibleMove({...a,commit:true},call);
+await reversibleMove({...a,direction:'undo',commit:true},call);
+assert.deepEqual(pos,[0,0,0]);
+await reversibleMove({...a,direction:'redo',commit:true},call);
+assert.deepEqual(pos,[1000,0,0]);
+await assert.rejects(reversibleMove({...a,commit:true},call),/mismatch/);
+unique='different';
+await assert.rejects(reversibleMove({...a,direction:'undo',commit:true},call),/mismatch/);
+assert.equal(moves,4);
+console.log('REVERSIBLE_MOVE_TESTS=PASS');
