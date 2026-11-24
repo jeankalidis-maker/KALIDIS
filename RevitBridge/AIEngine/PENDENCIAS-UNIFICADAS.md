@@ -10,20 +10,20 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [x] 003 [V] Contexto nativo validado: documento, vista, selecao vazia consistente, sessao, revisao e troca de documentos (132).
 - [x] 004 [V] Cache nativo comprovado em runtime: hit, TTL, invalidacao por alteracao e troca de documentos locais (136).
 - [x] 005 [V] Rejeicao de sessao/revisao incorretas, previa/commit com revisao atual e rejeicao de revisao anterior, em runtime (132).
-- [ ] 006 [P] Validar cancelamento cooperativo real: antes da execução, durante lote, rollback e corrida com commit. **Politica de rollback de falhas do batch compilada; teste nativo ainda pendente (129).** **Cancelamento nativo de lote180 materiais aceito e rollback sem residuos; fase exata e corrida real pendentes (132).** **Cancelamento de lote180 materiais com intencao de commit aprovado; fase exata pendente (133).**
+- [ ] 006 [P] Validar cancelamento cooperativo real: antes da execução, durante lote, rollback e corrida com commit. **Politica de rollback de falhas do batch compilada; teste nativo ainda pendente (129).** **Cancelamento nativo de lote180 materiais aceito e rollback sem residuos; fase exata e corrida real pendentes (132).** **Cancelamento de lote180 materiais com intencao de commit aprovado; fase exata pendente (133).** **Cancelamento observado durante running aprovado e tardio recusado; fase pending nao comprovada (137).**
 - [ ] 007 [P] Atualizador próprio do AI Engine, instalação autorizada, rollback de versão e smoke test pós-instalação. **Instalador existente permanece impedido pela politica de execucao (131).** **Stage autorizado pelo usuario funcionou, backup verificado; restauracao de versao ainda nao executada (132).** **Restore-Engine.ps1 preparado e parser/hash anterior aprovados; teste de restauracao ainda pendente (135).** **Segundo stage e restart confirmados; restore pendente (136).**
 - [x] 008 [V] Reinicio, timeout historico, fila ocupada, perda de cliente e recuperacao sem replay comprovados no escopo local (132,128/129,135). Conector publicado segue item002.
 
 ## B — Infraestrutura, segurança e autonomia
 - [ ] 009 [P] Completar schemas de todas as ferramentas de edição, validação de argumentos e compatibilidade entre versões; preflight em todos os clientes autorizados. **Preflight de formas nativas ampliado (128).** **Largura nativa de parede na prevalidacao de pares novos (129).** **Schema curtain_wall registrado, capacidade ativa verificada (130).**
-- [ ] 010 [P] Idempotência persistente e recuperação de resultados após interrupção, reconciliação de estado incerto e auditoria. **Estado unknown persistido e replay recusado em teste (129).** **Journal started preservado apos perda real do cliente; replay recusado (135).**
+- [x] 010 [V] Idempotencia persistente, recibos de criacao recuperados por escopo e presenca de IDs conferida; estados incertos exigem inspecao manual e nunca replay (128/129/135/137), sem garantia exatamente-uma-vez.
 - [ ] 011 [P] Desfazer/refazer para criação, edição, exclusão, tipos, famílias e operações dependentes (hoje movimento e comentário restritos). **Fixacao reversivel com forward/undo/redo confirmada e estado restaurado (130).**
-- [ ] 012 [P] Fila, controle de concorrência, telemetria, métricas e testes de carga em sessões longas. **Fila ocupada distinguida de ferramenta inexistente em runtime (135).**
+- [ ] 012 [P] Fila, controle de concorrência, telemetria, métricas e testes de carga em sessões longas. **Fila ocupada distinguida de ferramenta inexistente em runtime (135).** **engine_health e carga120 sequenciais/100 concorrentes, busy correto e fila drenada (137); longa duracao pendente.**
 - [ ] 013 [P] Planejamento multioperação com dependências, dry-run, checkpoints e verificação posterior, incluindo efeitos externos. **Fluxo de fixacao com previa e readback independente (130).**
-- [ ] 014 [P] Contexto de projeto persistente, unidades, identificação de elementos, seleção e proteção contra alterações concorrentes. **Leitura de selecao e identidade em snapshot legado testada (131).** **Contexto nativo e troca de documentos conferidos (132).**
+- [x] 014 [V] Contexto persistente, unidades mm, identidades, selecao/vista e sinal de revisao validados em checkpoints locais e protecao de sessao/revisao (132/137). Nao e lock multiusuario.
 - [ ] 015 [P] Fluxo autorizado para trabalhar em projetos reais fora do Sandbox, com cópia, escopo, permissões, backup e proteção de documentos. **Copia RVT externa verificada por SHA256, escrita isolada e origem preservada (131).**
 - [ ] 016 [P] Testar limites de confiança das extensões C#, versões, assinaturas, caminhos e permissões; não executar código arbitrário sem revisão. **Recusa de DLL nao aprovada e nome invalido confirmada (135).**
-- [ ] 017 [P] Testar todos os comandos anunciados no catálogo ativo e manter matriz por comando/versão/resultado.
+- [ ] 017 [P] Testar todos os comandos anunciados no catálogo ativo e manter matriz por comando/versão/resultado. **MATRIX-LIVE-137: 37/128 probes de leitura aprovados,91 nao retestados; catalogo final130 (137).**
 
 ## C — Arquitetura e documentação
 - [ ] 018 [P] Rampa nativa (categoria Ramp), em vez de somente piso inclinado, com geometria e patamares.
@@ -83,9 +83,9 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 
 ## H — Bibliotecas BIM e interoperabilidade
 - [ ] 064 [P] Ampliar catálogo além das quatro famílias de um repositório, com pesquisa real de fornecedores e categorias.
-- [ ] 065 [P] Verificar licenças, procedência, integridade, versões, dependências e compatibilidade RFA antes de importar.
+- [ ] 065 [P] Verificar licenças, procedência, integridade, versões, dependências e compatibilidade RFA antes de importar. **Quatro RFA auditados isoladamente e gate de proveniencia/auditoria exigido; dependencias/versao de origem pendentes (137).**
 - [ ] 066 [P] Auditar todos os tipos, parâmetros, conectores, geometria e comportamento de famílias externas em projetos isolados. **Sete tipos com solidos medidos; perfil e conectores pendentes (128).**
-- [ ] 067 [P] Adaptar famílias importadas a padrões de projeto sem alterar os arquivos originais; evitar duplicatas. **Copia adaptada com tipo e metadado, original preservado; deduplicacao pendente (128).**
+- [x] 067 [V] Adaptacao RFA preservando original (128) e deduplicacao do catalogo aprovado por reserva persistente: quatro historicas e novo load em copia com repeticao recusada, hash original preservado (137). Nao dedup global de RFA generico.
 - [x] 068 [V] Exportacao experimental Integrated121 validada em leitor independente web-ifc, geometria, unidades, categorias, propriedades selecionadas e relacoes (avanco126). Fidelidade de estilos e round-trip permanecem no item070.
 - [x] 069 [V] PDF renderizado e inspecionado em leitor independente e DWG aberto/auditado no AutoCAD Core Console, avanco127. Plotagem/fidelidade universal fora do ensaio.
 - [ ] 070 [P] Fluxo de importação/coordenação IFC, round-trip e interoperabilidade com outros formatos.
@@ -100,20 +100,20 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 077 [P] FamFab: fluxo de imagem/referência para RFA, integração de recursos úteis e revisão de dependências/API/custo. **Sweep composto RFA confirmado no motor proprio; imagem ainda pendente (134).**
 - [ ] 078 [P] Horizun: ampliar funções úteis de arquitetura, estrutura e MEP e verificar limites de licença/versão.
 - [ ] 079 [P] Dynamo: interpretar, construir e validar grafos variados, dependências, bindings, execução e efeitos externos; não executar grafos desconhecidos sem revisão.
-- [ ] 080 [P] Windows UI Automation: operações contextualizadas de interface, confirmação de estado e resultado, sem cliques cegos ou contorno de avisos. **Recuperacao de janela modal confirmada por leitura UIA; sem automacao de cliques (129).**
+- [x] 080 [V] Operacoes contextuais de ativacao/zoom e restauracao da vista por API nativa com verificacao UIA, sem cliques cegos ou confirmacao automatica de avisos; roundtrip validado (137). UIA somente leitura.
 - [ ] 081 [P] Kalidis legado: ampliar compatibilidade de operações e protocolos além de listar/info/inventário, com testes e escopo. **Leitura de selecao, snapshot_elemento e comandos nativos testada (131).**
 - [x] 082 [V] Inventario por revisao/licenca, comparacao de funcoes e decisoes de adocao/exclusao documentados em INTEGRATION-REGISTER.md (134); implementacoes individuais continuam abertas.
 
 ## J — Homologação e entrega
 - [ ] 083 [P] Teste ponta a ponta de um projeto realista de arquitetura, estrutura, elétrica e hidráulica, com documentação e verificação independente. **Prancha e coordenacao de conjunto experimental MEP/estrutura validadas; projeto completo pendente (133).** **Portico estrutural nativo experimental criado e salvo, sem dimensionamento (134).**
-- [ ] 084 [P] Teste de desempenho, modelos grandes, sessões prolongadas, dados inconsistentes e falhas/reconexão.
+- [ ] 084 [P] Teste de desempenho, modelos grandes, sessões prolongadas, dados inconsistentes e falhas/reconexão. **Carga de cinco clientes100 pedidos e120 sequenciais sem falhas inesperadas; modelos grandes e duracao pendentes (137).**
 - [ ] 085 [P] Teste em cópias de projetos reais, incluindo links, worksharing e casos protegidos, com autorização explícita. **Copia de fixture isolada validada; modelos reais e worksharing pendentes (131).**
 - [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).** **Build novo motor 0 erros/4 avisos; catalogo122 ferramentas ativas (130).** **Preprocessador batch verificado em runtime com rollback de aviso de sobreposicao (132).** **Guarda nativa de exclusao compilada; nova DLL6AF4... pendente (135).** **DLL6AF4 carregada, cache/viewport e exclusao isolada aprovados (136).**
-- [ ] 087 [P] Manual de instalação, operação, recuperação e limites; versão publicada, matriz de testes e critérios de aceite. **Gates de instalacao, recuperacao e aceite documentados em RELEASE-RECOVERY.md (130).**
+- [ ] 087 [P] Manual de instalação, operação, recuperação e limites; versão publicada, matriz de testes e critérios de aceite. **Gates de instalacao, recuperacao e aceite documentados em RELEASE-RECOVERY.md (130).** **Manual atualizado com limites e matriz137, publicacao/homologacao ainda pendentes.**
 - [ ] 088 [P] Homologação final pelo usuário: executar comandos pelo ChatGPT normal, sem Work, do pedido à verificação e entrega.
 
 ## Resumo
 
-77 itens abertos: 1 bloqueado, 1 nao validado, 73 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 11 encerrados de 88 (001, 003, 004, 005, 008, 026, 046, 068, 069, 075, 082). Contagem deste checklist, nao percentual da API Revit.
+73 itens abertos: 1 bloqueado, 1 nao validado, 69 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 15 encerrados de 88 (001, 003, 004, 005, 008, 010, 014, 026, 046, 067, 068, 069, 075, 080, 082). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.

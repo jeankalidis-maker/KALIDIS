@@ -14,15 +14,18 @@ import {checkBatchCapabilities,batchSchemaForEngine,requireCatalog} from './engi
 import {legacyRead,legacyTool} from './legacy-read.mjs';
 import {legacyInspect,legacyInspectTool} from './legacy-inspect.mjs';
 import {rebarBoxReview,rebarBoxTool} from './rebar-box-review.mjs';
+import {checkpoint,checkpointTool} from './context-checkpoint.mjs';
 import {reviewDynamoFile,dynamoReviewTool} from './dynamo-file-review.mjs';
 import {architectureAudit,architectureAuditTool} from './architecture-audit.mjs';
 import {mepNetworkReview,mepNetworkTool} from './mep-network-review.mjs';
 import {pythonCommentWorkflow,pythonWorkflowTool} from './python-comment-workflow.mjs';
 import {referenceReview,referenceTool} from './reference-plan-review.mjs';
 import {inventory,inventoryTool} from './bim-catalog-inventory.mjs';
+import {verifyPin,verifyAudit,assertNotRecorded,reserveImport} from './catalog-import-guard.mjs';
 import {reversibleMove,reversibleMoveTool} from './reversible-move.mjs';
 import {reversiblePin,pinTool} from './reversible-pin.mjs';
 import {once,operationStatus} from './operation-journal.mjs';
+import {reviewReceipt,receiptTool} from './operation-receipt-review.mjs';
 import {readFile,lstat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
@@ -57,10 +60,12 @@ const send=o=>process.stdout.write(JSON.stringify(o)+'\n');
 const error=(id,code,message)=>send({jsonrpc:'2.0',id,error:{code,message}});
 async function gateway(name,args={}){
  const token=(await readFile(tokenPath,'utf8')).trim();
- const response=await fetch('http://127.0.0.1:7895/execute',{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({...args,action:name}),signal:AbortSignal.timeout(35000)});
+ const health=name==='__local_health';
+ const response=await fetch(health?'http://127.0.0.1:7895/health':'http://127.0.0.1:7895/execute',health?{method:'GET',headers:{Authorization:'Bearer '+token},signal:AbortSignal.timeout(5000)}:{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({...args,action:name}),signal:AbortSignal.timeout(35000)});
  const result=await response.json();
  return {response,result};
 }
+const healthTool={name:'engine_health',description:'Read authenticated local gateway queue counters and current action; no Revit transaction or model edit.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
 const statusTool={name:'operation_status',description:'Read the local adapter journal for a requestId. Never retries a command or guarantees model state.',inputSchema:{type:'object',properties:{requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$'}},required:['requestId'],additionalProperties:false},annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
 const preflightTool={name:'batch_preflight',description:'Validate all 58 batch actions, argument schemas, alias dependencies and basic dimensions without executing Revit. Does not replace native transaction rollback.',inputSchema:registry.all.get('batch').tool.inputSchema,annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
 const cancelTool={name:'cancel_batch',description:'Request cooperative cancellation of a specific active batch by jobId. Cannot interrupt native API calls or commit; verify rollback in the original response.',inputSchema:{type:'object',properties:{jobId:{type:'string',pattern:'^[0-9a-fA-F]{32}$'}},required:['jobId'],additionalProperties:false},annotations:{readOnlyHint:false,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
@@ -70,7 +75,7 @@ async function liveTools(){
  const live=new Set(result.implemented);
  const base=manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
  if(live.has('run_extension')&&live.has('extensions')&&!readonly)for(const x of (await resolvedExtensions()).values())base.push(x.tool);
- return [statusTool,preflightTool,inventoryTool,referenceTool,dynamoReviewTool,...(!readonly&&["project_context","geometry_review","solid_audit","rebar_inventory"].every(n=>base.some(t=>t.name===n))?[rebarBoxTool]:[]),...(["snapshot","element_info","selection","native_status"].every(n=>base.some(t=>t.name===n))?[legacyInspectTool]:[]),...(!readonly&&["snapshot","geometry_review","edit_elements"].every(n=>base.some(t=>t.name===n))?[pinTool]:[]),...(!readonly&&["snapshot","element_info","material_takeoff","clash_candidates","solid_clash","sheet_review"].every(n=>base.some(t=>t.name===n))?[scopeAuditTool]:[]),...(["snapshot","elements","element_info","list_categories"].every(n=>base.some(t=>t.name===n))?[legacyTool]:[]),...(["snapshot","get_doors","get_element_rooms","audit_warnings","audit_level_span"].every(n=>base.some(t=>t.name===n))?[architectureAuditTool]:[]),...(!readonly&&base.some(t=>t.name==="mep_topology")?[mepNetworkTool]:[]),...(!readonly&&base.some(t=>t.name==="python_comments")?[pythonWorkflowTool]:[]),...(!readonly&&base.some(t=>t.name==="verified_move")&&base.some(t=>t.name==="geometry_review")?[reversibleMoveTool]:[]),...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>t.name==="batch"?batchSchemaForEngine(t,result):t).map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
+ return [healthTool,statusTool,preflightTool,...(["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[receiptTool]:[]),...(!readonly&&["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[checkpointTool]:[]),inventoryTool,referenceTool,dynamoReviewTool,...(!readonly&&["project_context","geometry_review","solid_audit","rebar_inventory"].every(n=>base.some(t=>t.name===n))?[rebarBoxTool]:[]),...(["snapshot","element_info","selection","native_status"].every(n=>base.some(t=>t.name===n))?[legacyInspectTool]:[]),...(!readonly&&["snapshot","geometry_review","edit_elements"].every(n=>base.some(t=>t.name===n))?[pinTool]:[]),...(!readonly&&["snapshot","element_info","material_takeoff","clash_candidates","solid_clash","sheet_review"].every(n=>base.some(t=>t.name===n))?[scopeAuditTool]:[]),...(["snapshot","elements","element_info","list_categories"].every(n=>base.some(t=>t.name===n))?[legacyTool]:[]),...(["snapshot","get_doors","get_element_rooms","audit_warnings","audit_level_span"].every(n=>base.some(t=>t.name===n))?[architectureAuditTool]:[]),...(!readonly&&base.some(t=>t.name==="mep_topology")?[mepNetworkTool]:[]),...(!readonly&&base.some(t=>t.name==="python_comments")?[pythonWorkflowTool]:[]),...(!readonly&&base.some(t=>t.name==="verified_move")&&base.some(t=>t.name==="geometry_review")?[reversibleMoveTool]:[]),...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>t.name==="batch"?batchSchemaForEngine(t,result):t).map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
 }
 async function callUnjournaled(name,args){
  const t=tools.get(name);
@@ -86,6 +91,19 @@ async function callUnjournaled(name,args){
   const permit={dynamo_write_fixture:"executeFixtureGraph",family_quarantine_audit:"inspectPinnedFile",family_catalog_audit:"inspectPinnedFile",dynamo_wall_fixture:"executeFixtureGraph",family_catalog_load:"loadPinnedFile"}[name];
   if(permit&&args.mode==="start"&&(commit!==true||args[permit]!==true))throw Error("External event requires explicit commit and permit; cannot roll back");
   if(permit&&args.mode==="status"&&commit)throw Error("Status must be rollback-only");
+  if(name==='family_catalog_load'&&args.mode==='start'){
+   const local=path.join(process.env.LOCALAPPDATA,'KalidisAIEngine'),dir=path.join(local,'CatalogImports');
+   const ctx=await callUnjournaled('project_context',{});
+   if(ctx.isError)throw Error('Project context unavailable');
+   const c=JSON.parse(ctx.content[0].text);
+   if(c.path.toLowerCase()!==path.resolve(expectedPath).toLowerCase()||c.cloud||c.family||c.workshared||c.readOnly||path.dirname(c.path).toLowerCase()!==path.join(local,'Sandbox').toLowerCase())throw Error('Catalogue load requires matching local Sandbox project');
+   const pin=verifyPin(await inventory(path.join(local,'Sandbox'),{}),args);
+   await assertNotRecorded(dir,expectedPath,pin);
+   const a=await callUnjournaled('family_catalog_audit',{expectedPath,mode:'status'});
+   if(a.isError)throw Error('Independent catalogue audit unavailable');
+   verifyAudit(pin,JSON.parse(a.content[0].text));
+   await reserveImport(dir,expectedPath,pin,{state:'reserved_before_external_event',note:'No automatic replay; inspect status and loaded family.'});
+  }
   const {response,result}=await gateway('run_extension',{expectedPath,commit:ext.inspection?false:commit,assembly:ext.assembly,operation:name,arguments:arguments_});
   return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
  }
@@ -107,6 +125,7 @@ async function callUnjournaled(name,args){
   }
   reviewWallPairs(args.steps,widths);
  }
+ if(name==='run_extension'&&args.operation==='family_catalog_load')throw Error('Use named family_catalog_load tool with catalogue provenance and duplicate guard');
  if(name==='create_family_spec')reviewFamilySpec(args);
  if(name==='edit_elements'){
   reviewEdits(args);
@@ -121,6 +140,19 @@ async function callUnjournaled(name,args){
 }
 async function call(name,args){
  if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Invalid arguments');
+ if(name==='context_checkpoint'){
+  if(readonly)throw Error('Read-only session');
+  const result=await checkpoint(args,async(n,a)=>{
+   const response=await callUnjournaled(n,a);if(response.isError)throw Error(response.content[0].text);
+   return JSON.parse(response.content[0].text);
+  },path.join(process.env.LOCALAPPDATA,'KalidisAIEngine','ContextCheckpoints'));
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
+ }
+ if(name==='engine_health'){
+  validate(healthTool.inputSchema,args,name);
+  const {response,result}=await gateway('__local_health');
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
+ }
  if(name==='rebar_box_review'){
   if(readonly)throw Error('Read-only session');
   const result=await rebarBoxReview(args,async(n,a)=>{
@@ -223,6 +255,13 @@ async function call(name,args){
  if(name==='batch_preflight'){
   const result=batchPreflight(args,registry);
   return {content:[{type:'text',text:JSON.stringify(result)}],isError:!result.ok};
+ }
+ if(name==='operation_receipt_review'){
+  const dir=path.join(process.env.LOCALAPPDATA,'KalidisAIEngine','OperationJournal');
+  const result=await reviewReceipt(args,id=>operationStatus(dir,id),async(n,a)=>{
+   const response=await callUnjournaled(n,a);if(response.isError)throw Error(response.content[0].text);return JSON.parse(response.content[0].text);
+  });
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
  }
  if(name==='operation_status'){
   validate(statusTool.inputSchema,args,name);

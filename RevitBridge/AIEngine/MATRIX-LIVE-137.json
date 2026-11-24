@@ -1,0 +1,727 @@
+{
+  "catalogCount": 128,
+  "passed": 37,
+  "failed": 0,
+  "notRetested": 91,
+  "serial": {
+    "count": 120,
+    "min": 29,
+    "median": 57,
+    "p95": 102,
+    "max": 783
+  },
+  "parallel": {
+    "count": 100,
+    "min": 10,
+    "median": 47,
+    "p95": 528,
+    "max": 802
+  },
+  "parallelResults": {
+    "ok": 27,
+    "busy": 73,
+    "other": 0
+  },
+  "queueBefore": {
+    "pending": false,
+    "running": false,
+    "started": 100,
+    "completed": 100,
+    "canceled": 0,
+    "activeAction": null,
+    "activeSince": null,
+    "lastAction": "project_context",
+    "lastFinished": "2026-11-24T23:48:54.2010942Z"
+  },
+  "queueAfter": {
+    "pending": false,
+    "running": false,
+    "started": 479,
+    "completed": 479,
+    "canceled": 0,
+    "activeAction": null,
+    "activeSince": null,
+    "lastAction": "snapshot",
+    "lastFinished": "2026-11-24T23:49:08.894281Z"
+  },
+  "tools": [
+    {
+      "name": "engine_health",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 6
+    },
+    {
+      "name": "operation_status",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 5
+    },
+    {
+      "name": "batch_preflight",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 2
+    },
+    {
+      "name": "bim_catalog_inventory",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 59
+    },
+    {
+      "name": "reference_plan_review",
+      "readOnly": true,
+      "status": "not_retested"
+    },
+    {
+      "name": "dynamo_file_review",
+      "readOnly": true,
+      "status": "not_retested"
+    },
+    {
+      "name": "rebar_box_review",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "legacy_inspect",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 155
+    },
+    {
+      "name": "reversible_pin",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "scope_audit",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "legacy_read",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 247
+    },
+    {
+      "name": "architecture_audit",
+      "readOnly": true,
+      "status": "not_retested"
+    },
+    {
+      "name": "mep_network_review",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "python_comment_workflow",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "reversible_move",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "cancel_batch",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "catalog",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 40
+    },
+    {
+      "name": "snapshot",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 91
+    },
+    {
+      "name": "types",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 213
+    },
+    {
+      "name": "native_status",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 68
+    },
+    {
+      "name": "library",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 365
+    },
+    {
+      "name": "family_info",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 66
+    },
+    {
+      "name": "test_wall",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "batch",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "export_family",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "create_family",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "load_family",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "export_view",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "save_test",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "sheet",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "schedule",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "new_test_project",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "open_test_project",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "elements",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 108
+    },
+    {
+      "name": "edit_elements",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "export_project",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "create_family_spec",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "element_info",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 162
+    },
+    {
+      "name": "views",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 119
+    },
+    {
+      "name": "selection",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 73
+    },
+    {
+      "name": "connectors",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 112
+    },
+    {
+      "name": "schedule_fields",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 95
+    },
+    {
+      "name": "clash_candidates",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 68
+    },
+    {
+      "name": "extensions",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 44
+    },
+    {
+      "name": "run_extension",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "model_health",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 86
+    },
+    {
+      "name": "clash_confirm",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 60
+    },
+    {
+      "name": "schedule_data",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 358
+    },
+    {
+      "name": "activate_view",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "zoom_fit",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "preview_view",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "dynamo_open",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "native_post",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "list_family_types",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 56
+    },
+    {
+      "name": "list_phases",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 38
+    },
+    {
+      "name": "list_view_templates",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 78
+    },
+    {
+      "name": "get_linked_files",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 48
+    },
+    {
+      "name": "get_worksets",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 75
+    },
+    {
+      "name": "list_categories",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 114
+    },
+    {
+      "name": "get_doors",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 99
+    },
+    {
+      "name": "get_element_rooms",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 74
+    },
+    {
+      "name": "get_tags_in_view",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 52
+    },
+    {
+      "name": "get_linked_elements",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 65
+    },
+    {
+      "name": "edit_family_copy",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "audit_level_span",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 137
+    },
+    {
+      "name": "audit_warnings",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 106
+    },
+    {
+      "name": "routing_preferences",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 123
+    },
+    {
+      "name": "straight_stair",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "project_context",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 65
+    },
+    {
+      "name": "curtain_wall",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "geometry_review",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "solid_audit",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "verified_move",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "straight_rebar",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "rebar_set",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "solid_clash",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "family_type_flex",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "bent_rebar",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "mep_topology",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "clearance_screen",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "mep_connect",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "sloped_floor",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "material_takeoff",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "paint_top_face",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "wall_attach_roof",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "rebar_inventory",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "checked_wall_opening",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "mep_split",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "view_review",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "native_material_schedule",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "closed_stirrup",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "layer_audit",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "layer_variant",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "sheet_review",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "material_appearance",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "schedule_review",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "profile_flex",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "routing_variant",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "native_shapes",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "native_view_filter",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "quality_checks",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "hooked_stirrup",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "auto_clearance_repair",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "spatial_repair",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "room_repair",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "polygon_repair",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "linked_repair",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "mep_clearance_repair",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "solid_profile_flex",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "cylinder_flex",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "bitmap_material",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "python_probe",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "python_comments",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "bim_file_review",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "dynamo_audit",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "raster_building",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "texture_scale",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "hooked_set",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "wall_gap_repair",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "realistic_preview",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "network_clearance",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "pipe_bypass",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "dynamo_write_fixture",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "family_quarantine_audit",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "family_catalog_audit",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "dynamo_wall_fixture",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "family_catalog_load",
+      "readOnly": false,
+      "status": "not_retested"
+    },
+    {
+      "name": "orthogonal_plan",
+      "readOnly": false,
+      "status": "not_retested"
+    }
+  ],
+  "note": "120 serial plus 100 concurrent read requests; not an hours-long or large project qualification."
+}

@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';import {reviewReceipt,pathDigest} from './operation-receipt-review.mjs';
+const a={expectedPath:'C:/Sandbox/Test.rvt',requestId:'receipt-137'},c={ok:true,path:new URL('file:///C:/Sandbox/Test.rvt').pathname,session:'s',revision:4};
+import path from 'node:path';c.path=path.resolve(a.expectedPath);
+const status={command:'batch',state:'completed',scope:{creationOnly:true,pathDigest:pathDigest(c.path),session:'s'},receipt:{verified:true,committed:true,elementIds:[7]}};
+const call=async n=>n==='project_context'?c:{elements:[{id:7,uniqueId:'u',typeId:3}]};
+assert((await reviewReceipt(a,async()=>status,call)).consistent);
+assert((await reviewReceipt(a,async()=>({...status,state:'started'}),call)).requiresManualInspection);
+await assert.rejects(reviewReceipt(a,async()=>({...status,scope:{...status.scope,session:'x'}}),call),/mismatch/);
+const absent=async n=>{if(n==='project_context')return c;throw Error('Missing element 7')};
+assert((await reviewReceipt(a,async()=>({...status,receipt:{...status.receipt,committed:false}}),absent)).consistent);
+assert.equal((await reviewReceipt(a,async()=>status,absent)).consistent,false);
+console.log('OPERATION_RECEIPT_TESTS=PASS');
