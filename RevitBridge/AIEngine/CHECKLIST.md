@@ -121,3 +121,10 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [V] Workflow Andrey adaptado: alteração textual em duas paredes com prévia rollback e leitura de retorno, commit e salvamento confirmados. MCP lista 50 ferramentas ativas.
 - [F] Cotovelo: failed to insert elbow; template sem famílias OST_PipeFitting, nenhuma RFA de joelho/cotovelo/elbow encontrada na biblioteca local pesquisada. Causa provável não conclusiva. [F] Telhado: Value cannot be null. [F] Blend: Unexpected internal error: code 1. Não marcar como validados. Lotes falhos ocorreram em dry-run; nenhuma repetição de commit incerto.
 - [P] Diagnosticar e corrigir os três erros, validar demais operações, motores dinâmicos e integração completa. Projeto original preservado.
+
+## Avanço 27 — correções e documentação
+- [C] Telhado: inicialização de ModelCurveArray, criação de CurveArray via Application e iteração explícita conforme exemplo API. Blend: perfis em planos paralelos com cotas distintas, conforme contrato NewBlend; não confirmado em sessão. Regeneração após aliases. Referências: https://www.revitapidocs.com/2025/110741bf-b041-9f78-0832-ec9f5892cebc.htm e https://rvtdocs.com/2025/00173a0d-6075-0270-fd7e-080da420d339/.
+- [C] routing_preferences: diagnóstico de segmentos e regras de conexões MEP. 51 ferramentas cadastradas, 53 ações batch. Build ffdccad: 0 erros, 5 avisos, 8.38 s. DLL implantada SHA256 DB262CD91614BE6FCA4E0E0A93B0D926252ED724B62BB6ACDBB023D7BCD45D72, backup confirmado; requer reinício normal para validar correções.
+- [V] Exportações reais do RVT teste: PDF 39722 bytes, DWG 18521 bytes + PCP 22648 bytes, IFC 91711 bytes; arquivos existentes e não vazios. Sem validação externa de conteúdo/qualidade.
+- [V] Dois eixos 326390/326391 (34 ms), cota 326393 (11 ms), forro 326403 (35 ms), porta hospedada 326410 (416 ms). Dry-run e commit verificados. Projeto original preservado.
+- [P] Reteste de telhado, blend, diagnóstico de conexões, estruturas avançadas e integrações completas. Sessão atual continua com DLL anterior.
