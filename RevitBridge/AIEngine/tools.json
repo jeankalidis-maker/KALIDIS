@@ -677,12 +677,25 @@
               },
               "endParameter": {
                 "type": "string"
+              },
+              "xParameter": {
+                "type": "string"
+              },
+              "yParameter": {
+                "type": "string"
+              },
+              "radiusParameter": {
+                "type": "string"
+              },
+              "radiusMm": {
+                "type": "number",
+                "minimum": 10,
+                "maximum": 10000
               }
             },
             "required": [
               "zMm",
-              "heightMm",
-              "points"
+              "heightMm"
             ]
           }
         },
