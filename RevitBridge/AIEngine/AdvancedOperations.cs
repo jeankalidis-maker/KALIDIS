@@ -62,12 +62,27 @@ internal static class AdvancedOperations
                         var h=dimension(shape,"heightMm",1,30000);
                         var points=shape.GetProperty("points").EnumerateArray().Select(p=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),z)).ToArray();
                         if(points.Length<3||points.Length>100)throw new ArgumentException("3-100 vertices");
-                        var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,z)));
+                        var relative=shape.TryGetProperty("baseParameter",out _);
+                        if(relative&&shape.TryGetProperty("heightParameter",out _))throw new ArgumentException("Use endParameter with baseParameter; height is end minus base");
+                        if(relative&&((shape.TryGetProperty("void",out var relativeVoid)&&relativeVoid.ValueKind==JsonValueKind.True)||z<0))throw new ArgumentException("Relative vertical offsets require a solid at nonnegative base");
+                        if(relative)points=points.Select(p=>new XYZ(p.X,p.Y,0)).ToArray();
+                        var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,relative?0:z)));
                         var ca=new CurveArray();for(int i=0;i<points.Length;i++)ca.Append(Line.CreateBound(points[i],points[(i+1)%points.Length]));
                         var profile=new CurveArrArray();profile.Append(ca);
                         bool solid=!shape.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                         var extrusion=fd.FamilyCreate.NewExtrusion(solid,profile,plane,h);
                         extrusions.Add(extrusion);
+                        if(relative){
+                            var start=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_START_PARAM);var end=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_END_PARAM);
+                            if(start==null||end==null||!end.Set(z+h)||!start.Set(z))throw new InvalidOperationException("Cannot establish extrusion offsets");
+                            void BindOffset(string key,Parameter ep,double value){
+                                string name=shape.GetProperty(key).GetString()??throw new ArgumentException(key);
+                                if(name.Length<1||name.Length>80||parameters.ContainsKey(name))throw new ArgumentException("Unique offset parameter required");
+                                var fp=fm.AddParameter(name,GroupTypeId.Geometry,SpecTypeId.Length,false);fm.Set(fp,value);parameters.Add(name,fp);
+                                if(!fm.CanElementParameterBeAssociated(ep))throw new InvalidOperationException("Cannot associate extrusion offset");fm.AssociateElementParameterToFamilyParameter(ep,fp);
+                            }
+                            BindOffset("baseParameter",start,z);BindOffset("endParameter",end,z+h);fd.Regenerate();
+                        }
                         if(shape.TryGetProperty("widthParameter",out var wp)||shape.TryGetProperty("depthParameter",out _)){
                             var widthName=shape.GetProperty("widthParameter").GetString()??throw new ArgumentException("Width parameter required");
                             var depthName=shape.GetProperty("depthParameter").GetString()??throw new ArgumentException("Depth parameter required");
