@@ -17,6 +17,7 @@ public sealed class Application : IExternalApplication
     private ExternalEvent? evt;
     private Handler? handler;
     private CancellationTokenSource? stop;
+    private Task? listenerTask;
     private byte[] token = Array.Empty<byte>();
     private static readonly string Home = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "KalidisAIEngine");
@@ -33,7 +34,9 @@ public sealed class Application : IExternalApplication
             listener.Start();
             File.WriteAllText(Path.Combine(Home, "token.txt"), Convert.ToHexString(token));
             stop = new CancellationTokenSource();
-            _ = Listen(stop.Token);
+            // Never capture Revit/WPF synchronization context for HTTP I/O.
+            var cancellation=stop.Token;
+            listenerTask=Task.Run(()=>Listen(cancellation),cancellation);
             return Result.Succeeded;
         }
         catch (Exception ex)
@@ -54,9 +57,9 @@ public sealed class Application : IExternalApplication
         while (!ct.IsCancellationRequested)
         {
             HttpListenerContext c;
-            try { c = await listener!.GetContextAsync(); }
+            try { c = await listener!.GetContextAsync().ConfigureAwait(false); }
             catch { break; }
-            _ = Serve(c, ct);
+            _ = Task.Run(()=>Serve(c,ct),CancellationToken.None);
         }
     }
     private bool Auth(HttpListenerRequest r)
@@ -72,13 +75,13 @@ public sealed class Application : IExternalApplication
         {
             if (!Auth(c.Request)) { await Reply(c, 401, new { ok=false, error="unauthorized" }); return; }
             if (c.Request.HttpMethod == "GET" && c.Request.Url?.AbsolutePath == "/health")
-            { await Reply(c, 200, new { ok=true, version="0.3.0", transport="loopback", engine="ExternalEvent" }); return; }
+            { await Reply(c, 200, new { ok=true, version="0.3.1", transport="loopback", engine="ExternalEvent", queue=handler?.Status(), listenerRunning=listenerTask is {IsCompleted:false}, pid=Environment.ProcessId }); return; }
             if (c.Request.HttpMethod != "POST" || c.Request.Url?.AbsolutePath != "/execute")
             { await Reply(c, 404, new { ok=false, error="not_found" }); return; }
             if (c.Request.ContentLength64 < 1 || c.Request.ContentLength64 > 262144)
             { await Reply(c, 413, new { ok=false, error="invalid_body_size" }); return; }
             using var sr = new StreamReader(c.Request.InputStream, Encoding.UTF8);
-            using var json = JsonDocument.Parse(await sr.ReadToEndAsync(ct));
+            using var json = JsonDocument.Parse(await sr.ReadToEndAsync(ct).ConfigureAwait(false));
             var job = new Job(json.RootElement.Clone());
             if (!handler!.TryQueue(job))
             { await Reply(c, 409, new { ok=false, error="busy" }); return; }
@@ -87,7 +90,7 @@ public sealed class Application : IExternalApplication
                 var raised = evt!.Raise();
                 if (raised != ExternalEventRequest.Accepted && raised != ExternalEventRequest.Pending)
                 { job.Cancel(); handler.Remove(job); await Reply(c, 503, new { ok=false, error="event_not_accepted" }); return; }
-                var result = await job.Done.Task.WaitAsync(TimeSpan.FromSeconds(30), ct);
+                var result = await job.Done.Task.WaitAsync(TimeSpan.FromSeconds(30), ct).ConfigureAwait(false);
                 await Reply(c, 200, result);
             }
             catch (TimeoutException)
@@ -105,7 +108,7 @@ public sealed class Application : IExternalApplication
         byte[] data = JsonSerializer.SerializeToUtf8Bytes(payload);
         c.Response.StatusCode = status; c.Response.ContentType = "application/json; charset=utf-8";
         c.Response.ContentLength64 = data.Length;
-        await c.Response.OutputStream.WriteAsync(data);
+        await c.Response.OutputStream.WriteAsync(data).ConfigureAwait(false);
     }
     internal sealed class Job(JsonElement request)
     {
@@ -120,17 +123,21 @@ public sealed class Application : IExternalApplication
         private readonly object gate = new();
         private Job? pending;
         private bool running;
+        private long started,completed,canceled;
+        private string? activeAction,lastAction;
+        private DateTime? activeSince,lastFinished;
+        internal object Status(){lock(gate)return new{pending=pending!=null,running,started,completed,canceled,activeAction,activeSince,lastAction,lastFinished};}
         internal bool TryQueue(Job j) { lock(gate) { if (pending != null || running) return false; pending=j; return true; } }
-        internal void Remove(Job j) { lock(gate) { if (ReferenceEquals(pending,j)) pending=null; } }
+        internal void Remove(Job j) { lock(gate) { if (ReferenceEquals(pending,j)){pending=null;canceled++;} } }
         internal void Cancel() { lock(gate) { pending?.Cancel(); pending=null; } }
         public string GetName() => "Kalidis AI Engine";
         public void Execute(UIApplication app)
         {
             Job? j;
-            lock(gate) { j=pending; pending=null; if(j==null || !j.Start()) return; running=true; }
+            lock(gate) { j=pending; pending=null; if(j==null || !j.Start()) return; running=true;started++;activeSince=DateTime.UtcNow;activeAction=j.Request.TryGetProperty("action",out var name)&&name.ValueKind==JsonValueKind.String?name.GetString():null; }
             try { j.Done.TrySetResult(Run(app,j.Request)); }
             catch(Exception ex) { j.Done.TrySetResult(new { ok=false,error=ex.Message }); }
-            finally { lock(gate) running=false; }
+            finally { lock(gate){running=false;completed++;lastAction=activeAction;lastFinished=DateTime.UtcNow;activeAction=null;activeSince=null;} }
         }
         private static object Run(UIApplication app, JsonElement r)
         {
