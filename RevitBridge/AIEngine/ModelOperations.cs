@@ -47,7 +47,7 @@ internal static class ModelOperations
                 string? alias=node["alias"]?.GetValue<string>();
                 node.Remove("alias");
                 if(alias!=null&&(alias.Length==0||alias.Length>64||aliases.ContainsKey(alias)))throw new ArgumentException("Invalid or duplicate alias");
-                foreach(var key in new[]{"levelId","typeId","hostId","systemTypeId","viewId","sheetId","firstId","secondId"}){
+                foreach(var key in new[]{"levelId","typeId","hostId","systemTypeId","viewId","sheetId","firstId","secondId","templateId"}){
                     if(node[key] is JsonValue val && val.TryGetValue<string>(out var reference)){
                         if(!reference.StartsWith("$")||!aliases.TryGetValue(reference.Substring(1),out long resolved))throw new ArgumentException("Unknown reference "+reference);
                         node[key]=JsonValue.Create(resolved);
@@ -56,7 +56,7 @@ internal static class ModelOperations
                 using var stepDoc=JsonDocument.Parse(node.ToJsonString());
                 long id=Execute(d,stepDoc.RootElement).Value;
                 ids.Add(id);
-                if(!new[]{"schedule_field","wall_top_constraint","join_geometry","unjoin_geometry"}.Contains(S(stepDoc.RootElement,"action")))createdIds.Add(id);
+                if(!new[]{"schedule_field","wall_top_constraint","join_geometry","unjoin_geometry","apply_view_template","set_view_detail_level","set_section_box","hide_elements","unhide_elements"}.Contains(S(stepDoc.RootElement,"action")))createdIds.Add(id);
                 if(alias!=null)aliases.Add(alias,id);
             }
             d.Regenerate();
@@ -232,6 +232,50 @@ internal static class ModelOperations
             case "area": {
                 var v=Get<ViewPlan>(d,r,"viewId");var p=P(r.GetProperty("point"));var area=d.Create.NewArea(v,new UV(p.X,p.Y));
                 if(area==null)throw new InvalidOperationException("Area creation failed");area.Name=S(r,"name");return area.Id;
+            }
+            // Adapted from KenLP/RevitMCPServer (MIT); see THIRD-PARTY-KenLP.txt.
+            case "apply_view_template": {
+                var v=Get<View>(d,r,"viewId");var tid=Id(r,"templateId");
+                if(tid!=ElementId.InvalidElementId&&(!v.IsValidViewTemplate(tid)))throw new ArgumentException("Incompatible view template");
+                v.ViewTemplateId=tid;return v.Id;
+            }
+            case "set_view_detail_level": {
+                var v=Get<View>(d,r,"viewId");var name=S(r,"detailLevel");
+                if(!new[]{"Coarse","Medium","Fine"}.Contains(name,StringComparer.OrdinalIgnoreCase))throw new ArgumentException("Coarse, Medium or Fine required");
+                v.DetailLevel=Enum.Parse<ViewDetailLevel>(name,true);return v.Id;
+            }
+            case "set_section_box": {
+                var v=Get<View3D>(d,r,"viewId");
+                if(r.TryGetProperty("enable",out var enabled)&&enabled.ValueKind==JsonValueKind.False){v.IsSectionBoxActive=false;return v.Id;}
+                var a=P3(r.GetProperty("min"));var b=P3(r.GetProperty("max"));
+                var lo=new XYZ(Math.Min(a.X,b.X),Math.Min(a.Y,b.Y),Math.Min(a.Z,b.Z));
+                var hi=new XYZ(Math.Max(a.X,b.X),Math.Max(a.Y,b.Y),Math.Max(a.Z,b.Z));
+                if(hi.X-lo.X<Mm(1)||hi.Y-lo.Y<Mm(1)||hi.Z-lo.Z<Mm(1))throw new ArgumentException("Section box must have positive volume");
+                v.SetSectionBox(new BoundingBoxXYZ{Min=lo,Max=hi});v.IsSectionBoxActive=true;return v.Id;
+            }
+            case "duplicate_view": {
+                var v=Get<View>(d,r,"viewId");var mode=r.TryGetProperty("duplicateOption",out var opt)?opt.GetString():"Duplicate";
+                if(!Enum.TryParse<ViewDuplicateOption>(mode,true,out var option)||!Enum.IsDefined(option)||!v.CanViewBeDuplicated(option))throw new ArgumentException("Invalid view duplication mode");
+                var id=v.Duplicate(option);d.GetElement(id).Name=S(r,"name");return id;
+            }
+            case "hide_elements":
+            case "unhide_elements": {
+                var v=Get<View>(d,r,"viewId");
+                var ids=r.GetProperty("ids").EnumerateArray().Select(x=>new ElementId(x.GetInt64())).Distinct().ToList();
+                if(ids.Count<1||ids.Count>500)throw new ArgumentException("1-500 IDs required");
+                if(S(r,"action")=="hide_elements")v.HideElements(ids);else v.UnhideElements(ids);return v.Id;
+            }
+            case "group_elements": {
+                var ids=r.GetProperty("ids").EnumerateArray().Select(x=>new ElementId(x.GetInt64())).Distinct().ToList();
+                if(ids.Count<1||ids.Count>500)throw new ArgumentException("1-500 IDs required");
+                var g=d.Create.NewGroup(ids);g.GroupType.Name=S(r,"name");return g.Id;
+            }
+            case "perspective": {
+                var t=Get<ViewFamilyType>(d,r,"typeId");var eye=P3(r.GetProperty("eye"));var target=P3(r.GetProperty("target"));
+                if(eye.DistanceTo(target)<Mm(1))throw new ArgumentException("Eye and target must differ");
+                var forward=(target-eye).Normalize();var up=XYZ.BasisZ-forward.DotProduct(XYZ.BasisZ)*forward;
+                up=up.GetLength()<1e-6?XYZ.BasisY:up.Normalize();
+                var v=View3D.CreatePerspective(d,t.Id);v.SetOrientation(new ViewOrientation3D(eye,up,forward));v.Name=S(r,"name");return v.Id;
             }
             default:throw new ArgumentException("Unsupported batch action: "+S(r,"action"));
         }
