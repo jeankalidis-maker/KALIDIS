@@ -11,3 +11,9 @@ export function batchSchemaForEngine(tool,catalog){
  if(catalog.cooperativeBatchCancel!==true)delete properties.jobId;
  return {...tool,inputSchema:{...tool.inputSchema,properties}};
 }
+
+export function requireCatalog({response,result}){
+ if(response.status===409&&result?.error==='busy')throw Error('Revit busy; no command submitted after catalog refusal');
+ if(!response.ok||result?.ok!==true||!Array.isArray(result.implemented))throw Error('Live Revit catalog unavailable; no command submitted');
+ return result;
+}

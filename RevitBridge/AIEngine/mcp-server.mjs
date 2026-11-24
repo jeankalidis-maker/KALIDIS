@@ -7,9 +7,10 @@ import {reviewWallPairs,candidateTypeIds} from './wall-pair-review.mjs';
 import {reviewNativeShape} from './native-shape-review.mjs';
 import {scopeAudit,scopeAuditTool} from './scope-audit.mjs';
 import {reviewEdits} from './edit-preflight.mjs';
+import {verifyDeletePreview} from './delete-guard.mjs';
 import {reviewFamilySpec} from './family-spec-review.mjs';
 import {reviewOrthogonalPlan} from './orthogonal-plan-review.mjs';
-import {checkBatchCapabilities,batchSchemaForEngine} from './engine-capabilities.mjs';
+import {checkBatchCapabilities,batchSchemaForEngine,requireCatalog} from './engine-capabilities.mjs';
 import {legacyRead,legacyTool} from './legacy-read.mjs';
 import {legacyInspect,legacyInspectTool} from './legacy-inspect.mjs';
 import {rebarBoxReview,rebarBoxTool} from './rebar-box-review.mjs';
@@ -33,7 +34,8 @@ const extDir=path.join(process.env.LOCALAPPDATA||'','KalidisAIEngine','ReviewedE
 async function resolvedExtensions(){
  if(readonly)return new Map();
  const {response,result}=await gateway('extensions');
- if(!response.ok||!result.ok||!Array.isArray(result.approved))return new Map();
+ if(response.status===409&&result?.error==='busy')throw Error('Revit busy; reviewed extension inventory unavailable');
+ if(!response.ok||!result.ok||!Array.isArray(result.approved))throw Error('Reviewed extension inventory unavailable');
  let approved;try{approved=JSON.parse((await readFile(path.join(extDir,'approved.json'),'utf8')).replace(/^\uFEFF/,''));}catch{return new Map();}
  const out=new Map();
  for(const entry of reviewed){
@@ -64,7 +66,7 @@ const preflightTool={name:'batch_preflight',description:'Validate all 58 batch a
 const cancelTool={name:'cancel_batch',description:'Request cooperative cancellation of a specific active batch by jobId. Cannot interrupt native API calls or commit; verify rollback in the original response.',inputSchema:{type:'object',properties:{jobId:{type:'string',pattern:'^[0-9a-fA-F]{32}$'}},required:['jobId'],additionalProperties:false},annotations:{readOnlyHint:false,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
 async function liveTools(){
  const {response,result}=await gateway('catalog');
- if(!response.ok||!result.ok||!Array.isArray(result.implemented))throw Error('Live Revit catalog unavailable');
+ requireCatalog({response,result});
  const live=new Set(result.implemented);
  const base=manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
  if(live.has('run_extension')&&live.has('extensions')&&!readonly)for(const x of (await resolvedExtensions()).values())base.push(x.tool);
@@ -90,7 +92,8 @@ async function callUnjournaled(name,args){
  if(readonly&&!t.annotations.readOnlyHint)throw Error('Read-only session');
  validate(t.inputSchema,args,name);
  const catalog=await gateway('catalog');
- if(!catalog.result.ok||!catalog.result.implemented?.includes(name))throw Error('Tool not supported by active Revit engine');
+ requireCatalog(catalog);
+ if(!catalog.result.implemented.includes(name))throw Error('Tool not supported by active Revit engine');
  if(name==='batch'){
   checkBatchCapabilities(args,catalog.result);
   const preflight=batchPreflight(args,registry);
@@ -105,7 +108,14 @@ async function callUnjournaled(name,args){
   reviewWallPairs(args.steps,widths);
  }
  if(name==='create_family_spec')reviewFamilySpec(args);
- if(name==='edit_elements')reviewEdits(args);
+ if(name==='edit_elements'){
+  reviewEdits(args);
+  if(args.commit===true&&args.steps.some(s=>s.action==='delete')){
+   const preview=await gateway(name,{...args,commit:false});
+   if(!preview.response.ok)throw Error('Deletion preview failed; no commit submitted');
+   verifyDeletePreview(args,preview.result);
+  }
+ }
  const {response,result}=await gateway(name,args);
  return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
 }

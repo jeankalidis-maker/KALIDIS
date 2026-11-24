@@ -8,21 +8,21 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [x] 001 [V] DLL atualizada instalada e hash confirmado no modulo carregado pelo Revit26232; backup e DLL anterior preservados (132).
 - [ ] 002 [B] Restabelecer o MCP publicado no ChatGPT (SSE 429); testar initialize, catálogo e chamadas reais de leitura e escrita. **SSE429 reconfirmado apos deploy local (132).**
 - [x] 003 [V] Contexto nativo validado: documento, vista, selecao vazia consistente, sessao, revisao e troca de documentos (132).
-- [ ] 004 [P] Validar cache no Revit: cacheHit, TTL, invalidação por DocumentChanged, abertura e fechamento de documentos. **Falha cacheHit persistente identificada; correcao compilada e 13 testes offline, deploy/runtime pendentes (132).**
+- [ ] 004 [P] Validar cache no Revit: cacheHit, TTL, invalidação por DocumentChanged, abertura e fechamento de documentos. **Falha cacheHit persistente identificada; correcao compilada e 13 testes offline, deploy/runtime pendentes (132).** **Regressao pos-deploy preparada, sintaxe aprovada, runtime pendente (135).**
 - [x] 005 [V] Rejeicao de sessao/revisao incorretas, previa/commit com revisao atual e rejeicao de revisao anterior, em runtime (132).
 - [ ] 006 [P] Validar cancelamento cooperativo real: antes da execução, durante lote, rollback e corrida com commit. **Politica de rollback de falhas do batch compilada; teste nativo ainda pendente (129).** **Cancelamento nativo de lote180 materiais aceito e rollback sem residuos; fase exata e corrida real pendentes (132).** **Cancelamento de lote180 materiais com intencao de commit aprovado; fase exata pendente (133).**
-- [ ] 007 [P] Atualizador próprio do AI Engine, instalação autorizada, rollback de versão e smoke test pós-instalação. **Instalador existente permanece impedido pela politica de execucao (131).** **Stage autorizado pelo usuario funcionou, backup verificado; restauracao de versao ainda nao executada (132).**
-- [ ] 008 [P] Validar reinício/reconexão, perda de conexão, timeout, fila ocupada e recuperação sem repetir escritas. **Estado incerto reconciliado por leitura; limpeza com dependentes recusada (129).** **Reinicio real validado; perda de conexao e timeout ainda pendentes (132).**
+- [ ] 007 [P] Atualizador próprio do AI Engine, instalação autorizada, rollback de versão e smoke test pós-instalação. **Instalador existente permanece impedido pela politica de execucao (131).** **Stage autorizado pelo usuario funcionou, backup verificado; restauracao de versao ainda nao executada (132).** **Restore-Engine.ps1 preparado e parser/hash anterior aprovados; teste de restauracao ainda pendente (135).**
+- [x] 008 [V] Reinicio, timeout historico, fila ocupada, perda de cliente e recuperacao sem replay comprovados no escopo local (132,128/129,135). Conector publicado segue item002.
 
 ## B — Infraestrutura, segurança e autonomia
 - [ ] 009 [P] Completar schemas de todas as ferramentas de edição, validação de argumentos e compatibilidade entre versões; preflight em todos os clientes autorizados. **Preflight de formas nativas ampliado (128).** **Largura nativa de parede na prevalidacao de pares novos (129).** **Schema curtain_wall registrado, capacidade ativa verificada (130).**
-- [ ] 010 [P] Idempotência persistente e recuperação de resultados após interrupção, reconciliação de estado incerto e auditoria. **Estado unknown persistido e replay recusado em teste (129).**
+- [ ] 010 [P] Idempotência persistente e recuperação de resultados após interrupção, reconciliação de estado incerto e auditoria. **Estado unknown persistido e replay recusado em teste (129).** **Journal started preservado apos perda real do cliente; replay recusado (135).**
 - [ ] 011 [P] Desfazer/refazer para criação, edição, exclusão, tipos, famílias e operações dependentes (hoje movimento e comentário restritos). **Fixacao reversivel com forward/undo/redo confirmada e estado restaurado (130).**
-- [ ] 012 [P] Fila, controle de concorrência, telemetria, métricas e testes de carga em sessões longas.
+- [ ] 012 [P] Fila, controle de concorrência, telemetria, métricas e testes de carga em sessões longas. **Fila ocupada distinguida de ferramenta inexistente em runtime (135).**
 - [ ] 013 [P] Planejamento multioperação com dependências, dry-run, checkpoints e verificação posterior, incluindo efeitos externos. **Fluxo de fixacao com previa e readback independente (130).**
 - [ ] 014 [P] Contexto de projeto persistente, unidades, identificação de elementos, seleção e proteção contra alterações concorrentes. **Leitura de selecao e identidade em snapshot legado testada (131).** **Contexto nativo e troca de documentos conferidos (132).**
 - [ ] 015 [P] Fluxo autorizado para trabalhar em projetos reais fora do Sandbox, com cópia, escopo, permissões, backup e proteção de documentos. **Copia RVT externa verificada por SHA256, escrita isolada e origem preservada (131).**
-- [ ] 016 [P] Testar limites de confiança das extensões C#, versões, assinaturas, caminhos e permissões; não executar código arbitrário sem revisão.
+- [ ] 016 [P] Testar limites de confiança das extensões C#, versões, assinaturas, caminhos e permissões; não executar código arbitrário sem revisão. **Recusa de DLL nao aprovada e nome invalido confirmada (135).**
 - [ ] 017 [P] Testar todos os comandos anunciados no catálogo ativo e manter matriz por comando/versão/resultado.
 
 ## C — Arquitetura e documentação
@@ -50,14 +50,14 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 037 [P] Coordenação interdisciplinar com aberturas e shafts, suportes, isolamento, manutenção e interferências de redes complexas. **Shaft1x1m corta laje superior; tubo vertical sem intersecao (133).**
 
 ## E — Autocorreção geométrica e coordenação
-- [ ] 038 [F] Junção física de paredes e acabamento das extremidades: wall_join_finish / JoinGeometryUtils ainda sem validação positiva. **Join em X aceito; acabamento L e ensaio de sobreposicao pendentes; modal/estado incerto no ultimo ensaio (128).** **Sobreposicao experimental0.7065m3 identificada; acabamento ainda sem resolucao (129).** **Rollback nativo de sobreposicao com aviso registrado, sem modal; acabamento ainda pendente (132).**
-- [ ] 039 [P] Reparo de paredes em L/T/X, curvas, múltiplos encontros e dependências de portas, janelas e elementos estruturais. **Join em X sem sobreposicao residual, mas sem prova de correcao de intersecao previa (128).** **Prevencao de paredes paralelas sobrepostas no mesmo lote (129).**
+- [ ] 038 [F] Junção física de paredes e acabamento das extremidades: wall_join_finish / JoinGeometryUtils ainda sem validação positiva. **Join em X aceito; acabamento L e ensaio de sobreposicao pendentes; modal/estado incerto no ultimo ensaio (128).** **Sobreposicao experimental0.7065m3 identificada; acabamento ainda sem resolucao (129).** **Rollback nativo de sobreposicao com aviso registrado, sem modal; acabamento ainda pendente (132).** **Join nativo de L recusado em preview, acabamento continua pendente (135).**
+- [ ] 039 [P] Reparo de paredes em L/T/X, curvas, múltiplos encontros e dependências de portas, janelas e elementos estruturais. **Join em X sem sobreposicao residual, mas sem prova de correcao de intersecao previa (128).** **Prevencao de paredes paralelas sobrepostas no mesmo lote (129).** **Novo reparo de eixo300mm para zero, ancora preservada (135).**
 - [ ] 040 [P] Detectar e corrigir perfis 3D, curvas, furos e degenerações além de polígonos XY. **Rejeicao de furo externo e arco degenerado (128).** **Verificacao conservadora de eixos e espessuras (129).**
 - [ ] 041 [P] Autocorreção de mobiliário em ambientes não retangulares, circulação, giro de portas, suportes e acessibilidade.
 - [ ] 042 [P] Validar reparo e interferência com vínculos RVT rotacionados/transladados e coordenadas compartilhadas.
 - [ ] 043 [P] Reparo de redes MEP conectadas com restrições e múltiplos obstáculos; ampliar bypass de tubos para outras configurações.
 - [ ] 044 [P] Clash detection global e priorização de conflitos, distinguir interseções intencionais, tolerâncias e falhas booleanas. **Intersecao laje/tubo zero, auditoria de11 elementos sem inconclusivos (133).**
-- [ ] 045 [P] Reparos em lote com análise de dependências, preservação de elementos, rollback e auditoria antes/depois. **Previa de exclusao com dependentes impediu commit (129).**
+- [ ] 045 [P] Reparos em lote com análise de dependências, preservação de elementos, rollback e auditoria antes/depois. **Previa de exclusao com dependentes impediu commit (129).** **Exclusao em cascata bloqueada em teste real; guarda atomica compilada, deploy pendente (135).**
 - [x] 046 [V] Substituida pela validacao obrigatoria do adaptador (avancos123/126); prototipo C# separado arquivado, sem instalacao.
 
 ## F — Famílias RFA e parametrização
@@ -108,12 +108,12 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 083 [P] Teste ponta a ponta de um projeto realista de arquitetura, estrutura, elétrica e hidráulica, com documentação e verificação independente. **Prancha e coordenacao de conjunto experimental MEP/estrutura validadas; projeto completo pendente (133).** **Portico estrutural nativo experimental criado e salvo, sem dimensionamento (134).**
 - [ ] 084 [P] Teste de desempenho, modelos grandes, sessões prolongadas, dados inconsistentes e falhas/reconexão.
 - [ ] 085 [P] Teste em cópias de projetos reais, incluindo links, worksharing e casos protegidos, com autorização explícita. **Copia de fixture isolada validada; modelos reais e worksharing pendentes (131).**
-- [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).** **Build novo motor 0 erros/4 avisos; catalogo122 ferramentas ativas (130).** **Preprocessador batch verificado em runtime com rollback de aviso de sobreposicao (132).**
+- [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).** **Build novo motor 0 erros/4 avisos; catalogo122 ferramentas ativas (130).** **Preprocessador batch verificado em runtime com rollback de aviso de sobreposicao (132).** **Guarda nativa de exclusao compilada; nova DLL6AF4... pendente (135).**
 - [ ] 087 [P] Manual de instalação, operação, recuperação e limites; versão publicada, matriz de testes e critérios de aceite. **Gates de instalacao, recuperacao e aceite documentados em RELEASE-RECOVERY.md (130).**
 - [ ] 088 [P] Homologação final pelo usuário: executar comandos pelo ChatGPT normal, sem Work, do pedido à verificação e entrega.
 
 ## Resumo
 
-79 itens abertos: 1 bloqueado, 1 nao validado, 75 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 9 encerrados de 88 (001, 003, 005, 026, 046, 068, 069, 075, 082). Contagem deste checklist, nao percentual da API Revit.
+78 itens abertos: 1 bloqueado, 1 nao validado, 74 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 10 encerrados de 88 (001, 003, 005, 008, 026, 046, 068, 069, 075, 082). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.

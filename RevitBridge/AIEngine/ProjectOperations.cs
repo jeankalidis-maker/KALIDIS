@@ -76,7 +76,8 @@ internal static class ProjectOperations {
      case "pin":e.Pinned=s.GetProperty("value").GetBoolean();break;
      case "rename":e.Name=S(s,"value");break;
      case "change_type": e.ChangeTypeId(Id(s,"typeId"));break;
-     case "delete": var removed=d.Delete(id);results.Add(new{sourceId=id.Value,deletedIds=removed.Select(x=>x.Value).ToArray()});continue;
+     case "delete": var removed=d.Delete(id);
+      if(commit&&removed.Any(x=>x!=id))throw new InvalidOperationException("Dependent deletion refused; unrequested IDs: "+string.Join(",",removed.Where(x=>x!=id).Select(x=>x.Value)));results.Add(new{sourceId=id.Value,deletedIds=removed.Select(x=>x.Value).ToArray()});continue;
      default:throw new ArgumentException("Unsupported edit");
     }
     results.Add(new{elementId=id.Value});
