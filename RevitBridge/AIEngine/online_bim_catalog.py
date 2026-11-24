@@ -5,6 +5,10 @@ import urllib.request, urllib.parse, hashlib, json, pathlib, uuid, argparse
 REPO="magnetar-io/revit-test-datasets"
 REV="fd755e18cec40ed016d06b082f420d796571fef1"
 ITEMS=[dict(name="Column Square",path="Revit/Families/Columns/Column_Sqaure.rfa",sha256="0660610efb4b6c8dd8717be4c4c1b6f74f044643c7d427590e6c122a02720bf9",bytes=360448,license="MIT",source=REPO,revision=REV)]
+ITEMS.extend([dict(name=name,path=path,sha256=digest,bytes=size,license="MIT",source=REPO,revision=REV) for name,path,digest,size in [
+ ("Single Flush Door","Revit/Families/Doors/I_Single-Flush.rfa","66ae731f85416ba0544038d9e442aaf399ff99ae8e1f4388be980b6636549d1f",307200),
+ ("Rectangular Mullion Profile","Revit/Families/Profiles/Mullion_Rectangle.rfa","745e6c9bc4e39eba1a109f50641d46dd78bfde165684af464b1e24e6b34338ef",512000),
+ ("Structural Square Column Tolerance","Revit/Families/Structural Columns/Column_Square_Tollerance.rfa","7fc2c31851d25c6611418cbb50c3e6a0cfaecdf345f012ecde7058fe596d512f",372736)]])
 def search(query):
     return [r for r in ITEMS if all(w.casefold() in (r["name"]+" "+r["path"]).casefold() for w in query.split())]
 def download(item,root):
