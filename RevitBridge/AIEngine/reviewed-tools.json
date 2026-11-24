@@ -692,5 +692,91 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "18C56F5D6B28",
+    "inspection": true,
+    "tool": {
+      "name": "rebar_inventory",
+      "description": "Read native bar counts, actual centerline lengths and theoretical nominal steel mass",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "expectedPath",
+          "ids"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "3544CE89C7F1",
+    "inspection": false,
+    "tool": {
+      "name": "checked_wall_opening",
+      "description": "Create rectangular wall opening and verify net host volume reduction; no structural design",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "wallId": {
+            "type": "integer"
+          },
+          "offsetMm": {
+            "type": "number"
+          },
+          "widthMm": {
+            "type": "number"
+          },
+          "bottomMm": {
+            "type": "number"
+          },
+          "heightMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "wallId",
+          "offsetMm",
+          "widthMm",
+          "bottomMm",
+          "heightMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
