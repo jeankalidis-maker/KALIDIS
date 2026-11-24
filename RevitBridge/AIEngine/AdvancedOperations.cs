@@ -60,18 +60,35 @@ internal static class AdvancedOperations
                     foreach(var shape in shapes){
                         var z=dimension(shape,"zMm",-30000,30000);
                         var h=dimension(shape,"heightMm",1,30000);
-                        var points=shape.GetProperty("points").EnumerateArray().Select(p=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),z)).ToArray();
+                        bool circular=shape.TryGetProperty("radiusMm",out _);
+                        var points=circular?new[]{new XYZ(0,0,z),new XYZ(1,0,z),new XYZ(0,1,z)}:shape.GetProperty("points").EnumerateArray().Select(p=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),z)).ToArray();
                         if(points.Length<3||points.Length>100)throw new ArgumentException("3-100 vertices");
                         var relative=shape.TryGetProperty("baseParameter",out _);
                         if(relative&&shape.TryGetProperty("heightParameter",out _))throw new ArgumentException("Use endParameter with baseParameter; height is end minus base");
                         if(relative&&((shape.TryGetProperty("void",out var relativeVoid)&&relativeVoid.ValueKind==JsonValueKind.True)||z<0))throw new ArgumentException("Relative vertical offsets require a solid at nonnegative base");
                         if(relative)points=points.Select(p=>new XYZ(p.X,p.Y,0)).ToArray();
                         var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,relative?0:z)));
-                        var ca=new CurveArray();for(int i=0;i<points.Length;i++)ca.Append(Line.CreateBound(points[i],points[(i+1)%points.Length]));
+                        var ca=new CurveArray();
+                        if(circular){
+                            double rad=dimension(shape,"radiusMm",10,10000);var center=new XYZ(0,0,z);ca.Append(Arc.Create(center,rad,0,Math.PI*2,XYZ.BasisX,XYZ.BasisY));
+                            if(relative||shape.TryGetProperty("widthParameter",out _)||shape.TryGetProperty("depthParameter",out _))throw new ArgumentException("Circular profile does not support rectangular constraints or offset");
+                        }else for(int i=0;i<points.Length;i++)ca.Append(Line.CreateBound(points[i],points[(i+1)%points.Length]));
                         var profile=new CurveArrArray();profile.Append(ca);
                         bool solid=!shape.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                         var extrusion=fd.FamilyCreate.NewExtrusion(solid,profile,plane,h);
                         extrusions.Add(extrusion);
+                        if(circular&&shape.TryGetProperty("radiusParameter",out var rp)){
+                            string name=rp.GetString()??throw new ArgumentException("Radius label");
+                            if(parameters.ContainsKey(name)||!solid)throw new ArgumentException("Unique solid radius parameter required");
+                            fd.Regenerate();
+                            var plan=new FilteredElementCollector(fd).OfClass(typeof(ViewPlan)).Cast<ViewPlan>().First(v=>!v.IsTemplate&&v.ViewType==ViewType.FloorPlan);
+                            var curves=extrusion.Sketch.GetAllElements().Select(id=>fd.GetElement(id)).OfType<ModelCurve>().Where(c=>c.GeometryCurve is Arc).ToArray();
+                            if(curves.Length!=1)throw new InvalidOperationException("Single circular sketch curve required");
+                            var arc=(Arc)curves[0].GeometryCurve;
+                            var reference=arc.Reference??new Reference(curves[0]);
+                            var dim=fd.FamilyCreate.NewRadialDimension(plan,reference,arc.Center+XYZ.BasisX*arc.Radius*1.5);
+                            var fp=fm.AddParameter(name,GroupTypeId.Geometry,SpecTypeId.Length,false);dim.FamilyLabel=fp;fm.Set(fp,arc.Radius);parameters.Add(name,fp);fd.Regenerate();
+                        }
                         if(relative){
                             var start=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_START_PARAM);var end=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_END_PARAM);
                             if(start==null||end==null||!end.Set(z+h)||!start.Set(z))throw new InvalidOperationException("Cannot establish extrusion offsets");
