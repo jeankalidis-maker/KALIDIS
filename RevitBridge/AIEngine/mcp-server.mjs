@@ -62,7 +62,7 @@ async function call(name,args){
   const {expectedPath,commit=false,...arguments_}=args;
   if(name==="dynamo_audit"&&args.mode==="start"&&(commit!==true||args.executeReadOnlyGraph!==true))throw Error("Dynamo start requires explicit commit and executeReadOnlyGraph=true; event cannot roll back");
   if(name==="dynamo_audit"&&args.mode==="status"&&commit)throw Error("Status must be rollback-only");
-  const permit={dynamo_write_fixture:"executeFixtureGraph",family_quarantine_audit:"inspectPinnedFile",family_catalog_audit:"inspectPinnedFile"}[name];
+  const permit={dynamo_write_fixture:"executeFixtureGraph",family_quarantine_audit:"inspectPinnedFile",family_catalog_audit:"inspectPinnedFile",dynamo_wall_fixture:"executeFixtureGraph"}[name];
   if(permit&&args.mode==="start"&&(commit!==true||args[permit]!==true))throw Error("External event requires explicit commit and permit; cannot roll back");
   if(permit&&args.mode==="status"&&commit)throw Error("Status must be rollback-only");
   const {response,result}=await gateway('run_extension',{expectedPath,commit:ext.inspection?false:commit,assembly:ext.assembly,operation:name,arguments:arguments_});
