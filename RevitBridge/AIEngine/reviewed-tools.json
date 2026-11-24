@@ -778,5 +778,249 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "138475486420",
+    "inspection": false,
+    "tool": {
+      "name": "mep_split",
+      "description": "Split disconnected straight native pipe or duct; verify lengths and type",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "fraction": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "fraction"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "1B9EB63F4F1F",
+    "inspection": false,
+    "tool": {
+      "name": "view_review",
+      "description": "Set projection line color, category visibility or display style, with readback",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "viewId": {
+            "type": "integer"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "color",
+              "category",
+              "style"
+            ]
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 100
+          },
+          "rgb": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "categoryId": {
+            "type": "integer"
+          },
+          "hidden": {
+            "type": "boolean"
+          },
+          "style": {
+            "type": "string",
+            "enum": [
+              "Shading",
+              "HLR",
+              "ShadingWithEdges"
+            ]
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "viewId",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "9B40E496AB51",
+    "inspection": false,
+    "tool": {
+      "name": "native_material_schedule",
+      "description": "Create native material takeoff with name, area and volume fields",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "categoryId": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "categoryId",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "8C624632C082",
+    "inspection": false,
+    "tool": {
+      "name": "closed_stirrup",
+      "description": "Experimental native rectangular stirrup outline; no hooks or structural certification",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hostId": {
+            "type": "integer"
+          },
+          "typeId": {
+            "type": "integer"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "z": {
+            "type": "number"
+          },
+          "widthMm": {
+            "type": "number"
+          },
+          "lengthMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "hostId",
+          "typeId",
+          "x",
+          "y",
+          "z",
+          "widthMm",
+          "lengthMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "6AF2D4EA2171",
+    "inspection": true,
+    "tool": {
+      "name": "layer_audit",
+      "description": "Read compound structure layers and nominal thickness",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "expectedPath",
+          "ids"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
   }
 ]
