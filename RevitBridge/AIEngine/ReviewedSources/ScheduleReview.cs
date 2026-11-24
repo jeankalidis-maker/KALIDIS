@@ -27,8 +27,17 @@ public sealed class ScheduleReview : IReviewedOperation {
    bool itemized=a.GetProperty("itemized").GetBoolean();def.IsItemized=itemized;
    d.Regenerate();def=s.Definition;
    if(def.IsItemized!=itemized)throw new InvalidOperationException("Grouping mismatch");
+  }else if(mode=="totals"){
+   var indices=a.GetProperty("fieldIndices").EnumerateArray().Select(v=>v.GetInt32()).Distinct().ToArray();
+   if(indices.Length<1||indices.Length>20)throw new ArgumentException("1-20 fields");
+   foreach(int i in indices){
+    def=s.Definition;if(i<0||i>=def.GetFieldCount())throw new ArgumentException("Invalid field");
+    var field=def.GetField(i);if(!field.CanTotal())throw new ArgumentException("Field cannot total");
+    field.DisplayType=ScheduleFieldDisplayType.Totals;d.Regenerate();
+    if(s.Definition.GetField(i).DisplayType!=ScheduleFieldDisplayType.Totals)throw new InvalidOperationException("Totals readback failed");
+   }
   }else if(mode!="audit")throw new ArgumentException("Unknown mode");
   d.Regenerate();def=s.Definition;
-  return new{id=s.Id.Value,name=s.Name,fields=Enumerable.Range(0,def.GetFieldCount()).Select(i=>new{index=i,name=def.GetField(i).GetName()}).ToArray(),sortCount=def.GetSortGroupFieldCount(),filterCount=def.GetFilterCount(),itemized=def.IsItemized,note="Schedule presentation only; filtering can exclude quantities."};
+  return new{id=s.Id.Value,name=s.Name,fields=Enumerable.Range(0,def.GetFieldCount()).Select(i=>new{index=i,name=def.GetField(i).GetName(),display=def.GetField(i).DisplayType.ToString()}).ToArray(),sortCount=def.GetSortGroupFieldCount(),filterCount=def.GetFilterCount(),itemized=def.IsItemized,note="Schedule presentation only; filtering can exclude quantities."};
  }
 }
