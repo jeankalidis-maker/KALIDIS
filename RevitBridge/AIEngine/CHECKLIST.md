@@ -104,3 +104,10 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [C] Smoke-Test.ps1 ampliado para consultas KenLP/Horizun e exportação PNG. Sintaxe PowerShell validada, execução real pendente.
 - [V] DLL preparada para próxima abertura, SHA256 A8F63A18095930CE34A119B14155D49B33F20ED267E986B544AB27FB7B512C7C; backup confirmado. 50 ferramentas MCP registradas, 53 ações batch. Sessão original permanece aberta.
 - [P] Reinício normal e teste de ponta a ponta; execução dinâmica, integrações completas e autocorreção geométrica ainda pendentes.
+
+## Avanço 24 — validação real no Revit 2025.4
+- [V] Reinício realizado pelo usuário. PID 20500, engine 0.3.0, catálogo ativo de 50 ferramentas e 566 comandos nativos.
+- [V] Smoke-Test.ps1: template brasileiro, RVT independente Smoke-9c3c99fd336746a0b555995ee2728a38.rvt, rollback e commit verificados, parede 325325, 36 parâmetros, movimento rollback, 11 vistas, registro extensões, 33 categorias, 2 fases, auditoria warnings/level span, consulta portas, PNG e salvamento. Exit 0 (32.47 s).
+- [V] Família RFA KalidisTable-9747ce5fb743478f8eefcec635a03a5d.rfa criada com 5 extrusões e planos/parâmetros adicionais; carregada no projeto teste família 325326. Instância 326272 verificada. Não implica validação de todas as restrições paramétricas.
+- [V] Receita de ambiente corrigida para x/y no nível raiz da operação room. Lote com quatro paredes, piso, ambiente e mesa: rollback 214 ms, commit 201 ms, IDs verificados. Área do ambiente 18.77268225 m². Primeira assertiva de nome falhou porque Room.Name retorna nome com número ('Sala de teste 1'); modelo já confirmado, não repetido. Releitura por ID, salvamento e PNG confirmados, exit 0.
+- [P] Validação das demais operações, exportações, blends, MEP, extensões, integrações completas e motores dinâmicos. Nenhum projeto original modificado.
