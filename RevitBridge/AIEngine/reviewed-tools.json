@@ -2425,5 +2425,37 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "54191E8ACEE5",
+    "inspection": true,
+    "tool": {
+      "name": "bim_file_review",
+      "description": "Inspect integrity and Revit file version of quarantined downloaded RFA using native BasicFileInfo without loading family. Not a geometry or security audit.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "folder": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "expectedPath",
+          "folder"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
   }
 ]
