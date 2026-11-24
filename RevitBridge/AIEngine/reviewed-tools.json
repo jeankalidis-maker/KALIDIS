@@ -2341,5 +2341,89 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "00118D96D6D2",
+    "inspection": true,
+    "tool": {
+      "name": "python_probe",
+      "description": "Execute fixed audited CPython document inventory or wall count inside Revit",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "inventory",
+              "audit"
+            ]
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "E91C635DCE63",
+    "inspection": false,
+    "tool": {
+      "name": "python_comments",
+      "description": "Execute fixed audited CPython comment update on independent furniture with stale-value and native readback guards",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "set"
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "expected": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode",
+          "id",
+          "expected",
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
