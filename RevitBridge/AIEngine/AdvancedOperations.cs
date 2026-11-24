@@ -56,6 +56,7 @@ internal static class AdvancedOperations
                     if(tx.Start()!=TransactionStatus.Started)throw new InvalidOperationException("Transaction failed");
                     var fm=fd.FamilyManager;if(fm.CurrentType==null)fm.NewType("Default");
                     var parameters=new Dictionary<string,FamilyParameter>(StringComparer.OrdinalIgnoreCase);
+                    var extrusions=new List<Extrusion>();
                     foreach(var shape in shapes){
                         var z=dimension(shape,"zMm",-30000,30000);
                         var h=dimension(shape,"heightMm",1,30000);
@@ -66,6 +67,7 @@ internal static class AdvancedOperations
                         var profile=new CurveArrArray();profile.Append(ca);
                         bool solid=!shape.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                         var extrusion=fd.FamilyCreate.NewExtrusion(solid,profile,plane,h);
+                        extrusions.Add(extrusion);
                         if(shape.TryGetProperty("heightParameter",out var label)){
                             string name=label.GetString()??throw new ArgumentException("Invalid parameter");
                             if(name.Length<1||name.Length>80)throw new ArgumentException("Invalid parameter length");
@@ -76,6 +78,21 @@ internal static class AdvancedOperations
                             var ep=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_END_PARAM);
                             if(ep==null||!fm.CanElementParameterBeAssociated(ep))throw new InvalidOperationException("Cannot associate height");
                             fm.AssociateElementParameterToFamilyParameter(ep,fp);
+                        }
+                    }
+                    if(r.TryGetProperty("voidCuts",out var cuts)){
+                        if(cuts.GetArrayLength()>50)throw new ArgumentException("Maximum 50 explicit cuts");
+                        var used=new HashSet<int>();
+                        foreach(var cut in cuts.EnumerateArray()){
+                            int target=cut.GetProperty("solidIndex").GetInt32(),voidIndex=cut.GetProperty("voidIndex").GetInt32();
+                            if(target<0||target>=extrusions.Count||voidIndex<0||voidIndex>=extrusions.Count||target==voidIndex||!used.Add(target)||!used.Add(voidIndex))throw new ArgumentException("Each cut requires distinct unused extrusion indices");
+                            var solid=extrusions[target];var cutter=extrusions[voidIndex];
+                            if(!solid.IsSolid||cutter.IsSolid)throw new ArgumentException("Cut requires solid and void");
+                            fd.Regenerate();
+                            var members=new CombinableElementArray();members.Append(solid);members.Append(cutter);
+                            var combined=fd.CombineElements(members);
+                            if(combined==null)throw new InvalidOperationException("Void combination failed");
+                            fd.Regenerate();
                         }
                     }
                     // Adapted from FamFab FamilyGenerator (MIT); see THIRD-PARTY-FamFab.txt.
