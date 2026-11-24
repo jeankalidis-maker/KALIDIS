@@ -15,7 +15,7 @@ public sealed class SheetReview : IReviewedOperation {
    if(mode=="move"){
     double x=a.GetProperty("xMm").GetDouble(),y=a.GetProperty("yMm").GetDouble();
     if(!double.IsFinite(x)||!double.IsFinite(y)||Math.Abs(x)>10000||Math.Abs(y)>10000)throw new ArgumentException("Invalid paper coordinate");
-    var target=new XYZ(Mm(x),Mm(y),0);vp.SetBoxCenter(target);d.Regenerate();if(vp.GetBoxCenter().DistanceTo(target)>Mm(0.1))throw new InvalidOperationException("Position mismatch");
+    var target=new XYZ(Mm(x),Mm(y),vp.GetBoxCenter().Z);vp.SetBoxCenter(target);d.Regenerate();var actual=vp.GetBoxCenter();if(Math.Abs(actual.X-target.X)>Mm(0.1)||Math.Abs(actual.Y-target.Y)>Mm(0.1))throw new InvalidOperationException($"Position mismatch: actual {ToMm(actual.X):F3},{ToMm(actual.Y):F3} mm");
    }else{
     var view=(View)d.GetElement(vp.ViewId);int scale=a.GetProperty("scale").GetInt32();
     if(scale<1||scale>1000)throw new ArgumentException("Invalid scale");
