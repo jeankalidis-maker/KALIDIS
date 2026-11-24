@@ -46,6 +46,7 @@ OPERATIONS = {
     "mep_clearance_repair": ("5B355A8649D6", False),
     "solid_profile_flex": ("D61A528E9FDE", False),
     "cylinder_flex": ("76808BA4814D", False),
+    "bitmap_material": ("9CD033DBCAF7", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
