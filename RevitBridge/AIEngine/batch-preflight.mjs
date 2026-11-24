@@ -1,5 +1,6 @@
 // Pure batch preflight: native Revit dry-run remains the geometric authority.
 import {validate} from './command-registry.mjs';
+import {validateClosedProfile} from './profile-topology.mjs';
 const num={type:'number',minimum:-10000000,maximum:10000000}, positive={type:'number',exclusiveMinimum:0,maximum:30000};
 const str={type:'string',minLength:1}, id={anyOf:[{type:'integer'},{type:'string',pattern:'^[$].{1,64}$'}]};
 const obj=(properties,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
@@ -59,7 +60,7 @@ export function batchPreflight(args,registry){
     const p=values.points;const closed=action!=='railing'||values.closed===true;
     for(let j=1;j<p.length;j++)if(dist(p[j],p[j-1],true)<0.001)throw Error('Repeated consecutive profile point');
     if(closed&&dist(p[0],p.at(-1),true)<0.001)throw Error('Do not repeat closing point');
-    if(closed&&p.length<3)throw Error('Closed profile needs three points');
+    if(closed)validateClosedProfile(p);
    }
    if(action==='duct_sized'){const round=values.diameterMm!==undefined,rect=values.widthMm!==undefined&&values.heightMm!==undefined;if(round?(values.widthMm!==undefined||values.heightMm!==undefined):!rect)throw Error('Choose round diameter or both rectangular dimensions')}
    if(action==='set_section_box'&&values.enable!==false&&(!values.min||!values.max||['x','y','z'].some(k=>Math.abs(values.min[k]-values.max[k])<1)))throw Error('Positive section box extents required');

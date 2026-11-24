@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {validateClosedProfile} from './profile-topology.mjs';
+const p=(...a)=>a.map(([x,y])=>({x,y}));
+assert.equal(validateClosedProfile(p([0,0],[4000,0],[4000,3000],[0,3000])),12000000);
+assert.equal(validateClosedProfile(p([0,0],[4000,0],[4000,2000],[2000,2000],[2000,4000],[0,4000])),12000000);
+assert.throws(()=>validateClosedProfile(p([0,0],[4000,3000],[0,3000],[4000,0])),/intersect/);
+assert.throws(()=>validateClosedProfile(p([0,0],[4000,0],[2000,0],[2000,2000],[0,2000])),/Backtracking/);
+assert.throws(()=>validateClosedProfile(p([0,0],[4000,0],[4000,3000],[2000,0],[0,3000])),/intersect/);
+assert.throws(()=>validateClosedProfile(p([0,0],[4000,0],[4000,3000],[0,0])),/Repeated/);
+console.log('PROFILE_TOPOLOGY_TESTS=PASS');
