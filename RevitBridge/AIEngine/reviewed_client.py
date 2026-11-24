@@ -57,6 +57,7 @@ OPERATIONS = {
     "wall_gap_repair": ("4DC9328597FA", False),
     "realistic_preview": ("4B5CDDD525F4", False),
     "network_clearance": ("FD86FEBABF57", False),
+    "pipe_bypass": ("CF9F1BD198DD", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
