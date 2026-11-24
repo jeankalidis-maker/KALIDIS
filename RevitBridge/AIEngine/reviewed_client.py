@@ -40,6 +40,7 @@ OPERATIONS = {
     "hooked_stirrup": ("87824F47E848", False),
     "auto_clearance_repair": ("4683C3604887", False),
     "spatial_repair": ("C3890549057C", False),
+    "room_repair": ("E03C1ABA1063", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
