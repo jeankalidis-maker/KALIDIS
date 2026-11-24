@@ -2807,5 +2807,78 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "FD86FEBABF57",
+    "inspection": false,
+    "tool": {
+      "name": "network_clearance",
+      "description": "Translate a complete isolated connected component of 2–20 straight pipes/ducts and fittings against local obstacles. expectedMm is centroid of all end connectors. Verifies topology and connector positions, rejects external connections. Not rerouting fixed endpoints.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "diagnose",
+              "repair"
+            ]
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 13
+          },
+          "minimumMm": {
+            "type": "number"
+          },
+          "maxMoveMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 2,
+            "maxItems": 20
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode",
+          "ids",
+          "expectedMm",
+          "categoryIds",
+          "minimumMm",
+          "maxMoveMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
