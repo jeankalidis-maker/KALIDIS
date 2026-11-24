@@ -70,3 +70,10 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [V] Catálogo da DLL atualmente instalada reconfirmado: 566 nomes PostableCommand, incluindo ArchitecturalWall, ArchitecturalFloor, RoofByFootprint, RoofByExtrusion, Door, Window, Stair, Pipe, Dynamo.
 - [C] native_status: busca textual, filtro de disponibilidade contextual e indicação de comandos aprovados. native_post: lista restrita de seis ações de interface (TileViews, ThinLines, ProjectBrowser, TogglePropertiesPalette, SystemBrowser, ToggleRevealHiddenElementsMode), em RVT de teste. Retorno confirma enfileiramento, não conclusão da ação. Não instalado/testado em sessão.
 - [C] Build 5e05fd3: 0 erros, 5 avisos, 5.81 s. 37 ferramentas MCP registradas. Integração direta externa e motores dinâmicos completos ainda pendentes.
+
+## Avanço 15
+- [C] 8 operações adicionais: restrições de topo de paredes, união/separação de geometrias, room tags, inserção de tabelas em pranchas, plantas/limites/elementos de área. Build ebac2a4: 0 erros, 5 avisos, 5.41 s.
+- [C] 10 ferramentas KenLP efetivamente portadas (MIT, atribuição e revisão fixa em THIRD-PARTY-KenLP.txt): list_family_types, list_phases, list_view_templates, get_linked_files, get_worksets, list_categories, get_doors, get_element_rooms, get_tags_in_view, get_linked_elements. Correção de bounding boxes de vínculos rotacionados com oito cantos. Build 47857c8: 0 erros, 5 avisos, 5.59 s.
+- [C] 47 ferramentas MCP cadastradas, 40 ações de batch. Testes no Revit pendentes.
+- [V] Stage-Engine.ps1: implantação lado a lado testada; falha inicial de atribuição XML corrigida. Manifesto do próprio plugin atualizado e backup criado; DLL SHA256 8E9776CFA30D5482C4CD182270429CD628B38C6584DB426A34C74BD41027A12A. Nenhum projeto alterado. Revit atual ainda usa 0.1.0; nova DLL 0.3.0 carregará na próxima abertura normal, sujeita à validação.
+- [P] Smoke test após reinício normal; integração integral de KenLP e demais projetos ainda pendente.
