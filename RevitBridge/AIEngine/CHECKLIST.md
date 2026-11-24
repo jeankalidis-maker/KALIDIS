@@ -40,3 +40,8 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [C] Batch: vigas, pilares, componentes livres/hospedados, tubos, dutos, eletrodutos, bandejas, aberturas, textos, linhas de detalhe, viewport. Build 1cff4cd: 0 erros, 3 avisos, 4.48 s.
 - [C] Novo RVT de teste, abertura, consulta de elementos e bounding boxes, mover/copiar/rotacionar/alterar texto/trocar tipo/excluir em lote, exportação IFC/DWG/PDF. Build e0c9022: 0 erros, 3 avisos, 3.62 s.
 - [C] Catálogo MCP de 20 ferramentas principais; 21 operações de criação em lote. Não instalado nem validado em sessão.
+
+## Avanços 08 e 09
+- [C] create_family_spec: múltiplas extrusões, perfis poligonais, vazios, alturas compartilhadas e fórmulas. Corte efetivo de vazios ainda não comprovado.
+- [C] Referências $alias entre operações de criação no mesmo lote.
+- [C] Build 87ef510: 0 erros, 4 avisos, 4.47 s. Ainda não instalado.
