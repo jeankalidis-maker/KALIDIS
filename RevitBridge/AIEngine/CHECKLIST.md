@@ -77,3 +77,10 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [C] 47 ferramentas MCP cadastradas, 40 ações de batch. Testes no Revit pendentes.
 - [V] Stage-Engine.ps1: implantação lado a lado testada; falha inicial de atribuição XML corrigida. Manifesto do próprio plugin atualizado e backup criado; DLL SHA256 8E9776CFA30D5482C4CD182270429CD628B38C6584DB426A34C74BD41027A12A. Nenhum projeto alterado. Revit atual ainda usa 0.1.0; nova DLL 0.3.0 carregará na próxima abertura normal, sujeita à validação.
 - [P] Smoke test após reinício normal; integração integral de KenLP e demais projetos ainda pendente.
+
+## Avanços 18 e 19
+- [C] 8 operações adaptadas de KenLP: templates, detalhamento, section box, duplicação de vistas, ocultar/reexibir elementos, agrupamento e perspectiva. 18 funcionalidades KenLP portadas no total. Build 2357644: 0 erros, 5 avisos, 6.34 s.
+- [V] kalidis_recipes.py: geração local de lote de ambiente retangular com paredes/piso/ambiente e componente hospedado. Testes offline RECIPE_TESTS=PASS; modelagem em Revit ainda não validada.
+- [V] Nova implantação lado a lado: SHA256 8EB4B2D1C4627E90F4006B7E6ADEF8B5D5B2C13F2C70F802A51C18970F6BAF97; backup preservado. Revit ainda aberto.
+- [V] MCP 0.3.1 consulta catálogo real antes de anunciar ferramentas. Teste com DLL 0.1.0: 2 ferramentas read-only, 5 totais, exit 0. Catálogo de desenvolvimento tem 47 ferramentas e 48 ações batch; não equivale ao catálogo ativo.
+- [P] Reinício normal do Revit e smoke test em RVT separado. Integrações restantes e execução dinâmica in-process pendentes.
