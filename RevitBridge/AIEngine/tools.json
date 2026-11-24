@@ -142,7 +142,7 @@
   },
   {
     "name": "batch",
-    "description": "Atomic model creation, up to 200 steps. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan. Coordinates mm.",
+    "description": "Atomic batch up to 200 steps, millimeters. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan, beam, column, component, hosted_component, pipe, duct, conduit, cable_tray, opening, text, detail_line, viewport. Use typeId, levelId, systemTypeId, hostId, viewId or sheetId as appropriate; point/start/end are XYZ objects (z required for advanced actions).",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -173,7 +173,19 @@
                   "grid",
                   "material",
                   "view3d",
-                  "plan"
+                  "plan",
+                  "beam",
+                  "column",
+                  "component",
+                  "hosted_component",
+                  "pipe",
+                  "duct",
+                  "conduit",
+                  "cable_tray",
+                  "opening",
+                  "text",
+                  "detail_line",
+                  "viewport"
                 ]
               }
             }
