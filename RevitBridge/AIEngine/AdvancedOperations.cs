@@ -45,7 +45,10 @@ internal static class AdvancedOperations
             if(!Roots().Skip(1).Any(p=>template.StartsWith(p+Path.DirectorySeparatorChar,StringComparison.OrdinalIgnoreCase))||!template.EndsWith(".rft",StringComparison.OrdinalIgnoreCase)||!File.Exists(template))throw new ArgumentException("Use installed RFT template");
             string output=FileIn(root,S(r,"fileName"),".rfa");if(File.Exists(output))throw new IOException("No overwrite");
             var shapes=r.GetProperty("shapes").EnumerateArray().ToArray();
-            if(shapes.Length<1||shapes.Length>100)throw new ArgumentException("1-100 extrusions");
+            if(shapes.Length>100)throw new ArgumentException("Maximum 100 extrusions");
+            int sweepCount=r.TryGetProperty("sweeps",out var swCount)?swCount.GetArrayLength():0;
+            int blendCount=r.TryGetProperty("blends",out var blCount)?blCount.GetArrayLength():0;
+            if(shapes.Length+sweepCount+blendCount<1)throw new ArgumentException("At least one form required");
             double dimension(JsonElement o,string k,double min,double max){double v=o.GetProperty(k).GetDouble();if(!double.IsFinite(v)||v<min||v>max)throw new ArgumentException("Invalid "+k);return Mm(v);}
             var fd=app.Application.NewFamilyDocument(template);
             try{
@@ -96,6 +99,45 @@ internal static class AdvancedOperations
                             fd.Regenerate();
                         }
                     }
+                    if(r.TryGetProperty("sweeps",out var sweepSpec)){
+                        var sweeps=sweepSpec.EnumerateArray().ToArray();
+                        if(sweeps.Length>50)throw new ArgumentException("Maximum 50 sweeps");
+                        foreach(var spec in sweeps){
+                            double z=dimension(spec,"zMm",-30000,30000);
+                            XYZ point(JsonElement p)=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),z);
+                            var path=new CurveArray();
+                            var segments=spec.GetProperty("path").EnumerateArray().ToArray();
+                            if(segments.Length<1||segments.Length>100)throw new ArgumentException("1-100 path segments");
+                            XYZ? last=null;
+                            foreach(var seg in segments){
+                                var start=point(seg.GetProperty("start"));var end=point(seg.GetProperty("end"));
+                                if(last!=null&&last.DistanceTo(start)>Mm(0.01))throw new ArgumentException("Sweep path must be continuous");
+                                Curve curve=S(seg,"kind") switch {
+                                    "line"=>Line.CreateBound(start,end),
+                                    "arc"=>Arc.Create(start,end,point(seg.GetProperty("mid"))),
+                                    _=>throw new ArgumentException("Unknown path segment")
+                                };
+                                path.Append(curve);last=end;
+                            }
+                            var profile=new CurveArray();
+                            if(spec.TryGetProperty("radiusMm",out _)){
+                                double radius=dimension(spec,"radiusMm",1,5000);
+                                profile.Append(Arc.Create(XYZ.Zero,radius,0,Math.PI,XYZ.BasisX,XYZ.BasisY));
+                                profile.Append(Arc.Create(XYZ.Zero,radius,Math.PI,2*Math.PI,XYZ.BasisX,XYZ.BasisY));
+                            }else{
+                                double w=dimension(spec,"widthMm",2,10000)/2,h=dimension(spec,"heightMm",2,10000)/2;
+                                var pts=new[]{new XYZ(-w,-h,0),new XYZ(w,-h,0),new XYZ(w,h,0),new XYZ(-w,h,0)};
+                                for(int i=0;i<4;i++)profile.Append(Line.CreateBound(pts[i],pts[(i+1)%4]));
+                            }
+                            var loops=new CurveArrArray();loops.Append(profile);
+                            var sweepProfile=fd.Application.Create.NewCurveLoopsProfile(loops);
+                            var pathPlane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,z)));
+                            bool solid=!spec.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
+                            var sweep=fd.FamilyCreate.NewSweep(solid,path,pathPlane,sweepProfile,0,ProfilePlaneLocation.Start);
+                            if(sweep==null)throw new InvalidOperationException("Sweep failed");
+                            fd.Regenerate();
+                        }
+                    }
                     if(r.TryGetProperty("referencePlanes",out var planeSpec)){
                         var planes=planeSpec.EnumerateArray().ToArray();
                         if(planes.Length>50)throw new ArgumentException("Maximum 50 reference planes");
@@ -133,7 +175,7 @@ internal static class AdvancedOperations
                     if(tx.Commit()!=TransactionStatus.Committed)throw new InvalidOperationException("Family transaction failed");
                 }
                 fd.SaveAs(output,new SaveAsOptions{OverwriteExistingFile=false});
-                return new{ok=true,path=output,extrusionCount=shapes.Length};
+                return new{ok=true,path=output,extrusionCount=shapes.Length,sweepCount,blendCount};
             }finally{fd.Close(false);}
         }
         if(action=="create_family"){
