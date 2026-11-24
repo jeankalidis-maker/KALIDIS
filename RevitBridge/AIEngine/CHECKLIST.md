@@ -65,3 +65,8 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [V] Presença local de DynamoForRevit e DynamoPlayerForRevit e enum nativo Dynamo/DynamoPlayer; pyRevit não detectado nos locais consultados. Execução de grafos não implementada.
 - [C] Build 0c9ce7e: 0 erros, 5 avisos, 6.64 s; DLL SHA256 F1D828653407D4FF9E8EE35D8139B01F84214DD55A1D18AA2BDC5CEA35486508. Atualizador preflight OK, Revit aberto: instalação não efetuada.
 - [P] Fechar Revit normalmente após salvar; instalar com backup e rodar Smoke-Test.ps1 em RVT separado. Nenhuma alteração no projeto original.
+
+## Avanço 14
+- [V] Catálogo da DLL atualmente instalada reconfirmado: 566 nomes PostableCommand, incluindo ArchitecturalWall, ArchitecturalFloor, RoofByFootprint, RoofByExtrusion, Door, Window, Stair, Pipe, Dynamo.
+- [C] native_status: busca textual, filtro de disponibilidade contextual e indicação de comandos aprovados. native_post: lista restrita de seis ações de interface (TileViews, ThinLines, ProjectBrowser, TogglePropertiesPalette, SystemBrowser, ToggleRevealHiddenElementsMode), em RVT de teste. Retorno confirma enfileiramento, não conclusão da ação. Não instalado/testado em sessão.
+- [C] Build 5e05fd3: 0 erros, 5 avisos, 5.81 s. 37 ferramentas MCP registradas. Integração direta externa e motores dinâmicos completos ainda pendentes.
