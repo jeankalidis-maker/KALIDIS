@@ -46,6 +46,7 @@ internal static class ModelOperations
             var createdIds=new List<long>();
             var aliases=new Dictionary<string,long>(StringComparer.Ordinal);
             var modifiedIds=new HashSet<long>();
+            var viewportTargets=new List<(ElementId Id,XYZ Point)>();
             int stepIndex=0;
             foreach(var step in steps){
                 cancellation?.Check();
@@ -66,11 +67,28 @@ internal static class ModelOperations
                 try{id=Execute(d,stepDoc.RootElement).Value;}
                 catch(Exception ex){throw new InvalidOperationException($"Batch step {stepIndex} ({operation}): {ex.Message}",ex); }
                 ids.Add(id);
+                if(operation=="viewport")viewportTargets.Add((new ElementId(id),P3(stepDoc.RootElement.GetProperty("point"))));
                 if(!new[]{"schedule_field","wall_top_constraint","join_geometry","unjoin_geometry","apply_view_template","set_view_detail_level","set_section_box","hide_elements","unhide_elements","wall_flip"}.Contains(operation))createdIds.Add(id);
                 else modifiedIds.Add(id);
                 if(alias!=null){aliases.Add(alias,id);d.Regenerate();}
             }
             d.Regenerate();
+            // A new view's crop/extents can change after creation and shift its viewport.
+            // Reposition only after the entire batch has regenerated.
+            foreach(var target in viewportTargets){
+                cancellation?.Check();
+                var vp=d.GetElement(target.Id) as Viewport??throw new InvalidOperationException("Viewport missing");
+                if(Math.Abs(target.Point.Z)>Mm(0.1))throw new ArgumentException("Viewport paper Z must be zero");
+                vp.SetBoxCenter(new XYZ(target.Point.X,target.Point.Y,vp.GetBoxCenter().Z));
+            }
+            if(viewportTargets.Count>0){
+                d.Regenerate();
+                foreach(var target in viewportTargets){
+                    var actual=((Viewport)d.GetElement(target.Id)).GetBoxCenter();
+                    if(Math.Abs(actual.X-target.Point.X)>Mm(0.1)||Math.Abs(actual.Y-target.Point.Y)>Mm(0.1))
+                        throw new InvalidOperationException("Viewport paper center mismatch");
+                }
+            }
             cancellation?.Check();
             if(commit)cancellation?.BeginCommit();
             var status=commit?tx.Commit():tx.RollBack();
