@@ -42,7 +42,10 @@ internal static class ModelOperations
         try {
             var createdIds=new List<long>();
             var aliases=new Dictionary<string,long>(StringComparer.Ordinal);
+            var modifiedIds=new HashSet<long>();
+            int stepIndex=0;
             foreach(var step in steps){
+                stepIndex++;
                 var node=JsonNode.Parse(step.GetRawText())!.AsObject();
                 string? alias=node["alias"]?.GetValue<string>();
                 node.Remove("alias");
@@ -54,15 +57,20 @@ internal static class ModelOperations
                     }
                 }
                 using var stepDoc=JsonDocument.Parse(node.ToJsonString());
-                long id=Execute(d,stepDoc.RootElement).Value;
+                string operation=S(stepDoc.RootElement,"action");
+                long id;
+                try{id=Execute(d,stepDoc.RootElement).Value;}
+                catch(Exception ex){throw new InvalidOperationException($"Batch step {stepIndex} ({operation}): {ex.Message}",ex); }
                 ids.Add(id);
-                if(!new[]{"schedule_field","wall_top_constraint","join_geometry","unjoin_geometry","apply_view_template","set_view_detail_level","set_section_box","hide_elements","unhide_elements","wall_flip"}.Contains(S(stepDoc.RootElement,"action")))createdIds.Add(id);
+                if(!new[]{"schedule_field","wall_top_constraint","join_geometry","unjoin_geometry","apply_view_template","set_view_detail_level","set_section_box","hide_elements","unhide_elements","wall_flip"}.Contains(operation))createdIds.Add(id);
+                else modifiedIds.Add(id);
                 if(alias!=null){aliases.Add(alias,id);d.Regenerate();}
             }
             d.Regenerate();
             var status=commit?tx.Commit():tx.RollBack();
             bool ok=commit?status==TransactionStatus.Committed:status==TransactionStatus.RolledBack;
-            return new {ok,committed=ok&&commit,dryRun=!commit,status=status.ToString(),elementIds=ids,aliases,verified=createdIds.All(i=>(d.GetElement(new ElementId(i))!=null)==commit),elapsedMs=timer.ElapsedMilliseconds};
+            bool verified=ok&&createdIds.All(i=>(d.GetElement(new ElementId(i))!=null)==commit)&&modifiedIds.Where(i=>!createdIds.Contains(i)).All(i=>d.GetElement(new ElementId(i))!=null);
+            return new {ok,committed=ok&&commit,dryRun=!commit,status=status.ToString(),elementIds=ids,aliases,verified,verificationScope="Transaction status and element existence only; geometry and modified parameter values require readback.",createdIds,modifiedIds,elapsedMs=timer.ElapsedMilliseconds};
         }
         catch { if(tx.GetStatus()==TransactionStatus.Started)tx.RollBack();throw; }
     }
