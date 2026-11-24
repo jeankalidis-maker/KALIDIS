@@ -1,0 +1,605 @@
+[
+  {
+    "sourcePrefix": "836DB468CE9D",
+    "inspection": true,
+    "tool": {
+      "name": "geometry_review",
+      "description": "Inspect element bounding boxes and positions in mm; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 200
+          }
+        },
+        "required": [
+          "expectedPath",
+          "ids"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "EC63193EB239",
+    "inspection": true,
+    "tool": {
+      "name": "solid_audit",
+      "description": "Inspect solid volumes, surfaces and room boundaries; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 200
+          }
+        },
+        "required": [
+          "expectedPath",
+          "ids"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "A391FFE06931",
+    "inspection": false,
+    "tool": {
+      "name": "verified_move",
+      "description": "Move an unhosted point family with stale position protection; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "targetMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "expectedMm",
+          "targetMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "AB026746B032",
+    "inspection": false,
+    "tool": {
+      "name": "straight_rebar",
+      "description": "Create experimental straight native reinforcement; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hostId": {
+            "type": "integer"
+          },
+          "typeId": {
+            "type": "integer"
+          },
+          "startMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "endMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "hostId",
+          "startMm",
+          "endMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "4A40E0822D70",
+    "inspection": false,
+    "tool": {
+      "name": "rebar_set",
+      "description": "Distribute an existing straight rebar as a fixed-number set; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "spanMm": {
+            "type": "number"
+          },
+          "normalSide": {
+            "type": "boolean"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "count",
+          "spanMm",
+          "normalSide"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "BBFBE7A06881",
+    "inspection": true,
+    "tool": {
+      "name": "solid_clash",
+      "description": "Check actual solid intersections for explicit pairs; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pairs": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "toleranceM3": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "pairs"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "650AEC399153",
+    "inspection": false,
+    "tool": {
+      "name": "family_type_flex",
+      "description": "Duplicate family type and verify height variation; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "parameter": {
+            "type": "string",
+            "minLength": 1
+          },
+          "typeName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "valueMm": {
+            "type": "number"
+          },
+          "expectedHeightDeltaMm": {
+            "type": "number"
+          },
+          "offsetMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "parameter",
+          "typeName",
+          "valueMm",
+          "expectedHeightDeltaMm",
+          "offsetMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "7D9BBE6718C0",
+    "inspection": false,
+    "tool": {
+      "name": "bent_rebar",
+      "description": "Create experimental planar bent reinforcement; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hostId": {
+            "type": "integer"
+          },
+          "typeId": {
+            "type": "integer"
+          },
+          "pointsMm": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "minItems": 3,
+            "maxItems": 20
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "hostId",
+          "typeId",
+          "pointsMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "FD0E425A19D2",
+    "inspection": true,
+    "tool": {
+      "name": "mep_topology",
+      "description": "Inspect physical end connectors; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 200
+          }
+        },
+        "required": [
+          "expectedPath",
+          "ids"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "FB3888758AE8",
+    "inspection": true,
+    "tool": {
+      "name": "clearance_screen",
+      "description": "Screen bounding-box clearance; not exact solid distance; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pairs": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "minimumMm": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "pairs",
+          "minimumMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "459041107B73",
+    "inspection": false,
+    "tool": {
+      "name": "mep_connect",
+      "description": "Connect matching coincident opposed MEP ends; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "firstId": {
+            "type": "integer"
+          },
+          "firstConnector": {
+            "type": "integer"
+          },
+          "secondId": {
+            "type": "integer"
+          },
+          "secondConnector": {
+            "type": "integer"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "firstId",
+          "firstConnector",
+          "secondId",
+          "secondConnector"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "D3B55A24150F",
+    "inspection": false,
+    "tool": {
+      "name": "sloped_floor",
+      "description": "Create sloped floor, not native ramp; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "levelId": {
+            "type": "integer"
+          },
+          "typeId": {
+            "type": "integer"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "lengthMm": {
+            "type": "number"
+          },
+          "widthMm": {
+            "type": "number"
+          },
+          "riseMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "levelId",
+          "typeId",
+          "x",
+          "y",
+          "lengthMm",
+          "widthMm",
+          "riseMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "FB499380E8E7",
+    "inspection": true,
+    "tool": {
+      "name": "material_takeoff",
+      "description": "Extract Revit material quantities; approved full-trust extension in test project only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 200
+          }
+        },
+        "required": [
+          "expectedPath",
+          "ids"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  }
+]
