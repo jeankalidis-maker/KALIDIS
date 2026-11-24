@@ -126,6 +126,47 @@ internal static class ModelOperations
                 var v=Get<View>(d,r,"viewId");return d.Create.NewDetailCurve(v,Line.CreateBound(P3(r.GetProperty("start")),P3(r.GetProperty("end")))).Id;
             }
             case "viewport": return Viewport.Create(d,Id(r,"sheetId"),Id(r,"viewId"),P3(r.GetProperty("point"))).Id;
+            case "foundation": {
+                var l=Get<Level>(d,r,"levelId");var t=Get<FamilySymbol>(d,r,"typeId");
+                if(!t.IsActive){t.Activate();d.Regenerate();}
+                return d.Create.NewFamilyInstance(P3(r.GetProperty("point")),t,l,StructuralType.Footing).Id;
+            }
+            case "terrain": {
+                var l=Get<Level>(d,r,"levelId");var t=Get<ToposolidType>(d,r,"typeId");
+                var points=r.GetProperty("points").EnumerateArray().Select(P3).ToList();
+                if(points.Count<3||points.Count>5000)throw new ArgumentException("3-5000 terrain points");
+                return Toposolid.Create(d,points,t.Id,l.Id).Id;
+            }
+            case "section": {
+                var t=Get<ViewFamilyType>(d,r,"typeId");
+                var start=P3(r.GetProperty("start"));var end=P3(r.GetProperty("end"));
+                var delta=end-start;var horizontal=new XYZ(delta.X,delta.Y,0);
+                if(horizontal.GetLength()<Mm(100))throw new ArgumentException("Section too short");
+                var x=horizontal.Normalize();var y=XYZ.BasisZ;var z=x.CrossProduct(y);
+                var transform=Transform.Identity;transform.Origin=start;transform.BasisX=x;transform.BasisY=y;transform.BasisZ=z;
+                double height=Mm(N(r,"heightMm")),depth=Mm(N(r,"depthMm"));
+                if(height<=0||depth<=0)throw new ArgumentException("Positive section extents required");
+                var box=new BoundingBoxXYZ{Transform=transform,Min=new XYZ(0,0,0),Max=new XYZ(horizontal.GetLength(),height,depth)};
+                var v=ViewSection.CreateSection(d,t.Id,box);v.Name=S(r,"name");return v.Id;
+            }
+            case "roof": {
+                var l=Get<Level>(d,r,"levelId");var t=Get<RoofType>(d,r,"typeId");
+                var curves=new CurveArray();foreach(var c in Profile(r,l.Elevation))curves.Append(c);
+                ModelCurveArray edges;var roof=d.Create.NewFootPrintRoof(curves,l,t,out edges);
+                double slope=N(r,"slopeDegrees");if(slope<0||slope>=80)throw new ArgumentException("Invalid slope");
+                foreach(ModelCurve edge in edges){roof.set_DefinesSlope(edge,slope>0);if(slope>0)roof.set_SlopeAngle(edge,slope*Math.PI/180);}
+                return roof.Id;
+            }
+            case "model_line": {
+                var a=P3(r.GetProperty("start"));var b=P3(r.GetProperty("end"));var direction=(b-a).Normalize();
+                var normal=direction.CrossProduct(Math.Abs(direction.DotProduct(XYZ.BasisZ))>0.99?XYZ.BasisX:XYZ.BasisZ).Normalize();
+                var plane=SketchPlane.Create(d,Plane.CreateByNormalAndOrigin(normal,a));
+                return d.Create.NewModelCurve(Line.CreateBound(a,b),plane).Id;
+            }
+            case "tag": {
+                var v=Get<View>(d,r,"viewId");var host=d.GetElement(Id(r,"hostId"))??throw new ArgumentException("Invalid host");
+                return IndependentTag.Create(d,Id(r,"typeId"),v.Id,new Reference(host),false,TagOrientation.Horizontal,P3(r.GetProperty("point"))).Id;
+            }
             default:throw new ArgumentException("Unsupported batch action: "+S(r,"action"));
         }
     }
