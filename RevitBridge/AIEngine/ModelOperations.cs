@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.DB.Plumbing;
@@ -39,11 +40,27 @@ internal static class ModelOperations
         using var tx=new Transaction(d,"Kalidis AI Engine - batch");
         if(tx.Start()!=TransactionStatus.Started) throw new InvalidOperationException("Transaction not started");
         try {
-            foreach(var step in steps) ids.Add(Execute(d,step).Value);
+            var aliases=new Dictionary<string,long>(StringComparer.Ordinal);
+            foreach(var step in steps){
+                var node=JsonNode.Parse(step.GetRawText())!.AsObject();
+                string? alias=node["alias"]?.GetValue<string>();
+                node.Remove("alias");
+                if(alias!=null&&(alias.Length==0||alias.Length>64||aliases.ContainsKey(alias)))throw new ArgumentException("Invalid or duplicate alias");
+                foreach(var key in new[]{"levelId","typeId","hostId","systemTypeId","viewId","sheetId"}){
+                    if(node[key] is JsonValue val && val.TryGetValue<string>(out var reference)){
+                        if(!reference.StartsWith("$")||!aliases.TryGetValue(reference.Substring(1),out long resolved))throw new ArgumentException("Unknown reference "+reference);
+                        node[key]=JsonValue.Create(resolved);
+                    }
+                }
+                using var stepDoc=JsonDocument.Parse(node.ToJsonString());
+                long id=Execute(d,stepDoc.RootElement).Value;
+                ids.Add(id);
+                if(alias!=null)aliases.Add(alias,id);
+            }
             d.Regenerate();
             var status=commit?tx.Commit():tx.RollBack();
             bool ok=commit?status==TransactionStatus.Committed:status==TransactionStatus.RolledBack;
-            return new {ok,committed=ok&&commit,dryRun=!commit,status=status.ToString(),elementIds=ids,verified=ids.All(i=>(d.GetElement(new ElementId(i))!=null)==commit),elapsedMs=timer.ElapsedMilliseconds};
+            return new {ok,committed=ok&&commit,dryRun=!commit,status=status.ToString(),elementIds=ids,aliases,verified=ids.All(i=>(d.GetElement(new ElementId(i))!=null)==commit),elapsedMs=timer.ElapsedMilliseconds};
         }
         catch { if(tx.GetStatus()==TransactionStatus.Started)tx.RollBack();throw; }
     }
