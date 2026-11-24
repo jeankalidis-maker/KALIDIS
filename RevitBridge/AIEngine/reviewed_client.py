@@ -38,6 +38,7 @@ OPERATIONS = {
     "native_view_filter": ("EC334369A78F", False),
     "quality_checks": ("A63EE3E311C8", True),
     "hooked_stirrup": ("87824F47E848", False),
+    "auto_clearance_repair": ("4683C3604887", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
