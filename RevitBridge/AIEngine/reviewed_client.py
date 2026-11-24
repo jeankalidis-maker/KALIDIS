@@ -55,6 +55,7 @@ OPERATIONS = {
     "texture_scale": ("A9F833D4E0CE", False),
     "hooked_set": ("DA411F02960E", False),
     "wall_gap_repair": ("4DC9328597FA", False),
+    "realistic_preview": ("4B5CDDD525F4", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
