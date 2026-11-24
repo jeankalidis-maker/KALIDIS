@@ -142,7 +142,7 @@
   },
   {
     "name": "batch",
-    "description": "Atomic batch up to 200 steps, millimeters. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan, beam, column, component, hosted_component, pipe, duct, conduit, cable_tray, opening, text, detail_line, viewport. Use typeId, levelId, systemTypeId, hostId, viewId or sheetId as appropriate; point/start/end are XYZ objects (z required for advanced actions). Optional alias on each step; subsequent ID fields may reference earlier aliases as $name. Also supports foundation, terrain (XYZ points), section, roof, model_line and tag.",
+    "description": "Atomic batch up to 200 steps, millimeters. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan, beam, column, component, hosted_component, pipe, duct, conduit, cable_tray, opening, text, detail_line, viewport. Use typeId, levelId, systemTypeId, hostId, viewId or sheetId as appropriate; point/start/end are XYZ objects (z required for advanced actions). Optional alias on each step; subsequent ID fields may reference earlier aliases as $name. Also supports foundation, terrain (XYZ points), section, roof, model_line and tag. Also grid dimensions, schedule fields, type duplication, MEP elbow/union fittings; firstId and secondId accept earlier aliases.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -191,7 +191,12 @@
                   "section",
                   "roof",
                   "model_line",
-                  "tag"
+                  "tag",
+                  "dimension",
+                  "schedule_field",
+                  "duplicate_type",
+                  "elbow",
+                  "union"
                 ]
               }
             }
@@ -667,6 +672,114 @@
           },
           "minItems": 1,
           "maxItems": 100
+        }
+      },
+      "required": [
+        "ids"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "views",
+    "description": "List non-template views and active view",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "selection",
+    "description": "Read current selected element IDs",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "connectors",
+    "description": "Inspect end connectors and connected owners",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "elementId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "elementId"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "schedule_fields",
+    "description": "Inspect available and existing schedule fields",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "viewId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "viewId"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "clash_candidates",
+    "description": "Broad-phase bounding-box overlap; not confirmed clash",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 2,
+          "maxItems": 500
+        },
+        "toleranceMm": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000
         }
       },
       "required": [
