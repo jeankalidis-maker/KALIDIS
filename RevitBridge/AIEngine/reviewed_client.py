@@ -20,6 +20,7 @@ OPERATIONS = {
     "sloped_floor": ("D3B55A24150F", False),
     "material_takeoff": ("FB499380E8E7", True),
     "paint_top_face": ("B7158B02BAE8", False),
+    "wall_attach_roof": ("14A6A6F23934", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
