@@ -56,7 +56,7 @@ internal static class ModelOperations
                 using var stepDoc=JsonDocument.Parse(node.ToJsonString());
                 long id=Execute(d,stepDoc.RootElement).Value;
                 ids.Add(id);
-                if(S(stepDoc.RootElement,"action")!="schedule_field")createdIds.Add(id);
+                if(!new[]{"schedule_field","wall_top_constraint","join_geometry","unjoin_geometry"}.Contains(S(stepDoc.RootElement,"action")))createdIds.Add(id);
                 if(alias!=null)aliases.Add(alias,id);
             }
             d.Regenerate();
@@ -194,6 +194,44 @@ internal static class ModelOperations
                 var a=ConnectorAt(d,r,"firstId","firstPoint");var b=ConnectorAt(d,r,"secondId","secondPoint");
                 if(a.Owner.Id==b.Owner.Id||a.IsConnected||b.IsConnected||a.Domain!=b.Domain)throw new ArgumentException("Incompatible or already connected connectors");
                 return (S(r,"action")=="elbow"?d.Create.NewElbowFitting(a,b):d.Create.NewUnionFitting(a,b)).Id;
+            }
+            case "wall_top_constraint": {
+                var wall=Get<Wall>(d,r,"hostId");var top=Get<Level>(d,r,"levelId");
+                var p=wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE);if(p==null||p.IsReadOnly||!p.Set(top.Id))throw new InvalidOperationException("Cannot set top constraint");
+                if(r.TryGetProperty("offsetMm",out var off)){var o=wall.get_Parameter(BuiltInParameter.WALL_TOP_OFFSET);if(o==null||o.IsReadOnly||!o.Set(Mm(N(r,"offsetMm"))))throw new InvalidOperationException("Cannot set top offset");}
+                return wall.Id;
+            }
+            case "join_geometry":
+            case "unjoin_geometry": {
+                var a=Get<Element>(d,r,"firstId");var b=Get<Element>(d,r,"secondId");
+                if(a.Id==b.Id)throw new ArgumentException("Distinct elements required");
+                bool joined=JoinGeometryUtils.AreElementsJoined(d,a,b);
+                if(S(r,"action")=="join_geometry"&&!joined)JoinGeometryUtils.JoinGeometry(d,a,b);
+                if(S(r,"action")=="unjoin_geometry"&&joined)JoinGeometryUtils.UnjoinGeometry(d,a,b);
+                return a.Id;
+            }
+            case "room_tag": {
+                var v=Get<View>(d,r,"viewId");var room=Get<Autodesk.Revit.DB.Architecture.Room>(d,r,"hostId");var p=P(r.GetProperty("point"));
+                var tag=d.Create.NewRoomTag(new LinkElementId(room.Id),new UV(p.X,p.Y),v.Id);
+                if(tag==null)throw new InvalidOperationException("Room tag failed");return tag.Id;
+            }
+            case "schedule_on_sheet": {
+                var sheet=Get<ViewSheet>(d,r,"sheetId");var schedule=Get<ViewSchedule>(d,r,"viewId");
+                return ScheduleSheetInstance.Create(d,sheet.Id,schedule.Id,P3(r.GetProperty("point"))).Id;
+            }
+            case "area_plan": {
+                var scheme=Get<AreaScheme>(d,r,"typeId");var l=Get<Level>(d,r,"levelId");
+                var v=ViewPlan.CreateAreaPlan(d,scheme.Id,l.Id);v.Name=S(r,"name");return v.Id;
+            }
+            case "area_boundary": {
+                var v=Get<ViewPlan>(d,r,"viewId");var a=P3(r.GetProperty("start"));var b=P3(r.GetProperty("end"));
+                if(Math.Abs(a.Z-b.Z)>1e-8)throw new ArgumentException("Horizontal area boundary required");
+                var plane=SketchPlane.Create(d,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,a));
+                return d.Create.NewAreaBoundaryLine(plane,Line.CreateBound(a,b),v).Id;
+            }
+            case "area": {
+                var v=Get<ViewPlan>(d,r,"viewId");var p=P(r.GetProperty("point"));var area=d.Create.NewArea(v,new UV(p.X,p.Y));
+                if(area==null)throw new InvalidOperationException("Area creation failed");area.Name=S(r,"name");return area.Id;
             }
             default:throw new ArgumentException("Unsupported batch action: "+S(r,"action"));
         }
