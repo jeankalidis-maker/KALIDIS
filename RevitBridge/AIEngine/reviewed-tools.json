@@ -2297,5 +2297,49 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "9CD033DBCAF7",
+    "inspection": false,
+    "tool": {
+      "name": "bitmap_material",
+      "description": "Duplicate untextured generic material and attach a local TextureFixture PNG in the isolated project directory; verify source and appearance reference. No render quality certification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fileName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "name",
+          "fileName"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
