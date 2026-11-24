@@ -601,5 +601,53 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "B7158B02BAE8",
+    "inspection": false,
+    "tool": {
+      "name": "paint_top_face",
+      "description": "Create graphic finish material and paint a single planar floor top face; preserves existing finish and structural layers. Test copy only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "materialName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rgb": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "materialName",
+          "rgb"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
