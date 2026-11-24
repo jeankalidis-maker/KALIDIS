@@ -793,5 +793,57 @@
       "idempotentHint": true,
       "openWorldHint": false
     }
+  },
+  {
+    "name": "extensions",
+    "description": "List locally approved reviewed C# assemblies and loaded operations",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "run_extension",
+    "description": "Run a locally reviewed SHA-256 approved full-trust C# extension on designated test RVT. Not a security sandbox; no arbitrary source execution. Defaults to rollback.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "assembly": {
+          "type": "string"
+        },
+        "operation": {
+          "type": "string"
+        },
+        "arguments": {
+          "type": "object"
+        },
+        "commit": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "assembly",
+        "operation",
+        "arguments"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
   }
 ]
