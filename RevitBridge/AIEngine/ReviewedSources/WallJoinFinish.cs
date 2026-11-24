@@ -20,9 +20,12 @@ public sealed class WallJoinFinish:IReviewedOperation{
   IEnumerable<Solid> Solids(GeometryElement g){foreach(var o in g){if(o is Solid s&&s.Volume>1e-9)yield return s;else if(o is GeometryInstance gi)foreach(var q in Solids(gi.GetInstanceGeometry()))yield return q;}}
   double Overlap(){double total=0;foreach(var s in Solids(w.get_Geometry(new Options{DetailLevel=ViewDetailLevel.Fine})))foreach(var t in Solids(v.get_Geometry(new Options{DetailLevel=ViewDetailLevel.Fine})))total+=BooleanOperationsUtils.ExecuteBooleanOperation(s,t,BooleanOperationsType.Intersect).Volume;return UnitUtils.ConvertFromInternalUnits(total,UnitTypeId.CubicMeters);}
   var before=Overlap();WallUtils.AllowWallJoinAtEnd(w,i);WallUtils.AllowWallJoinAtEnd(v,k);d.Regenerate();
-  if(!((LocationCurve)w.Location).get_ElementsAtJoin(i).Cast<Element>().Any(e=>e.Id==v.Id))throw new InvalidOperationException("Native join absent");
+  bool endJoin=((LocationCurve)w.Location).get_ElementsAtJoin(i).Cast<Element>().Any(e=>e.Id==v.Id);
+  if(!endJoin&&!JoinGeometryUtils.AreElementsJoined(d,w,v)){JoinGeometryUtils.JoinGeometry(d,w,v);d.Regenerate();}
+  bool geometryJoin=JoinGeometryUtils.AreElementsJoined(d,w,v);
+  if(!endJoin&&!geometryJoin)throw new InvalidOperationException("Native join absent");
   foreach(var pair in new[]{(w,l1),(v,l2)})for(int j=0;j<2;j++)if(LineOf(pair.Item1).GetEndPoint(j).DistanceTo(pair.Item2.GetEndPoint(j))>Mm(.1))throw new InvalidOperationException("Axis shifted");
   var after=Overlap();if(after>1e-7)throw new InvalidOperationException("Residual solid overlap "+after);
-  return new{id=w.Id.Value,anchorId=v.Id.Value,beforeM3=before,afterM3=after,nativeJoin=true,axesPreserved=true};
+  return new{id=w.Id.Value,anchorId=v.Id.Value,beforeM3=before,afterM3=after,endJoin,geometryJoin,axesPreserved=true};
  }
 }
