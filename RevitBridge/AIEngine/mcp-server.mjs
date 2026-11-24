@@ -60,6 +60,8 @@ async function call(name,args){
   if(!ext)throw Error('Unknown or unavailable reviewed tool');
   validate(ext.tool.inputSchema,args,name);
   const {expectedPath,commit=false,...arguments_}=args;
+  if(name==="dynamo_audit"&&args.mode==="start"&&(commit!==true||args.executeReadOnlyGraph!==true))throw Error("Dynamo start requires explicit commit and executeReadOnlyGraph=true; event cannot roll back");
+  if(name==="dynamo_audit"&&args.mode==="status"&&commit)throw Error("Status must be rollback-only");
   const {response,result}=await gateway('run_extension',{expectedPath,commit:ext.inspection?false:commit,assembly:ext.assembly,operation:name,arguments:arguments_});
   return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
  }
