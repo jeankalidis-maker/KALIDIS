@@ -2457,5 +2457,46 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "C4F5B1F8CB03",
+    "inspection": false,
+    "tool": {
+      "name": "dynamo_audit",
+      "description": "Run fixed hash-reviewed Autodesk read-only document graph in Revit. Start requires commit=true and executeReadOnlyGraph=true; external event is NOT rollbackable. Poll status without commit; never retry unknown state. Refuses unrelated or unsaved workspace.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "start",
+              "status"
+            ]
+          },
+          "executeReadOnlyGraph": {
+            "type": "boolean"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
