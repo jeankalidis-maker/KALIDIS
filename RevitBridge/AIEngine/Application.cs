@@ -72,7 +72,7 @@ public sealed class Application : IExternalApplication
         {
             if (!Auth(c.Request)) { await Reply(c, 401, new { ok=false, error="unauthorized" }); return; }
             if (c.Request.HttpMethod == "GET" && c.Request.Url?.AbsolutePath == "/health")
-            { await Reply(c, 200, new { ok=true, version="0.1.0", transport="loopback", engine="ExternalEvent" }); return; }
+            { await Reply(c, 200, new { ok=true, version="0.3.0", transport="loopback", engine="ExternalEvent" }); return; }
             if (c.Request.HttpMethod != "POST" || c.Request.Url?.AbsolutePath != "/execute")
             { await Reply(c, 404, new { ok=false, error="not_found" }); return; }
             if (c.Request.ContentLength64 < 1 || c.Request.ContentLength64 > 262144)
@@ -137,7 +137,8 @@ public sealed class Application : IExternalApplication
             var watch=Stopwatch.StartNew();
             string action=r.GetProperty("action").GetString() ?? "";
             if(action=="catalog")
-                return new { ok=true, implemented=new[]{"catalog","snapshot","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).ToArray(), nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
+                return new { ok=true, implemented=new[]{"catalog","snapshot","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).Concat(ExtensionOperations.Actions).ToArray(), nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
+            if(action=="extensions") return ExtensionOperations.List(Home);
             if(action=="new_test_project" || action=="open_test_project") return ProjectOperations.NewOrOpen(app,r,action,Path.Combine(Home,"Sandbox"));
             var d=app.ActiveUIDocument?.Document ?? throw new InvalidOperationException("No active document");
             if(action=="snapshot")
@@ -154,7 +155,7 @@ public sealed class Application : IExternalApplication
             if(action=="elements") return ProjectOperations.Elements(d,r);
             if(action=="element_info") return ProjectOperations.Info(d,r);
             if(new[]{"types","native_status","library","family_info"}.Contains(action)) return AdvancedOperations.Read(app,d,r,action);
-            if(action!="test_wall" && action!="batch" && action!="export_family" && !AdvancedOperations.Actions.Contains(action) && !ProjectOperations.Actions.Contains(action)) throw new InvalidOperationException("Unknown action");
+            if(action!="test_wall" && action!="batch" && action!="export_family" && !AdvancedOperations.Actions.Contains(action) && !ProjectOperations.Actions.Contains(action) && action!="run_extension") throw new InvalidOperationException("Unknown action");
             // Writes only to explicitly designated local test copy, never cloud/workshared/unsaved documents.
             string root=Path.GetFullPath(Path.Combine(Home,"Sandbox"))+Path.DirectorySeparatorChar;
             string expected=Path.GetFullPath(r.GetProperty("expectedPath").GetString() ?? "");
@@ -166,6 +167,7 @@ public sealed class Application : IExternalApplication
                 (File.GetAttributes(actual)&FileAttributes.ReparsePoint)!=0 || (File.GetAttributes(root)&FileAttributes.ReparsePoint)!=0 ||
                 !string.Equals(Path.GetDirectoryName(actual),root.TrimEnd(Path.DirectorySeparatorChar),StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Write refused: open a local test copy in the engine Sandbox");
+            if(action=="run_extension") return ExtensionOperations.Run(d,r,Home);
             if(action=="edit_elements") return ProjectOperations.Edit(d,r);
             if(action=="export_project") return ProjectOperations.Export(d,r,root);
             if(action=="batch") return ModelOperations.Batch(d,r);
