@@ -49,7 +49,16 @@ def run_profile(engine,p,level,template):
     spec=dict(shapes=[dict(zMm=0,heightMm=500,points=rect(0,0,600,400),widthParameter="Test_Width",depthParameter="Test_Depth",heightParameter="Test_Height")])
     i=create(engine,p,level,template,"ProfileRegression",spec,37000,22000)
     check_dims(dimensions(engine,p,[i])[i],[600,400,500])
-    return dict(id=i,dimensionsMm=[600,400,500],note="Initial geometry only; run profile flex separately.")
+    args=dict(id=i,typeName="ProfileFlex-"+uuid4().hex,parameters={"Test_Width":800,"Test_Depth":550,"Test_Height":700},expectedDimensionsMm=[800,550,700],offsetMm=[2000,0,0])
+    dry=execute(engine,"profile_flex",args,p)
+    assert dry["dryRun"] and dry["status"]=="RolledBack"
+    r=execute(engine,"profile_flex",args,p,commit=True)
+    assert r["status"]=="Committed"
+    j=r["result"]["newId"]
+    actual=dimensions(engine,p,[i,j])
+    check_dims(actual[i],[600,400,500])
+    check_dims(actual[j],[800,550,700])
+    return dict(originalId=i,newId=j,dimensionsMm=actual)
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
