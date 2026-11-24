@@ -57,3 +57,11 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [C] Build d5bb502: 0 erros, 4 avisos, 3.97 s; 29 ferramentas MCP.
 - [P] Smoke-Test.ps1 criado para RVT independente; executar após instalar DLL ampliada. Update-Engine.ps1 criado; exige fechar Revit normalmente e cria backup.
 - Revit 2025.4 ainda aberto no projeto original; nenhuma escrita feita neste projeto. Integrações diretas externas continuam pendentes.
+
+## Avanço 13
+- [C] Extensão de exemplo WallAudit em AIEngine.Sample, compilada (7168 bytes); execução no Revit pendente.
+- [C] model_health, clash_confirm (filtro Revit, limitações para geometria não suportada e elementos unidos), schedule_data.
+- [C] activate_view, zoom_fit, preview_view, dynamo_open. 36 ferramentas MCP.
+- [V] Presença local de DynamoForRevit e DynamoPlayerForRevit e enum nativo Dynamo/DynamoPlayer; pyRevit não detectado nos locais consultados. Execução de grafos não implementada.
+- [C] Build 0c9ce7e: 0 erros, 5 avisos, 6.64 s; DLL SHA256 F1D828653407D4FF9E8EE35D8139B01F84214DD55A1D18AA2BDC5CEA35486508. Atualizador preflight OK, Revit aberto: instalação não efetuada.
+- [P] Fechar Revit normalmente após salvar; instalar com backup e rodar Smoke-Test.ps1 em RVT separado. Nenhuma alteração no projeto original.
