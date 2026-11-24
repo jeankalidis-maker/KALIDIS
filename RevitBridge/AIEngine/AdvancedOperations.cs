@@ -68,6 +68,11 @@ internal static class AdvancedOperations
                         bool solid=!shape.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                         var extrusion=fd.FamilyCreate.NewExtrusion(solid,profile,plane,h);
                         extrusions.Add(extrusion);
+                        if(shape.TryGetProperty("widthParameter",out var wp)||shape.TryGetProperty("depthParameter",out _)){
+                            var widthName=shape.GetProperty("widthParameter").GetString()??throw new ArgumentException("Width parameter required");
+                            var depthName=shape.GetProperty("depthParameter").GetString()??throw new ArgumentException("Depth parameter required");
+                            FamilyProfileConstraints.Bind(fd,extrusion,points,parameters,widthName,depthName);
+                        }
                         if(shape.TryGetProperty("heightParameter",out var label)){
                             string name=label.GetString()??throw new ArgumentException("Invalid parameter");
                             if(name.Length<1||name.Length>80)throw new ArgumentException("Invalid parameter length");
