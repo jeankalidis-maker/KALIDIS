@@ -111,3 +111,13 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [V] Família RFA KalidisTable-9747ce5fb743478f8eefcec635a03a5d.rfa criada com 5 extrusões e planos/parâmetros adicionais; carregada no projeto teste família 325326. Instância 326272 verificada. Não implica validação de todas as restrições paramétricas.
 - [V] Receita de ambiente corrigida para x/y no nível raiz da operação room. Lote com quatro paredes, piso, ambiente e mesa: rollback 214 ms, commit 201 ms, IDs verificados. Área do ambiente 18.77268225 m². Primeira assertiva de nome falhou porque Room.Name retorna nome com número ('Sala de teste 1'); modelo já confirmado, não repetido. Releitura por ID, salvamento e PNG confirmados, exit 0.
 - [P] Validação das demais operações, exportações, blends, MEP, extensões, integrações completas e motores dinâmicos. Nenhum projeto original modificado.
+
+## Avanço 25 — validação de modelagem avançada
+- [V] edit_family_copy: novo tipo Kalidis Test e alteração textual, arquivo independente TableEdit-5fdd3d4433574caa89a1d240d6d1868d.rfa salvo, sem recarregar original.
+- [V] Lote de vistas: vista 3D, detalhamento Fine, section box, perspectiva e corte. Commit 189 ms; IDs 326306, 326317, 326327. Topossólido 326350, commit 34 ms.
+- [V] Dois tubos 50 mm, IDs 326361 e 326364, commit 116 ms; leitura dos conectores. Duto retangular 300x200, ID 326371, commit 40 ms.
+- [V] Tabela 326374: quatro campos, leitura de 7 linhas (incluindo cabeçalho/linha vazia), exportação Paredes.csv. Prancha 326381, viewport 326386 e tabela 326387. PNG 3D salvo. RVT de teste salvo.
+- [V] Extensão C# própria Kalidis.Sample.dll aprovada localmente por SHA-256, wall_audit executada, 5 paredes e comprimentos confirmados, rollback. Extensões são full-trust, não sandbox de segurança.
+- [V] Workflow Andrey adaptado: alteração textual em duas paredes com prévia rollback e leitura de retorno, commit e salvamento confirmados. MCP lista 50 ferramentas ativas.
+- [F] Cotovelo: failed to insert elbow; template sem famílias OST_PipeFitting, nenhuma RFA de joelho/cotovelo/elbow encontrada na biblioteca local pesquisada. Causa provável não conclusiva. [F] Telhado: Value cannot be null. [F] Blend: Unexpected internal error: code 1. Não marcar como validados. Lotes falhos ocorreram em dry-run; nenhuma repetição de commit incerto.
+- [P] Diagnosticar e corrigir os três erros, validar demais operações, motores dinâmicos e integração completa. Projeto original preservado.
