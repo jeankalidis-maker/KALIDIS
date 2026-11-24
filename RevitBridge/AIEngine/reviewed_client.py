@@ -50,6 +50,7 @@ OPERATIONS = {
     "python_probe": ("00118D96D6D2", True),
     "python_comments": ("E91C635DCE63", False),
     "bim_file_review": ("54191E8ACEE5", True),
+    "dynamo_audit": ("C4F5B1F8CB03", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
@@ -68,6 +69,9 @@ def resolve(folder, operation):
 
 def execute(engine, operation, arguments, expected_path, commit=False):
     _, read_only=OPERATIONS[operation]
+    if operation=="dynamo_audit":
+        if arguments.get("mode")=="start" and (not commit or arguments.get("executeReadOnlyGraph") is not True):raise ValueError("Dynamo start requires explicit commit and executeReadOnlyGraph=true; event cannot roll back")
+        if arguments.get("mode")=="status" and commit:raise ValueError("Status must be rollback-only")
     if read_only and commit:
         raise ValueError("Inspection must roll back")
     if engine.read_only:
