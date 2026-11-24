@@ -1870,5 +1870,77 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "E03C1ABA1063",
+    "inspection": false,
+    "tool": {
+      "name": "room_repair",
+      "description": "Discover nearby obstacles and repair unhosted furniture clearance while keeping its bounding box inside an enclosed axis-aligned rectangular room. No circulation or accessibility certification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "diagnose",
+              "repair"
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 8
+          },
+          "minimumMm": {
+            "type": "number"
+          },
+          "maxMoveMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "roomId": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode",
+          "id",
+          "expectedMm",
+          "categoryIds",
+          "minimumMm",
+          "maxMoveMm",
+          "roomId"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
