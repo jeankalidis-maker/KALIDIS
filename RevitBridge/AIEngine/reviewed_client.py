@@ -60,6 +60,7 @@ OPERATIONS = {
     "pipe_bypass": ("CF9F1BD198DD", False),
     "dynamo_write_fixture": ("77EDAEE70399", False),
     "family_quarantine_audit": ("A83AB9333383", False),
+    "family_catalog_audit": ("F343C0BEDF84", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
@@ -81,7 +82,7 @@ def execute(engine, operation, arguments, expected_path, commit=False):
     if operation=="dynamo_audit":
         if arguments.get("mode")=="start" and (not commit or arguments.get("executeReadOnlyGraph") is not True):raise ValueError("Dynamo start requires explicit commit and executeReadOnlyGraph=true; event cannot roll back")
         if arguments.get("mode")=="status" and commit:raise ValueError("Status must be rollback-only")
-    event_permits={"dynamo_write_fixture":"executeFixtureGraph","family_quarantine_audit":"inspectPinnedFile"}
+    event_permits={"dynamo_write_fixture":"executeFixtureGraph","family_quarantine_audit":"inspectPinnedFile","family_catalog_audit":"inspectPinnedFile"}
     if operation in event_permits:
         if arguments.get("mode")=="start" and (not commit or arguments.get(event_permits[operation]) is not True):raise ValueError("External event requires explicit commit and permit; cannot roll back")
         if arguments.get("mode")=="status" and commit:raise ValueError("Status must be rollback-only")
