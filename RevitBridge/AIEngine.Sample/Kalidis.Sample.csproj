@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup><TargetFramework>net8.0-windows</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><PlatformTarget>x64</PlatformTarget><AssemblyName>Kalidis.Sample</AssemblyName></PropertyGroup>
+<ItemGroup><ProjectReference Include="..\AIEngine\Kalidis.AIEngine.csproj" /><Reference Include="RevitAPI"><HintPath>C:\Program Files\Autodesk\Revit 2025\RevitAPI.dll</HintPath><Private>false</Private></Reference></ItemGroup>
+</Project>
