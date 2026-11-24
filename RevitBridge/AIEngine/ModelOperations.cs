@@ -57,7 +57,7 @@ internal static class ModelOperations
                 long id=Execute(d,stepDoc.RootElement).Value;
                 ids.Add(id);
                 if(!new[]{"schedule_field","wall_top_constraint","join_geometry","unjoin_geometry","apply_view_template","set_view_detail_level","set_section_box","hide_elements","unhide_elements"}.Contains(S(stepDoc.RootElement,"action")))createdIds.Add(id);
-                if(alias!=null)aliases.Add(alias,id);
+                if(alias!=null){aliases.Add(alias,id);d.Regenerate();}
             }
             d.Regenerate();
             var status=commit?tx.Commit():tx.RollBack();
@@ -153,10 +153,11 @@ internal static class ModelOperations
             }
             case "roof": {
                 var l=Get<Level>(d,r,"levelId");var t=Get<RoofType>(d,r,"typeId");
-                var curves=new CurveArray();foreach(var c in Profile(r,l.Elevation))curves.Append(c);
-                ModelCurveArray edges;var roof=d.Create.NewFootPrintRoof(curves,l,t,out edges);
+                var curves=d.Application.Create.NewCurveArray();foreach(var c in Profile(r,l.Elevation))curves.Append(c);
+                ModelCurveArray edges=new ModelCurveArray();var roof=d.Create.NewFootPrintRoof(curves,l,t,out edges);
+                if(roof==null||edges==null)throw new InvalidOperationException("Roof creation returned no geometry mapping");
                 double slope=N(r,"slopeDegrees");if(slope<0||slope>=80)throw new ArgumentException("Invalid slope");
-                foreach(ModelCurve edge in edges){roof.set_DefinesSlope(edge,slope>0);if(slope>0)roof.set_SlopeAngle(edge,slope*Math.PI/180);}
+                var iterator=edges.ForwardIterator();iterator.Reset();while(iterator.MoveNext()){if(iterator.Current is not ModelCurve edge)throw new InvalidOperationException("Invalid roof edge");roof.set_DefinesSlope(edge,slope>0);if(slope>0)roof.set_SlopeAngle(edge,slope*Math.PI/180);}
                 return roof.Id;
             }
             case "model_line": {
