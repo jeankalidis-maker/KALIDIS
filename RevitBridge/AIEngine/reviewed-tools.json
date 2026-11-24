@@ -1942,5 +1942,77 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "3DEA48D00B14",
+    "inspection": false,
+    "tool": {
+      "name": "polygon_repair",
+      "description": "Repair unhosted furniture clearance within straight-edged polygonal rooms, including concavity and interior boundaries. Selected local obstacle categories; no circulation certification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "diagnose",
+              "repair"
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 13
+          },
+          "minimumMm": {
+            "type": "number"
+          },
+          "maxMoveMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "roomId": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode",
+          "id",
+          "expectedMm",
+          "categoryIds",
+          "minimumMm",
+          "maxMoveMm",
+          "roomId"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
