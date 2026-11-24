@@ -926,5 +926,104 @@
       "idempotentHint": true,
       "openWorldHint": false
     }
+  },
+  {
+    "name": "activate_view",
+    "description": "Activate a view of designated test RVT",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "viewId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "viewId"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "zoom_fit",
+    "description": "Zoom to fit the active test view",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "expectedPath"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "preview_view",
+    "description": "Export a specified view to unique PNG folder",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "viewId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "viewId"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "dynamo_open",
+    "description": "Post native Dynamo or Dynamo Player command; does not execute graph",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "player": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedPath"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
   }
 ]
