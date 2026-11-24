@@ -90,3 +90,10 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [C] Build ec8d15b: 0 erros, 5 avisos, 6.93 s. 47 ferramentas MCP; create_family_spec ampliado.
 - [V] family_recipes.py: testes offline mesa de cinco extrusões e pedestal com dois blends, FAMILY_RECIPE_TESTS=PASS. RFA real ainda não gerado.
 - [V] DLL implantada lado a lado SHA256 5ADF2B1D6142C469122C4A7BF0799BD9AB2C3CDE1731243ABFB7D96F84EE831B, backup confirmado. Sessão Revit PID 644 ainda usa 0.1.0; templates RFT encontrados. Reinício normal e testes reais pendentes.
+
+## Avanço 21 — edição de RFA, MEP e Mvclr
+- [C] edit_family_copy: edição de cópia independente, novos tipos, seleção de tipo, parâmetros de comprimento/número/texto, valores e fórmulas, rollback por padrão, sem recarregar família original.
+- [C] Exportação CSV de tabelas com UTF-8 BOM, separador ponto e vírgula e proteção contra interpretação de fórmulas.
+- [C] Adaptação de padrões Mvclr para espelhamento e tubulações/dutos dimensionados, licença MIT preservada. Adições próprias: tês e transições MEP. 48 ferramentas MCP e 53 ações batch.
+- [C] Build 1bb2233: 0 erros, 5 avisos, 12.85 s. DLL implantada lado a lado SHA256 E8CA036D3B43940240655D89C5C52005796B22E53BCC8164FF670688D619B944, backup confirmado. Revit permanece aberto, testes dentro da sessão pendentes.
+- [P] Integração integral Mvclr, Horizun, AndreyStartsev, pyRevit, Dynamo e execução dinâmica completa continuam pendentes.
