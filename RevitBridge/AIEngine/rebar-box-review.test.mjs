@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';import {rebarBoxReview} from './rebar-box-review.mjs';
+const a={expectedPath:'C:/test.rvt',hostId:1,ids:[2],minimumMm:40};
+const box=(id,minMm,maxMm)=>({id,minMm,maxMm});
+const data={project_context:{path:a.expectedPath,session:'s',revision:1},geometry_review:{status:'RolledBack',result:{elements:[box(1,[0,0,0],[100,100,100]),box(2,[20,20,20],[80,80,80])]}},rebar_inventory:{status:'RolledBack',result:{elements:[{id:2,hostId:1,quantity:1,totalLengthM:1,estimatedMassKg:1}]}},solid_audit:{status:'RolledBack',result:{elements:[{id:1,rebarHost:true,solidCount:1,volumeM3:.001}]}}};
+const call=async n=>data[n];let r=await rebarBoxReview(a,call);assert.equal(r.rows[0].screen,'below_requested_box_gap');assert.equal(r.physicalCoverVerified,false);assert.equal((await rebarBoxReview({...a,minimumMm:10},call)).rows[0].screen,'box_gap_pass_only');data.rebar_inventory.result.elements[0].hostId=3;await assert.rejects(rebarBoxReview(a,call),/host mismatch/);console.log('REBAR_BOX_TESTS=PASS');

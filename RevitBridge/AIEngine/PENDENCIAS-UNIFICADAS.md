@@ -37,11 +37,11 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [x] 026 [V] Filtro nativo: imagens visivel/oculto/restaurado inspecionadas, avanco127.
 - [ ] 027 [P] Topografia complexa, fundações, cortes/aterros e documentação integrada.
 - [ ] 028 [P] Pranchas completas: colisão de viewports, rótulos, tabelas, limites de carimbo, cotas, tags, detalhes e paginação. **Folha A1 de coordenacao corrigida e PNG conferido; ajuste nativo compilado, deploy e acabamento pendentes (133).**
-- [ ] 029 [P] Quantitativos completos por disciplina/material/escopo, tratamento de dados ausentes e conferência independente. **Quantitativo de duas lajes,71m2/10.65m3, nove elementos sem material quantificavel explicitados (133).**
+- [ ] 029 [P] Quantitativos completos por disciplina/material/escopo, tratamento de dados ausentes e conferência independente. **Quantitativo de duas lajes,71m2/10.65m3, nove elementos sem material quantificavel explicitados (133).** **Inventario de quatro armaduras com comprimento, massa teorica e folga AABB (134).**
 
 ## D — Estruturas e instalações
-- [ ] 030 [P] Modelagem estrutural integrada de fundações, pilares, vigas, lajes e ligações metálicas em cenários complexos.
-- [ ] 031 [P] Armaduras complexas: distribuição, curvas, emendas, ancoragens, detalhamento e verificação de cobrimento físico; estribos básicos já validados.
+- [ ] 030 [P] Modelagem estrutural integrada de fundações, pilares, vigas, lajes e ligações metálicas em cenários complexos. **Portico com duas sapatas, dois pilares metalicos e viga6m confirmado por solidos, sem ligacoes/calculo (134).**
+- [ ] 031 [P] Armaduras complexas: distribuição, curvas, emendas, ancoragens, detalhamento e verificação de cobrimento físico; estribos básicos já validados. **rebar_box_review sinaliza folga de caixa insuficiente; cobrimento fisico nao certificado (134).**
 - [ ] 032 [D] Integração com cálculo estrutural e verificações normativas, se incluída no escopo profissional; não confundir modelagem com dimensionamento.
 - [ ] 033 [P] Redes MEP completas de água, esgoto, ventilação, HVAC e elétrica, com equipamentos, conexões, acessórios e múltiplos pavimentos. **Rede com te, reducao e conectividade independente validada (133).**
 - [ ] 034 [P] Roteamento MEP automático com derivações, obstáculos múltiplos, inclinações, elevações, conexões externas e endpoints fixos. **Derivacao e transicao de trajeto explicito validadas; roteamento automatico pendente (133).**
@@ -61,11 +61,11 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [x] 046 [V] Substituida pela validacao obrigatoria do adaptador (avancos123/126); prototipo C# separado arquivado, sem instalacao.
 
 ## F — Famílias RFA e parametrização
-- [ ] 047 [P] Parametrização geométrica generalizada de blends, sweeps, curvas não cilíndricas e geometrias compostas arbitrárias.
+- [ ] 047 [P] Parametrização geométrica generalizada de blends, sweeps, curvas não cilíndricas e geometrias compostas arbitrárias. **Sweep circular em caminho de tres segmentos conferido; flex generalizado pendente (134).**
 - [ ] 048 [P] Restrições entre sólidos, rotação, posições relativas, parâmetros compartilhados e relações de fórmula complexas.
 - [ ] 049 [P] Cortes por void em blends/sweeps, múltiplos cortes, recortes complexos e verificação de volume resultante.
-- [ ] 050 [P] Sweeps complexos, trajetórias 3D e geometrias de revolução/loft além do escopo já testado.
-- [ ] 051 [P] Famílias hospedadas, aninhadas, conectores MEP, parâmetros de instância/tipo, materiais e níveis de detalhe.
+- [ ] 050 [P] Sweeps complexos, trajetórias 3D e geometrias de revolução/loft além do escopo já testado. **Sweep reta-arco-reta com erro volumetrico0.00234%, apenas planar (134).**
+- [ ] 051 [P] Famílias hospedadas, aninhadas, conectores MEP, parâmetros de instância/tipo, materiais e níveis de detalhe. **Parametro de instancia texto de familia sweep conferido (134).**
 - [ ] 052 [P] Edição e atualização controlada de famílias existentes, recarga com preservação de tipos/instâncias e parâmetros. **Copia RFA editada sem recarga (128).**
 - [ ] 053 [P] Validação de todos os tipos de cada família, flex extremo, fórmulas e restrições; não apenas a geometria corrente. **Oito simbolos externos inventariados, sete instanciados (128).**
 - [ ] 054 [P] Gerar famílias complexas nativas a partir de imagem, desenho ou referência dimensional, com conferência física.
@@ -95,17 +95,17 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 072 [P] KenLP: comparar inventário upstream e adaptar comandos complementares úteis com transações e testes.
 - [ ] 073 [N] pyRevit: instalação separada e autorizada; executar e validar a extensão de auditoria desenvolvida.
 - [ ] 074 [P] AndreyStartsev: ampliar workflows Python estruturados para outras categorias/parâmetros e integração pyRevit.
-- [ ] 075 [B] CAD-MCP: esclarecer licença antes de reutilizar código; avaliar integração C# revisada e independente.
+- [x] 075 [V] Encerrado por exclusao justificada do CAD-MCP (licenca TBD no commit fixo), substituido por C# proprio revisado e validado. Nao incorpora codigo upstream (134).
 - [ ] 076 [P] Mvclr: completar revisão de comandos úteis e testes de operações complementares.
-- [ ] 077 [P] FamFab: fluxo de imagem/referência para RFA, integração de recursos úteis e revisão de dependências/API/custo.
+- [ ] 077 [P] FamFab: fluxo de imagem/referência para RFA, integração de recursos úteis e revisão de dependências/API/custo. **Sweep composto RFA confirmado no motor proprio; imagem ainda pendente (134).**
 - [ ] 078 [P] Horizun: ampliar funções úteis de arquitetura, estrutura e MEP e verificar limites de licença/versão.
 - [ ] 079 [P] Dynamo: interpretar, construir e validar grafos variados, dependências, bindings, execução e efeitos externos; não executar grafos desconhecidos sem revisão.
 - [ ] 080 [P] Windows UI Automation: operações contextualizadas de interface, confirmação de estado e resultado, sem cliques cegos ou contorno de avisos. **Recuperacao de janela modal confirmada por leitura UIA; sem automacao de cliques (129).**
 - [ ] 081 [P] Kalidis legado: ampliar compatibilidade de operações e protocolos além de listar/info/inventário, com testes e escopo. **Leitura de selecao, snapshot_elemento e comandos nativos testada (131).**
-- [ ] 082 [P] Inventário comparativo por versão/licença de todos os projetos externos; decidir o que integrar, substituir ou excluir justificadamente.
+- [x] 082 [V] Inventario por revisao/licenca, comparacao de funcoes e decisoes de adocao/exclusao documentados em INTEGRATION-REGISTER.md (134); implementacoes individuais continuam abertas.
 
 ## J — Homologação e entrega
-- [ ] 083 [P] Teste ponta a ponta de um projeto realista de arquitetura, estrutura, elétrica e hidráulica, com documentação e verificação independente. **Prancha e coordenacao de conjunto experimental MEP/estrutura validadas; projeto completo pendente (133).**
+- [ ] 083 [P] Teste ponta a ponta de um projeto realista de arquitetura, estrutura, elétrica e hidráulica, com documentação e verificação independente. **Prancha e coordenacao de conjunto experimental MEP/estrutura validadas; projeto completo pendente (133).** **Portico estrutural nativo experimental criado e salvo, sem dimensionamento (134).**
 - [ ] 084 [P] Teste de desempenho, modelos grandes, sessões prolongadas, dados inconsistentes e falhas/reconexão.
 - [ ] 085 [P] Teste em cópias de projetos reais, incluindo links, worksharing e casos protegidos, com autorização explícita. **Copia de fixture isolada validada; modelos reais e worksharing pendentes (131).**
 - [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).** **Build novo motor 0 erros/4 avisos; catalogo122 ferramentas ativas (130).** **Preprocessador batch verificado em runtime com rollback de aviso de sobreposicao (132).**
@@ -114,6 +114,6 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 
 ## Resumo
 
-81 itens abertos: 2 bloqueados, 1 nao validado, 76 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 7 encerrados de 88 (001, 003, 005, 026, 046, 068, 069). Contagem deste checklist, nao percentual da API Revit.
+79 itens abertos: 1 bloqueado, 1 nao validado, 75 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 9 encerrados de 88 (001, 003, 005, 026, 046, 068, 069, 075, 082). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.
