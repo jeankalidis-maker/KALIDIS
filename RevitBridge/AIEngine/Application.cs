@@ -137,7 +137,7 @@ public sealed class Application : IExternalApplication
             var watch=Stopwatch.StartNew();
             string action=r.GetProperty("action").GetString() ?? "";
             if(action=="catalog")
-                return new { ok=true, implemented=new[]{"catalog","snapshot","test_wall"}, nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
+                return new { ok=true, implemented=new[]{"catalog","snapshot","test_wall","batch","export_family"}, nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
             var d=app.ActiveUIDocument?.Document ?? throw new InvalidOperationException("No active document");
             if(action=="snapshot")
             {
@@ -149,7 +149,7 @@ public sealed class Application : IExternalApplication
                     .Select(x=>new { id=x.Id.Value,name=x.Name }).ToArray();
                 return new { ok=true, title=d.Title, path=d.PathName, version=app.Application.VersionNumber, workshared=d.IsWorkshared, family=d.IsFamilyDocument, levels, wallTypes=walls, families, elapsedMs=watch.ElapsedMilliseconds };
             }
-            if(action!="test_wall") throw new InvalidOperationException("Unknown action");
+            if(action!="test_wall" && action!="batch" && action!="export_family") throw new InvalidOperationException("Unknown action");
             // Writes only to explicitly designated local test copy, never cloud/workshared/unsaved documents.
             string root=Path.GetFullPath(Path.Combine(Home,"Sandbox"))+Path.DirectorySeparatorChar;
             string expected=Path.GetFullPath(r.GetProperty("expectedPath").GetString() ?? "");
@@ -159,6 +159,8 @@ public sealed class Application : IExternalApplication
                 !actual.StartsWith(root,StringComparison.OrdinalIgnoreCase) ||
                 !actual.EndsWith(".rvt",StringComparison.OrdinalIgnoreCase) || !File.Exists(actual))
                 throw new InvalidOperationException("Write refused: open a local test copy in the engine Sandbox");
+            if(action=="batch") return ModelOperations.Batch(d,r);
+            if(action=="export_family") return ModelOperations.ExportFamily(d,r,root);
             var level=d.GetElement(new ElementId(r.GetProperty("levelId").GetInt64())) as Level ?? throw new InvalidOperationException("Invalid level");
             var type=d.GetElement(new ElementId(r.GetProperty("wallTypeId").GetInt64())) as WallType ?? throw new InvalidOperationException("Invalid wall type");
             if(type.Kind!=WallKind.Basic) throw new InvalidOperationException("Basic wall type required");
