@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {inspectGraph} from './dynamo-file-review.mjs';
+const n=(id)=>({Id:id,Inputs:[{Id:id+'i'}],Outputs:[{Id:id+'o'}]});
+const g={Nodes:[n('a'),n('b')],Connectors:[{Start:'ao',End:'bi'}],Bindings:[],View:{Dynamo:{RunType:'Manual'}}};
+assert.equal(inspectGraph(g).requiresManualReview,false);
+assert.equal(inspectGraph(g).executionApproved,false);
+assert.equal(inspectGraph({...g,Connectors:[...g.Connectors,{Start:'bo',End:'ai'}]}).issues[0].kind,'cyclic_graph');
+assert.equal(inspectGraph({...g,Connectors:[{Start:'missing',End:'bi'}]}).issues[0].kind,'invalid_link');
+assert.equal(inspectGraph({...g,Nodes:[{...n('a'),Code:'pass'},n('b')]}).requiresManualReview,true);
+assert.throws(()=>inspectGraph({...g,Nodes:[n('a'),n('a')]}));
+console.log('DYNAMO_FILE_REVIEW_TESTS=PASS');
