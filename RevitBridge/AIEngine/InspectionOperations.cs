@@ -3,7 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 namespace Kalidis.AIEngine;
 internal static class InspectionOperations {
- internal static readonly string[] Actions={"views","connectors","schedule_fields","clash_candidates","selection","model_health","clash_confirm","schedule_data"};
+ internal static readonly string[] Actions={"views","connectors","schedule_fields","clash_candidates","selection","model_health","clash_confirm","schedule_data","routing_preferences"};
  private static ElementId Id(JsonElement r,string k)=>new(r.GetProperty(k).GetInt64());
  private static double Mm(double v)=>UnitUtils.ConvertFromInternalUnits(v,UnitTypeId.Millimeters);
  private static double[] Point(XYZ p)=>new[]{Mm(p.X),Mm(p.Y),Mm(p.Z)};
@@ -69,6 +69,15 @@ internal static class InspectionOperations {
      rows.Add(cells.ToArray());
     }
     return new{ok=true,totalRows=body.NumberOfRows,totalColumns=body.NumberOfColumns,rows};
+   }
+   case "routing_preferences":{
+    var type=d.GetElement(Id(r,"typeId")) as MEPCurveType??throw new ArgumentException("Expected MEP curve type");
+    var manager=type.RoutingPreferenceManager;
+    var groups=new[]{RoutingPreferenceRuleGroupType.Segments,RoutingPreferenceRuleGroupType.Elbows,RoutingPreferenceRuleGroupType.Junctions,RoutingPreferenceRuleGroupType.Transitions,RoutingPreferenceRuleGroupType.Unions};
+    return new{ok=true,typeId=type.Id.Value,name=type.Name,groups=groups.Select(g=>new{group=g.ToString(),rules=Enumerable.Range(0,manager.GetNumberOfRules(g)).Select(i=>{
+     var rule=manager.GetRule(g,i);var part=d.GetElement(rule.MEPPartId);
+     return new{index=i,partId=rule.MEPPartId.Value,partName=part?.Name,description=rule.Description,criteria=rule.NumberOfCriteria};
+    }).ToArray()}).ToArray()};
    }
    default:throw new ArgumentException("Unknown inspection");
   }
