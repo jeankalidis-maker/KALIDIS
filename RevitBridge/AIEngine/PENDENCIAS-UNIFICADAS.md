@@ -10,13 +10,13 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 003 [N] Validar project_context na DLL nova: documento, vista, seleção, sessão e sinal de revisão.
 - [ ] 004 [N] Validar cache no Revit: cacheHit, TTL, invalidação por DocumentChanged, abertura e fechamento de documentos.
 - [ ] 005 [N] Validar guarda de revisão real, incluindo rejeição de sessão/revisão obsoleta.
-- [ ] 006 [N] Validar cancelamento cooperativo real: antes da execução, durante lote, rollback e corrida com commit.
+- [ ] 006 [N] Validar cancelamento cooperativo real: antes da execução, durante lote, rollback e corrida com commit. **Politica de rollback de falhas do batch compilada; teste nativo ainda pendente (129).**
 - [ ] 007 [P] Atualizador próprio do AI Engine, instalação autorizada, rollback de versão e smoke test pós-instalação.
-- [ ] 008 [P] Validar reinício/reconexão, perda de conexão, timeout, fila ocupada e recuperação sem repetir escritas.
+- [ ] 008 [P] Validar reinício/reconexão, perda de conexão, timeout, fila ocupada e recuperação sem repetir escritas. **Estado incerto reconciliado por leitura; limpeza com dependentes recusada (129).**
 
 ## B — Infraestrutura, segurança e autonomia
-- [ ] 009 [P] Completar schemas de todas as ferramentas de edição, validação de argumentos e compatibilidade entre versões; preflight em todos os clientes autorizados. **Preflight de formas nativas ampliado (128).**
-- [ ] 010 [P] Idempotência persistente e recuperação de resultados após interrupção, reconciliação de estado incerto e auditoria.
+- [ ] 009 [P] Completar schemas de todas as ferramentas de edição, validação de argumentos e compatibilidade entre versões; preflight em todos os clientes autorizados. **Preflight de formas nativas ampliado (128).** **Largura nativa de parede na prevalidacao de pares novos (129).**
+- [ ] 010 [P] Idempotência persistente e recuperação de resultados após interrupção, reconciliação de estado incerto e auditoria. **Estado unknown persistido e replay recusado em teste (129).**
 - [ ] 011 [P] Desfazer/refazer para criação, edição, exclusão, tipos, famílias e operações dependentes (hoje movimento e comentário restritos).
 - [ ] 012 [P] Fila, controle de concorrência, telemetria, métricas e testes de carga em sessões longas.
 - [ ] 013 [P] Planejamento multioperação com dependências, dry-run, checkpoints e verificação posterior, incluindo efeitos externos.
@@ -50,14 +50,14 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 037 [P] Coordenação interdisciplinar com aberturas e shafts, suportes, isolamento, manutenção e interferências de redes complexas.
 
 ## E — Autocorreção geométrica e coordenação
-- [ ] 038 [F] Junção física de paredes e acabamento das extremidades: wall_join_finish / JoinGeometryUtils ainda sem validação positiva. **Join em X aceito; acabamento L e ensaio de sobreposicao pendentes; modal/estado incerto no ultimo ensaio (128).**
-- [ ] 039 [P] Reparo de paredes em L/T/X, curvas, múltiplos encontros e dependências de portas, janelas e elementos estruturais. **Join em X sem sobreposicao residual, mas sem prova de correcao de intersecao previa (128).**
-- [ ] 040 [P] Detectar e corrigir perfis 3D, curvas, furos e degenerações além de polígonos XY. **Rejeicao de furo externo e arco degenerado (128).**
+- [ ] 038 [F] Junção física de paredes e acabamento das extremidades: wall_join_finish / JoinGeometryUtils ainda sem validação positiva. **Join em X aceito; acabamento L e ensaio de sobreposicao pendentes; modal/estado incerto no ultimo ensaio (128).** **Sobreposicao experimental0.7065m3 identificada; acabamento ainda sem resolucao (129).**
+- [ ] 039 [P] Reparo de paredes em L/T/X, curvas, múltiplos encontros e dependências de portas, janelas e elementos estruturais. **Join em X sem sobreposicao residual, mas sem prova de correcao de intersecao previa (128).** **Prevencao de paredes paralelas sobrepostas no mesmo lote (129).**
+- [ ] 040 [P] Detectar e corrigir perfis 3D, curvas, furos e degenerações além de polígonos XY. **Rejeicao de furo externo e arco degenerado (128).** **Verificacao conservadora de eixos e espessuras (129).**
 - [ ] 041 [P] Autocorreção de mobiliário em ambientes não retangulares, circulação, giro de portas, suportes e acessibilidade.
 - [ ] 042 [P] Validar reparo e interferência com vínculos RVT rotacionados/transladados e coordenadas compartilhadas.
 - [ ] 043 [P] Reparo de redes MEP conectadas com restrições e múltiplos obstáculos; ampliar bypass de tubos para outras configurações.
 - [ ] 044 [P] Clash detection global e priorização de conflitos, distinguir interseções intencionais, tolerâncias e falhas booleanas.
-- [ ] 045 [P] Reparos em lote com análise de dependências, preservação de elementos, rollback e auditoria antes/depois.
+- [ ] 045 [P] Reparos em lote com análise de dependências, preservação de elementos, rollback e auditoria antes/depois. **Previa de exclusao com dependentes impediu commit (129).**
 - [x] 046 [V] Substituida pela validacao obrigatoria do adaptador (avancos123/126); prototipo C# separado arquivado, sem instalacao.
 
 ## F — Famílias RFA e parametrização
@@ -100,7 +100,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 077 [P] FamFab: fluxo de imagem/referência para RFA, integração de recursos úteis e revisão de dependências/API/custo.
 - [ ] 078 [P] Horizun: ampliar funções úteis de arquitetura, estrutura e MEP e verificar limites de licença/versão.
 - [ ] 079 [P] Dynamo: interpretar, construir e validar grafos variados, dependências, bindings, execução e efeitos externos; não executar grafos desconhecidos sem revisão.
-- [ ] 080 [P] Windows UI Automation: operações contextualizadas de interface, confirmação de estado e resultado, sem cliques cegos ou contorno de avisos.
+- [ ] 080 [P] Windows UI Automation: operações contextualizadas de interface, confirmação de estado e resultado, sem cliques cegos ou contorno de avisos. **Recuperacao de janela modal confirmada por leitura UIA; sem automacao de cliques (129).**
 - [ ] 081 [P] Kalidis legado: ampliar compatibilidade de operações e protocolos além de listar/info/inventário, com testes e escopo.
 - [ ] 082 [P] Inventário comparativo por versão/licença de todos os projetos externos; decidir o que integrar, substituir ou excluir justificadamente.
 
@@ -108,7 +108,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 083 [P] Teste ponta a ponta de um projeto realista de arquitetura, estrutura, elétrica e hidráulica, com documentação e verificação independente.
 - [ ] 084 [P] Teste de desempenho, modelos grandes, sessões prolongadas, dados inconsistentes e falhas/reconexão.
 - [ ] 085 [P] Teste em cópias de projetos reais, incluindo links, worksharing e casos protegidos, com autorização explícita.
-- [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release.
+- [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).**
 - [ ] 087 [P] Manual de instalação, operação, recuperação e limites; versão publicada, matriz de testes e critérios de aceite.
 - [ ] 088 [P] Homologação final pelo usuário: executar comandos pelo ChatGPT normal, sem Work, do pedido à verificação e entrega.
 

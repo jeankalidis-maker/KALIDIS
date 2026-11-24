@@ -40,6 +40,8 @@ internal static class ModelOperations
         var ids=new List<long>();
         using var tx=new Transaction(d,"Kalidis AI Engine - batch");
         if(tx.Start()!=TransactionStatus.Started) throw new InvalidOperationException("Transaction not started");
+        var failurePolicy=new BatchFailurePolicy();
+        tx.SetFailureHandlingOptions(tx.GetFailureHandlingOptions().SetFailuresPreprocessor(failurePolicy).SetClearAfterRollback(true));
         try {
             var createdIds=new List<long>();
             var aliases=new Dictionary<string,long>(StringComparer.Ordinal);
@@ -73,6 +75,7 @@ internal static class ModelOperations
             if(commit)cancellation?.BeginCommit();
             var status=commit?tx.Commit():tx.RollBack();
             bool ok=commit?status==TransactionStatus.Committed:status==TransactionStatus.RolledBack;
+            if(failurePolicy.Messages.Count>0) return new {ok=false,committed=false,status=status.ToString(),error="Revit failures caused rollback",failures=failurePolicy.Messages};
             bool verified=ok&&createdIds.All(i=>(d.GetElement(new ElementId(i))!=null)==commit)&&modifiedIds.Where(i=>!createdIds.Contains(i)).All(i=>d.GetElement(new ElementId(i))!=null);
             return new {ok,committed=ok&&commit,dryRun=!commit,status=status.ToString(),elementIds=ids,aliases,verified,verificationScope="Transaction status and element existence only; geometry and modified parameter values require readback.",createdIds,modifiedIds,elapsedMs=timer.ElapsedMilliseconds};
         }

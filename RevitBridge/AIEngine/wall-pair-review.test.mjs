@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import {reviewWallPairs,candidateTypeIds} from './wall-pair-review.mjs';
+const w={action:'wall',typeId:396,levelId:311,start:{x:0,y:0},end:{x:5000,y:0}};
+const b={...w,start:{x:1000,y:60},end:{x:4000,y:60}};
+const widths=new Map([[396,138.5]]);
+assert.throws(()=>reviewWallPairs([w,b],widths),/Overlapping/);
+assert.throws(()=>reviewWallPairs([w,{...w,start:w.end,end:w.start}]),/Overlapping/);
+assert.doesNotThrow(()=>reviewWallPairs([w,{...b,levelId:694}],widths));
+assert.doesNotThrow(()=>reviewWallPairs([w,{...b,start:{x:1000,y:200},end:{x:4000,y:200}}],widths));
+assert.doesNotThrow(()=>reviewWallPairs([w,{...w,start:{x:5000,y:0},end:{x:8000,y:0}}],widths));
+assert.deepEqual(candidateTypeIds([w,b]),[396]);console.log('WALL_PAIR_REVIEW_TESTS=PASS');

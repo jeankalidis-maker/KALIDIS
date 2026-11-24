@@ -24,6 +24,9 @@ try{
  await assert.rejects(once(dir,'test-id-002','batch',{},async()=>{throw Error('simulated interruption')}),/simulated interruption/);
  await assert.rejects(once(dir,'test-id-002','batch',{},work),/started/);
  assert.equal(count,1);
+ await once(dir,'unknown-001','batch',{},async()=>({isError:true,content:[{text:JSON.stringify({ok:false,error:'execution_state_unknown_do_not_retry'})}]}));
+ const unknown=await operationStatus(dir,'unknown-001');assert.equal(unknown.state,'unknown');assert.equal(unknown.safeToRetry,false);
+ await assert.rejects(once(dir,'unknown-001','batch',{},work),/unknown/);
  let race=0;
  const results=await Promise.allSettled(Array.from({length:20},()=>once(dir,'race-0001','batch',{},async()=>{race++;return {isError:false,content:[{text:JSON.stringify({ok:true,verified:true,committed:false,status:'RolledBack',elementIds:[77],privateValue:'do not store'})}]}})));
  assert.equal(race,1);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);

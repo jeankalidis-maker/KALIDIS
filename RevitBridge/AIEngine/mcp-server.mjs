@@ -3,6 +3,7 @@
 import readline from 'node:readline';
 import {validate,loadRegistry} from './command-registry.mjs';
 import {batchPreflight} from './batch-preflight.mjs';
+import {reviewWallPairs,candidateTypeIds} from './wall-pair-review.mjs';
 import {reviewNativeShape} from './native-shape-review.mjs';
 import {scopeAudit,scopeAuditTool} from './scope-audit.mjs';
 import {reviewEdits} from './edit-preflight.mjs';
@@ -91,6 +92,14 @@ async function callUnjournaled(name,args){
   checkBatchCapabilities(args,catalog.result);
   const preflight=batchPreflight(args,registry);
   if(!preflight.ok)throw Error('Batch preflight rejected: '+JSON.stringify(preflight.issues));
+  reviewWallPairs(args.steps);
+  const typeIds=candidateTypeIds(args.steps),widths=new Map();
+  for(let i=0;i<typeIds.length;i+=100){
+   const info=await gateway('element_info',{ids:typeIds.slice(i,i+100)});
+   if(!info.response.ok||!info.result.ok)throw Error('Cannot inspect wall type widths');
+   for(const e of info.result.elements){const p=e.parameters.find(p=>p.id===-1001000&&p.storage==='Double');if(p&&p.value>0)widths.set(e.id,p.value*304.8);}
+  }
+  reviewWallPairs(args.steps,widths);
  }
  if(name==='create_family_spec')reviewFamilySpec(args);
  if(name==='edit_elements')reviewEdits(args);

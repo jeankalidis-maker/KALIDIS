@@ -20,16 +20,17 @@ export async function once(directory,id,name,args,execute){
  // Any interruption leaves the started record; never retry automatically.
  let result=await execute();
  const temp=file+'.'+randomUUID()+'.tmp';
- const receipt={};
+ const receipt={};let unknown=false;
  try{
   const payload=JSON.parse(result.content[0].text);
+  unknown=payload.error==="execution_state_unknown_do_not_retry"||payload.status==="Pending";
   for(const k of ['ok','verified','committed','dryRun'])if(typeof payload[k]==='boolean')receipt[k]=payload[k];
   if(['Committed','RolledBack'].includes(payload.status))receipt.status=payload.status;
   if(Array.isArray(payload.elementIds)&&payload.elementIds.length<=200&&payload.elementIds.every(Number.isSafeInteger))receipt.elementIds=payload.elementIds;
  }catch{}
  const resultDigest=createHash('sha256').update(JSON.stringify(stable(result??null))).digest('hex');
  const endHandle=await open(temp,'wx');
- try{await endHandle.writeFile(JSON.stringify({digest,name,state:result?.isError?'reported_error':'completed',at:new Date().toISOString(),receipt,resultDigest}));await endHandle.sync()}finally{await endHandle.close()}
+ try{await endHandle.writeFile(JSON.stringify({digest,name,state:unknown?'unknown':result?.isError?'reported_error':'completed',at:new Date().toISOString(),receipt,resultDigest}));await endHandle.sync()}finally{await endHandle.close()}
  await rename(temp,file+'.completed');
  return result;
 }
@@ -43,7 +44,7 @@ export async function operationStatus(directory,id){
  if(!['started','completed','reported_error'].includes(raw.state)||typeof raw.name!=='string')throw Error('Invalid operation record');
  if(raw.state==='started'){
   let end;try{end=JSON.parse(await readFile(path.join(directory,id+'.json.completed'),'utf8'))}catch(e){if(e.code!=='ENOENT')throw Error('Completion record unreadable; inspect model before proceeding')}
-  if(end){if(end.digest!==raw.digest||end.name!==raw.name||!['completed','reported_error'].includes(end.state))throw Error('Completion record mismatch');raw=end}
+  if(end){if(end.digest!==raw.digest||end.name!==raw.name||!['completed','reported_error','unknown'].includes(end.state))throw Error('Completion record mismatch');raw=end}
  }
- return {requestId:id,command:raw.name,state:raw.state,at:raw.at,receipt:raw.receipt??null,resultDigest:raw.resultDigest??null,safeToRetry:false,note:raw.state==='started'?'Execution outcome unknown; inspect model.':'Adapter outcome only; verify model independently.'};
+ return {requestId:id,command:raw.name,state:raw.state,at:raw.at,receipt:raw.receipt??null,resultDigest:raw.resultDigest??null,safeToRetry:false,note:['started','unknown'].includes(raw.state)?'Execution outcome unknown; inspect model.':'Adapter outcome only; verify model independently.'};
 }
