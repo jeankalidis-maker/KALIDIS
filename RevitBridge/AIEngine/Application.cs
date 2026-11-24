@@ -151,6 +151,7 @@ public sealed class Application : IExternalApplication
                 return new { ok=true, title=d.Title, path=d.PathName, version=app.Application.VersionNumber, workshared=d.IsWorkshared, family=d.IsFamilyDocument, levels, wallTypes=walls, families, elapsedMs=watch.ElapsedMilliseconds };
             }
             if(action=="elements") return ProjectOperations.Elements(d,r);
+            if(action=="element_info") return ProjectOperations.Info(d,r);
             if(new[]{"types","native_status","library","family_info"}.Contains(action)) return AdvancedOperations.Read(app,d,r,action);
             if(action!="test_wall" && action!="batch" && action!="export_family" && !AdvancedOperations.Actions.Contains(action) && !ProjectOperations.Actions.Contains(action)) throw new InvalidOperationException("Unknown action");
             // Writes only to explicitly designated local test copy, never cloud/workshared/unsaved documents.
@@ -160,7 +161,9 @@ public sealed class Application : IExternalApplication
             if(d.IsReadOnly || d.IsWorkshared || d.IsFamilyDocument || d.IsModelInCloud ||
                 !expected.Equals(actual,StringComparison.OrdinalIgnoreCase) ||
                 !actual.StartsWith(root,StringComparison.OrdinalIgnoreCase) ||
-                !actual.EndsWith(".rvt",StringComparison.OrdinalIgnoreCase) || !File.Exists(actual))
+                !actual.EndsWith(".rvt",StringComparison.OrdinalIgnoreCase) || !File.Exists(actual) ||
+                (File.GetAttributes(actual)&FileAttributes.ReparsePoint)!=0 || (File.GetAttributes(root)&FileAttributes.ReparsePoint)!=0 ||
+                !string.Equals(Path.GetDirectoryName(actual),root.TrimEnd(Path.DirectorySeparatorChar),StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Write refused: open a local test copy in the engine Sandbox");
             if(action=="edit_elements") return ProjectOperations.Edit(d,r);
             if(action=="export_project") return ProjectOperations.Export(d,r,root);
