@@ -563,7 +563,7 @@
   },
   {
     "name": "export_project",
-    "description": "Export IFC, DWG or PDF to unique sandbox folder",
+    "description": "Export IFC, DWG or PDF to unique sandbox folder CSV exports a single schedule identified by viewId, with semicolon separator and UTF-8 BOM.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -575,7 +575,8 @@
           "enum": [
             "ifc",
             "dwg",
-            "pdf"
+            "pdf",
+            "csv"
           ]
         },
         "fileName": {
@@ -586,6 +587,9 @@
           "items": {
             "type": "integer"
           }
+        },
+        "viewId": {
+          "type": "integer"
         }
       },
       "required": [
@@ -1422,6 +1426,92 @@
       "readOnlyHint": true,
       "destructiveHint": false,
       "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "edit_family_copy",
+    "description": "Edit types, typed values and formulas of an editable family in a separate RFA. No reload into source project. Defaults to dry-run.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "familyId": {
+          "type": "integer"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "boolean"
+        },
+        "changes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "new_type",
+                  "select_type",
+                  "add_parameter",
+                  "set_value",
+                  "set_formula"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "length",
+                  "number",
+                  "text"
+                ]
+              },
+              "instance": {
+                "type": "boolean"
+              },
+              "formula": {
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "action",
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "expectedPath",
+        "familyId",
+        "fileName",
+        "changes"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
       "openWorldHint": false
     }
   }
