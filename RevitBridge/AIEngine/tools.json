@@ -423,5 +423,149 @@
       "idempotentHint": false,
       "openWorldHint": false
     }
+  },
+  {
+    "name": "new_test_project",
+    "description": "Create new sandbox RVT from installed RTE",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fileName",
+        "template"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "open_test_project",
+    "description": "Open sandbox RVT",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fileName"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "elements",
+    "description": "Inspect elements and bounding boxes in mm",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "edit_elements",
+    "description": "Edit batch: move, copy, rotate, set_parameter (string), change_type, delete; dry-run default",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "commit": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "export_project",
+    "description": "Export IFC, DWG or PDF to unique sandbox folder",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "ifc",
+            "dwg",
+            "pdf"
+          ]
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "viewIds": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "expectedPath",
+        "format",
+        "fileName"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": false
+    }
   }
 ]
