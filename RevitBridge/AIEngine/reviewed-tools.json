@@ -2773,5 +2773,39 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "4B5CDDD525F4",
+    "inspection": false,
+    "tool": {
+      "name": "realistic_preview",
+      "description": "Create isolated section-box 3D realistic preview around an element in sandbox. Nearby objects may appear; export using preview_view.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
