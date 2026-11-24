@@ -38,6 +38,15 @@ def horizontal(e,p,l,t):
 
 def radial(e,p,l,t):
     spec=dict(shapes=[dict(zMm=0,heightMm=500,radiusMm=200,radiusParameter="Test_Radius",heightParameter="Test_Height")])
-    i=create(e,p,l,t,"RadiusRegression",spec,90000,26000)
-    check_dims(dimensions(e,p,[i])[i],[400,400,500])
-    return flex(e,p,i,dict(Test_Radius=300,Test_Height=700),[600,600,700],[400,400,500],[pi*.2**2*.5,pi*.3**2*.7])
+    i=create(e,p,l,t,"RadiusRegression",spec,350000,32000)
+    v=execute(e,"cylinder_flex",dict(id=i,mode="audit"),p)["result"]
+    check_dims(v["dimensionsMm"],[400,400,500])
+    out=[]
+    for k,(label,r,h) in enumerate([("R",300,500),("H",200,700),("RH",300,700)]):
+        args=dict(id=i,typeName="Radial-"+label+"-"+uuid4().hex,parameters=dict(Test_Radius=r,Test_Height=h),expectedDimensionsMm=[2*r,2*r,h],offsetMm=[3000*(k+1),0,0])
+        dry=execute(e,"cylinder_flex",args,p);assert dry["dryRun"]
+        b=execute(e,"cylinder_flex",args,p,commit=True);assert b["status"]=="Committed"
+        v=b["result"]["newSolids"];check_dims(v["dimensionsMm"],[2*r,2*r,h])
+        assert isclose(v["volumeM3"],pi*(r/1000)**2*h/1000,rel_tol=1e-4)
+        out.append(b["result"])
+    return out
