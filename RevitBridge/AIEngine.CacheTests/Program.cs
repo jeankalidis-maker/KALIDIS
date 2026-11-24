@@ -12,3 +12,17 @@ var shortCache=new RevisionCache<object,string>(TimeSpan.FromMilliseconds(1));
 shortCache.Get(doc,"A.rvt",1,Load);Thread.Sleep(30);
 Check(!shortCache.Get(doc,"A.rvt",1,Load).Hit,"TTL expiration");
 Console.WriteLine("REVISION_CACHE_TESTS=PASS; six cases");
+
+var pending=new BatchCancellation();
+Check(pending.Request(),"request accepted before execution");
+try{pending.Check();throw new Exception("Missing cancellation");}catch(OperationCanceledException){}
+try{pending.BeginCommit();throw new Exception("Commit after cancel");}catch(OperationCanceledException){}
+var committing=new BatchCancellation();committing.Check();committing.BeginCommit();
+Check(!committing.Request(),"commit cannot be interrupted");
+var finished=new BatchCancellation();finished.Finish();Check(!finished.Request(),"finished cannot be canceled");
+for(int i=0;i<100;i++){
+ var race=new BatchCancellation();bool accepted=false,commit=false;
+ Parallel.Invoke(()=>accepted=race.Request(),()=>{try{race.BeginCommit();commit=true;}catch(OperationCanceledException){}});
+ Check(accepted!=commit,"cancel/commit mutually exclusive");
+}
+Console.WriteLine("BATCH_CANCELLATION_TESTS=PASS; 100 race trials");

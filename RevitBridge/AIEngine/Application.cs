@@ -88,6 +88,15 @@ public sealed class Application : IExternalApplication
             if (!Auth(c.Request)) { await Reply(c, 401, new { ok=false, error="unauthorized" }); return; }
             if (c.Request.HttpMethod == "GET" && c.Request.Url?.AbsolutePath == "/health")
             { await Reply(c, 200, new { ok=true, version="0.3.1", transport="loopback", engine="ExternalEvent", queue=handler?.Status(), listenerRunning=listenerTask is {IsCompleted:false}, pid=Environment.ProcessId }); return; }
+            if(c.Request.HttpMethod=="POST"&&c.Request.Url?.AbsolutePath=="/cancel_batch"){
+                if(c.Request.ContentLength64<1||c.Request.ContentLength64>1024){await Reply(c,413,new{ok=false,error="invalid_body_size"});return;}
+                using var reader=new StreamReader(c.Request.InputStream,Encoding.UTF8);
+                using var payload=JsonDocument.Parse(await reader.ReadToEndAsync(ct).ConfigureAwait(false));
+                var id=payload.RootElement.GetProperty("jobId").GetString();
+                if(!Guid.TryParseExact(id,"N",out _)){await Reply(c,400,new{ok=false,error="invalid_job_id"});return;}
+                bool accepted=handler!.RequestCancellation(id!);
+                await Reply(c,accepted?200:409,new{ok=accepted,state=accepted?"cancellation_requested":"not_active_or_commit_started",note="Request only; await original batch result and verify rollback."});return;
+            }
             if (c.Request.HttpMethod != "POST" || c.Request.Url?.AbsolutePath != "/execute")
             { await Reply(c, 404, new { ok=false, error="not_found" }); return; }
             if (c.Request.ContentLength64 < 1 || c.Request.ContentLength64 > 262144)
@@ -126,6 +135,8 @@ public sealed class Application : IExternalApplication
     {
         internal JsonElement Request = request;
         internal TaskCompletionSource<object> Done = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        internal readonly BatchCancellation Cancellation=new();
+        internal string? BatchId=>Request.TryGetProperty("action",out var a)&&a.ValueKind==JsonValueKind.String&&a.GetString()=="batch"&&Request.TryGetProperty("jobId",out var id)&&id.ValueKind==JsonValueKind.String?id.GetString():null;
         private int state;
         internal bool Start() => Interlocked.CompareExchange(ref state, 1, 0) == 0;
         internal bool Cancel() => Interlocked.CompareExchange(ref state, 2, 0) == 0;
@@ -133,7 +144,13 @@ public sealed class Application : IExternalApplication
     internal sealed class Handler : IExternalEventHandler
     {
         private readonly object gate = new();
-        private Job? pending;
+        private Job? pending,active;
+        internal bool RequestCancellation(string id){
+            lock(gate){
+                var j=active??pending;
+                return j!=null&&j.BatchId==id&&j.Cancellation.Request();
+            }
+        }
         private bool running;
         private long started,completed,canceled;
         private string? activeAction,lastAction;
@@ -146,17 +163,17 @@ public sealed class Application : IExternalApplication
         public void Execute(UIApplication app)
         {
             Job? j;
-            lock(gate) { j=pending; pending=null; if(j==null || !j.Start()) return; running=true;started++;activeSince=DateTime.UtcNow;activeAction=j.Request.TryGetProperty("action",out var name)&&name.ValueKind==JsonValueKind.String?name.GetString():null; }
-            try { j.Done.TrySetResult(Run(app,j.Request)); }
+            lock(gate) { j=pending; pending=null; if(j==null || !j.Start()) return; running=true;active=j;started++;activeSince=DateTime.UtcNow;activeAction=j.Request.TryGetProperty("action",out var name)&&name.ValueKind==JsonValueKind.String?name.GetString():null; }
+            try { j.Done.TrySetResult(Run(app,j.Request,j.Cancellation)); }
             catch(Exception ex) { j.Done.TrySetResult(new { ok=false,error=ex.Message }); }
-            finally { lock(gate){running=false;completed++;lastAction=activeAction;lastFinished=DateTime.UtcNow;activeAction=null;activeSince=null;} }
+            finally { j.Cancellation.Finish();lock(gate){active=null;running=false;completed++;lastAction=activeAction;lastFinished=DateTime.UtcNow;activeAction=null;activeSince=null;} }
         }
-        private static object Run(UIApplication app, JsonElement r)
+        private static object Run(UIApplication app, JsonElement r,BatchCancellation cancellation)
         {
             var watch=Stopwatch.StartNew();
             string action=r.GetProperty("action").GetString() ?? "";
             if(action=="catalog")
-                return new { ok=true, implemented=new[]{"catalog","snapshot","project_context","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).Concat(ExtensionOperations.Actions).Concat(VisualOperations.Actions).Concat(KenLPPorts.Actions).Concat(FamilyEditOperations.Actions).Concat(HorizunAudit.Actions).Concat(StairOperations.Actions).ToArray(), nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
+                return new { ok=true, implemented=new[]{"catalog","snapshot","project_context","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).Concat(ExtensionOperations.Actions).Concat(VisualOperations.Actions).Concat(KenLPPorts.Actions).Concat(FamilyEditOperations.Actions).Concat(HorizunAudit.Actions).Concat(StairOperations.Actions).ToArray(), cooperativeBatchCancel=true, nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
             if(action=="extensions") return ExtensionOperations.List(Home);
             if(action=="new_test_project" || action=="open_test_project") return ProjectOperations.NewOrOpen(app,r,action,Path.Combine(Home,"Sandbox"));
             var d=app.ActiveUIDocument?.Document ?? throw new InvalidOperationException("No active document");
@@ -192,7 +209,8 @@ public sealed class Application : IExternalApplication
                 if(hasSession!=hasRevision)throw new ArgumentException("Both expectedSession and expectedRevision are required together");
                 if(hasSession&&(session.GetString()!=SessionId||expectedRevision.GetInt64()!=ModelRevision))
                     throw new InvalidOperationException("Stale model context: refresh snapshot before planning");
-                return ModelOperations.Batch(d,r);
+                if(r.TryGetProperty("jobId",out var jobId)&&!Guid.TryParseExact(jobId.GetString(),"N",out _))throw new ArgumentException("jobId must be a 32-character GUID");
+                return ModelOperations.Batch(d,r,cancellation);
             }
             if(AdvancedOperations.Actions.Contains(action)) return AdvancedOperations.Write(app,d,r,action,root);
             if(action=="export_family") return ModelOperations.ExportFamily(d,r,root);

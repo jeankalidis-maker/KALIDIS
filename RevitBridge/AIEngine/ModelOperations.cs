@@ -30,12 +30,13 @@ internal static class ModelOperations
         for(int i=0;i<p.Length;i++) loop.Append(Line.CreateBound(p[i],p[(i+1)%p.Length]));
         return loop;
     }
-    public static object Batch(Document d,JsonElement r)
+    public static object Batch(Document d,JsonElement r,BatchCancellation? cancellation=null)
     {
         var timer=Stopwatch.StartNew();
         var steps=r.GetProperty("steps").EnumerateArray().ToArray();
         if(steps.Length<1 || steps.Length>200) throw new ArgumentException("Batch limit 1-200");
         bool commit=r.TryGetProperty("commit",out var flag)&&flag.ValueKind==JsonValueKind.True;
+        cancellation?.Check();
         var ids=new List<long>();
         using var tx=new Transaction(d,"Kalidis AI Engine - batch");
         if(tx.Start()!=TransactionStatus.Started) throw new InvalidOperationException("Transaction not started");
@@ -45,6 +46,7 @@ internal static class ModelOperations
             var modifiedIds=new HashSet<long>();
             int stepIndex=0;
             foreach(var step in steps){
+                cancellation?.Check();
                 stepIndex++;
                 var node=JsonNode.Parse(step.GetRawText())!.AsObject();
                 string? alias=node["alias"]?.GetValue<string>();
@@ -67,6 +69,8 @@ internal static class ModelOperations
                 if(alias!=null){aliases.Add(alias,id);d.Regenerate();}
             }
             d.Regenerate();
+            cancellation?.Check();
+            if(commit)cancellation?.BeginCommit();
             var status=commit?tx.Commit():tx.RollBack();
             bool ok=commit?status==TransactionStatus.Committed:status==TransactionStatus.RolledBack;
             bool verified=ok&&createdIds.All(i=>(d.GetElement(new ElementId(i))!=null)==commit)&&modifiedIds.Where(i=>!createdIds.Contains(i)).All(i=>d.GetElement(new ElementId(i))!=null);
