@@ -47,7 +47,7 @@ internal static class ModelOperations
                 string? alias=node["alias"]?.GetValue<string>();
                 node.Remove("alias");
                 if(alias!=null&&(alias.Length==0||alias.Length>64||aliases.ContainsKey(alias)))throw new ArgumentException("Invalid or duplicate alias");
-                foreach(var key in new[]{"levelId","typeId","hostId","systemTypeId","viewId","sheetId","firstId","secondId","thirdId","templateId"}){
+                foreach(var key in new[]{"levelId","typeId","hostId","systemTypeId","viewId","sheetId","firstId","secondId","thirdId","templateId","topLevelId"}){
                     if(node[key] is JsonValue val && val.TryGetValue<string>(out var reference)){
                         if(!reference.StartsWith("$")||!aliases.TryGetValue(reference.Substring(1),out long resolved))throw new ArgumentException("Unknown reference "+reference);
                         node[key]=JsonValue.Create(resolved);
@@ -56,7 +56,7 @@ internal static class ModelOperations
                 using var stepDoc=JsonDocument.Parse(node.ToJsonString());
                 long id=Execute(d,stepDoc.RootElement).Value;
                 ids.Add(id);
-                if(!new[]{"schedule_field","wall_top_constraint","join_geometry","unjoin_geometry","apply_view_template","set_view_detail_level","set_section_box","hide_elements","unhide_elements"}.Contains(S(stepDoc.RootElement,"action")))createdIds.Add(id);
+                if(!new[]{"schedule_field","wall_top_constraint","join_geometry","unjoin_geometry","apply_view_template","set_view_detail_level","set_section_box","hide_elements","unhide_elements","wall_flip"}.Contains(S(stepDoc.RootElement,"action")))createdIds.Add(id);
                 if(alias!=null){aliases.Add(alias,id);d.Regenerate();}
             }
             d.Regenerate();
@@ -307,6 +307,32 @@ internal static class ModelOperations
                 d.Regenerate();var a=ConnectorAt(d,r,"firstId","firstPoint");var b=ConnectorAt(d,r,"secondId","secondPoint");var c=ConnectorAt(d,r,"thirdId","thirdPoint");
                 if(new[]{a.Owner.Id,b.Owner.Id,c.Owner.Id}.Distinct().Count()!=3||a.IsConnected||b.IsConnected||c.IsConnected||a.Domain!=b.Domain||a.Domain!=c.Domain)throw new ArgumentException("Incompatible connectors");
                 return d.Create.NewTeeFitting(a,b,c).Id;
+            }
+            case "railing": {
+                var l=Get<Level>(d,r,"levelId");var t=Get<Autodesk.Revit.DB.Architecture.RailingType>(d,r,"typeId");
+                var pts=r.GetProperty("points").EnumerateArray().Select(x=>P(x,l.ProjectElevation)).ToArray();
+                if(pts.Length<2||pts.Length>200)throw new ArgumentException("Railing needs 2-200 points");
+                var path=new CurveLoop();for(int i=0;i<pts.Length-1;i++)path.Append(Line.CreateBound(pts[i],pts[i+1]));
+                if(r.TryGetProperty("closed",out var closed)&&closed.ValueKind==JsonValueKind.True)path.Append(Line.CreateBound(pts[^1],pts[0]));
+                return Autodesk.Revit.DB.Architecture.Railing.Create(d,path,t.Id,l.Id).Id;
+            }
+            case "shaft_opening": {
+                var lower=Get<Level>(d,r,"levelId");var upper=Get<Level>(d,r,"topLevelId");
+                if(upper.ProjectElevation<=lower.ProjectElevation)throw new ArgumentException("Upper level must be higher");
+                var ca=d.Application.Create.NewCurveArray();foreach(var c in Profile(r,lower.ProjectElevation))ca.Append(c);
+                return d.Create.NewOpening(lower,upper,ca).Id;
+            }
+            case "wall_flip": {
+                var wall=Get<Wall>(d,r,"hostId");wall.Flip();return wall.Id;
+            }
+            case "conduit_sized": {
+                var e=Conduit.Create(d,Id(r,"typeId"),P3(r.GetProperty("start")),P3(r.GetProperty("end")),Id(r,"levelId"));
+                SetPositiveLength(e,BuiltInParameter.RBS_CONDUIT_DIAMETER_PARAM,N(r,"diameterMm"));return e.Id;
+            }
+            case "cable_tray_sized": {
+                var e=CableTray.Create(d,Id(r,"typeId"),P3(r.GetProperty("start")),P3(r.GetProperty("end")),Id(r,"levelId"));
+                SetPositiveLength(e,BuiltInParameter.RBS_CABLETRAY_WIDTH_PARAM,N(r,"widthMm"));
+                SetPositiveLength(e,BuiltInParameter.RBS_CABLETRAY_HEIGHT_PARAM,N(r,"heightMm"));return e.Id;
             }
             default:throw new ArgumentException("Unsupported batch action: "+S(r,"action"));
         }
