@@ -1,13 +1,14 @@
 // Native Node.js MCP stdio adapter. No external npm dependencies.
 // Connects only to the authenticated loopback Revit gateway.
 import readline from 'node:readline';
+import {validate,loadRegistry} from './command-registry.mjs';
+import {once} from './operation-journal.mjs';
 import {readFile,lstat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=path.dirname(fileURLToPath(import.meta.url));
-const manifest=JSON.parse(await readFile(path.join(root,'tools.json'),'utf8'));
-const reviewed=JSON.parse(await readFile(path.join(root,'reviewed-tools.json'),'utf8'));
+const {base:manifest,reviewed}=await loadRegistry(root);
 const extDir=path.join(process.env.LOCALAPPDATA||'','KalidisAIEngine','ReviewedExtensions');
 async function resolvedExtensions(){
  if(readonly)return new Map();
@@ -27,13 +28,6 @@ async function resolvedExtensions(){
  }
  return out;
 }
-function validate(schema,value,label){
- const k=schema.type;
- if(k==='string'&&(typeof value!=='string'||value.length<(schema.minLength||0))||k==='boolean'&&typeof value!=='boolean'||k==='integer'&&!Number.isSafeInteger(value)||k==='number'&&!(typeof value==='number'&&Number.isFinite(value))||k==='array'&&!Array.isArray(value)||k==='object'&&(!value||typeof value!=='object'||Array.isArray(value)))throw Error('Invalid type: '+label);
- if(schema.enum&&!schema.enum.includes(value))throw Error('Invalid enum: '+label);
- if(k==='array'){if(value.length<(schema.minItems||0)||value.length>(schema.maxItems??Infinity))throw Error('Invalid array length: '+label);if(schema.items)for(const [i,v] of value.entries())validate(schema.items,v,label+'['+i+']');}
- if(k==='object'&&schema.properties){for(const key of schema.required||[])if(!Object.hasOwn(value,key))throw Error('Missing '+label+'.'+key);for(const [key,v] of Object.entries(value)){if(Object.hasOwn(schema.properties,key))validate(schema.properties[key],v,label+'.'+key);else if(schema.additionalProperties===false)throw Error('Unknown '+label+'.'+key);}}
-}
 const tools=new Map(manifest.map(t=>[t.name,t]));
 const readonly=process.argv.includes('--read-only');
 const tokenPath=path.join(process.env.LOCALAPPDATA||'', 'KalidisAIEngine','token.txt');
@@ -51,9 +45,9 @@ async function liveTools(){
  const live=new Set(result.implemented);
  const base=manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
  if(live.has('run_extension')&&live.has('extensions')&&!readonly)for(const x of (await resolvedExtensions()).values())base.push(x.tool);
- return base;
+ return base.map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t);
 }
-async function call(name,args){
+async function callUnjournaled(name,args){
  const t=tools.get(name);
  if(!t){
   const ext=(await resolvedExtensions()).get(name);
@@ -69,17 +63,20 @@ async function call(name,args){
   return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
  }
  if(readonly&&!t.annotations.readOnlyHint)throw Error('Read-only session');
- if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Invalid arguments');
- for(const k of Object.keys(args))if(!Object.hasOwn(t.inputSchema.properties,k))throw Error('Unknown argument '+k);
- for(const k of t.inputSchema.required||[])if(!Object.hasOwn(args,k))throw Error('Missing '+k);
- for(const [k,v] of Object.entries(args)){
-  const schema=t.inputSchema.properties[k]; const kind=schema.type;
-  if(kind==='string'&&typeof v!=='string'||kind==='boolean'&&typeof v!=='boolean'||kind==='integer'&&!Number.isSafeInteger(v)||kind==='number'&&!(typeof v==='number'&&Number.isFinite(v))||kind==='array'&&!Array.isArray(v))throw Error('Invalid type: '+k);
- }
+ validate(t.inputSchema,args,name);
  const catalog=await gateway('catalog');
  if(!catalog.result.ok||!catalog.result.implemented?.includes(name))throw Error('Tool not supported by active Revit engine');
  const {response,result}=await gateway(name,args);
  return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
+}
+async function call(name,args){
+ if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Invalid arguments');
+ const {requestId,...rest}=args;
+ if(requestId===undefined)return callUnjournaled(name,rest);
+ const t=tools.get(name)||reviewed.find(e=>e.tool.name===name)?.tool;
+ if(!t||t.annotations.readOnlyHint||readonly)throw Error('requestId only available for write-enabled operations');
+ validate(t.inputSchema,rest,name);
+ return once(path.join(process.env.LOCALAPPDATA||'', 'KalidisAIEngine','OperationJournal'),requestId,name,rest,()=>callUnjournaled(name,rest));
 }
 async function dispatch(r){
  if(r?.jsonrpc!=='2.0'||typeof r.method!=='string'){error(r?.id??null,-32600,'Invalid request');return}
