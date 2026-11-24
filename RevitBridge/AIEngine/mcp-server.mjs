@@ -11,6 +11,18 @@ const readonly=process.argv.includes('--read-only');
 const tokenPath=path.join(process.env.LOCALAPPDATA||'', 'KalidisAIEngine','token.txt');
 const send=o=>process.stdout.write(JSON.stringify(o)+'\n');
 const error=(id,code,message)=>send({jsonrpc:'2.0',id,error:{code,message}});
+async function gateway(name,args={}){
+ const token=(await readFile(tokenPath,'utf8')).trim();
+ const response=await fetch('http://127.0.0.1:7895/execute',{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({...args,action:name}),signal:AbortSignal.timeout(35000)});
+ const result=await response.json();
+ return {response,result};
+}
+async function liveTools(){
+ const {response,result}=await gateway('catalog');
+ if(!response.ok||!result.ok||!Array.isArray(result.implemented))throw Error('Live Revit catalog unavailable');
+ const live=new Set(result.implemented);
+ return manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
+}
 async function call(name,args){
  const t=tools.get(name);
  if(!t)throw Error('Unknown tool');
@@ -22,9 +34,7 @@ async function call(name,args){
   const schema=t.inputSchema.properties[k]; const kind=schema.type;
   if(kind==='string'&&typeof v!=='string'||kind==='boolean'&&typeof v!=='boolean'||kind==='integer'&&!Number.isSafeInteger(v)||kind==='number'&&!(typeof v==='number'&&Number.isFinite(v))||kind==='array'&&!Array.isArray(v))throw Error('Invalid type: '+k);
  }
- const token=(await readFile(tokenPath,'utf8')).trim();
- const response=await fetch('http://127.0.0.1:7895/execute',{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({...args,action:name}),signal:AbortSignal.timeout(35000)});
- const result=await response.json();
+ const {response,result}=await gateway(name,args);
  return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
 }
 async function dispatch(r){
@@ -33,9 +43,9 @@ async function dispatch(r){
  try{
  let result;
  switch(r.method){
- case 'initialize':result={protocolVersion:['2025-06-18','2025-03-26','2024-11-05'].includes(r.params?.protocolVersion)?r.params.protocolVersion:'2025-06-18',capabilities:{tools:{}},serverInfo:{name:'Kalidis AI Engine',version:'0.2.0'},instructions:'Units mm. Query snapshot and types first. Writes restricted to local Sandbox project; transactions dry-run unless commit=true. Do not retry unknown execution state.'};break;
+ case 'initialize':result={protocolVersion:['2025-06-18','2025-03-26','2024-11-05'].includes(r.params?.protocolVersion)?r.params.protocolVersion:'2025-06-18',capabilities:{tools:{}},serverInfo:{name:'Kalidis AI Engine',version:'0.3.1'},instructions:'Units mm. Query snapshot and types first. Writes restricted to local Sandbox project; transactions dry-run unless commit=true. Do not retry unknown execution state.'};break;
  case 'ping':result={};break;
- case 'tools/list':result={tools:manifest.filter(t=>!readonly||t.annotations.readOnlyHint)};break;
+ case 'tools/list':result={tools:await liveTools()};break;
  case 'tools/call':try{result=await call(r.params?.name,r.params?.arguments??{})}catch(e){result={content:[{type:'text',text:String(e.message)}],isError:true}}break;
  default:error(r.id,-32601,'Method not found');return;
  }
