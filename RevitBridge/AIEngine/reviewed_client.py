@@ -51,6 +51,7 @@ OPERATIONS = {
     "python_comments": ("E91C635DCE63", False),
     "bim_file_review": ("54191E8ACEE5", True),
     "dynamo_audit": ("C4F5B1F8CB03", False),
+    "raster_building": ("240E8B5DB189", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
