@@ -4,7 +4,7 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {validate,loadRegistry,describe} from './command-registry.mjs';
-import {once} from './operation-journal.mjs';
+import {once,operationStatus} from './operation-journal.mjs';
 const root=path.dirname(fileURLToPath(import.meta.url)),r=await loadRegistry(root);
 assert.equal(r.all.size,r.base.length+r.reviewed.length);
 assert.ok(r.all.has('orthogonal_plan'));assert.ok(r.all.has('family_catalog_load'));
@@ -19,5 +19,11 @@ try{
  await assert.rejects(once(dir,'test-id-002','batch',{},async()=>{throw Error('simulated interruption')}),/simulated interruption/);
  await assert.rejects(once(dir,'test-id-002','batch',{},work),/started/);
  assert.equal(count,1);
+ assert.equal((await operationStatus(dir,'test-id-001')).state,'completed');
+ assert.equal((await operationStatus(dir,'test-id-002')).state,'started');
+ assert.equal((await operationStatus(dir,'test-id-003')).state,'not_found');
+ assert.equal((await operationStatus(dir,'test-id-002')).safeToRetry,false);
+ await assert.rejects(operationStatus(dir,'../invalid'),/Invalid requestId/);
+ assert.ok(r.all.has('project_context'));
 }finally{await rm(dir,{recursive:true,force:true})}
 console.log('REGISTRY_JOURNAL_TESTS=PASS; registered='+describe(r).length+' (offline)');

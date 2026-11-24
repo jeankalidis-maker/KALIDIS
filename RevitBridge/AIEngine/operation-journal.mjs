@@ -23,3 +23,13 @@ export async function once(directory,id,name,args,execute){
  await rename(temp,file);
  return result;
 }
+
+export async function operationStatus(directory,id){
+ if(typeof id!=='string'||!/^[A-Za-z0-9_-]{8,100}$/.test(id))throw Error('Invalid requestId');
+ let raw;try{raw=JSON.parse(await readFile(path.join(directory,id+'.json'),'utf8'))}catch(e){
+  if(e.code==='ENOENT')return {requestId:id,state:'not_found',safeToRetry:false};
+  throw Error('Operation record unreadable; inspect model before proceeding');
+ }
+ if(!['started','completed','reported_error'].includes(raw.state)||typeof raw.name!=='string')throw Error('Invalid operation record');
+ return {requestId:id,command:raw.name,state:raw.state,at:raw.at,safeToRetry:false,note:raw.state==='started'?'Execution outcome unknown; inspect model.':'Adapter outcome only; verify model independently.'};
+}

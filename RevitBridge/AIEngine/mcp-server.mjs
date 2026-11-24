@@ -2,7 +2,7 @@
 // Connects only to the authenticated loopback Revit gateway.
 import readline from 'node:readline';
 import {validate,loadRegistry} from './command-registry.mjs';
-import {once} from './operation-journal.mjs';
+import {once,operationStatus} from './operation-journal.mjs';
 import {readFile,lstat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
@@ -39,13 +39,14 @@ async function gateway(name,args={}){
  const result=await response.json();
  return {response,result};
 }
+const statusTool={name:'operation_status',description:'Read the local adapter journal for a requestId. Never retries a command or guarantees model state.',inputSchema:{type:'object',properties:{requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$'}},required:['requestId'],additionalProperties:false},annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
 async function liveTools(){
  const {response,result}=await gateway('catalog');
  if(!response.ok||!result.ok||!Array.isArray(result.implemented))throw Error('Live Revit catalog unavailable');
  const live=new Set(result.implemented);
  const base=manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
  if(live.has('run_extension')&&live.has('extensions')&&!readonly)for(const x of (await resolvedExtensions()).values())base.push(x.tool);
- return base.map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t);
+ return [statusTool,...base.map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
 }
 async function callUnjournaled(name,args){
  const t=tools.get(name);
@@ -71,6 +72,12 @@ async function callUnjournaled(name,args){
 }
 async function call(name,args){
  if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Invalid arguments');
+ if(name==='operation_status'){
+  validate(statusTool.inputSchema,args,name);
+  if(!process.env.LOCALAPPDATA)throw Error('LOCALAPPDATA required');
+  const result=await operationStatus(path.join(process.env.LOCALAPPDATA,'KalidisAIEngine','OperationJournal'),args.requestId);
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
+ }
  const {requestId,...rest}=args;
  if(requestId===undefined)return callUnjournaled(name,rest);
  const t=tools.get(name)||reviewed.find(e=>e.tool.name===name)?.tool;

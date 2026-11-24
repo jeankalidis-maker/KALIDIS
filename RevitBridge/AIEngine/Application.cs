@@ -13,6 +13,10 @@ namespace Kalidis.AIEngine;
 // All Revit API operations run on the ExternalEvent UI thread.
 public sealed class Application : IExternalApplication
 {
+    internal static readonly string SessionId=Guid.NewGuid().ToString("N");
+    private static long revision;
+    internal static long ModelRevision=>Interlocked.Read(ref revision);
+    private static void OnModelChanged(object? sender,Autodesk.Revit.DB.Events.DocumentChangedEventArgs args)=>Interlocked.Increment(ref revision);
     private HttpListener? listener;
     private ExternalEvent? evt;
     private Handler? handler;
@@ -37,6 +41,7 @@ public sealed class Application : IExternalApplication
             // Never capture Revit/WPF synchronization context for HTTP I/O.
             var cancellation=stop.Token;
             listenerTask=Task.Run(()=>Listen(cancellation),cancellation);
+            app.ControlledApplication.DocumentChanged+=OnModelChanged;
             return Result.Succeeded;
         }
         catch (Exception ex)
@@ -48,6 +53,7 @@ public sealed class Application : IExternalApplication
     }
     public Result OnShutdown(UIControlledApplication app)
     {
+        app.ControlledApplication.DocumentChanged-=OnModelChanged;
         stop?.Cancel(); listener?.Close(); handler?.Cancel(); evt?.Dispose();
         try { var file=Path.Combine(Home,"token.txt");if(File.Exists(file)&&File.ReadAllText(file).Trim()==Convert.ToHexString(token))File.Delete(file); } catch { }
         return Result.Succeeded;
@@ -144,10 +150,11 @@ public sealed class Application : IExternalApplication
             var watch=Stopwatch.StartNew();
             string action=r.GetProperty("action").GetString() ?? "";
             if(action=="catalog")
-                return new { ok=true, implemented=new[]{"catalog","snapshot","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).Concat(ExtensionOperations.Actions).Concat(VisualOperations.Actions).Concat(KenLPPorts.Actions).Concat(FamilyEditOperations.Actions).Concat(HorizunAudit.Actions).Concat(StairOperations.Actions).ToArray(), nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
+                return new { ok=true, implemented=new[]{"catalog","snapshot","project_context","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).Concat(ExtensionOperations.Actions).Concat(VisualOperations.Actions).Concat(KenLPPorts.Actions).Concat(FamilyEditOperations.Actions).Concat(HorizunAudit.Actions).Concat(StairOperations.Actions).ToArray(), nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
             if(action=="extensions") return ExtensionOperations.List(Home);
             if(action=="new_test_project" || action=="open_test_project") return ProjectOperations.NewOrOpen(app,r,action,Path.Combine(Home,"Sandbox"));
             var d=app.ActiveUIDocument?.Document ?? throw new InvalidOperationException("No active document");
+            if(action=="project_context") return ContextOperations.Read(app,d,r);
             if(action=="snapshot")
             {
                 var levels=new FilteredElementCollector(d).OfClass(typeof(Level)).Cast<Level>()
