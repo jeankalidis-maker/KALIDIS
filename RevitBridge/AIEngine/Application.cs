@@ -137,7 +137,7 @@ public sealed class Application : IExternalApplication
             var watch=Stopwatch.StartNew();
             string action=r.GetProperty("action").GetString() ?? "";
             if(action=="catalog")
-                return new { ok=true, implemented=new[]{"catalog","snapshot","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).Concat(ExtensionOperations.Actions).Concat(VisualOperations.Actions).Concat(KenLPPorts.Actions).Concat(FamilyEditOperations.Actions).ToArray(), nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
+                return new { ok=true, implemented=new[]{"catalog","snapshot","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).Concat(ExtensionOperations.Actions).Concat(VisualOperations.Actions).Concat(KenLPPorts.Actions).Concat(FamilyEditOperations.Actions).Concat(HorizunAudit.Actions).ToArray(), nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
             if(action=="extensions") return ExtensionOperations.List(Home);
             if(action=="new_test_project" || action=="open_test_project") return ProjectOperations.NewOrOpen(app,r,action,Path.Combine(Home,"Sandbox"));
             var d=app.ActiveUIDocument?.Document ?? throw new InvalidOperationException("No active document");
@@ -151,6 +151,7 @@ public sealed class Application : IExternalApplication
                     .Select(x=>new { id=x.Id.Value,name=x.Name }).ToArray();
                 return new { ok=true, title=d.Title, path=d.PathName, version=app.Application.VersionNumber, workshared=d.IsWorkshared, family=d.IsFamilyDocument, levels, wallTypes=walls, families, elapsedMs=watch.ElapsedMilliseconds };
             }
+            if(HorizunAudit.Actions.Contains(action)) return HorizunAudit.Read(d,r,action);
             if(KenLPPorts.Actions.Contains(action)) return KenLPPorts.Read(d,r,action);
             if(InspectionOperations.Actions.Contains(action)) return InspectionOperations.Read(app,d,r,action);
             if(action=="elements") return ProjectOperations.Elements(d,r);
