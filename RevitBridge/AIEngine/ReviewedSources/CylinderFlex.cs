@@ -20,8 +20,8 @@ public sealed class CylinderFlex : IReviewedOperation {
    if(solids.Length!=1)throw new InvalidOperationException("Expected one physical solid");
    var cyl=solids[0].Faces.Cast<Face>().OfType<CylindricalFace>().ToArray();
    if(cyl.Length<1)throw new InvalidOperationException("No cylindrical face");
-   var r=cyl[0].Radius;
-   if(r<=0||cyl.Any(c=>Math.Abs(c.Radius-r)>Mm(0.01)||Math.Abs(c.Axis.Z)<0.99999))throw new InvalidOperationException("Only single upright cylinder");
+   var r=cyl[0].get_Radius(0).GetLength();
+   if(r<=0||cyl.Any(c=>Math.Abs(c.get_Radius(0).GetLength()-r)>Mm(0.01)||Math.Abs(c.get_Radius(1).GetLength()-r)>Mm(0.01)||Math.Abs(c.Axis.Z)<0.99999))throw new InvalidOperationException("Only single upright cylinder");
    var caps=solids[0].Faces.Cast<Face>().OfType<PlanarFace>().Where(f=>Math.Abs(f.FaceNormal.Z)>0.99999).ToArray();
    if(caps.Length!=2)throw new InvalidOperationException("Expected two planar caps");
    double h=Math.Abs(caps[0].Origin.Z-caps[1].Origin.Z);
