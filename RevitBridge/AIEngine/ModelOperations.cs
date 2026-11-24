@@ -47,7 +47,7 @@ internal static class ModelOperations
                 string? alias=node["alias"]?.GetValue<string>();
                 node.Remove("alias");
                 if(alias!=null&&(alias.Length==0||alias.Length>64||aliases.ContainsKey(alias)))throw new ArgumentException("Invalid or duplicate alias");
-                foreach(var key in new[]{"levelId","typeId","hostId","systemTypeId","viewId","sheetId","firstId","secondId","templateId"}){
+                foreach(var key in new[]{"levelId","typeId","hostId","systemTypeId","viewId","sheetId","firstId","secondId","thirdId","templateId"}){
                     if(node[key] is JsonValue val && val.TryGetValue<string>(out var reference)){
                         if(!reference.StartsWith("$")||!aliases.TryGetValue(reference.Substring(1),out long resolved))throw new ArgumentException("Unknown reference "+reference);
                         node[key]=JsonValue.Create(resolved);
@@ -277,8 +277,42 @@ internal static class ModelOperations
                 up=up.GetLength()<1e-6?XYZ.BasisY:up.Normalize();
                 var v=View3D.CreatePerspective(d,t.Id);v.SetOrientation(new ViewOrientation3D(eye,up,forward));v.Name=S(r,"name");return v.Id;
             }
+            case "mirror_copy": {
+                var e=Get<Element>(d,r,"hostId");if(e.Pinned)throw new ArgumentException("Pinned element");
+                var normal=P3(r.GetProperty("normal"));if(normal.GetLength()<1e-9)throw new ArgumentException("Nonzero normal required");
+                var ids=ElementTransformUtils.MirrorElements(d,new List<ElementId>{e.Id},Plane.CreateByNormalAndOrigin(normal.Normalize(),P3(r.GetProperty("origin"))),true);
+                if(ids.Count!=1)throw new InvalidOperationException("Mirror produced multiple elements; rolled back");return ids.First();
+            }
+            case "pipe_sized": {
+                var e=Pipe.Create(d,Id(r,"systemTypeId"),Id(r,"typeId"),Id(r,"levelId"),P3(r.GetProperty("start")),P3(r.GetProperty("end")));
+                SetPositiveLength(e,BuiltInParameter.RBS_PIPE_DIAMETER_PARAM,N(r,"diameterMm"));return e.Id;
+            }
+            case "duct_sized": {
+                var e=Duct.Create(d,Id(r,"systemTypeId"),Id(r,"typeId"),Id(r,"levelId"),P3(r.GetProperty("start")),P3(r.GetProperty("end")));
+                if(r.TryGetProperty("diameterMm",out _)){
+                    if(r.TryGetProperty("widthMm",out _)||r.TryGetProperty("heightMm",out _))throw new ArgumentException("Choose round or rectangular dimensions");
+                    SetPositiveLength(e,BuiltInParameter.RBS_CURVE_DIAMETER_PARAM,N(r,"diameterMm"));
+                }else{
+                    SetPositiveLength(e,BuiltInParameter.RBS_CURVE_WIDTH_PARAM,N(r,"widthMm"));
+                    SetPositiveLength(e,BuiltInParameter.RBS_CURVE_HEIGHT_PARAM,N(r,"heightMm"));
+                }return e.Id;
+            }
+            case "transition": {
+                d.Regenerate();var a=ConnectorAt(d,r,"firstId","firstPoint");var b=ConnectorAt(d,r,"secondId","secondPoint");
+                if(a.Owner.Id==b.Owner.Id||a.IsConnected||b.IsConnected||a.Domain!=b.Domain)throw new ArgumentException("Incompatible connectors");
+                return d.Create.NewTransitionFitting(a,b).Id;
+            }
+            case "tee": {
+                d.Regenerate();var a=ConnectorAt(d,r,"firstId","firstPoint");var b=ConnectorAt(d,r,"secondId","secondPoint");var c=ConnectorAt(d,r,"thirdId","thirdPoint");
+                if(new[]{a.Owner.Id,b.Owner.Id,c.Owner.Id}.Distinct().Count()!=3||a.IsConnected||b.IsConnected||c.IsConnected||a.Domain!=b.Domain||a.Domain!=c.Domain)throw new ArgumentException("Incompatible connectors");
+                return d.Create.NewTeeFitting(a,b,c).Id;
+            }
             default:throw new ArgumentException("Unsupported batch action: "+S(r,"action"));
         }
+    }
+    private static void SetPositiveLength(Element e,BuiltInParameter key,double value){
+        if(value<=0||value>30000)throw new ArgumentException("Invalid dimension");
+        var p=e.get_Parameter(key);if(p==null||p.IsReadOnly||!p.Set(Mm(value)))throw new InvalidOperationException("Cannot set dimension "+key);
     }
     private static Connector ConnectorAt(Document d,JsonElement r,string key,string point){
         var e=d.GetElement(Id(r,key));var manager=e is MEPCurve c?c.ConnectorManager:(e as FamilyInstance)?.MEPModel?.ConnectorManager;
