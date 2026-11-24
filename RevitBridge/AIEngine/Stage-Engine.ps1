@@ -18,7 +18,7 @@ if(!(Test-Path -LiteralPath $target)){Copy-Item -LiteralPath $source -Destinatio
 if((Get-FileHash -LiteralPath $target).Hash -ne $hash){throw 'Staged assembly hash mismatch'}
 $backup=Join-Path $homeDir ('manifest-backup-'+[Guid]::NewGuid().ToString('N')+'.xml')
 $temporary=$manifest+'.'+[Guid]::NewGuid().ToString('N')+'.tmp'
-$nodes[0].Assembly=$target
+$nodes[0].SelectSingleNode('Assembly').InnerText=[string]$target
 $xml.Save($temporary)
 try{
  [System.IO.File]::Replace($temporary,$manifest,$backup)
