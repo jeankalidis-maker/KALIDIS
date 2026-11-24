@@ -3,6 +3,8 @@
 import readline from 'node:readline';
 import {validate,loadRegistry} from './command-registry.mjs';
 import {batchPreflight} from './batch-preflight.mjs';
+import {scopeAudit,scopeAuditTool} from './scope-audit.mjs';
+import {reviewEdits} from './edit-preflight.mjs';
 import {reviewFamilySpec} from './family-spec-review.mjs';
 import {reviewOrthogonalPlan} from './orthogonal-plan-review.mjs';
 import {checkBatchCapabilities,batchSchemaForEngine} from './engine-capabilities.mjs';
@@ -61,7 +63,7 @@ async function liveTools(){
  const live=new Set(result.implemented);
  const base=manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
  if(live.has('run_extension')&&live.has('extensions')&&!readonly)for(const x of (await resolvedExtensions()).values())base.push(x.tool);
- return [statusTool,preflightTool,inventoryTool,referenceTool,dynamoReviewTool,...(["snapshot","elements","element_info","list_categories"].every(n=>base.some(t=>t.name===n))?[legacyTool]:[]),...(["snapshot","get_doors","get_element_rooms","audit_warnings","audit_level_span"].every(n=>base.some(t=>t.name===n))?[architectureAuditTool]:[]),...(!readonly&&base.some(t=>t.name==="mep_topology")?[mepNetworkTool]:[]),...(!readonly&&base.some(t=>t.name==="python_comments")?[pythonWorkflowTool]:[]),...(!readonly&&base.some(t=>t.name==="verified_move")&&base.some(t=>t.name==="geometry_review")?[reversibleMoveTool]:[]),...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>t.name==="batch"?batchSchemaForEngine(t,result):t).map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
+ return [statusTool,preflightTool,inventoryTool,referenceTool,dynamoReviewTool,...(!readonly&&["snapshot","element_info","material_takeoff","clash_candidates","solid_clash","sheet_review"].every(n=>base.some(t=>t.name===n))?[scopeAuditTool]:[]),...(["snapshot","elements","element_info","list_categories"].every(n=>base.some(t=>t.name===n))?[legacyTool]:[]),...(["snapshot","get_doors","get_element_rooms","audit_warnings","audit_level_span"].every(n=>base.some(t=>t.name===n))?[architectureAuditTool]:[]),...(!readonly&&base.some(t=>t.name==="mep_topology")?[mepNetworkTool]:[]),...(!readonly&&base.some(t=>t.name==="python_comments")?[pythonWorkflowTool]:[]),...(!readonly&&base.some(t=>t.name==="verified_move")&&base.some(t=>t.name==="geometry_review")?[reversibleMoveTool]:[]),...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>t.name==="batch"?batchSchemaForEngine(t,result):t).map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
 }
 async function callUnjournaled(name,args){
  const t=tools.get(name);
@@ -89,11 +91,21 @@ async function callUnjournaled(name,args){
   if(!preflight.ok)throw Error('Batch preflight rejected: '+JSON.stringify(preflight.issues));
  }
  if(name==='create_family_spec')reviewFamilySpec(args);
+ if(name==='edit_elements')reviewEdits(args);
  const {response,result}=await gateway(name,args);
  return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
 }
 async function call(name,args){
  if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Invalid arguments');
+ if(name==='scope_audit'){
+  if(readonly)throw Error('Read-only session');
+  const result=await scopeAudit(args,async(n,a)=>{
+   const response=await callUnjournaled(n,a);
+   if(response.isError)throw Error(response.content[0].text);
+   return JSON.parse(response.content[0].text);
+  });
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
+ }
  if(name==='legacy_read'){
   const result=await legacyRead(args,async (n,a)=>{
    const response=await callUnjournaled(n,a);

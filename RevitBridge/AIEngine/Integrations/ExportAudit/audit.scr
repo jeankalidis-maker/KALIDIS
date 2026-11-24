@@ -1,0 +1,6 @@
+(princ (strcat "\nKALIDIS_DWG_COUNT=" (itoa (sslength (ssget "_X")))))
+(princ (strcat "\nKALIDIS_INSUNITS=" (itoa (getvar "INSUNITS"))))
+(princ "\nKALIDIS_EXTMIN=")(prin1 (getvar "EXTMIN"))
+(princ "\nKALIDIS_EXTMAX=")(prin1 (getvar "EXTMAX"))
+(princ "\nKALIDIS_DWG_AUDIT_END")
+_QUIT

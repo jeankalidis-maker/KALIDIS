@@ -24,6 +24,11 @@ try{
  await assert.rejects(once(dir,'test-id-002','batch',{},async()=>{throw Error('simulated interruption')}),/simulated interruption/);
  await assert.rejects(once(dir,'test-id-002','batch',{},work),/started/);
  assert.equal(count,1);
+ let race=0;
+ const results=await Promise.allSettled(Array.from({length:20},()=>once(dir,'race-0001','batch',{},async()=>{race++;return {isError:false,content:[{text:JSON.stringify({ok:true,verified:true,committed:false,status:'RolledBack',elementIds:[77],privateValue:'do not store'})}]}})));
+ assert.equal(race,1);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);
+ const state=await operationStatus(dir,'race-0001');
+ assert.equal(state.receipt.status,'RolledBack');assert.deepEqual(state.receipt.elementIds,[77]);assert.equal(state.resultDigest.length,64);assert.equal(state.receipt.privateValue,undefined);assert.equal(state.safeToRetry,false);
  assert.equal((await operationStatus(dir,'test-id-001')).state,'completed');
  assert.equal((await operationStatus(dir,'test-id-002')).state,'started');
  assert.equal((await operationStatus(dir,'test-id-003')).state,'not_found');

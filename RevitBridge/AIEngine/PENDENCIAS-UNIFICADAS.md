@@ -34,7 +34,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 023 [P] Portas e janelas com famílias variadas, orientação, folgas, vãos livres, restrições e hospedagem em situações complexas.
 - [ ] 024 [P] Ambientes e áreas com curvas, limites complexos, fases, vazios e múltiplos níveis.
 - [ ] 025 [P] Fases, worksets, vínculos, coordenadas compartilhadas, templates e filtros: ampliar edição controlada e verificar resultados.
-- [ ] 026 [N] Verificar visualmente filtros e elementos efetivamente exibidos/ocultos, além do readback de propriedades.
+- [x] 026 [V] Filtro nativo: imagens visivel/oculto/restaurado inspecionadas, avanco127.
 - [ ] 027 [P] Topografia complexa, fundações, cortes/aterros e documentação integrada.
 - [ ] 028 [P] Pranchas completas: colisão de viewports, rótulos, tabelas, limites de carimbo, cotas, tags, detalhes e paginação.
 - [ ] 029 [P] Quantitativos completos por disciplina/material/escopo, tratamento de dados ausentes e conferência independente.
@@ -54,7 +54,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 039 [P] Reparo de paredes em L/T/X, curvas, múltiplos encontros e dependências de portas, janelas e elementos estruturais.
 - [ ] 040 [P] Detectar e corrigir perfis 3D, curvas, furos e degenerações além de polígonos XY.
 - [ ] 041 [P] Autocorreção de mobiliário em ambientes não retangulares, circulação, giro de portas, suportes e acessibilidade.
-- [ ] 042 [N] Validar reparo e interferência com vínculos RVT rotacionados/transladados e coordenadas compartilhadas.
+- [ ] 042 [P] Validar reparo e interferência com vínculos RVT rotacionados/transladados e coordenadas compartilhadas.
 - [ ] 043 [P] Reparo de redes MEP conectadas com restrições e múltiplos obstáculos; ampliar bypass de tubos para outras configurações.
 - [ ] 044 [P] Clash detection global e priorização de conflitos, distinguir interseções intencionais, tolerâncias e falhas booleanas.
 - [ ] 045 [P] Reparos em lote com análise de dependências, preservação de elementos, rollback e auditoria antes/depois.
@@ -87,7 +87,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 066 [P] Auditar todos os tipos, parâmetros, conectores, geometria e comportamento de famílias externas em projetos isolados.
 - [ ] 067 [P] Adaptar famílias importadas a padrões de projeto sem alterar os arquivos originais; evitar duplicatas.
 - [x] 068 [V] Exportacao experimental Integrated121 validada em leitor independente web-ifc, geometria, unidades, categorias, propriedades selecionadas e relacoes (avanco126). Fidelidade de estilos e round-trip permanecem no item070.
-- [ ] 069 [N] Validar qualidade e conteúdo das exportações PDF/DWG em ferramentas independentes, além de existência do arquivo.
+- [x] 069 [V] PDF renderizado e inspecionado em leitor independente e DWG aberto/auditado no AutoCAD Core Console, avanco127. Plotagem/fidelidade universal fora do ensaio.
 - [ ] 070 [P] Fluxo de importação/coordenação IFC, round-trip e interoperabilidade com outros formatos.
 
 ## I — Integrações externas
@@ -114,6 +114,6 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 
 ## Resumo
 
-86 itens abertos: 3 bloqueados, 8 nao validados, 72 parciais, 2 sem implementacao confirmada, 1 com falha nao resolvida. 2 encerrados de 88 (046 e 068). Contagem deste checklist, nao percentual da API Revit.
+84 itens abertos: 3 bloqueados, 5 nao validados, 73 parciais, 2 sem implementacao confirmada, 1 com falha nao resolvida. 4 encerrados de 88 (026, 046, 068, 069). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.

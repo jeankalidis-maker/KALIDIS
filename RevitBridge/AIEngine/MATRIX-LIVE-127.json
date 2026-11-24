@@ -1,0 +1,640 @@
+{
+  "engine": {
+    "name": "Kalidis AI Engine",
+    "version": "0.4.0"
+  },
+  "at": "2026-11-24T23:00:06.939Z",
+  "catalogCount": 121,
+  "passed": 14,
+  "failed": 0,
+  "notRetested": 107,
+  "snapshotBenchmark": {
+    "count": 20,
+    "minMs": 21,
+    "medianMs": 42.5,
+    "p95Ms": 73,
+    "maxMs": 76
+  },
+  "tools": [
+    {
+      "name": "operation_status",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "batch_preflight",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "bim_catalog_inventory",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "reference_plan_review",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "dynamo_file_review",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "scope_audit",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "legacy_read",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "architecture_audit",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "mep_network_review",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "python_comment_workflow",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "reversible_move",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "catalog",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "snapshot",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 60
+    },
+    {
+      "name": "types",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 90
+    },
+    {
+      "name": "native_status",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "library",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "family_info",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "test_wall",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "batch",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "export_family",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "create_family",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "load_family",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "export_view",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "save_test",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "sheet",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "schedule",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "new_test_project",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "open_test_project",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "elements",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "edit_elements",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "export_project",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "create_family_spec",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "element_info",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 41
+    },
+    {
+      "name": "views",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 49
+    },
+    {
+      "name": "selection",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 98
+    },
+    {
+      "name": "connectors",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "schedule_fields",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "clash_candidates",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "extensions",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "run_extension",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "model_health",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 36
+    },
+    {
+      "name": "clash_confirm",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "schedule_data",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "activate_view",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "zoom_fit",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "preview_view",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "dynamo_open",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "native_post",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "list_family_types",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "list_phases",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 36
+    },
+    {
+      "name": "list_view_templates",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 53
+    },
+    {
+      "name": "get_linked_files",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 48
+    },
+    {
+      "name": "get_worksets",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 38
+    },
+    {
+      "name": "list_categories",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 108
+    },
+    {
+      "name": "get_doors",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 69
+    },
+    {
+      "name": "get_element_rooms",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "get_tags_in_view",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "get_linked_elements",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "edit_family_copy",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "audit_level_span",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 109
+    },
+    {
+      "name": "audit_warnings",
+      "readOnly": true,
+      "status": "passed_read_only",
+      "elapsedMs": 34
+    },
+    {
+      "name": "routing_preferences",
+      "readOnly": true,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "straight_stair",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "geometry_review",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "solid_audit",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "verified_move",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "straight_rebar",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "rebar_set",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "solid_clash",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "family_type_flex",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "bent_rebar",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "mep_topology",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "clearance_screen",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "mep_connect",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "sloped_floor",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "material_takeoff",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "paint_top_face",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "wall_attach_roof",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "rebar_inventory",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "checked_wall_opening",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "mep_split",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "view_review",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "native_material_schedule",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "closed_stirrup",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "layer_audit",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "layer_variant",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "sheet_review",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "material_appearance",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "schedule_review",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "profile_flex",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "routing_variant",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "native_shapes",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "native_view_filter",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "quality_checks",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "hooked_stirrup",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "auto_clearance_repair",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "spatial_repair",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "room_repair",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "polygon_repair",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "linked_repair",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "mep_clearance_repair",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "solid_profile_flex",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "cylinder_flex",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "bitmap_material",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "python_probe",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "python_comments",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "bim_file_review",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "dynamo_audit",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "raster_building",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "texture_scale",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "hooked_set",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "wall_gap_repair",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "realistic_preview",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "network_clearance",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "pipe_bypass",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "dynamo_write_fixture",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "family_quarantine_audit",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "family_catalog_audit",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "dynamo_wall_fixture",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "family_catalog_load",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    },
+    {
+      "name": "orthogonal_plan",
+      "readOnly": false,
+      "status": "not_retested_this_run"
+    }
+  ],
+  "note": "Read-only probe matrix; not universal individual coverage or large-model stress."
+}

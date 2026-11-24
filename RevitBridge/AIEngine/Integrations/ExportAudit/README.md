@@ -1,0 +1,4 @@
+# Export audit — milestone 127
+Independent inspection of the original experimental KalidisTest PDF/DWG, not universal export certification.
+PDF: in an isolated folder run npm ci --ignore-scripts --no-audit --no-fund, then node audit-pdf.mjs "<path-to-PDF>". pdfjs-dist 5.4.624 and its optional native canvas dependency are pinned by package-lock.json. Writes AuditPage-N.png in the current audit directory; use a dedicated folder. Inspect the rendered PNGs. Do not commit user files or node_modules.
+DWG: use an isolated copy of the export and the installed licensed AutoCAD 2027 Core Console: accoreconsole.exe /i "<copy.dwg>" /s "<audit.scr>" /l en-US, then audit-details.scr. No save; compare source SHA256 before/after. Audit counts, units and extents, not independent plot fidelity. The PDF table heading wraps; remaining sheet layout checks are backlog 028.

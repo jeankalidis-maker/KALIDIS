@@ -1,0 +1,6 @@
+(setq ss (ssget "_X") i 0 counts nil)
+(repeat (sslength ss) (setq e (entget (ssname ss i)) k (cdr (assoc 0 e)) old (assoc k counts)) (if old (setq counts (subst (cons k (1+ (cdr old))) old counts)) (setq counts (cons (cons k 1) counts))) (setq i (1+ i)))
+(princ "\nKALIDIS_ENTITY_TYPES=")(prin1 counts)
+(princ "\nKALIDIS_MODELSPACE_COUNT=")(prin1 (sslength (ssget "_X" '((410 . "Model")))))
+(princ "\nKALIDIS_DWG_DETAILS_END")
+_QUIT
