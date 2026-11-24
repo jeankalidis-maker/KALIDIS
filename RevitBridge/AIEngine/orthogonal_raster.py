@@ -15,9 +15,11 @@ def arguments(report,perimeter,partitions,rooms,level,wall_type,floor_type,door_
     # Each detected span or confirmed gap belongs to exactly one reviewed centerline.
     assigned=[[] for _ in keys]
     for axis,c,lo,hi in source:
-        matches=[i for i,k in enumerate(keys) if k[:2]==(axis,c) and k[2]<=lo and hi<=k[3]]
-        if len(matches)!=1:raise ValueError("Ambiguous or unmatched raster span")
-        assigned[matches[0]].append((lo,hi))
+        cuts=sorted({lo,hi}|{v for k in keys if k[:2]==(axis,c) for v in k[2:] if lo<v<hi})
+        for left,right in zip(cuts,cuts[1:]):
+            matches=[i for i,k in enumerate(keys) if k[:2]==(axis,c) and k[2]<=left and right<=k[3]]
+            if len(matches)!=1:raise ValueError("Ambiguous or unmatched raster span")
+            assigned[matches[0]].append((left,right))
     for k,spans in zip(keys,assigned):
         at=k[2]
         for lo,hi in sorted(spans):
