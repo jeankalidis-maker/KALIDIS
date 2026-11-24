@@ -1,0 +1,59 @@
+"""Named reviewed operations over the existing authenticated Revit engine.
+No discovery of arbitrary executable code, no automatic approval or retry.
+"""
+from pathlib import Path
+from hashlib import sha256
+import json
+
+OPERATIONS = {
+    "geometry_review": ("836DB468CE9D", True),
+    "solid_audit": ("EC63193EB239", True),
+    "verified_move": ("A391FFE06931", False),
+    "straight_rebar": ("AB026746B032", False),
+    "rebar_set": ("4A40E0822D70", False),
+    "solid_clash": ("BBFBE7A06881", True),
+    "family_type_flex": ("650AEC399153", False),
+    "bent_rebar": ("7D9BBE6718C0", False),
+    "mep_topology": ("FD0E425A19D2", True),
+    "clearance_screen": ("FB3888758AE8", True),
+    "mep_connect": ("459041107B73", False),
+    "sloped_floor": ("D3B55A24150F", False),
+    "material_takeoff": ("FB499380E8E7", True),
+}
+def resolve(folder, operation):
+    prefix, _ = OPERATIONS[operation]
+    folder=Path(folder)
+    approved=json.loads((folder/"approved.json").read_text(encoding="utf-8-sig"))
+    matches=[]
+    for name,digest in approved.items():
+        if Path(name).name!=name or not name.startswith("Kalidis.Reviewed."+prefix+".") or not name.endswith(".dll"):
+            continue
+        p=folder/name
+        if p.is_file() and not p.is_symlink() and sha256(p.read_bytes()).hexdigest().lower()==digest.lower():
+            matches.append(name)
+    if len(matches)!=1:
+        raise RuntimeError("Expected exactly one approved matching binary; resolve missing or ambiguous approval")
+    return matches[0]
+
+def execute(engine, operation, arguments, expected_path, commit=False):
+    _, read_only=OPERATIONS[operation]
+    if read_only and commit:
+        raise ValueError("Inspection must roll back")
+    if engine.read_only:
+        raise PermissionError("Extension execution requires explicit write-enabled session; even inspection uses rollback")
+    dll=resolve(engine.home/"ReviewedExtensions", operation)
+    if dll not in engine.call("extensions")["approved"]:
+        raise RuntimeError("Extension not reported approved by live engine")
+    return engine.call("run_extension",expectedPath=str(expected_path),assembly=dll,operation=operation,arguments=arguments,commit=commit)
+
+if __name__=="__main__":
+    from tempfile import TemporaryDirectory
+    with TemporaryDirectory() as tmp:
+        p=Path(tmp);name="Kalidis.Reviewed.836DB468CE9D.fixture.dll";(p/name).write_bytes(b"fixture")
+        (p/"approved.json").write_text(json.dumps({name:sha256(b"fixture").hexdigest()}))
+        assert resolve(p,"geometry_review")==name
+        (p/name).write_bytes(b"changed")
+        try:resolve(p,"geometry_review")
+        except RuntimeError:pass
+        else:raise AssertionError("Hash mismatch accepted")
+    print("REVIEWED_CLIENT_TESTS=PASS (fixture)")
