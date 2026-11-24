@@ -3,7 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 namespace Kalidis.AIEngine;
 internal static class VisualOperations {
- internal static readonly string[] Actions={"activate_view","zoom_fit","preview_view","dynamo_open"};
+ internal static readonly string[] Actions={"activate_view","zoom_fit","preview_view","dynamo_open","native_post"};
  internal static object Run(UIApplication app,Document d,JsonElement r,string action,string root){
   var ui=app.ActiveUIDocument;
   if(action=="activate_view"){
@@ -14,6 +14,17 @@ internal static class VisualOperations {
   if(action=="zoom_fit"){
    var v=ui.GetOpenUIViews().FirstOrDefault(x=>x.ViewId==ui.ActiveView.Id)??throw new InvalidOperationException("No active UI view");
    v.ZoomToFit();return new{ok=true,viewId=v.ViewId.Value};
+  }
+  if(action=="native_post"){
+   // Only explicitly reviewed UI operations; no generic posting of model edits or file actions.
+   string name=r.GetProperty("command").GetString()??"";
+   var allow=new[]{"TileViews","ThinLines","ProjectBrowser","TogglePropertiesPalette","SystemBrowser","ToggleRevealHiddenElementsMode"};
+   if(!allow.Contains(name,StringComparer.Ordinal))throw new ArgumentException("Command not approved for native posting");
+   if(!Enum.TryParse<PostableCommand>(name,false,out var command))throw new ArgumentException("Command unavailable in this Revit version");
+   var id=RevitCommandId.LookupPostableCommandId(command);
+   if(!app.CanPostCommand(id))throw new InvalidOperationException("Command currently unavailable");
+   app.PostCommand(id);
+   return new{ok=true,posted=true,command=name,note="Queued for UI; completion not verified. Do not blindly retry toggles."};
   }
   if(action=="dynamo_open"){
    bool player=r.TryGetProperty("player",out var flag)&&flag.ValueKind==JsonValueKind.True;
