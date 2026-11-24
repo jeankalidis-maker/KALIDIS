@@ -97,3 +97,10 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [C] Adaptação de padrões Mvclr para espelhamento e tubulações/dutos dimensionados, licença MIT preservada. Adições próprias: tês e transições MEP. 48 ferramentas MCP e 53 ações batch.
 - [C] Build 1bb2233: 0 erros, 5 avisos, 12.85 s. DLL implantada lado a lado SHA256 E8CA036D3B43940240655D89C5C52005796B22E53BCC8164FF670688D619B944, backup confirmado. Revit permanece aberto, testes dentro da sessão pendentes.
 - [P] Integração integral Mvclr, Horizun, AndreyStartsev, pyRevit, Dynamo e execução dinâmica completa continuam pendentes.
+
+## Avanços 22 e 23 — Horizun e AndreyStartsev
+- [C] Horizun: auditoria de elementos que cruzam níveis por bounding box transformado, aviso paginado com FailureDefinitionId e UniqueId. Licença Apache 2.0 e NOTICE preservados. Resultados consultivos, não prescrição automática de divisão de elementos. Build 2677170: 0 erros, 5 avisos, 7.36 s.
+- [V] AndreyStartsev: adaptação dos exemplos de relatório e atualização de parâmetros em lote via cliente Python estruturado, IDs explícitos, dry-run e leitura de retorno; testes com mock passaram (não execução in-process). MIT preservada.
+- [C] Smoke-Test.ps1 ampliado para consultas KenLP/Horizun e exportação PNG. Sintaxe PowerShell validada, execução real pendente.
+- [V] DLL preparada para próxima abertura, SHA256 A8F63A18095930CE34A119B14155D49B33F20ED267E986B544AB27FB7B512C7C; backup confirmado. 50 ferramentas MCP registradas, 53 ações batch. Sessão original permanece aberta.
+- [P] Reinício normal e teste de ponta a ponta; execução dinâmica, integrações completas e autocorreção geométrica ainda pendentes.
