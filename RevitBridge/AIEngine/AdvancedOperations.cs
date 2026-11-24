@@ -82,18 +82,18 @@ internal static class AdvancedOperations
                         foreach(var spec in blends){
                             double bottom=dimension(spec,"bottomMm",-30000,30000),top=dimension(spec,"topMm",-30000,30000);
                             if(top-bottom<Mm(1))throw new ArgumentException("Blend top must exceed bottom");
-                            CurveArray curves(string key){
-                                var pts=spec.GetProperty(key).EnumerateArray().Select(p=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),0)).ToArray();
+                            CurveArray curves(string key,double elevation){
+                                var pts=spec.GetProperty(key).EnumerateArray().Select(p=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),elevation)).ToArray();
                                 if(pts.Length<3||pts.Length>100)throw new ArgumentException("3-100 blend vertices");
                                 var ca=new CurveArray();for(int i=0;i<pts.Length;i++)ca.Append(Line.CreateBound(pts[i],pts[(i+1)%pts.Length]));return ca;
                             }
-                            var baseCurves=curves("bottomPoints");var topCurves=curves("topPoints");
+                            var baseCurves=curves("bottomPoints",bottom);var topCurves=curves("topPoints",top);
                             if(baseCurves.Size!=topCurves.Size)throw new ArgumentException("Blend vertex counts must match");
-                            var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,XYZ.Zero));
+                            var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,bottom)));
                             bool solid=!spec.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                             var blend=fd.FamilyCreate.NewBlend(solid,topCurves,baseCurves,plane);
-                            if(top>blend.BottomOffset){blend.TopOffset=top;blend.BottomOffset=bottom;}
-                            else{blend.BottomOffset=bottom;blend.TopOffset=top;}
+                            if(blend==null)throw new InvalidOperationException("Blend creation failed");
+                            fd.Regenerate();
                         }
                     }
                     if(r.TryGetProperty("referencePlanes",out var planeSpec)){
