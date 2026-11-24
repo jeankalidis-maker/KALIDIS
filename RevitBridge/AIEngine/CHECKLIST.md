@@ -35,3 +35,8 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 ## Validação MCP
 - [V] JSON-RPC initialize, tools/list (6 ferramentas somente leitura), snapshot real (81 famílias, 2 níveis), bloqueio de test_wall em read-only; processo 24324, exit 0, 6.52 s.
 - [C] Build avançado 97a38f2: 0 erros, 3 avisos, 7.67 s; ainda não instalado.
+
+## Avanços 06 e 07
+- [C] Batch: vigas, pilares, componentes livres/hospedados, tubos, dutos, eletrodutos, bandejas, aberturas, textos, linhas de detalhe, viewport. Build 1cff4cd: 0 erros, 3 avisos, 4.48 s.
+- [C] Novo RVT de teste, abertura, consulta de elementos e bounding boxes, mover/copiar/rotacionar/alterar texto/trocar tipo/excluir em lote, exportação IFC/DWG/PDF. Build e0c9022: 0 erros, 3 avisos, 3.62 s.
+- [C] Catálogo MCP de 20 ferramentas principais; 21 operações de criação em lote. Não instalado nem validado em sessão.
