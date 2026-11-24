@@ -8,10 +8,10 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [x] 001 [V] DLL atualizada instalada e hash confirmado no modulo carregado pelo Revit26232; backup e DLL anterior preservados (132).
 - [ ] 002 [B] Restabelecer o MCP publicado no ChatGPT (SSE 429); testar initialize, catálogo e chamadas reais de leitura e escrita. **SSE429 reconfirmado apos deploy local (132).**
 - [x] 003 [V] Contexto nativo validado: documento, vista, selecao vazia consistente, sessao, revisao e troca de documentos (132).
-- [ ] 004 [P] Validar cache no Revit: cacheHit, TTL, invalidação por DocumentChanged, abertura e fechamento de documentos. **Falha cacheHit persistente identificada; correcao compilada e 13 testes offline, deploy/runtime pendentes (132).** **Regressao pos-deploy preparada, sintaxe aprovada, runtime pendente (135).**
+- [x] 004 [V] Cache nativo comprovado em runtime: hit, TTL, invalidacao por alteracao e troca de documentos locais (136).
 - [x] 005 [V] Rejeicao de sessao/revisao incorretas, previa/commit com revisao atual e rejeicao de revisao anterior, em runtime (132).
 - [ ] 006 [P] Validar cancelamento cooperativo real: antes da execução, durante lote, rollback e corrida com commit. **Politica de rollback de falhas do batch compilada; teste nativo ainda pendente (129).** **Cancelamento nativo de lote180 materiais aceito e rollback sem residuos; fase exata e corrida real pendentes (132).** **Cancelamento de lote180 materiais com intencao de commit aprovado; fase exata pendente (133).**
-- [ ] 007 [P] Atualizador próprio do AI Engine, instalação autorizada, rollback de versão e smoke test pós-instalação. **Instalador existente permanece impedido pela politica de execucao (131).** **Stage autorizado pelo usuario funcionou, backup verificado; restauracao de versao ainda nao executada (132).** **Restore-Engine.ps1 preparado e parser/hash anterior aprovados; teste de restauracao ainda pendente (135).**
+- [ ] 007 [P] Atualizador próprio do AI Engine, instalação autorizada, rollback de versão e smoke test pós-instalação. **Instalador existente permanece impedido pela politica de execucao (131).** **Stage autorizado pelo usuario funcionou, backup verificado; restauracao de versao ainda nao executada (132).** **Restore-Engine.ps1 preparado e parser/hash anterior aprovados; teste de restauracao ainda pendente (135).** **Segundo stage e restart confirmados; restore pendente (136).**
 - [x] 008 [V] Reinicio, timeout historico, fila ocupada, perda de cliente e recuperacao sem replay comprovados no escopo local (132,128/129,135). Conector publicado segue item002.
 
 ## B — Infraestrutura, segurança e autonomia
@@ -36,7 +36,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 025 [P] Fases, worksets, vínculos, coordenadas compartilhadas, templates e filtros: ampliar edição controlada e verificar resultados.
 - [x] 026 [V] Filtro nativo: imagens visivel/oculto/restaurado inspecionadas, avanco127.
 - [ ] 027 [P] Topografia complexa, fundações, cortes/aterros e documentação integrada.
-- [ ] 028 [P] Pranchas completas: colisão de viewports, rótulos, tabelas, limites de carimbo, cotas, tags, detalhes e paginação. **Folha A1 de coordenacao corrigida e PNG conferido; ajuste nativo compilado, deploy e acabamento pendentes (133).**
+- [ ] 028 [P] Pranchas completas: colisão de viewports, rótulos, tabelas, limites de carimbo, cotas, tags, detalhes e paginação. **Folha A1 de coordenacao corrigida e PNG conferido; ajuste nativo compilado, deploy e acabamento pendentes (133).** **Correcao de viewport em runtime aprovada e PNG conferido; acabamento completo pendente (136).**
 - [ ] 029 [P] Quantitativos completos por disciplina/material/escopo, tratamento de dados ausentes e conferência independente. **Quantitativo de duas lajes,71m2/10.65m3, nove elementos sem material quantificavel explicitados (133).** **Inventario de quatro armaduras com comprimento, massa teorica e folga AABB (134).**
 
 ## D — Estruturas e instalações
@@ -57,7 +57,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 042 [P] Validar reparo e interferência com vínculos RVT rotacionados/transladados e coordenadas compartilhadas.
 - [ ] 043 [P] Reparo de redes MEP conectadas com restrições e múltiplos obstáculos; ampliar bypass de tubos para outras configurações.
 - [ ] 044 [P] Clash detection global e priorização de conflitos, distinguir interseções intencionais, tolerâncias e falhas booleanas. **Intersecao laje/tubo zero, auditoria de11 elementos sem inconclusivos (133).**
-- [ ] 045 [P] Reparos em lote com análise de dependências, preservação de elementos, rollback e auditoria antes/depois. **Previa de exclusao com dependentes impediu commit (129).** **Exclusao em cascata bloqueada em teste real; guarda atomica compilada, deploy pendente (135).**
+- [ ] 045 [P] Reparos em lote com análise de dependências, preservação de elementos, rollback e auditoria antes/depois. **Previa de exclusao com dependentes impediu commit (129).** **Exclusao em cascata bloqueada em teste real; guarda atomica compilada, deploy pendente (135).** **Protecao de dependentes retestada; guarda nativa carregada mas ramo de recusa atomica nao isolado (136).**
 - [x] 046 [V] Substituida pela validacao obrigatoria do adaptador (avancos123/126); prototipo C# separado arquivado, sem instalacao.
 
 ## F — Famílias RFA e parametrização
@@ -108,12 +108,12 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 083 [P] Teste ponta a ponta de um projeto realista de arquitetura, estrutura, elétrica e hidráulica, com documentação e verificação independente. **Prancha e coordenacao de conjunto experimental MEP/estrutura validadas; projeto completo pendente (133).** **Portico estrutural nativo experimental criado e salvo, sem dimensionamento (134).**
 - [ ] 084 [P] Teste de desempenho, modelos grandes, sessões prolongadas, dados inconsistentes e falhas/reconexão.
 - [ ] 085 [P] Teste em cópias de projetos reais, incluindo links, worksharing e casos protegidos, com autorização explícita. **Copia de fixture isolada validada; modelos reais e worksharing pendentes (131).**
-- [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).** **Build novo motor 0 erros/4 avisos; catalogo122 ferramentas ativas (130).** **Preprocessador batch verificado em runtime com rollback de aviso de sobreposicao (132).** **Guarda nativa de exclusao compilada; nova DLL6AF4... pendente (135).**
+- [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).** **Build novo motor 0 erros/4 avisos; catalogo122 ferramentas ativas (130).** **Preprocessador batch verificado em runtime com rollback de aviso de sobreposicao (132).** **Guarda nativa de exclusao compilada; nova DLL6AF4... pendente (135).** **DLL6AF4 carregada, cache/viewport e exclusao isolada aprovados (136).**
 - [ ] 087 [P] Manual de instalação, operação, recuperação e limites; versão publicada, matriz de testes e critérios de aceite. **Gates de instalacao, recuperacao e aceite documentados em RELEASE-RECOVERY.md (130).**
 - [ ] 088 [P] Homologação final pelo usuário: executar comandos pelo ChatGPT normal, sem Work, do pedido à verificação e entrega.
 
 ## Resumo
 
-78 itens abertos: 1 bloqueado, 1 nao validado, 74 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 10 encerrados de 88 (001, 003, 005, 008, 026, 046, 068, 069, 075, 082). Contagem deste checklist, nao percentual da API Revit.
+77 itens abertos: 1 bloqueado, 1 nao validado, 73 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 11 encerrados de 88 (001, 003, 004, 005, 008, 026, 046, 068, 069, 075, 082). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.
