@@ -2,7 +2,7 @@ using Autodesk.Revit.DB;
 namespace Kalidis.AIEngine;
 // Constrain an axis-aligned rectangular extrusion in a family document.
 internal static class FamilyProfileConstraints {
- internal static object Bind(Document fd,Extrusion form,XYZ[] pts,Dictionary<string,FamilyParameter> parameters,string widthName,string depthName){
+ internal static object Bind(Document fd,Extrusion form,XYZ[] pts,Dictionary<string,FamilyParameter> parameters,string widthName,string depthName,string? xName=null,string? yName=null){
   if(pts.Length!=4||!form.IsSolid||widthName==depthName||parameters.ContainsKey(widthName)||parameters.ContainsKey(depthName))throw new ArgumentException("Unique parameters and rectangular solid required");
   double x0=pts.Min(p=>p.X),x1=pts.Max(p=>p.X),y0=pts.Min(p=>p.Y),y1=pts.Max(p=>p.Y),z=pts[0].Z;
   double tol=UnitUtils.ConvertToInternalUnits(0.01,UnitTypeId.Millimeters);
@@ -28,7 +28,7 @@ internal static class FamilyProfileConstraints {
   }
   // Capture stable references before changing the document.
   var faceRefs=new[]{FaceAt(true,x0),FaceAt(true,x1),FaceAt(false,y0),FaceAt(false,y1)};
-  var planes=new[]{PlaneAt(true,x0,widthName+"_Min",true),PlaneAt(true,x1,widthName+"_Max",false),PlaneAt(false,y0,depthName+"_Min",true),PlaneAt(false,y1,depthName+"_Max",false)};
+  var planes=new[]{PlaneAt(true,x0,widthName+"_Min",xName==null),PlaneAt(true,x1,widthName+"_Max",false),PlaneAt(false,y0,depthName+"_Min",yName==null),PlaneAt(false,y1,depthName+"_Max",false)};
   fd.Regenerate();
   for(int i=0;i<4;i++)fd.FamilyCreate.NewAlignment(view,planes[i].GetReference(),faceRefs[i]);
   fd.Regenerate();
@@ -40,6 +40,19 @@ internal static class FamilyProfileConstraints {
   }
   Label(widthName,0,1,Line.CreateBound(new XYZ(x0,y0-span/4,z),new XYZ(x1,y0-span/4,z)),x1-x0);
   Label(depthName,2,3,Line.CreateBound(new XYZ(x0-span/4,y0,z),new XYZ(x0-span/4,y1,z)),y1-y0);
+  void Position(string name,bool x,double coord,int index){
+   if(parameters.ContainsKey(name))throw new ArgumentException("Duplicate position parameter");
+   // Fixed datum at family coordinate -1000 mm, allowing positive dimension.
+   double datum=-UnitUtils.ConvertToInternalUnits(1000,UnitTypeId.Millimeters);
+   if(coord<=datum+tol)throw new ArgumentException("Position must exceed -1000 mm datum");
+   var anchor=PlaneAt(x,datum,name+"_Datum",true);fd.Regenerate();
+   var refs=new ReferenceArray();refs.Append(anchor.GetReference());refs.Append(planes[index].GetReference());
+   var line=x?Line.CreateBound(new XYZ(datum,y0-span/2,z),new XYZ(coord,y0-span/2,z)):Line.CreateBound(new XYZ(x0-span/2,datum,z),new XYZ(x0-span/2,coord,z));
+   var dim=fd.FamilyCreate.NewDimension(view,line,refs);
+   var fp=fm.AddParameter(name,GroupTypeId.Geometry,SpecTypeId.Length,false);dim.FamilyLabel=fp;fm.Set(fp,coord-datum);parameters.Add(name,fp);
+  }
+  if(xName!=null)Position(xName,true,x0,0);
+  if(yName!=null)Position(yName,false,y0,2);
   fd.Regenerate();
   return new{widthName,depthName};
  }
