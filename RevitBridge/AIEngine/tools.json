@@ -604,7 +604,7 @@
   },
   {
     "name": "create_family_spec",
-    "description": "Generate native RFA with 1-100 polygonal extrusions, optional void geometry, shared height parameters and formulas. Void cutting behavior requires verification.",
+    "description": "Generate native RFA with 1-100 polygonal extrusions, optional void geometry, shared height parameters and formulas. Void cutting behavior requires verification. Optional FamFab-inspired blends, X/Y reference planes and typed instance/type parameters. Reference planes are not automatically constrained to geometry.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -664,6 +664,137 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
+          }
+        },
+        "blends": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "properties": {
+              "bottomMm": {
+                "type": "number"
+              },
+              "topMm": {
+                "type": "number"
+              },
+              "bottomPoints": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 100,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number"
+                    },
+                    "y": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "topPoints": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 100,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number"
+                    },
+                    "y": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "void": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "bottomMm",
+              "topMm",
+              "bottomPoints",
+              "topPoints"
+            ]
+          }
+        },
+        "referencePlanes": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "axis": {
+                "type": "string",
+                "enum": [
+                  "x",
+                  "y"
+                ]
+              },
+              "offsetMm": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "name",
+              "axis",
+              "offsetMm"
+            ]
+          }
+        },
+        "parameters": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "length",
+                  "number",
+                  "text"
+                ]
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "instance": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "name",
+              "kind",
+              "value"
+            ]
           }
         }
       },
