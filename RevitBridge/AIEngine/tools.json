@@ -1146,5 +1146,144 @@
       "idempotentHint": true,
       "openWorldHint": false
     }
+  },
+  {
+    "name": "get_worksets",
+    "description": "KenLP port: inspect user worksets and instance counts",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "list_categories",
+    "description": "KenLP port: count categories actually used in project",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "get_doors",
+    "description": "KenLP port: door widths in mm, coordinates, hand/facing orientation",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "get_element_rooms",
+    "description": "KenLP port: room/from/to relationships with phase",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "maxItems": 500
+        }
+      },
+      "required": [
+        "ids"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "get_tags_in_view",
+    "description": "KenLP port: inspect tags, host IDs and positions in mm",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "viewId": {
+          "type": "integer"
+        },
+        "category": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "get_linked_elements",
+    "description": "KenLP port: linked elements, all eight bounding box corners transformed into host mm",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "linkId": {
+          "type": "integer"
+        },
+        "category": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000
+        }
+      },
+      "required": [
+        "linkId"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
   }
 ]
