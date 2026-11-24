@@ -40,13 +40,14 @@ internal static class ModelOperations
         using var tx=new Transaction(d,"Kalidis AI Engine - batch");
         if(tx.Start()!=TransactionStatus.Started) throw new InvalidOperationException("Transaction not started");
         try {
+            var createdIds=new List<long>();
             var aliases=new Dictionary<string,long>(StringComparer.Ordinal);
             foreach(var step in steps){
                 var node=JsonNode.Parse(step.GetRawText())!.AsObject();
                 string? alias=node["alias"]?.GetValue<string>();
                 node.Remove("alias");
                 if(alias!=null&&(alias.Length==0||alias.Length>64||aliases.ContainsKey(alias)))throw new ArgumentException("Invalid or duplicate alias");
-                foreach(var key in new[]{"levelId","typeId","hostId","systemTypeId","viewId","sheetId"}){
+                foreach(var key in new[]{"levelId","typeId","hostId","systemTypeId","viewId","sheetId","firstId","secondId"}){
                     if(node[key] is JsonValue val && val.TryGetValue<string>(out var reference)){
                         if(!reference.StartsWith("$")||!aliases.TryGetValue(reference.Substring(1),out long resolved))throw new ArgumentException("Unknown reference "+reference);
                         node[key]=JsonValue.Create(resolved);
@@ -55,12 +56,13 @@ internal static class ModelOperations
                 using var stepDoc=JsonDocument.Parse(node.ToJsonString());
                 long id=Execute(d,stepDoc.RootElement).Value;
                 ids.Add(id);
+                if(S(stepDoc.RootElement,"action")!="schedule_field")createdIds.Add(id);
                 if(alias!=null)aliases.Add(alias,id);
             }
             d.Regenerate();
             var status=commit?tx.Commit():tx.RollBack();
             bool ok=commit?status==TransactionStatus.Committed:status==TransactionStatus.RolledBack;
-            return new {ok,committed=ok&&commit,dryRun=!commit,status=status.ToString(),elementIds=ids,aliases,verified=ids.All(i=>(d.GetElement(new ElementId(i))!=null)==commit),elapsedMs=timer.ElapsedMilliseconds};
+            return new {ok,committed=ok&&commit,dryRun=!commit,status=status.ToString(),elementIds=ids,aliases,verified=createdIds.All(i=>(d.GetElement(new ElementId(i))!=null)==commit),elapsedMs=timer.ElapsedMilliseconds};
         }
         catch { if(tx.GetStatus()==TransactionStatus.Started)tx.RollBack();throw; }
     }
@@ -167,8 +169,40 @@ internal static class ModelOperations
                 var v=Get<View>(d,r,"viewId");var host=d.GetElement(Id(r,"hostId"))??throw new ArgumentException("Invalid host");
                 return IndependentTag.Create(d,Id(r,"typeId"),v.Id,new Reference(host),false,TagOrientation.Horizontal,P3(r.GetProperty("point"))).Id;
             }
+            case "dimension": {
+                var v=Get<View>(d,r,"viewId");
+                var refs=new ReferenceArray();
+                foreach(var id in r.GetProperty("gridIds").EnumerateArray()){
+                    var grid=d.GetElement(new ElementId(id.GetInt64())) as Grid??throw new ArgumentException("Expected grid");
+                    refs.Append(new Reference(grid));
+                }
+                if(refs.Size<2||refs.Size>50)throw new ArgumentException("2-50 grid references");
+                return d.Create.NewDimension(v,Line.CreateBound(P3(r.GetProperty("start")),P3(r.GetProperty("end"))),refs).Id;
+            }
+            case "schedule_field": {
+                var schedule=Get<ViewSchedule>(d,r,"viewId");
+                var definition=schedule.Definition;
+                var field=definition.GetSchedulableFields().Single(f=>f.ParameterId==Id(r,"parameterId"));
+                definition.AddField(field);return schedule.Id;
+            }
+            case "duplicate_type": {
+                var t=Get<ElementType>(d,r,"typeId");return t.Duplicate(S(r,"name")).Id;
+            }
+            case "elbow":
+            case "union": {
+                d.Regenerate();
+                var a=ConnectorAt(d,r,"firstId","firstPoint");var b=ConnectorAt(d,r,"secondId","secondPoint");
+                if(a.Owner.Id==b.Owner.Id||a.IsConnected||b.IsConnected||a.Domain!=b.Domain)throw new ArgumentException("Incompatible or already connected connectors");
+                return (S(r,"action")=="elbow"?d.Create.NewElbowFitting(a,b):d.Create.NewUnionFitting(a,b)).Id;
+            }
             default:throw new ArgumentException("Unsupported batch action: "+S(r,"action"));
         }
+    }
+    private static Connector ConnectorAt(Document d,JsonElement r,string key,string point){
+        var e=d.GetElement(Id(r,key));var manager=e is MEPCurve c?c.ConnectorManager:(e as FamilyInstance)?.MEPModel?.ConnectorManager;
+        if(manager==null)throw new ArgumentException("No connector manager");
+        var p=P3(r.GetProperty(point));var connectors=manager.Connectors.Cast<Connector>().Where(c=>c.ConnectorType==ConnectorType.End).OrderBy(c=>c.Origin.DistanceTo(p)).ToArray();
+        if(connectors.Length==0||connectors[0].Origin.DistanceTo(p)>Mm(20))throw new ArgumentException("No end connector within 20 mm");return connectors[0];
     }
     public static object ExportFamily(Document d,JsonElement r,string sandbox)
     {
