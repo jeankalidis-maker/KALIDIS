@@ -845,5 +845,86 @@
       "idempotentHint": false,
       "openWorldHint": false
     }
+  },
+  {
+    "name": "model_health",
+    "description": "Inspect Revit warnings and room placement/areas",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "clash_confirm",
+    "description": "Check up to 100 pairs with Revit intersection filter; limitations apply",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "pairs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "properties": {
+              "firstId": {
+                "type": "integer"
+              },
+              "secondId": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "firstId",
+              "secondId"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "pairs"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "schedule_data",
+    "description": "Extract formatted schedule cells, at most 500 rows and 100 columns",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "viewId": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "viewId"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
   }
 ]
