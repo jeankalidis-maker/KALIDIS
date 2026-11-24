@@ -2014,5 +2014,221 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "A5FCACD151A1",
+    "inspection": false,
+    "tool": {
+      "name": "linked_repair",
+      "description": "Repair local furniture against explicit linked elements and selected local categories; read-only link, AABB host coordinates, no linked edits.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "diagnose",
+              "repair"
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 8
+          },
+          "minimumMm": {
+            "type": "number"
+          },
+          "maxMoveMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "linkId": {
+            "type": "integer"
+          },
+          "linkedIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 30
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode",
+          "id",
+          "expectedMm",
+          "categoryIds",
+          "minimumMm",
+          "maxMoveMm",
+          "linkId",
+          "linkedIds"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "5B355A8649D6",
+    "inspection": false,
+    "tool": {
+      "name": "mep_clearance_repair",
+      "description": "Translate disconnected straight pipes or ducts only; expectedMm is midpoint, preserve endpoints relative to translation, type and disconnection.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "diagnose",
+              "repair"
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 13
+          },
+          "minimumMm": {
+            "type": "number"
+          },
+          "maxMoveMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode",
+          "id",
+          "expectedMm",
+          "categoryIds",
+          "minimumMm",
+          "maxMoveMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "D61A528E9FDE",
+    "inspection": false,
+    "tool": {
+      "name": "solid_profile_flex",
+      "description": "Duplicate and flex family type using physical solid bounds, excludes nonphysical references; reports per-solid boxes. For audit mode supply id and mode=audit; inspect per-solid changes before committing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "typeName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "expectedDimensionsMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "offsetMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "audit",
+              "flex"
+            ]
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
