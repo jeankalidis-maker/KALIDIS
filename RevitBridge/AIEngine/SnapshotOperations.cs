@@ -12,7 +12,7 @@ internal static class SnapshotOperations {
   var (data,hit)=Cache.Get(d,d.PathName,revision,()=>new Data(
    new FilteredElementCollector(d).OfClass(typeof(Level)).Cast<Level>().Select(x=>new LevelData(x.Id.Value,x.Name,UnitUtils.ConvertFromInternalUnits(x.Elevation,UnitTypeId.Millimeters))).ToArray(),
    new FilteredElementCollector(d).OfClass(typeof(WallType)).Cast<WallType>().Select(x=>new WallData(x.Id.Value,x.Name,x.Kind.ToString())).ToArray(),
-   new FilteredElementCollector(d).OfClass(typeof(Family)).Cast<Family>().Select(x=>new FamilyData(x.Id.Value,x.Name)).ToArray()));
+   new FilteredElementCollector(d).OfClass(typeof(Family)).Cast<Family>().Select(x=>new FamilyData(x.Id.Value,x.Name)).ToArray()),stableSavedLocalPath:!d.IsWorkshared&&!d.IsModelInCloud&&!d.IsFamilyDocument&&!string.IsNullOrWhiteSpace(d.PathName)&&System.IO.Path.IsPathFullyQualified(d.PathName));
   return new {ok=true,title=d.Title,path=d.PathName,version=app.Application.VersionNumber,workshared=d.IsWorkshared,family=d.IsFamilyDocument,
    data.levels,data.wallTypes,data.families,session=Application.SessionId,revision,cacheHit=hit,elapsedMs=timer.ElapsedMilliseconds};
  }

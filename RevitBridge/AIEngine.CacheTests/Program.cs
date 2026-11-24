@@ -11,7 +11,15 @@ Check(!cache.Get(other,"B.rvt",1,Load).Hit&&loads==4,"document isolation");
 var shortCache=new RevisionCache<object,string>(TimeSpan.FromMilliseconds(1));
 shortCache.Get(doc,"A.rvt",1,Load);Thread.Sleep(30);
 Check(!shortCache.Get(doc,"A.rvt",1,Load).Hit,"TTL expiration");
-Console.WriteLine("REVISION_CACHE_TESTS=PASS; six cases");
+var stableCache=new RevisionCache<object,string>(TimeSpan.FromSeconds(10));
+Check(!stableCache.Get(new object(),"C:/Sandbox/A.rvt",10,Load,true).Hit,"stable initial miss");
+Check(stableCache.Get(new object(),"C:/Sandbox/A.rvt",10,Load,true).Hit,"fresh managed wrapper stable path hit");
+Check(!stableCache.Get(new object(),"C:/Sandbox/B.rvt",10,Load,true).Hit,"distinct local path miss");
+Check(!stableCache.Get(new object(),"C:/Sandbox/B.rvt",11,Load,true).Hit,"local revision miss");
+Check(!stableCache.Get(new object(),"C:/Sandbox/B.rvt",11,Load,false).Hit,"identity policy change miss");
+Check(!stableCache.Get(new object(),"",11,Load,true).Hit,"unsaved initial miss");
+Check(!stableCache.Get(new object(),"",11,Load,true).Hit,"unsaved wrappers isolated");
+Console.WriteLine("REVISION_CACHE_TESTS=PASS; thirteen cases");
 
 var pending=new BatchCancellation();
 Check(pending.Request(),"request accepted before execution");
