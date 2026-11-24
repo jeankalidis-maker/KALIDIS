@@ -1398,5 +1398,341 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "78FE61EDA875",
+    "inspection": false,
+    "tool": {
+      "name": "native_shapes",
+      "description": "Create curved wall, flip wall, floor with interior loop or room separation lines",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "arc_wall",
+              "flip_wall",
+              "floor_hole",
+              "room_boundary"
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "levelId": {
+            "type": "integer"
+          },
+          "typeId": {
+            "type": "integer"
+          },
+          "heightMm": {
+            "type": "number"
+          },
+          "start": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y"
+            ],
+            "additionalProperties": false
+          },
+          "mid": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y"
+            ],
+            "additionalProperties": false
+          },
+          "end": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y"
+            ],
+            "additionalProperties": false
+          },
+          "outer": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 3,
+            "maxItems": 50
+          },
+          "inner": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 3,
+            "maxItems": 50
+          },
+          "viewId": {
+            "type": "integer"
+          },
+          "points": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 3,
+            "maxItems": 50
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "EC334369A78F",
+    "inspection": false,
+    "tool": {
+      "name": "native_view_filter",
+      "description": "Native comment-based parameter filter creation, application, graphic override, visibility and removal",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "create",
+              "apply",
+              "color",
+              "visibility",
+              "audit",
+              "remove"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "categoryId": {
+            "type": "integer"
+          },
+          "contains": {
+            "type": "string",
+            "minLength": 1
+          },
+          "viewId": {
+            "type": "integer"
+          },
+          "filterId": {
+            "type": "integer"
+          },
+          "rgb": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "visible": {
+            "type": "boolean"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "A63EE3E311C8",
+    "inspection": true,
+    "tool": {
+      "name": "quality_checks",
+      "description": "Category-level mark, direct type usage, room status and host QA; no purge or automatic edits",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "duplicate_marks",
+              "missing_marks",
+              "unused_types",
+              "room_status",
+              "hosts"
+            ]
+          },
+          "categoryId": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode",
+          "categoryId"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "87824F47E848",
+    "inspection": false,
+    "tool": {
+      "name": "hooked_stirrup",
+      "description": "Experimental native stirrup with 135 degree hooks and geometry readback; no structural design",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hostId": {
+            "type": "integer"
+          },
+          "typeId": {
+            "type": "integer"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "z": {
+            "type": "number"
+          },
+          "widthMm": {
+            "type": "number"
+          },
+          "lengthMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "hostId",
+          "typeId",
+          "x",
+          "y",
+          "z",
+          "widthMm",
+          "lengthMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
