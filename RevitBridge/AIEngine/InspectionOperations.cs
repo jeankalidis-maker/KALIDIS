@@ -3,7 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 namespace Kalidis.AIEngine;
 internal static class InspectionOperations {
- internal static readonly string[] Actions={"views","connectors","schedule_fields","clash_candidates","selection"};
+ internal static readonly string[] Actions={"views","connectors","schedule_fields","clash_candidates","selection","model_health","clash_confirm","schedule_data"};
  private static ElementId Id(JsonElement r,string k)=>new(r.GetProperty(k).GetInt64());
  private static double Mm(double v)=>UnitUtils.ConvertFromInternalUnits(v,UnitTypeId.Millimeters);
  private static double[] Point(XYZ p)=>new[]{Mm(p.X),Mm(p.Y),Mm(p.Z)};
@@ -37,6 +37,38 @@ internal static class InspectionOperations {
       }
     }
     return new{ok=true,method="axis-aligned bounding boxes only; not confirmed physical intersections",examined=boxes.Length,omitted=ids.Length-boxes.Length,truncated,pairs};
+   }
+   case "model_health":{
+    var warnings=d.GetWarnings().Take(500).Select(w=>new{description=w.GetDescriptionText(),ids=w.GetFailingElements().Select(i=>i.Value).ToArray()}).ToArray();
+    var rooms=new FilteredElementCollector(d).OfCategory(BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().OfType<Autodesk.Revit.DB.Architecture.Room>().Select(room=>new{id=room.Id.Value,name=room.Name,number=room.Number,placed=room.Location!=null,areaM2=UnitUtils.ConvertFromInternalUnits(room.Area,UnitTypeId.SquareMeters)}).ToArray();
+    return new{ok=true,warningCount=d.GetWarnings().Count,warnings,rooms,unplaced=rooms.Count(x=>!x.placed),zeroArea=rooms.Count(x=>x.areaM2==0)};
+   }
+   case "clash_confirm":{
+    var pairs=r.GetProperty("pairs").EnumerateArray().ToArray();
+    if(pairs.Length<1||pairs.Length>100)throw new ArgumentException("1-100 pairs required");
+    var results=new List<object>();
+    foreach(var pair in pairs){
+     var a=Id(pair,"firstId");var b=Id(pair,"secondId");
+     if(a==b||d.GetElement(a)==null||d.GetElement(b)==null){results.Add(new{firstId=a.Value,secondId=b.Value,status="invalid"});continue;}
+     try{
+      var filter=new ElementIntersectsElementFilter(d.GetElement(a));
+      bool intersects=filter.PassesFilter(d,b);
+      results.Add(new{firstId=a.Value,secondId=b.Value,status=intersects?"intersection_reported":"no_intersection_reported"});
+     }catch(Autodesk.Revit.Exceptions.ArgumentException){results.Add(new{firstId=a.Value,secondId=b.Value,status="unsupported_geometry"});}
+    }
+    return new{ok=true,method="Revit ElementIntersectsElementFilter; unsupported or joined geometry can be missed",results};
+   }
+   case "schedule_data":{
+    var schedule=d.GetElement(Id(r,"viewId")) as ViewSchedule??throw new ArgumentException("Not a schedule");
+    var body=schedule.GetTableData().GetSectionData(SectionType.Body);
+    int limit=r.TryGetProperty("limit",out var lim)?Math.Clamp(lim.GetInt32(),1,500):100;
+    var rows=new List<string[]>();
+    for(int i=body.FirstRowNumber;i<=body.LastRowNumber&&rows.Count<limit;i++){
+     var cells=new List<string>();
+     for(int j=body.FirstColumnNumber;j<=body.LastColumnNumber&&cells.Count<100;j++)cells.Add(schedule.GetCellText(SectionType.Body,i,j));
+     rows.Add(cells.ToArray());
+    }
+    return new{ok=true,totalRows=body.NumberOfRows,totalColumns=body.NumberOfColumns,rows};
    }
    default:throw new ArgumentException("Unknown inspection");
   }
