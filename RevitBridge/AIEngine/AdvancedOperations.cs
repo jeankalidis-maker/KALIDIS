@@ -83,11 +83,13 @@ internal static class AdvancedOperations
                             fd.Regenerate();
                             var plan=new FilteredElementCollector(fd).OfClass(typeof(ViewPlan)).Cast<ViewPlan>().First(v=>!v.IsTemplate&&v.ViewType==ViewType.FloorPlan);
                             var curves=extrusion.Sketch.GetAllElements().Select(id=>fd.GetElement(id)).OfType<ModelCurve>().Where(c=>c.GeometryCurve is Arc).ToArray();
-                            if(curves.Length!=1)throw new InvalidOperationException("Single circular sketch curve required");
-                            var arc=(Arc)curves[0].GeometryCurve;
-                            var reference=arc.Reference??new Reference(curves[0]);
+                            double radius=dimension(shape,"radiusMm",10,10000);
+                            var rim=extrusion.get_Geometry(new Options{ComputeReferences=true,DetailLevel=ViewDetailLevel.Fine}).OfType<Solid>().SelectMany(s=>s.Edges.Cast<Edge>()).Select(e=>new{edge=e,arc=e.AsCurve() as Arc}).Where(x=>x.arc!=null&&Math.Abs(x.arc.Radius-radius)<1e-6&&Math.Abs(x.arc.Normal.Z)>0.999&&x.edge.Reference!=null).OrderByDescending(x=>x.arc!.Center.Z).ToArray();
+                            if(rim.Length==0&&curves.Length==0)throw new InvalidOperationException("No referenceable circular edge or sketch arc");
+                            var arc=rim.Length>0?rim[0].arc!:(Arc)curves[0].GeometryCurve;
+                            var reference=rim.Length>0?rim[0].edge.Reference:arc.Reference??new Reference(curves[0]);
                             var dim=fd.FamilyCreate.NewRadialDimension(plan,reference,arc.Center+XYZ.BasisX*arc.Radius*1.5);
-                            var fp=fm.AddParameter(name,GroupTypeId.Geometry,SpecTypeId.Length,false);dim.FamilyLabel=fp;fm.Set(fp,arc.Radius);parameters.Add(name,fp);fd.Regenerate();
+                            var fp=fm.AddParameter(name,GroupTypeId.Geometry,SpecTypeId.Length,false);dim.FamilyLabel=fp;fm.Set(fp,radius);parameters.Add(name,fp);fd.Regenerate();
                         }
                         if(relative){
                             var start=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_START_PARAM);var end=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_END_PARAM);
