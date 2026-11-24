@@ -26,6 +26,6 @@ if((Get-FileHash -LiteralPath $target).Hash -ne $hash){throw 'Staged hash differ
 $temp=Join-Path $folder ('approval-'+[Guid]::NewGuid().ToString('N')+'.tmp')
 [IO.File]::WriteAllText($temp,($data|ConvertTo-Json -Compress),[Text.UTF8Encoding]::new($false))
 try{
- if(Test-Path -LiteralPath $manifest){[IO.File]::Replace($temp,$manifest,$null)}else{[IO.File]::Move($temp,$manifest)}
+ if(Test-Path -LiteralPath $manifest){[IO.File]::Replace($temp,$manifest,(Join-Path $folder ('approval-backup-'+[Guid]::NewGuid().ToString('N')+'.json')))}else{[IO.File]::Move($temp,$manifest)}
 }finally{if(Test-Path -LiteralPath $temp){Remove-Item -LiteralPath $temp}}
 [pscustomobject]@{approved=$true;assembly=$name;sha256=$hash;trust='Full trust; not a security sandbox'}|ConvertTo-Json
