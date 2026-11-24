@@ -3087,5 +3087,52 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "7BA04AE196ED",
+    "inspection": false,
+    "tool": {
+      "name": "dynamo_wall_fixture",
+      "description": "Generate and execute fixed graph creating a single 3000mm wall in the dedicated smoke RVT empty test region. Start explicitly requires commit=true and executeFixtureGraph=true, external event cannot roll back. Status rollback-only. Not general Dynamo modelling.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "start",
+              "status"
+            ]
+          },
+          "executeFixtureGraph": {
+            "type": "boolean"
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "levelId": {
+            "type": "integer"
+          },
+          "typeId": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
