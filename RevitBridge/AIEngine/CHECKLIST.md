@@ -50,3 +50,10 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [C] Fundações, topossólidos, telhado de perímetro, cortes, linhas de modelo, tags, parâmetros tipados, fixar/renomear, proteção de caminhos e transação IFC. Build e8034b1: 0 erros, 4 avisos, 3.86 s.
 - [C] Cotas entre eixos, campos de tabelas, duplicação de tipos, curvas/uniões MEP, inspeção de conectores, vistas, seleção, campos de tabela e candidatos a interferências por bounding box. Build 104dee3: 0 erros, 4 avisos, 4.25 s.
 - [C] 27 ferramentas MCP, 32 operações de criação/edição em lote. Não instaladas/testadas em sessão.
+
+## Avanço 12
+- [C] Carregador C# de DLLs locais aprovadas por SHA-256; execução full-trust, não sandbox de segurança. Não executado em sessão; não equivale a Roslyn dinâmico nem integração CAD-MCP.
+- [V] Cliente Python externo: snapshot real com 2 níveis e 81 famílias, PY_EXIT=0. Não equivale a Python in-process ou integração pyRevit.
+- [C] Build d5bb502: 0 erros, 4 avisos, 3.97 s; 29 ferramentas MCP.
+- [P] Smoke-Test.ps1 criado para RVT independente; executar após instalar DLL ampliada. Update-Engine.ps1 criado; exige fechar Revit normalmente e cria backup.
+- Revit 2025.4 ainda aberto no projeto original; nenhuma escrita feita neste projeto. Integrações diretas externas continuam pendentes.
