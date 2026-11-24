@@ -137,7 +137,7 @@ public sealed class Application : IExternalApplication
             var watch=Stopwatch.StartNew();
             string action=r.GetProperty("action").GetString() ?? "";
             if(action=="catalog")
-                return new { ok=true, implemented=new[]{"catalog","snapshot","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).Concat(ExtensionOperations.Actions).Concat(VisualOperations.Actions).Concat(KenLPPorts.Actions).Concat(FamilyEditOperations.Actions).Concat(HorizunAudit.Actions).ToArray(), nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
+                return new { ok=true, implemented=new[]{"catalog","snapshot","test_wall","batch","export_family"}.Concat(AdvancedOperations.Actions).Concat(ProjectOperations.Actions).Concat(InspectionOperations.Actions).Concat(ExtensionOperations.Actions).Concat(VisualOperations.Actions).Concat(KenLPPorts.Actions).Concat(FamilyEditOperations.Actions).Concat(HorizunAudit.Actions).Concat(StairOperations.Actions).ToArray(), nativeCommands=Enum.GetNames<PostableCommand>(), note="Native names are discoverable, not validated as executable by this prototype." };
             if(action=="extensions") return ExtensionOperations.List(Home);
             if(action=="new_test_project" || action=="open_test_project") return ProjectOperations.NewOrOpen(app,r,action,Path.Combine(Home,"Sandbox"));
             var d=app.ActiveUIDocument?.Document ?? throw new InvalidOperationException("No active document");
@@ -157,7 +157,7 @@ public sealed class Application : IExternalApplication
             if(action=="elements") return ProjectOperations.Elements(d,r);
             if(action=="element_info") return ProjectOperations.Info(d,r);
             if(new[]{"types","native_status","library","family_info"}.Contains(action)) return AdvancedOperations.Read(app,d,r,action);
-            if(action!="test_wall" && action!="batch" && action!="export_family" && !AdvancedOperations.Actions.Contains(action) && !ProjectOperations.Actions.Contains(action) && action!="run_extension" && !VisualOperations.Actions.Contains(action) && !FamilyEditOperations.Actions.Contains(action)) throw new InvalidOperationException("Unknown action");
+            if(action!="test_wall" && action!="batch" && action!="export_family" && !AdvancedOperations.Actions.Contains(action) && !ProjectOperations.Actions.Contains(action) && action!="run_extension" && !VisualOperations.Actions.Contains(action) && !FamilyEditOperations.Actions.Contains(action) && !StairOperations.Actions.Contains(action)) throw new InvalidOperationException("Unknown action");
             // Writes only to explicitly designated local test copy, never cloud/workshared/unsaved documents.
             string root=Path.GetFullPath(Path.Combine(Home,"Sandbox"))+Path.DirectorySeparatorChar;
             string expected=Path.GetFullPath(r.GetProperty("expectedPath").GetString() ?? "");
@@ -169,6 +169,7 @@ public sealed class Application : IExternalApplication
                 (File.GetAttributes(actual)&FileAttributes.ReparsePoint)!=0 || (File.GetAttributes(root)&FileAttributes.ReparsePoint)!=0 ||
                 !string.Equals(Path.GetDirectoryName(actual),root.TrimEnd(Path.DirectorySeparatorChar),StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Write refused: open a local test copy in the engine Sandbox");
+            if(action=="straight_stair") return StairOperations.Run(d,r);
             if(action=="edit_family_copy") return FamilyEditOperations.Run(d,r,root);
             if(VisualOperations.Actions.Contains(action)) return VisualOperations.Run(app,d,r,action,root);
             if(action=="run_extension") return ExtensionOperations.Run(d,r,Home);
