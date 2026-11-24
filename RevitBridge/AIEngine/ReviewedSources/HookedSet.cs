@@ -30,7 +30,7 @@ public sealed class HookedSet : IReviewedOperation {
   if(!box.Transform.IsIdentity||!rb.Transform.IsIdentity)throw new InvalidOperationException("Axis-aligned host and bar bounds required");
   var gaps=new[]{rb.Min.X-box.Min.X,rb.Min.Y-box.Min.Y,rb.Min.Z-box.Min.Z,box.Max.X-rb.Max.X,box.Max.Y-rb.Max.Y,box.Max.Z-rb.Max.Z};
   if(gaps.Min()<minCover||bar.Quantity!=count)throw new InvalidOperationException("Set count or box clearance mismatch");
-  double[] zs=Enumerable.Range(0,count).Select(i=>bar.GetBarPositionTransform(i).Origin.Z).ToArray();
+  double[] zs=Enumerable.Range(0,count).Select(i=>bar.GetShapeDrivenAccessor().GetBarPositionTransform(i).Origin.Z).ToArray();
   if(zs.Skip(1).Select((v,i)=>Math.Abs(v-zs[i]-spacing)).Any(v=>v>Mm(.1)))throw new InvalidOperationException("Spacing mismatch");
   return new{quantity=bar.Quantity,spacingMm=UnitUtils.ConvertFromInternalUnits(spacing,UnitTypeId.Millimeters),minBoxClearanceMm=UnitUtils.ConvertFromInternalUnits(gaps.Min(),UnitTypeId.Millimeters),id=bar.Id.Value,hookTypeId=hook.Id.Value,hookAngleDegrees=135,withHooksMm=UnitUtils.ConvertFromInternalUnits(all.Sum(c=>c.Length),UnitTypeId.Millimeters),withoutHooksMm=UnitUtils.ConvertFromInternalUnits(plain.Sum(c=>c.Length),UnitTypeId.Millimeters),note="Experimental native set; AABB clearance only, not true concrete cover or clash/design certification."};
  }
