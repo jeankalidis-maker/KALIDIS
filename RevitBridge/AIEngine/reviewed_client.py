@@ -34,6 +34,10 @@ OPERATIONS = {
     "schedule_review": ("847D785D8644", False),
     "profile_flex": ("D27CFDC5796F", False),
     "routing_variant": ("2E0D55B98E9B", False),
+    "native_shapes": ("78FE61EDA875", False),
+    "native_view_filter": ("EC334369A78F", False),
+    "quality_checks": ("A63EE3E311C8", True),
+    "hooked_stirrup": ("87824F47E848", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
