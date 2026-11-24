@@ -649,5 +649,48 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "14A6A6F23934",
+    "inspection": false,
+    "tool": {
+      "name": "wall_attach_roof",
+      "description": "Attach up to 20 explicit walls to a roof using native Revit 2025.2+ attachment and verify attachment IDs. Test copy only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "roofId": {
+            "type": "integer"
+          },
+          "wallIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 20
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "roofId",
+          "wallIds"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
