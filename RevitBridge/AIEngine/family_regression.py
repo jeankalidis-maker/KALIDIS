@@ -49,16 +49,26 @@ def run_profile(engine,p,level,template):
     spec=dict(shapes=[dict(zMm=0,heightMm=500,points=rect(0,0,600,400),widthParameter="Test_Width",depthParameter="Test_Depth",heightParameter="Test_Height")])
     i=create(engine,p,level,template,"ProfileRegression",spec,37000,22000)
     check_dims(dimensions(engine,p,[i])[i],[600,400,500])
-    args=dict(id=i,typeName="ProfileFlex-"+uuid4().hex,parameters={"Test_Width":800,"Test_Depth":550,"Test_Height":700},expectedDimensionsMm=[800,550,700],offsetMm=[2000,0,0])
-    dry=execute(engine,"profile_flex",args,p)
-    assert dry["dryRun"] and dry["status"]=="RolledBack"
-    r=execute(engine,"profile_flex",args,p,commit=True)
-    assert r["status"]=="Committed"
-    j=r["result"]["newId"]
-    actual=dimensions(engine,p,[i,j])
-    check_dims(actual[i],[600,400,500])
-    check_dims(actual[j],[800,550,700])
-    return dict(originalId=i,newId=j,dimensionsMm=actual)
+    cases=[("width",[800,400,500]),("depth",[600,550,500]),("height",[600,400,700]),("xyz",[800,550,700])]
+    results=[]
+    for k,(label,expected) in enumerate(cases):
+        args=dict(id=i,typeName="ProfileFlex-"+label+"-"+uuid4().hex,parameters=dict(zip(["Test_Width","Test_Depth","Test_Height"],expected)),expectedDimensionsMm=expected,offsetMm=[2000*(k+1),0,0])
+        dry=execute(engine,"profile_flex",args,p)
+        assert dry["dryRun"] and dry["status"]=="RolledBack"
+        r=execute(engine,"profile_flex",args,p,commit=True)
+        assert r["status"]=="Committed"
+        j=r["result"]["newId"]
+        actual=dimensions(engine,p,[i,j])
+        check_dims(actual[i],[600,400,500])
+        check_dims(actual[j],expected)
+        vol=execute(engine,"solid_audit",{"ids":[i,j]},p)["result"]["elements"]
+        volumes={x["id"]:x["volumeM3"] for x in vol}
+        target=expected[0]*expected[1]*expected[2]/1e9
+        assert isclose(volumes[i],0.12,abs_tol=1e-6) and isclose(volumes[j],target,abs_tol=1e-6)
+        row=dict(axis=label,newId=j,dimensionsMm=actual[j],volumeM3=volumes[j])
+        results.append(row)
+        print("PROFILE_CASE",json.dumps(row),flush=True)
+    return dict(originalId=i,results=results,originalUnchanged=True)
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
