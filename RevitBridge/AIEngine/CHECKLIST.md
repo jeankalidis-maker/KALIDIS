@@ -45,3 +45,8 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [C] create_family_spec: múltiplas extrusões, perfis poligonais, vazios, alturas compartilhadas e fórmulas. Corte efetivo de vazios ainda não comprovado.
 - [C] Referências $alias entre operações de criação no mesmo lote.
 - [C] Build 87ef510: 0 erros, 4 avisos, 4.47 s. Ainda não instalado.
+
+## Avanços 10 e 11
+- [C] Fundações, topossólidos, telhado de perímetro, cortes, linhas de modelo, tags, parâmetros tipados, fixar/renomear, proteção de caminhos e transação IFC. Build e8034b1: 0 erros, 4 avisos, 3.86 s.
+- [C] Cotas entre eixos, campos de tabelas, duplicação de tipos, curvas/uniões MEP, inspeção de conectores, vistas, seleção, campos de tabela e candidatos a interferências por bounding box. Build 104dee3: 0 erros, 4 avisos, 4.25 s.
+- [C] 27 ferramentas MCP, 32 operações de criação/edição em lote. Não instaladas/testadas em sessão.
