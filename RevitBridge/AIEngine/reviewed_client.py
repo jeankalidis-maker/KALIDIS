@@ -47,6 +47,8 @@ OPERATIONS = {
     "solid_profile_flex": ("D61A528E9FDE", False),
     "cylinder_flex": ("76808BA4814D", False),
     "bitmap_material": ("9CD033DBCAF7", False),
+    "python_probe": ("00118D96D6D2", True),
+    "python_comments": ("E91C635DCE63", False),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
