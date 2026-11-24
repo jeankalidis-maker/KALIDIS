@@ -142,7 +142,7 @@
   },
   {
     "name": "batch",
-    "description": "Atomic batch up to 200 steps, millimeters. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan, beam, column, component, hosted_component, pipe, duct, conduit, cable_tray, opening, text, detail_line, viewport. Use typeId, levelId, systemTypeId, hostId, viewId or sheetId as appropriate; point/start/end are XYZ objects (z required for advanced actions). Optional alias on each step; subsequent ID fields may reference earlier aliases as $name.",
+    "description": "Atomic batch up to 200 steps, millimeters. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan, beam, column, component, hosted_component, pipe, duct, conduit, cable_tray, opening, text, detail_line, viewport. Use typeId, levelId, systemTypeId, hostId, viewId or sheetId as appropriate; point/start/end are XYZ objects (z required for advanced actions). Optional alias on each step; subsequent ID fields may reference earlier aliases as $name. Also supports foundation, terrain (XYZ points), section, roof, model_line and tag.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -185,7 +185,13 @@
                   "opening",
                   "text",
                   "detail_line",
-                  "viewport"
+                  "viewport",
+                  "foundation",
+                  "terrain",
+                  "section",
+                  "roof",
+                  "model_line",
+                  "tag"
                 ]
               }
             }
@@ -497,7 +503,7 @@
   },
   {
     "name": "edit_elements",
-    "description": "Edit batch: move, copy, rotate, set_parameter (string), change_type, delete; dry-run default",
+    "description": "Atomic editing: move, copy, rotate, set_parameter (string, integer, length in mm, number, element ID), change_type, pin, rename, delete. Rollback by default.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -645,6 +651,33 @@
       "readOnlyHint": false,
       "destructiveHint": true,
       "idempotentHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "element_info",
+    "description": "Inspect detailed parameters for up to 100 elements. Raw double values are in Revit internal units.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "maxItems": 100
+        }
+      },
+      "required": [
+        "ids"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
       "openWorldHint": false
     }
   }
