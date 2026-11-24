@@ -85,11 +85,22 @@ internal static class ProjectOperations {
   }catch{if(tx.GetStatus()==TransactionStatus.Started)tx.RollBack();throw;}
  }
  internal static object Export(Document d,JsonElement r,string root){
-  string format=S(r,"format");string ext=format=="ifc"?".ifc":format=="dwg"?".dwg":format=="pdf"?".pdf":throw new ArgumentException("Unsupported format");
+  string format=S(r,"format");string ext=format=="csv"?".csv":format=="ifc"?".ifc":format=="dwg"?".dwg":format=="pdf"?".pdf":throw new ArgumentException("Unsupported format");
   string p=FileIn(root,S(r,"fileName"),ext);
   string folder=Path.Combine(root,"export-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(folder);
   string name=Path.GetFileNameWithoutExtension(p);bool ok;
-  if(format=="ifc"){using var opt=new IFCExportOptions();using var tx=new Transaction(d,"Kalidis - IFC export");if(tx.Start()!=TransactionStatus.Started)throw new InvalidOperationException("IFC export transaction failed");try{ok=d.Export(folder,name,opt);}finally{if(tx.GetStatus()==TransactionStatus.Started)tx.RollBack();}}
+  if(format=="csv"){
+   var schedule=d.GetElement(Id(r,"viewId")) as ViewSchedule??throw new ArgumentException("Invalid schedule");
+   var table=schedule.GetTableData().GetSectionData(SectionType.Body);
+   if(table.NumberOfRows>20000||table.NumberOfColumns>200)throw new ArgumentException("Schedule too large");
+   string Cell(string value){if(value.Length>0&&"=+-@\t\r".Contains(value[0]))value="\'"+value;return "\""+value.Replace("\"","\"\"")+"\"";}
+   using(var writer=new StreamWriter(Path.Combine(folder,name+".csv"),false,new System.Text.UTF8Encoding(true))){
+    for(int row=table.FirstRowNumber;row<=table.LastRowNumber;row++){
+     var cells=new List<string>();for(int col=table.FirstColumnNumber;col<=table.LastColumnNumber;col++)cells.Add(Cell(schedule.GetCellText(SectionType.Body,row,col)));
+     writer.WriteLine(string.Join(";",cells));
+    }
+   }ok=true;
+  }else if(format=="ifc"){using var opt=new IFCExportOptions();using var tx=new Transaction(d,"Kalidis - IFC export");if(tx.Start()!=TransactionStatus.Started)throw new InvalidOperationException("IFC export transaction failed");try{ok=d.Export(folder,name,opt);}finally{if(tx.GetStatus()==TransactionStatus.Started)tx.RollBack();}}
   else {
    var ids=r.GetProperty("viewIds").EnumerateArray().Select(x=>new ElementId(x.GetInt64())).ToList();if(ids.Count==0||ids.Count>100)throw new ArgumentException("1-100 views required");
    if(format=="dwg"){using var opt=new DWGExportOptions();ok=d.Export(folder,name,ids,opt);}
