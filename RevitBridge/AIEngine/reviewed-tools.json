@@ -2944,5 +2944,94 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "77EDAEE70399",
+    "inspection": false,
+    "tool": {
+      "name": "dynamo_write_fixture",
+      "description": "Generate and run fixed Dynamo Python graph that writes a marker only on marked independent furniture in sandbox. Start requires commit=true and executeFixtureGraph=true; event outside rollback. Poll status; no arbitrary graph.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "start",
+              "status"
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "executeFixtureGraph": {
+            "type": "boolean"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  },
+  {
+    "sourcePrefix": "A83AB9333383",
+    "inspection": false,
+    "tool": {
+      "name": "family_quarantine_audit",
+      "description": "Open a separate copy of the pinned MIT square-column RFA, inspect current family type and close without saving. Start requires commit=true and inspectPinnedFile=true; no loading into project. Not security certification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "start",
+              "status"
+            ]
+          },
+          "folder": {
+            "type": "string",
+            "minLength": 1
+          },
+          "inspectPinnedFile": {
+            "type": "boolean"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
