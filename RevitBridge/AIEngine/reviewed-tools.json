@@ -1734,5 +1734,73 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "4683C3604887",
+    "inspection": false,
+    "tool": {
+      "name": "auto_clearance_repair",
+      "description": "Diagnose or repair clearance for unhosted furniture against explicit obstacle IDs using conservative bounds and a movement limit; simulation by default. Does not certify clearance against unlisted elements.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "diagnose",
+              "repair"
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "expectedMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "obstacleIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "maxItems": 30
+          },
+          "minimumMm": {
+            "type": "number"
+          },
+          "maxMoveMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "mode",
+          "id",
+          "expectedMm",
+          "obstacleIds",
+          "minimumMm",
+          "maxMoveMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
