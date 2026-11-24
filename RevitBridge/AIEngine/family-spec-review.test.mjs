@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {reviewFamilySpec} from './family-spec-review.mjs';
+const r=[{x:0,y:0},{x:600,y:0},{x:600,y:400},{x:0,y:400}],s={zMm:0,heightMm:500,points:r,widthParameter:'W',depthParameter:'D',heightParameter:'H'};
+assert.equal(reviewFamilySpec({shapes:[s]}).parameters,3);
+assert.throws(()=>reviewFamilySpec({shapes:[{...s,points:[r[0],r[2],r[1],r[3]]}]}),/intersect/);
+assert.throws(()=>reviewFamilySpec({shapes:[s],formulas:{Unknown:'W*2'}}),/Unknown/);
+assert.throws(()=>reviewFamilySpec({shapes:[s,{...s,widthParameter:'w'}]}),/Duplicate/);
+assert.throws(()=>reviewFamilySpec({shapes:[s],voidCuts:[{solidIndex:0,voidIndex:0}]}),/indices/);
+assert.throws(()=>reviewFamilySpec({shapes:[{...s,baseParameter:'Base'}]}),/together/);
+assert.equal(reviewFamilySpec({shapes:[{zMm:0,heightMm:500,radiusMm:200,radiusParameter:'R',heightParameter:'H'}],parameters:[{name:'Driver',kind:'length',value:200}],formulas:{R:'Driver',H:'Driver*2.5'}}).parameters,3);
+assert.throws(()=>reviewFamilySpec({shapes:[],sweeps:[{zMm:0,radiusMm:20,path:[{kind:'line',start:r[0],end:r[1]},{kind:'line',start:r[2],end:r[3]}]}]}),/Disconnected/);
+console.log('FAMILY_SPEC_REVIEW_TESTS=PASS');

@@ -3,6 +3,7 @@
 import readline from 'node:readline';
 import {validate,loadRegistry} from './command-registry.mjs';
 import {batchPreflight} from './batch-preflight.mjs';
+import {reviewFamilySpec} from './family-spec-review.mjs';
 import {reviewOrthogonalPlan} from './orthogonal-plan-review.mjs';
 import {checkBatchCapabilities,batchSchemaForEngine} from './engine-capabilities.mjs';
 import {legacyRead,legacyTool} from './legacy-read.mjs';
@@ -87,6 +88,7 @@ async function callUnjournaled(name,args){
   const preflight=batchPreflight(args,registry);
   if(!preflight.ok)throw Error('Batch preflight rejected: '+JSON.stringify(preflight.issues));
  }
+ if(name==='create_family_spec')reviewFamilySpec(args);
  const {response,result}=await gateway(name,args);
  return {content:[{type:'text',text:JSON.stringify(result)}],isError:!response.ok||result.ok!==true};
 }
