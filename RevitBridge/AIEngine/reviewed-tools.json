@@ -2230,5 +2230,72 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "76808BA4814D",
+    "inspection": false,
+    "tool": {
+      "name": "cylinder_flex",
+      "description": "Analytic cylinder audit and verified length-parameter flex. Upright full solid cylinder only. Radius changes may be rejected if parameter is not geometrically driving; height tested. Relative volume tolerance 0.01 percent.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "typeName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "expectedDimensionsMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "offsetMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "audit",
+              "flex"
+            ]
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
