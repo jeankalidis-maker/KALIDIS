@@ -84,3 +84,9 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [V] Nova implantação lado a lado: SHA256 8EB4B2D1C4627E90F4006B7E6ADEF8B5D5B2C13F2C70F802A51C18970F6BAF97; backup preservado. Revit ainda aberto.
 - [V] MCP 0.3.1 consulta catálogo real antes de anunciar ferramentas. Teste com DLL 0.1.0: 2 ferramentas read-only, 5 totais, exit 0. Catálogo de desenvolvimento tem 47 ferramentas e 48 ações batch; não equivale ao catálogo ativo.
 - [P] Reinício normal do Revit e smoke test em RVT separado. Integrações restantes e execução dinâmica in-process pendentes.
+
+## Avanço 20 — FamFab
+- [C] Adaptação efetiva de padrões NewBlend e NewReferencePlane de ArchSmarterFamFab, com licença MIT e revisão fixa em THIRD-PARTY-FamFab.txt. Até 50 blends e 50 planos X/Y; parâmetros adicionais de comprimento, número e texto, tipo/instância, fórmulas. Planos e parâmetros nominais de largura/profundidade não vinculados automaticamente à geometria; sweep e restrições geométricas pendentes.
+- [C] Build ec8d15b: 0 erros, 5 avisos, 6.93 s. 47 ferramentas MCP; create_family_spec ampliado.
+- [V] family_recipes.py: testes offline mesa de cinco extrusões e pedestal com dois blends, FAMILY_RECIPE_TESTS=PASS. RFA real ainda não gerado.
+- [V] DLL implantada lado a lado SHA256 5ADF2B1D6142C469122C4A7BF0799BD9AB2C3CDE1731243ABFB7D96F84EE831B, backup confirmado. Sessão Revit PID 644 ainda usa 0.1.0; templates RFT encontrados. Reinício normal e testes reais pendentes.
