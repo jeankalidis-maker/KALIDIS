@@ -2498,5 +2498,83 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "240E8B5DB189",
+    "inspection": false,
+    "tool": {
+      "name": "raster_building",
+      "description": "Create five walls, floor, two rooms and explicitly selected hosted door from confirmed rectangular raster geometry. Use image_to_walls.py and raster_building.py for extraction and gap confirmation; no automatic door classification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "levelId": {
+            "type": "integer"
+          },
+          "wallTypeId": {
+            "type": "integer"
+          },
+          "floorTypeId": {
+            "type": "integer"
+          },
+          "doorTypeId": {
+            "type": "integer"
+          },
+          "heightMm": {
+            "type": "number"
+          },
+          "minXmm": {
+            "type": "number"
+          },
+          "maxXmm": {
+            "type": "number"
+          },
+          "minYmm": {
+            "type": "number"
+          },
+          "maxYmm": {
+            "type": "number"
+          },
+          "dividerXmm": {
+            "type": "number"
+          },
+          "doorYmm": {
+            "type": "number"
+          },
+          "doorWidthMm": {
+            "type": "number"
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "levelId",
+          "wallTypeId",
+          "floorTypeId",
+          "doorTypeId",
+          "heightMm",
+          "minXmm",
+          "maxXmm",
+          "minYmm",
+          "maxYmm",
+          "dividerXmm",
+          "doorYmm",
+          "doorWidthMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
