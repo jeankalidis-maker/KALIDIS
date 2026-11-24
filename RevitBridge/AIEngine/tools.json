@@ -149,7 +149,7 @@
   },
   {
     "name": "batch",
-    "description": "Atomic batch up to 200 steps, millimeters. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan, beam, column, component, hosted_component, pipe, duct, conduit, cable_tray, opening, text, detail_line, viewport. Use typeId, levelId, systemTypeId, hostId, viewId or sheetId as appropriate; point/start/end are XYZ objects (z required for advanced actions). Optional alias on each step; subsequent ID fields may reference earlier aliases as $name. Also supports foundation, terrain (XYZ points), section, roof, model_line and tag. Also grid dimensions, schedule fields, type duplication, MEP elbow/union fittings; firstId and secondId accept earlier aliases.",
+    "description": "Atomic batch up to 200 steps, millimeters. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan, beam, column, component, hosted_component, pipe, duct, conduit, cable_tray, opening, text, detail_line, viewport. Use typeId, levelId, systemTypeId, hostId, viewId or sheetId as appropriate; point/start/end are XYZ objects (z required for advanced actions). Optional alias on each step; subsequent ID fields may reference earlier aliases as $name. Also supports foundation, terrain (XYZ points), section, roof, model_line and tag. Also grid dimensions, schedule fields, type duplication, MEP elbow/union fittings; firstId and secondId accept earlier aliases. Also wall top constraints, geometry joins, room tags, schedule placement, area plans, area boundary lines and areas.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -203,7 +203,15 @@
                   "schedule_field",
                   "duplicate_type",
                   "elbow",
-                  "union"
+                  "union",
+                  "wall_top_constraint",
+                  "join_geometry",
+                  "unjoin_geometry",
+                  "room_tag",
+                  "schedule_on_sheet",
+                  "area_plan",
+                  "area_boundary",
+                  "area"
                 ]
               }
             }
