@@ -26,12 +26,12 @@ public sealed class Application : IExternalApplication
         {
             Directory.CreateDirectory(Home);
             token = RandomNumberGenerator.GetBytes(32);
-            File.WriteAllText(Path.Combine(Home, "token.txt"), Convert.ToHexString(token));
             handler = new Handler();
             evt = ExternalEvent.Create(handler);
             listener = new HttpListener();
             listener.Prefixes.Add("http://127.0.0.1:7895/");
             listener.Start();
+            File.WriteAllText(Path.Combine(Home, "token.txt"), Convert.ToHexString(token));
             stop = new CancellationTokenSource();
             _ = Listen(stop.Token);
             return Result.Succeeded;
@@ -46,7 +46,7 @@ public sealed class Application : IExternalApplication
     public Result OnShutdown(UIControlledApplication app)
     {
         stop?.Cancel(); listener?.Close(); handler?.Cancel(); evt?.Dispose();
-        try { File.Delete(Path.Combine(Home, "token.txt")); } catch { }
+        try { var file=Path.Combine(Home,"token.txt");if(File.Exists(file)&&File.ReadAllText(file).Trim()==Convert.ToHexString(token))File.Delete(file); } catch { }
         return Result.Succeeded;
     }
     private async Task Listen(CancellationToken ct)
