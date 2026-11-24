@@ -1,5 +1,5 @@
 Adapted from https://github.com/KenLP/RevitMCPServer at fdf6efa23e57fe59effb8191666d04b4f73142a0
-Files: ListFamilyTypesCommand.cs, ListPhasesCommand.cs, ListViewTemplatesCommand.cs, GetLinkedFilesCommand.cs
+Files: ListFamilyTypesCommand.cs, ListPhasesCommand.cs, ListViewTemplatesCommand.cs, GetLinkedFilesCommand.cs, GetWorksetsCommand.cs, ListCategoriesCommand.cs, GetDoorsCommand.cs, GetElementRoomsCommand.cs, GetTagsInViewCommand.cs, GetLinkedElementsCommand.cs
 
 MIT License
 
