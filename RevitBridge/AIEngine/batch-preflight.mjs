@@ -43,6 +43,7 @@ const edits=new Set(['schedule_field','wall_top_constraint','join_geometry','unj
 const dist=(a,b,xy=false)=>Math.hypot(a.x-b.x,a.y-b.y,xy?0:(a.z??0)-(b.z??0));
 export function batchPreflight(args,registry){
  validate(registry.all.get('batch').tool.inputSchema,args,'batch');
+ if((args.expectedSession===undefined)!==(args.expectedRevision===undefined))throw Error('Both expectedSession and expectedRevision required together');
  if(!args.expectedPath.trim()||!args.expectedPath.toLowerCase().endsWith('.rvt'))throw Error('Expected RVT path');
  const aliases=new Set(),counts={},issues=[];
  let created=0,modified=0;

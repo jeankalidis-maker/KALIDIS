@@ -17,6 +17,8 @@ public sealed class Application : IExternalApplication
     private static long revision;
     internal static long ModelRevision=>Interlocked.Read(ref revision);
     private static void OnModelChanged(object? sender,Autodesk.Revit.DB.Events.DocumentChangedEventArgs args)=>Interlocked.Increment(ref revision);
+    private static void OnDocumentOpened(object? sender,Autodesk.Revit.DB.Events.DocumentOpenedEventArgs args)=>Interlocked.Increment(ref revision);
+    private static void OnDocumentClosed(object? sender,Autodesk.Revit.DB.Events.DocumentClosedEventArgs args)=>Interlocked.Increment(ref revision);
     private HttpListener? listener;
     private ExternalEvent? evt;
     private Handler? handler;
@@ -42,6 +44,8 @@ public sealed class Application : IExternalApplication
             var cancellation=stop.Token;
             listenerTask=Task.Run(()=>Listen(cancellation),cancellation);
             app.ControlledApplication.DocumentChanged+=OnModelChanged;
+            app.ControlledApplication.DocumentOpened+=OnDocumentOpened;
+            app.ControlledApplication.DocumentClosed+=OnDocumentClosed;
             return Result.Succeeded;
         }
         catch (Exception ex)
@@ -54,6 +58,8 @@ public sealed class Application : IExternalApplication
     public Result OnShutdown(UIControlledApplication app)
     {
         app.ControlledApplication.DocumentChanged-=OnModelChanged;
+        app.ControlledApplication.DocumentOpened-=OnDocumentOpened;
+        app.ControlledApplication.DocumentClosed-=OnDocumentClosed;
         stop?.Cancel(); listener?.Close(); handler?.Cancel(); evt?.Dispose();
         try { var file=Path.Combine(Home,"token.txt");if(File.Exists(file)&&File.ReadAllText(file).Trim()==Convert.ToHexString(token))File.Delete(file); } catch { }
         return Result.Succeeded;
@@ -155,16 +161,7 @@ public sealed class Application : IExternalApplication
             if(action=="new_test_project" || action=="open_test_project") return ProjectOperations.NewOrOpen(app,r,action,Path.Combine(Home,"Sandbox"));
             var d=app.ActiveUIDocument?.Document ?? throw new InvalidOperationException("No active document");
             if(action=="project_context") return ContextOperations.Read(app,d,r);
-            if(action=="snapshot")
-            {
-                var levels=new FilteredElementCollector(d).OfClass(typeof(Level)).Cast<Level>()
-                    .Select(x=>new { id=x.Id.Value,name=x.Name,elevationMm=UnitUtils.ConvertFromInternalUnits(x.Elevation,UnitTypeId.Millimeters) }).ToArray();
-                var walls=new FilteredElementCollector(d).OfClass(typeof(WallType)).Cast<WallType>()
-                    .Select(x=>new { id=x.Id.Value,name=x.Name,kind=x.Kind.ToString() }).ToArray();
-                var families=new FilteredElementCollector(d).OfClass(typeof(Family)).Cast<Family>()
-                    .Select(x=>new { id=x.Id.Value,name=x.Name }).ToArray();
-                return new { ok=true, title=d.Title, path=d.PathName, version=app.Application.VersionNumber, workshared=d.IsWorkshared, family=d.IsFamilyDocument, levels, wallTypes=walls, families, elapsedMs=watch.ElapsedMilliseconds };
-            }
+            if(action=="snapshot") return SnapshotOperations.Read(app,d);
             if(HorizunAudit.Actions.Contains(action)) return HorizunAudit.Read(d,r,action);
             if(KenLPPorts.Actions.Contains(action)) return KenLPPorts.Read(d,r,action);
             if(InspectionOperations.Actions.Contains(action)) return InspectionOperations.Read(app,d,r,action);
@@ -189,7 +186,14 @@ public sealed class Application : IExternalApplication
             if(action=="run_extension") return ExtensionOperations.Run(d,r,Home);
             if(action=="edit_elements") return ProjectOperations.Edit(d,r);
             if(action=="export_project") return ProjectOperations.Export(d,r,root);
-            if(action=="batch") return ModelOperations.Batch(d,r);
+            if(action=="batch"){
+                bool hasSession=r.TryGetProperty("expectedSession",out var session);
+                bool hasRevision=r.TryGetProperty("expectedRevision",out var expectedRevision);
+                if(hasSession!=hasRevision)throw new ArgumentException("Both expectedSession and expectedRevision are required together");
+                if(hasSession&&(session.GetString()!=SessionId||expectedRevision.GetInt64()!=ModelRevision))
+                    throw new InvalidOperationException("Stale model context: refresh snapshot before planning");
+                return ModelOperations.Batch(d,r);
+            }
             if(AdvancedOperations.Actions.Contains(action)) return AdvancedOperations.Write(app,d,r,action,root);
             if(action=="export_family") return ModelOperations.ExportFamily(d,r,root);
             var level=d.GetElement(new ElementId(r.GetProperty("levelId").GetInt64())) as Level ?? throw new InvalidOperationException("Invalid level");
