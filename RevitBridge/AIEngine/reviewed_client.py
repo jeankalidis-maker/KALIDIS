@@ -23,6 +23,11 @@ OPERATIONS = {
     "wall_attach_roof": ("14A6A6F23934", False),
     "rebar_inventory": ("18C56F5D6B28", True),
     "checked_wall_opening": ("3544CE89C7F1", False),
+    "mep_split": ("138475486420", False),
+    "view_review": ("1B9EB63F4F1F", False),
+    "native_material_schedule": ("9B40E496AB51", False),
+    "closed_stirrup": ("8C624632C082", False),
+    "layer_audit": ("6AF2D4EA2171", True),
 }
 def resolve(folder, operation):
     prefix, _ = OPERATIONS[operation]
