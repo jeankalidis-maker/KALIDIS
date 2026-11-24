@@ -135,3 +135,11 @@ Não há evidência de validação de escrita no Revit. Não há cobertura perce
 - [C] straight_stair: StairsEditScope, corrida reta, largura, verificação de espelhos e desnível, cancelamento dry-run, falhas recusadas. Mais 5 ações: railing, shaft_opening, wall_flip, conduit_sized, cable_tray_sized. Contratos consultados no RevitAPI.xml 2025 local. 52 ferramentas cadastradas e 58 ações batch; sessão atual 50 ferramentas. Build 6c6367e: 0 erros, 5 avisos, 7.17 s.
 - [V] Implantação lado a lado SHA256 0D8B2A8E91EC2AA5D5F04A9ED29D485BE6DA21991A2EF95D3CC465D3D1549EF4, backup confirmado, STAGE_EXIT=0. Projeto original preservado.
 - [P] Reinício normal para validar escada, guarda-corpo, shaft, elétrica dimensionada, telhado, Blend e diagnóstico de roteamento. Demais integrações completas ainda pendentes.
+
+## Avanço 30 — edição, biblioteca e robustez
+- [V] Testes reais: cópia, rotação, movimento, pin/unpin e exclusão de cópia temporária (326505). Exclusão simulada preservou elemento; commit confirmado por releitura. RVT salvo.
+- [V] Inventário: 446 RFA na biblioteca Autodesk instalada; buscas por sapata e cotovelo não localizaram RFA útil, somente templates RFT em inglês.
+- [V] library_stage.py: staging explícito por SHA256, criação exclusiva sem sobrescrever, teste fixture de hash incorreto e colisão aprovado; testado com RFA nativo gerado pelo próprio motor.
+- [V] Sapata geométrica 1200x1200x400 mm criada em RFA usando Metric Structural Foundation.rft, copiada por hash, carregada (família 326506) e instanciada (327191), dry-run/commit verificados, 44 ms internos, save confirmado. Não dimensionada para cargas reais.
+- [C] Batch informa índice e operação falha, separa IDs criados/modificados e limita escopo da verificação à existência/status transacional. Token escrito após bind do listener, remoção somente se pertencer à própria instância. Build ff7beef: 0 erros, 5 avisos, 3.98 s. DLL SHA256 BE4CA9614230AAF1E27BD64697B68B4CE3A206F3DD244C331CE88C7108CC270B implantada com backup. Sessão atual ainda 50 ferramentas; 52 cadastradas e 58 ações batch.
+- [P] Reinício e validação das mudanças compiladas, escadas, telhados, blends, conexões, bibliotecas externas e integração completa. Nenhum projeto original modificado.
