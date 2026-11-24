@@ -671,6 +671,12 @@
               },
               "depthParameter": {
                 "type": "string"
+              },
+              "baseParameter": {
+                "type": "string"
+              },
+              "endParameter": {
+                "type": "string"
               }
             },
             "required": [
