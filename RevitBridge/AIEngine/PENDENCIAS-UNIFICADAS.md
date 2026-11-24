@@ -5,13 +5,13 @@ Base: histórico até o avanço 125, commit 6a0834d, 24/11/2026. Consolidação 
 Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não validado no ambiente/escopo indicado; P = parcial; D = não implementado ou sem evidência de implementação; F = falha não resolvida. Todos os itens permanecem abertos até evidência de aceite.
 
 ## A — Implantação e conexão (prioridade crítica)
-- [ ] 001 [B] Instalar a DLL atualizada com backup, reinício normal e verificação do hash carregado.
+- [ ] 001 [B] Instalar a DLL atualizada com backup, reinício normal e verificação do hash carregado. **DLL compilada e hash conferido; Stage-Engine recusado pelo Windows Restricted mesmo sem -Stage (131).**
 - [ ] 002 [B] Restabelecer o MCP publicado no ChatGPT (SSE 429); testar initialize, catálogo e chamadas reais de leitura e escrita.
 - [ ] 003 [N] Validar project_context na DLL nova: documento, vista, seleção, sessão e sinal de revisão.
 - [ ] 004 [N] Validar cache no Revit: cacheHit, TTL, invalidação por DocumentChanged, abertura e fechamento de documentos.
 - [ ] 005 [N] Validar guarda de revisão real, incluindo rejeição de sessão/revisão obsoleta.
 - [ ] 006 [N] Validar cancelamento cooperativo real: antes da execução, durante lote, rollback e corrida com commit. **Politica de rollback de falhas do batch compilada; teste nativo ainda pendente (129).**
-- [ ] 007 [P] Atualizador próprio do AI Engine, instalação autorizada, rollback de versão e smoke test pós-instalação.
+- [ ] 007 [P] Atualizador próprio do AI Engine, instalação autorizada, rollback de versão e smoke test pós-instalação. **Instalador existente permanece impedido pela politica de execucao (131).**
 - [ ] 008 [P] Validar reinício/reconexão, perda de conexão, timeout, fila ocupada e recuperação sem repetir escritas. **Estado incerto reconciliado por leitura; limpeza com dependentes recusada (129).**
 
 ## B — Infraestrutura, segurança e autonomia
@@ -20,8 +20,8 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 011 [P] Desfazer/refazer para criação, edição, exclusão, tipos, famílias e operações dependentes (hoje movimento e comentário restritos). **Fixacao reversivel com forward/undo/redo confirmada e estado restaurado (130).**
 - [ ] 012 [P] Fila, controle de concorrência, telemetria, métricas e testes de carga em sessões longas.
 - [ ] 013 [P] Planejamento multioperação com dependências, dry-run, checkpoints e verificação posterior, incluindo efeitos externos. **Fluxo de fixacao com previa e readback independente (130).**
-- [ ] 014 [P] Contexto de projeto persistente, unidades, identificação de elementos, seleção e proteção contra alterações concorrentes.
-- [ ] 015 [P] Fluxo autorizado para trabalhar em projetos reais fora do Sandbox, com cópia, escopo, permissões, backup e proteção de documentos.
+- [ ] 014 [P] Contexto de projeto persistente, unidades, identificação de elementos, seleção e proteção contra alterações concorrentes. **Leitura de selecao e identidade em snapshot legado testada (131).**
+- [ ] 015 [P] Fluxo autorizado para trabalhar em projetos reais fora do Sandbox, com cópia, escopo, permissões, backup e proteção de documentos. **Copia RVT externa verificada por SHA256, escrita isolada e origem preservada (131).**
 - [ ] 016 [P] Testar limites de confiança das extensões C#, versões, assinaturas, caminhos e permissões; não executar código arbitrário sem revisão.
 - [ ] 017 [P] Testar todos os comandos anunciados no catálogo ativo e manter matriz por comando/versão/resultado.
 
@@ -101,13 +101,13 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 078 [P] Horizun: ampliar funções úteis de arquitetura, estrutura e MEP e verificar limites de licença/versão.
 - [ ] 079 [P] Dynamo: interpretar, construir e validar grafos variados, dependências, bindings, execução e efeitos externos; não executar grafos desconhecidos sem revisão.
 - [ ] 080 [P] Windows UI Automation: operações contextualizadas de interface, confirmação de estado e resultado, sem cliques cegos ou contorno de avisos. **Recuperacao de janela modal confirmada por leitura UIA; sem automacao de cliques (129).**
-- [ ] 081 [P] Kalidis legado: ampliar compatibilidade de operações e protocolos além de listar/info/inventário, com testes e escopo.
+- [ ] 081 [P] Kalidis legado: ampliar compatibilidade de operações e protocolos além de listar/info/inventário, com testes e escopo. **Leitura de selecao, snapshot_elemento e comandos nativos testada (131).**
 - [ ] 082 [P] Inventário comparativo por versão/licença de todos os projetos externos; decidir o que integrar, substituir ou excluir justificadamente.
 
 ## J — Homologação e entrega
 - [ ] 083 [P] Teste ponta a ponta de um projeto realista de arquitetura, estrutura, elétrica e hidráulica, com documentação e verificação independente.
 - [ ] 084 [P] Teste de desempenho, modelos grandes, sessões prolongadas, dados inconsistentes e falhas/reconexão.
-- [ ] 085 [P] Teste em cópias de projetos reais, incluindo links, worksharing e casos protegidos, com autorização explícita.
+- [ ] 085 [P] Teste em cópias de projetos reais, incluindo links, worksharing e casos protegidos, com autorização explícita. **Copia de fixture isolada validada; modelos reais e worksharing pendentes (131).**
 - [ ] 086 [P] Revisão de avisos de compilação, bugs conhecidos, dependências, permissões e segurança do release. **Preprocessador de falhas compilado, quatro avisos restantes; deploy pendente (129).** **Build novo motor 0 erros/4 avisos; catalogo122 ferramentas ativas (130).**
 - [ ] 087 [P] Manual de instalação, operação, recuperação e limites; versão publicada, matriz de testes e critérios de aceite. **Gates de instalacao, recuperacao e aceite documentados em RELEASE-RECOVERY.md (130).**
 - [ ] 088 [P] Homologação final pelo usuário: executar comandos pelo ChatGPT normal, sem Work, do pedido à verificação e entrega.
