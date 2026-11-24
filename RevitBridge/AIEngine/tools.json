@@ -908,6 +908,26 @@
               "path"
             ]
           }
+        },
+        "voidCuts": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "properties": {
+              "solidIndex": {
+                "type": "integer"
+              },
+              "voidIndex": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "solidIndex",
+              "voidIndex"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
