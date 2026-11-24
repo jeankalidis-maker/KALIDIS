@@ -17,7 +17,15 @@ internal static class AdvancedOperations
     internal static object Read(UIApplication app,Document d,JsonElement r,string action)
     {
         if(action=="native_status"){
-            var names=Enum.GetValues<PostableCommand>(); return new {ok=true,commands=names.Select(x=>{bool available=false;try{available=app.CanPostCommand(RevitCommandId.LookupPostableCommandId(x));}catch{}return new{name=x.ToString(),available};}).ToArray()};
+            var names=Enum.GetValues<PostableCommand>();
+            string query=r.TryGetProperty("query",out var q)?q.GetString()??"":"";
+            bool onlyAvailable=r.TryGetProperty("availableOnly",out var flag)&&flag.ValueKind==JsonValueKind.True;
+            var allowed=new[]{"TileViews","ThinLines","ProjectBrowser","TogglePropertiesPalette","SystemBrowser","ToggleRevealHiddenElementsMode"};
+            var commands=names.Where(x=>x.ToString().Contains(query,StringComparison.OrdinalIgnoreCase)).Select(x=>{
+                bool available=false;try{available=app.CanPostCommand(RevitCommandId.LookupPostableCommandId(x));}catch{}
+                return new{name=x.ToString(),available,approvedForPosting=allowed.Contains(x.ToString(),StringComparer.Ordinal),requiresContext=true};
+            }).Where(x=>!onlyAvailable||x.available).ToArray();
+            return new{ok=true,totalNative=names.Length,matched=commands.Length,commands,note="Available means Revit can accept a UI command now, not that autonomous model creation is supported."};
         }
         if(action=="types")return new {ok=true,types=new FilteredElementCollector(d).WhereElementIsElementType().Cast<ElementType>().Take(10000).Select(x=>new{id=x.Id.Value,name=x.Name,category=x.Category?.Name,kind=x.GetType().Name}).ToArray()};
         if(action=="family_info"){
