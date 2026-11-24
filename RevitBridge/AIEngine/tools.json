@@ -618,7 +618,7 @@
   },
   {
     "name": "create_family_spec",
-    "description": "Generate native RFA with 1-100 polygonal extrusions, optional void geometry, shared height parameters and formulas. Void cutting behavior requires verification. Optional FamFab-inspired blends, X/Y reference planes and typed instance/type parameters. Reference planes are not automatically constrained to geometry.",
+    "description": "Generate native RFA with up to 100 extrusions, optional blends, swept forms, reference planes, parameters and formulas. Supply at least one form; sweeps use planar line/arc paths and round or rectangular profiles. Void cutting and geometric constraints require verification.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -808,6 +808,104 @@
               "name",
               "kind",
               "value"
+            ]
+          }
+        },
+        "sweeps": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "properties": {
+              "zMm": {
+                "type": "number"
+              },
+              "radiusMm": {
+                "type": "number"
+              },
+              "widthMm": {
+                "type": "number"
+              },
+              "heightMm": {
+                "type": "number"
+              },
+              "void": {
+                "type": "boolean"
+              },
+              "path": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 100,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "line",
+                        "arc"
+                      ]
+                    },
+                    "start": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "end": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "mid": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "start",
+                    "end"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "zMm",
+              "path"
             ]
           }
         }
