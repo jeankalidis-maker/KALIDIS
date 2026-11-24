@@ -2,6 +2,9 @@ using System.Diagnostics;
 using System.Text.Json;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.DB.Plumbing;
+using Autodesk.Revit.DB.Mechanical;
+using Autodesk.Revit.DB.Electrical;
 
 namespace Kalidis.AIEngine;
 internal static class ModelOperations
@@ -17,6 +20,7 @@ internal static class ModelOperations
     private static T Get<T>(Document d,JsonElement r,string k) where T:Element =>
         d.GetElement(Id(r,k)) as T ?? throw new ArgumentException("Invalid "+k);
     private static XYZ P(JsonElement r,double z=0) => new(Mm(N(r,"x")),Mm(N(r,"y")),z);
+    private static XYZ P3(JsonElement r) => new(Mm(N(r,"x")),Mm(N(r,"y")),Mm(N(r,"z")));
     private static CurveLoop Profile(JsonElement r,double z)
     {
         var p=r.GetProperty("points").EnumerateArray().Select(x=>P(x,z)).ToArray();
@@ -75,6 +79,36 @@ internal static class ModelOperations
             case "plan": {
                 var t=Get<ViewFamilyType>(d,r,"typeId");var l=Get<Level>(d,r,"levelId");var v=ViewPlan.Create(d,t.Id,l.Id);v.Name=S(r,"name");return v.Id;
             }
+            case "beam": {
+                var l=Get<Level>(d,r,"levelId"); var t=Get<FamilySymbol>(d,r,"typeId");
+                if(!t.IsActive){t.Activate();d.Regenerate();}
+                return d.Create.NewFamilyInstance(Line.CreateBound(P3(r.GetProperty("start")),P3(r.GetProperty("end"))),t,l,StructuralType.Beam).Id;
+            }
+            case "column":
+            case "component": {
+                var l=Get<Level>(d,r,"levelId");var t=Get<FamilySymbol>(d,r,"typeId");
+                if(!t.IsActive){t.Activate();d.Regenerate();}
+                return d.Create.NewFamilyInstance(P3(r.GetProperty("point")),t,l,S(r,"action")=="column"?StructuralType.Column:StructuralType.NonStructural).Id;
+            }
+            case "hosted_component": {
+                var l=Get<Level>(d,r,"levelId");var t=Get<FamilySymbol>(d,r,"typeId");var host=Get<Wall>(d,r,"hostId");
+                if(!t.IsActive){t.Activate();d.Regenerate();}
+                return d.Create.NewFamilyInstance(P3(r.GetProperty("point")),t,host,l,StructuralType.NonStructural).Id;
+            }
+            case "pipe": return Pipe.Create(d,Id(r,"systemTypeId"),Id(r,"typeId"),Id(r,"levelId"),P3(r.GetProperty("start")),P3(r.GetProperty("end"))).Id;
+            case "duct": return Duct.Create(d,Id(r,"systemTypeId"),Id(r,"typeId"),Id(r,"levelId"),P3(r.GetProperty("start")),P3(r.GetProperty("end"))).Id;
+            case "conduit": return Conduit.Create(d,Id(r,"typeId"),P3(r.GetProperty("start")),P3(r.GetProperty("end")),Id(r,"levelId")).Id;
+            case "cable_tray": return CableTray.Create(d,Id(r,"typeId"),P3(r.GetProperty("start")),P3(r.GetProperty("end")),Id(r,"levelId")).Id;
+            case "opening": {
+                var wall=Get<Wall>(d,r,"hostId");return d.Create.NewOpening(wall,P3(r.GetProperty("start")),P3(r.GetProperty("end"))).Id;
+            }
+            case "text": {
+                var v=Get<View>(d,r,"viewId");return TextNote.Create(d,v.Id,P3(r.GetProperty("point")),S(r,"text"),Id(r,"typeId")).Id;
+            }
+            case "detail_line": {
+                var v=Get<View>(d,r,"viewId");return d.Create.NewDetailCurve(v,Line.CreateBound(P3(r.GetProperty("start")),P3(r.GetProperty("end")))).Id;
+            }
+            case "viewport": return Viewport.Create(d,Id(r,"sheetId"),Id(r,"viewId"),P3(r.GetProperty("point"))).Id;
             default:throw new ArgumentException("Unsupported batch action: "+S(r,"action"));
         }
     }
