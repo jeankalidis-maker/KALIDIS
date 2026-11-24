@@ -1259,5 +1259,69 @@
         "openWorldHint": false
       }
     }
+  },
+  {
+    "sourcePrefix": "D27CFDC5796F",
+    "inspection": false,
+    "tool": {
+      "name": "profile_flex",
+      "description": "Duplicate family type and instance, set explicit length parameters, verify expected XYZ bounding-box dimensions and original preservation. Does not certify internal geometry.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expectedPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer"
+          },
+          "typeName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "expectedDimensionsMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "offsetMm": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "commit": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedPath",
+          "id",
+          "typeName",
+          "parameters",
+          "expectedDimensionsMm",
+          "offsetMm"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
   }
 ]
