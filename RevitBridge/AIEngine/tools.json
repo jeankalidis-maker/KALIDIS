@@ -149,7 +149,7 @@
   },
   {
     "name": "batch",
-    "description": "Atomic batch up to 200 steps, millimeters. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan, beam, column, component, hosted_component, pipe, duct, conduit, cable_tray, opening, text, detail_line, viewport. Use typeId, levelId, systemTypeId, hostId, viewId or sheetId as appropriate; point/start/end are XYZ objects (z required for advanced actions). Optional alias on each step; subsequent ID fields may reference earlier aliases as $name. Also supports foundation, terrain (XYZ points), section, roof, model_line and tag. Also grid dimensions, schedule fields, type duplication, MEP elbow/union fittings; firstId and secondId accept earlier aliases. Also wall top constraints, geometry joins, room tags, schedule placement, area plans, area boundary lines and areas. Also view template, detail level, section box, duplicate view, visibility, group and perspective camera. Also mirror copy, sized pipes/ducts, transition and tee fittings. thirdId can reference a prior alias.",
+    "description": "Atomic batch up to 200 steps, millimeters. Actions: level, wall, floor, ceiling, room, grid, material, view3d, plan, beam, column, component, hosted_component, pipe, duct, conduit, cable_tray, opening, text, detail_line, viewport. Use typeId, levelId, systemTypeId, hostId, viewId or sheetId as appropriate; point/start/end are XYZ objects (z required for advanced actions). Optional alias on each step; subsequent ID fields may reference earlier aliases as $name. Also supports foundation, terrain (XYZ points), section, roof, model_line and tag. Also grid dimensions, schedule fields, type duplication, MEP elbow/union fittings; firstId and secondId accept earlier aliases. Also wall top constraints, geometry joins, room tags, schedule placement, area plans, area boundary lines and areas. Also view template, detail level, section box, duplicate view, visibility, group and perspective camera. Also mirror copy, sized pipes/ducts, transition and tee fittings. thirdId can reference a prior alias. Also railings, shafts, wall orientation and sized electrical containment.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -224,7 +224,12 @@
                   "pipe_sized",
                   "duct_sized",
                   "transition",
-                  "tee"
+                  "tee",
+                  "railing",
+                  "shaft_opening",
+                  "wall_flip",
+                  "conduit_sized",
+                  "cable_tray_sized"
                 ]
               }
             }
@@ -1596,6 +1601,80 @@
       "readOnlyHint": true,
       "destructiveHint": false,
       "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "straight_stair",
+    "description": "Create one straight native stair run between two levels. Explicit plan path in mm, width, optional stair type. Dry-run default; checks riser count and top elevation; rejects failures. Does not certify code compliance.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "expectedPath": {
+          "type": "string"
+        },
+        "baseLevelId": {
+          "type": "integer"
+        },
+        "topLevelId": {
+          "type": "integer"
+        },
+        "typeId": {
+          "type": "integer"
+        },
+        "start": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "end": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "widthMm": {
+          "type": "number"
+        },
+        "commit": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedPath",
+        "baseLevelId",
+        "topLevelId",
+        "start",
+        "end",
+        "widthMm"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false,
       "openWorldHint": false
     }
   }
