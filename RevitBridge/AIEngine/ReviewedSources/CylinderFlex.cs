@@ -25,7 +25,7 @@ public sealed class CylinderFlex : IReviewedOperation {
    var caps=solids[0].Faces.Cast<Face>().OfType<PlanarFace>().Where(f=>Math.Abs(f.FaceNormal.Z)>0.99999).ToArray();
    if(caps.Length!=2)throw new InvalidOperationException("Expected two planar caps");
    double h=Math.Abs(caps[0].Origin.Z-caps[1].Origin.Z);
-   if(h<=0||Math.Abs(solids[0].Volume-Math.PI*r*r*h)>Math.PI*r*r*h*1e-6)throw new InvalidOperationException("Not a full solid cylinder");
+   if(h<=0||Math.Abs(solids[0].Volume-Math.PI*r*r*h)>Math.PI*r*r*h*1e-6)throw new InvalidOperationException($"Not a full solid cylinder: radiusMm={ToMm(r)}, heightMm={ToMm(h)}, actualM3={UnitUtils.ConvertFromInternalUnits(solids[0].Volume,UnitTypeId.CubicMeters)}, analyticM3={UnitUtils.ConvertFromInternalUnits(Math.PI*r*r*h,UnitTypeId.CubicMeters)}, faces={solids[0].Faces.Size}, capAreas={string.Join(",",caps.Select(f=>UnitUtils.ConvertFromInternalUnits(f.Area,UnitTypeId.SquareMeters)))}");
    return new[]{ToMm(2*r),ToMm(2*r),ToMm(h)};
   }
   object Report(FamilyInstance e){var dims=Size(e);return new{id=e.Id.Value,dimensionsMm=dims,radiusMm=dims[0]/2,heightMm=dims[2],volumeM3=UnitUtils.ConvertFromInternalUnits(Solids(e.get_Geometry(new Options{DetailLevel=ViewDetailLevel.Fine})).Sum(s=>s.Volume),UnitTypeId.CubicMeters)};}
