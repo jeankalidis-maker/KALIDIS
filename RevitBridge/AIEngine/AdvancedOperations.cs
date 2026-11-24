@@ -86,7 +86,7 @@ internal static class AdvancedOperations
                         if(shape.TryGetProperty("widthParameter",out var wp)||shape.TryGetProperty("depthParameter",out _)){
                             var widthName=shape.GetProperty("widthParameter").GetString()??throw new ArgumentException("Width parameter required");
                             var depthName=shape.GetProperty("depthParameter").GetString()??throw new ArgumentException("Depth parameter required");
-                            FamilyProfileConstraints.Bind(fd,extrusion,points,parameters,widthName,depthName);
+                            FamilyProfileConstraints.Bind(fd,extrusion,points,parameters,widthName,depthName,shape.TryGetProperty("xParameter",out var xp)?xp.GetString():null,shape.TryGetProperty("yParameter",out var yp)?yp.GetString():null);
                         }
                         if(shape.TryGetProperty("heightParameter",out var label)){
                             string name=label.GetString()??throw new ArgumentException("Invalid parameter");
