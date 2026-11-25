@@ -52,7 +52,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 ## E — Autocorreção geométrica e coordenação
 - [ ] 038 [F] Junção física de paredes e acabamento das extremidades: wall_join_finish / JoinGeometryUtils ainda sem validação positiva. **Join em X aceito; acabamento L e ensaio de sobreposicao pendentes; modal/estado incerto no ultimo ensaio (128).** **Sobreposicao experimental0.7065m3 identificada; acabamento ainda sem resolucao (129).** **Rollback nativo de sobreposicao com aviso registrado, sem modal; acabamento ainda pendente (132).** **Join nativo de L recusado em preview, acabamento continua pendente (135).**
 - [ ] 039 [P] Reparo de paredes em L/T/X, curvas, múltiplos encontros e dependências de portas, janelas e elementos estruturais. **Join em X sem sobreposicao residual, mas sem prova de correcao de intersecao previa (128).** **Prevencao de paredes paralelas sobrepostas no mesmo lote (129).** **Novo reparo de eixo300mm para zero, ancora preservada (135).**
-- [ ] 040 [P] Detectar e corrigir perfis 3D, curvas, furos e degenerações além de polígonos XY. **Rejeicao de furo externo e arco degenerado (128).** **Verificacao conservadora de eixos e espessuras (129).**
+- [x] 040 [V] Diagnostico de perfis planos orientados em 3D, linhas/arcos, multiplos furos, coplanaridade, intersecoes e correcoes exatas de segmentos; seis ensaios nativos transientes e testes offline aprovados (162). Nao altera elementos existentes nem cobre superficies nao planas/splines.
 - [ ] 041 [P] Autocorreção de mobiliário em ambientes não retangulares, circulação, giro de portas, suportes e acessibilidade.
 - [ ] 042 [P] Validar reparo e interferência com vínculos RVT rotacionados/transladados e coordenadas compartilhadas.
 - [ ] 043 [P] Reparo de redes MEP conectadas com restrições e múltiplos obstáculos; ampliar bypass de tubos para outras configurações.
@@ -114,6 +114,6 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 
 ## Resumo
 
-65 itens abertos: 1 bloqueado, 0 nao validados, 62 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 23 encerrados de 88 (001, 003, 004, 005, 008, 010, 012, 014, 026, 029, 046, 049, 054, 057, 063, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
+64 itens abertos: 1 bloqueado, 0 nao validados, 61 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 24 encerrados de 88 (001, 003, 004, 005, 008, 010, 012, 014, 026, 029, 040, 046, 049, 054, 057, 063, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.
