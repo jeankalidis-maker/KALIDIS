@@ -91,17 +91,17 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 070 [P] Fluxo de importação/coordenação IFC, round-trip e interoperabilidade com outros formatos.
 
 ## I — Integrações externas
-- [ ] 071 [P] BIMCraft: completar registro, schemas, contexto, recuperação, undo/redo e simulação; adaptar conceitos, não copiar motor.
-- [ ] 072 [P] KenLP: comparar inventário upstream e adaptar comandos complementares úteis com transações e testes.
-- [ ] 073 [N] pyRevit: instalação separada e autorizada; executar e validar a extensão de auditoria desenvolvida.
-- [ ] 074 [P] AndreyStartsev: ampliar workflows Python estruturados para outras categorias/parâmetros e integração pyRevit.
+- [ ] 071 [P] BIMCraft: completar registro, schemas, contexto, recuperação, undo/redo e simulação; adaptar conceitos, não copiar motor. **Prioridade de integracao e gates em PLUGIN-PACK-139.md; simulacao/undo geral pendentes.**
+- [ ] 072 [P] KenLP: comparar inventário upstream e adaptar comandos complementares úteis com transações e testes. **Cinco novos ports nativos compilados e tres workflows KenLP ativos validados (139); deploy dos nativos pendente.**
+- [ ] 073 [N] pyRevit: instalação separada e autorizada; executar e validar a extensão de auditoria desenvolvida. **Instalador oficial pyRevit7.1 per-user baixado, SHA256 e Authenticode Valid; instalacao/execucao ainda pendentes (139).**
+- [ ] 074 [P] AndreyStartsev: ampliar workflows Python estruturados para outras categorias/parâmetros e integração pyRevit. **Exemplo upstream de atualizacao em lote revisado, workflow Comments estruturado em C#/JS validado; Python ampliado pendente (139).**
 - [x] 075 [V] Encerrado por exclusao justificada do CAD-MCP (licenca TBD no commit fixo), substituido por C# proprio revisado e validado. Nao incorpora codigo upstream (134).
-- [ ] 076 [P] Mvclr: completar revisão de comandos úteis e testes de operações complementares.
-- [ ] 077 [P] FamFab: fluxo de imagem/referência para RFA, integração de recursos úteis e revisão de dependências/API/custo. **Sweep composto RFA confirmado no motor proprio; imagem ainda pendente (134).** **Fluxo medidas explicitas -> receita -> RFA -> instancia -> auditoria passou para mesa; foto e desenho real pendentes (138).**
-- [ ] 078 [P] Horizun: ampliar funções úteis de arquitetura, estrutura e MEP e verificar limites de licença/versão.
-- [ ] 079 [P] Dynamo: interpretar, construir e validar grafos variados, dependências, bindings, execução e efeitos externos; não executar grafos desconhecidos sem revisão.
+- [ ] 076 [P] Mvclr: completar revisão de comandos úteis e testes de operações complementares. **get_element_properties separa instancia/tipo e passou no Revit (139).**
+- [ ] 077 [P] FamFab: fluxo de imagem/referência para RFA, integração de recursos úteis e revisão de dependências/API/custo. **Sweep composto RFA confirmado no motor proprio; imagem ainda pendente (134).** **Fluxo medidas explicitas -> receita -> RFA -> instancia -> auditoria passou para mesa; foto e desenho real pendentes (138).** **Receita dimensional138 mantida, gates de imagem e dependencias documentados (139).**
+- [ ] 078 [P] Horizun: ampliar funções úteis de arquitetura, estrutura e MEP e verificar limites de licença/versão. **Coherence.cs revisado; auditorias adicionais ainda pendentes (139).**
+- [ ] 079 [P] Dynamo: interpretar, construir e validar grafos variados, dependências, bindings, execução e efeitos externos; não executar grafos desconhecidos sem revisão. **Gates de grafos revisados mantidos no pacote de plugins (139).**
 - [x] 080 [V] Operacoes contextuais de ativacao/zoom e restauracao da vista por API nativa com verificacao UIA, sem cliques cegos ou confirmacao automatica de avisos; roundtrip validado (137). UIA somente leitura.
-- [ ] 081 [P] Kalidis legado: ampliar compatibilidade de operações e protocolos além de listar/info/inventário, com testes e escopo. **Leitura de selecao, snapshot_elemento e comandos nativos testada (131).**
+- [ ] 081 [P] Kalidis legado: ampliar compatibilidade de operações e protocolos além de listar/info/inventário, com testes e escopo. **Leitura de selecao, snapshot_elemento e comandos nativos testada (131).** **Snapshot legado com parametros, geometria e solidos validado em dois IDs (139).**
 - [x] 082 [V] Inventario por revisao/licenca, comparacao de funcoes e decisoes de adocao/exclusao documentados em INTEGRATION-REGISTER.md (134); implementacoes individuais continuam abertas.
 
 ## J — Homologação e entrega

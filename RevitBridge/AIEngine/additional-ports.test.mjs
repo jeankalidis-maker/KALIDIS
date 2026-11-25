@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';import {runPort} from './additional-ports.mjs';
+const p='C:/test.rvt',c={ok:true,path:p,session:'s',revision:1};const e=(id,typeId,value)=>({id,typeId,uniqueId:'u'+id,category:'Furniture',parameters:[{id:-1010106,name:'Comments',storage:'String',value,readOnly:false}]});const data=[e(1,3,'source'),e(2,3,'target'),e(3,-1,'type')];const call=async(n,a)=>{if(n==='project_context')return c;if(n==='element_info')return {elements:data.filter(e=>a.ids.includes(e.id))};if(n==='geometry_review')return {status:'RolledBack',result:{elements:[{id:1,minMm:[0,0,0],maxMm:[10,10,10]},{id:2,minMm:[20,0,0],maxMm:[30,10,10]}]}};if(n==='solid_audit')return {status:'RolledBack',result:{elements:[{id:1,volumeM3:1},{id:2,volumeM3:1}]}};if(n==='edit_elements'){if(a.commit)data[1].parameters[0].value=a.steps[0].value;return {status:a.commit?'Committed':'RolledBack'}}throw Error(n)};
+assert.equal((await runPort('get_parameter',{expectedPath:p,id:1,parameterId:-1010106},call)).parameter.value,'source');
+await assert.rejects(runPort('get_parameter',{expectedPath:p,id:1},call),/selector/);
+assert.equal((await runPort('get_element_properties',{expectedPath:p,id:1},call)).type.id,3);
+assert.equal((await runPort('check_clearance',{expectedPath:p,firstId:1,secondId:2,minimumMm:5},call)).distanceMm,10);
+assert.equal((await runPort('legacy_geometry_snapshot',{expectedPath:p,requestId:'test',ids:[1,2]},call)).elementos.length,2);
+const a={expectedPath:p,sourceId:1,sourceUniqueId:'u1',expectedSource:'source',targets:[{id:2,uniqueId:'u2',expectedBefore:'target'}]};
+assert.equal((await runPort('copy_text_parameter',a,call)).targets[0].after,'target');
+assert.equal((await runPort('copy_text_parameter',{...a,commit:true},call)).targets[0].after,'source');
+await assert.rejects(runPort('copy_text_parameter',{...a,commit:true},call),/mismatch/);
+console.log('ADDITIONAL_PORTS_TESTS=PASS');
