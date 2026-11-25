@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import {loadRegistry,validate} from './command-registry.mjs';import {validateClosedProfile} from './profile-topology.mjs';
+const r=await loadRegistry(process.cwd()),p='C:/Sandbox/Smoke.rvt',rgb={r:25,g:110,b:170},uid='fixture';
+const args={select_elements:{expectedPath:p,viewId:312,ids:[1,2],expectedIds:[]},isolate_elements_in_view:{expectedPath:p,viewId:312,ids:[1],reset:false},array_linear:{expectedPath:p,id:1,uniqueId:uid,count:3,spacing:{x:0,y:3000,z:0}},ungroup_elements:{expectedPath:p,groupId:3,uniqueId:uid,expectedMemberIds:[1,2]},create_filled_region:{expectedPath:p,viewId:312,typeId:86143,points:[{x:0,y:0},{x:2000,y:0},{x:2000,y:1000},{x:0,y:1000}]},override_element_graphics:{expectedPath:p,viewId:312,ids:[1],color:rgb,expectedColor:null,transparency:35,expectedTransparency:0},list_category_parameters:{expectedPath:p,categoryId:-2000080,ids:[1]},reversible_text_parameters:{expectedPath:p,direction:'undo',changes:[{id:1,uniqueId:uid,parameterId:-1010106,before:'',after:'test'}]},clear_colors:{expectedPath:p,viewId:312,ids:[1],expectedColor:rgb,expectedTransparency:35},zoom_to_elements:{expectedPath:p,viewId:312,ids:[1]}};
+for(const [name,a] of Object.entries(args)){const t=r.all.get(name)?.tool;assert(t);assert.equal(t.annotations.readOnlyHint,false);validate(t.inputSchema,a);assert.throws(()=>validate(t.inputSchema,{...a,unexpected:true}),/unknown/)}
+assert.throws(()=>validate(r.all.get('array_linear').tool.inputSchema,{...args.array_linear,count:31}),/bounds/);
+assert.throws(()=>validate(r.all.get('select_elements').tool.inputSchema,{...args.select_elements,ids:[1,1]}),/duplicate/);
+assert.throws(()=>validate(r.all.get('reversible_text_parameters').tool.inputSchema,{...args.reversible_text_parameters,changes:[{...args.reversible_text_parameters.changes[0],before:null}]}),/type/);
+assert.equal(validateClosedProfile(args.create_filled_region.points),2000000);
+assert.throws(()=>validateClosedProfile([{x:0,y:0},{x:1,y:1},{x:0,y:1},{x:1,y:0}]),/intersect/);
+console.log('PLUGIN_COMPLETION_SCHEMA_TESTS=PASS; 10 commands');

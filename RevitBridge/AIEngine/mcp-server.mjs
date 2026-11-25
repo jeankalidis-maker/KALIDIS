@@ -1,3 +1,4 @@
+import {validateClosedProfile} from './profile-topology.mjs';
 import {planStatus,planStatusTool} from './agent-plan-status.mjs';
 import {pythonBatchTool,pythonBatchAvailable,pythonBatchPreview} from './pyrevit-parameter-preview.mjs';
 import {scopedQuery,scopedQueryTool} from './scoped-parameter-query.mjs';
@@ -139,6 +140,7 @@ async function callUnjournaled(name,args){
   if(args.formCuts!==undefined&&catalog.result.groupedFamilyCuts!==true)throw Error('Grouped form cuts require a newer loaded Revit engine');
   reviewFamilySpec(args);
  }
+ if(name==='create_filled_region')validateClosedProfile(args.points);
  if(name==='edit_elements'){
   reviewEdits(args);
   if(args.commit===true&&args.steps.some(s=>s.action==='delete')){
