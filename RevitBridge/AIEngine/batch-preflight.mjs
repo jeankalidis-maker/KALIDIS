@@ -74,3 +74,5 @@ export function batchPreflight(args,registry){
  return {ok:issues.length===0,executed:false,geometricallyVerified:false,commitRequested:args.commit===true,steps:args.steps.length,estimatedCreates:created,estimatedEdits:modified,counts,issues,limitations:'Static argument and dependency checks only. Native Revit dry-run is required for types, topology, geometry, permissions and transactions.'};
 }
 export function coveredActions(){return Object.keys(schemas).sort()}
+
+export function batchActionSchemas(){return structuredClone(schemas)}

@@ -1,0 +1,3 @@
+import assert from 'node:assert/strict';import {agentCatalog} from './agent-command-catalog.mjs';
+const live=[{name:'agent_plan',description:'script',annotations:{}},{name:'batch',description:'batch',inputSchema:{properties:{steps:{items:{properties:{action:{enum:['wall','floor','hide_elements']}}}}}}}];
+const r=agentCatalog({includeSchemas:true},live);assert.equal(r.actions.length,3);assert(r.actions.find(x=>x.name==='wall').agentPlan);assert(!r.actions.find(x=>x.name==='hide_elements').agentPlan);assert(r.actions.find(x=>x.name==='wall').inputSchema.properties.heightMm);assert.equal(agentCatalog({query:'floor'},live).actions.length,1);assert.equal(agentCatalog({},[]).actions.length,0);console.log('AGENT_CATALOG_TESTS=PASS');
