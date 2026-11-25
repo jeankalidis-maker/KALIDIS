@@ -54,30 +54,64 @@ internal static class AdvancedOperations
             try{
                 using(var tx=new Transaction(fd,"Kalidis - family specification")){
                     if(tx.Start()!=TransactionStatus.Started)throw new InvalidOperationException("Transaction failed");
+                    if(r.TryGetProperty("expectedCategory",out var category)){
+                        string cat=category.GetString()??throw new ArgumentException("Category required");
+                        if(cat is not ("OST_Casework" or "OST_Furniture" or "OST_GenericModel" or "OST_Doors" or "OST_Windows" or "OST_SpecialityEquipment")||!Enum.TryParse<BuiltInCategory>(cat,out var bic)||fd.OwnerFamily.FamilyCategory?.Id.Value!=(long)bic)throw new InvalidOperationException("Installed template category differs from definition");
+                    }
                     var fm=fd.FamilyManager;if(fm.CurrentType==null)fm.NewType("Default");
                     var parameters=new Dictionary<string,FamilyParameter>(StringComparer.OrdinalIgnoreCase);
                     var extrusions=new List<Extrusion>();
                     var allForms=new List<GenericForm>();
+                    string formAxis(JsonElement spec){
+                        string a=spec.TryGetProperty("axis",out var v)?v.GetString()??"z":"z";
+                        if(a is not ("x" or "y" or "z"))throw new ArgumentException("Invalid form axis");
+                        return a;
+                    }
+                    XYZ map(string a,double u,double v,double w)=>a=="x"?new XYZ(w,u,v):a=="y"?new XYZ(u,w,v):new XYZ(u,v,w);
+                    XYZ normal(string a)=>map(a,0,0,1);
+                    var subs=new Dictionary<string,Category>(StringComparer.OrdinalIgnoreCase);
+                    if(r.TryGetProperty("subcategories",out var subSpec)){
+                        if(subSpec.GetArrayLength()>50)throw new ArgumentException("Maximum 50 subcategories");
+                        var parent=fd.OwnerFamily.FamilyCategory??throw new InvalidOperationException("Family category missing");
+                        foreach(var item in subSpec.EnumerateArray()){
+                            string name=item.GetString()??throw new ArgumentException("Subcategory name");
+                            if(name.Length<1||name.Length>80||subs.ContainsKey(name))throw new ArgumentException("Invalid or duplicate subcategory");
+                            var existing=parent.SubCategories.Cast<Category>().SingleOrDefault(c=>c.Name.Equals(name,StringComparison.OrdinalIgnoreCase));
+                            subs.Add(name,existing??fd.Settings.Categories.NewSubcategory(parent,name));
+                        }
+                    }
+                    void assign(GenericForm form,JsonElement spec){
+                        if(spec.TryGetProperty("subcategory",out var v)){
+                            if(!subs.TryGetValue(v.GetString()??"",out var sub))throw new ArgumentException("Undeclared subcategory");
+                            form.Subcategory=sub;
+                        }
+                    }
                     foreach(var shape in shapes){
                         var z=dimension(shape,"zMm",-30000,30000);
                         var h=dimension(shape,"heightMm",1,30000);
+                        string a=formAxis(shape);
                         bool circular=shape.TryGetProperty("radiusMm",out _);
-                        var points=circular?new[]{new XYZ(0,0,z),new XYZ(1,0,z),new XYZ(0,1,z)}:shape.GetProperty("points").EnumerateArray().Select(p=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),z)).ToArray();
+                        if(a!="z"&&new[]{"baseParameter","endParameter","heightParameter","widthParameter","depthParameter","xParameter","yParameter","radiusParameter"}.Any(k=>shape.TryGetProperty(k,out _)))throw new ArgumentException("Driving constraints currently require z extrusion");
+                        var points=circular?new[]{new XYZ(0,0,z),new XYZ(1,0,z),new XYZ(0,1,z)}:shape.GetProperty("points").EnumerateArray().Select(p=>map(a,dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),z)).ToArray();
                         if(points.Length<3||points.Length>100)throw new ArgumentException("3-100 vertices");
                         var relative=shape.TryGetProperty("baseParameter",out _);
                         if(relative&&shape.TryGetProperty("heightParameter",out _))throw new ArgumentException("Use endParameter with baseParameter; height is end minus base");
                         if(relative&&((shape.TryGetProperty("void",out var relativeVoid)&&relativeVoid.ValueKind==JsonValueKind.True)||z<0))throw new ArgumentException("Relative vertical offsets require a solid at nonnegative base");
                         if(relative)points=points.Select(p=>new XYZ(p.X,p.Y,0)).ToArray();
-                        var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,relative?0:z)));
+                        var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(normal(a),map(a,0,0,relative?0:z)));
                         var ca=new CurveArray();
                         if(circular){
-                            double rad=dimension(shape,"radiusMm",10,10000);var center=new XYZ(0,0,z);if(shape.TryGetProperty("radiusParameter",out _)){ca.Append(Arc.Create(center,rad,0,Math.PI,XYZ.BasisX,XYZ.BasisY));ca.Append(Arc.Create(center,rad,Math.PI,Math.PI*2,XYZ.BasisX,XYZ.BasisY));}else ca.Append(Arc.Create(center,rad,0,Math.PI*2,XYZ.BasisX,XYZ.BasisY));
+                            double rad=dimension(shape,"radiusMm",10,10000);
+                            double u=0,v=0;if(shape.TryGetProperty("centerMm",out var centerSpec)){u=dimension(centerSpec,"x",-30000,30000);v=dimension(centerSpec,"y",-30000,30000);}
+                            if(shape.TryGetProperty("radiusParameter",out _)&&(Math.Abs(u)>1e-9||Math.Abs(v)>1e-9))throw new ArgumentException("Driven radius must be centered");
+                            var center=map(a,u,v,z);var ub=map(a,1,0,0);var vb=map(a,0,1,0);
+                            if(shape.TryGetProperty("radiusParameter",out _)){ca.Append(Arc.Create(center,rad,0,Math.PI,ub,vb));ca.Append(Arc.Create(center,rad,Math.PI,Math.PI*2,ub,vb));}else ca.Append(Arc.Create(center,rad,0,Math.PI*2,ub,vb));
                             if(relative||shape.TryGetProperty("widthParameter",out _)||shape.TryGetProperty("depthParameter",out _))throw new ArgumentException("Circular profile does not support rectangular constraints or offset");
                         }else for(int i=0;i<points.Length;i++)ca.Append(Line.CreateBound(points[i],points[(i+1)%points.Length]));
                         var profile=new CurveArrArray();profile.Append(ca);
                         bool solid=!shape.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                         var extrusion=fd.FamilyCreate.NewExtrusion(solid,profile,plane,h);
-                        extrusions.Add(extrusion);allForms.Add(extrusion);
+                        assign(extrusion,shape);extrusions.Add(extrusion);allForms.Add(extrusion);
                         if(circular&&shape.TryGetProperty("radiusParameter",out var rp)){
                             string name=rp.GetString()??throw new ArgumentException("Radius label");
                             if(parameters.ContainsKey(name)||!solid)throw new ArgumentException("Unique solid radius parameter required");
@@ -153,19 +187,20 @@ internal static class AdvancedOperations
                         var blends=blendSpec.EnumerateArray().ToArray();
                         if(blends.Length>50)throw new ArgumentException("Maximum 50 blends");
                         foreach(var spec in blends){
+                            string a=formAxis(spec);
                             double bottom=dimension(spec,"bottomMm",-30000,30000),top=dimension(spec,"topMm",-30000,30000);
                             if(top-bottom<Mm(1))throw new ArgumentException("Blend top must exceed bottom");
                             CurveArray curves(string key,double elevation){
-                                var pts=spec.GetProperty(key).EnumerateArray().Select(p=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),elevation)).ToArray();
+                                var pts=spec.GetProperty(key).EnumerateArray().Select(p=>map(a,dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),elevation)).ToArray();
                                 if(pts.Length<3||pts.Length>100)throw new ArgumentException("3-100 blend vertices");
                                 var ca=new CurveArray();for(int i=0;i<pts.Length;i++)ca.Append(Line.CreateBound(pts[i],pts[(i+1)%pts.Length]));return ca;
                             }
                             var baseCurves=curves("bottomPoints",bottom);var topCurves=curves("topPoints",top);
                             if(baseCurves.Size!=topCurves.Size)throw new ArgumentException("Blend vertex counts must match");
-                            var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,bottom)));
+                            var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(normal(a),map(a,0,0,bottom)));
                             bool solid=!spec.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                             var blend=fd.FamilyCreate.NewBlend(solid,topCurves,baseCurves,plane);
-                            if(blend==null)throw new InvalidOperationException("Blend creation failed");allForms.Add(blend);
+                            if(blend==null)throw new InvalidOperationException("Blend creation failed");assign(blend,spec);allForms.Add(blend);
                             fd.Regenerate();
                         }
                     }
@@ -173,8 +208,9 @@ internal static class AdvancedOperations
                         var sweeps=sweepSpec.EnumerateArray().ToArray();
                         if(sweeps.Length>50)throw new ArgumentException("Maximum 50 sweeps");
                         foreach(var spec in sweeps){
+                            string a=formAxis(spec);
                             double z=dimension(spec,"zMm",-30000,30000);
-                            XYZ point(JsonElement p)=>new XYZ(dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),z);
+                            XYZ point(JsonElement p)=>map(a,dimension(p,"x",-30000,30000),dimension(p,"y",-30000,30000),z);
                             var path=new CurveArray();
                             var segments=spec.GetProperty("path").EnumerateArray().ToArray();
                             if(segments.Length<1||segments.Length>100)throw new ArgumentException("1-100 path segments");
@@ -201,10 +237,10 @@ internal static class AdvancedOperations
                             }
                             var loops=new CurveArrArray();loops.Append(profile);
                             var sweepProfile=fd.Application.Create.NewCurveLoopsProfile(loops);
-                            var pathPlane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,z)));
+                            var pathPlane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(normal(a),map(a,0,0,z)));
                             bool solid=!spec.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                             var sweep=fd.FamilyCreate.NewSweep(solid,path,pathPlane,sweepProfile,0,ProfilePlaneLocation.Start);
-                            if(sweep==null)throw new InvalidOperationException("Sweep failed");allForms.Add(sweep);
+                            if(sweep==null)throw new InvalidOperationException("Sweep failed");assign(sweep,spec);allForms.Add(sweep);
                             fd.Regenerate();
                         }
                     }
@@ -240,7 +276,12 @@ internal static class AdvancedOperations
                             XYZ a,b;
                             if(axis=="x"){a=new XYZ(offset,-span,0);b=new XYZ(offset,span,0);}
                             else if(axis=="y"){a=new XYZ(-span,offset,0);b=new XYZ(span,offset,0);}
-                            else throw new ArgumentException("Supported reference axes x or y");
+                            else if(axis=="z"){
+                                var elev=new FilteredElementCollector(fd).OfClass(typeof(View)).Cast<View>().FirstOrDefault(v=>!v.IsTemplate&&v.ViewType==ViewType.Elevation&&Math.Abs(v.ViewDirection.Z)<1e-8)??throw new InvalidOperationException("Family elevation required");
+                                var right=elev.RightDirection.Normalize();var center=new XYZ(0,0,offset);
+                                var horizontal=fd.FamilyCreate.NewReferencePlane(center-right*span,center+right*span,elev.ViewDirection,elev);horizontal.Name=name;continue;
+                            }
+                            else throw new ArgumentException("Supported reference axes x/y/z");
                             var plane=fd.FamilyCreate.NewReferencePlane(a,b,XYZ.BasisZ,view);plane.Name=name;
                         }
                     }
@@ -250,10 +291,10 @@ internal static class AdvancedOperations
                         foreach(var def in defs){
                             var name=S(def,"name");if(parameters.ContainsKey(name))throw new ArgumentException("Duplicate parameter");
                             var kind=S(def,"kind");
-                            var spec=kind switch{"length"=>SpecTypeId.Length,"number"=>SpecTypeId.Number,"text"=>SpecTypeId.String.Text,_=>throw new ArgumentException("Unsupported parameter kind")};
+                            var spec=kind switch{"length"=>SpecTypeId.Length,"number"=>SpecTypeId.Number,"text"=>SpecTypeId.String.Text,"integer"=>SpecTypeId.Int.Integer,"yes_no"=>SpecTypeId.Boolean.YesNo,"angle"=>SpecTypeId.Angle,_=>throw new ArgumentException("Unsupported parameter kind")};
                             bool instance=def.TryGetProperty("instance",out var inst)&&inst.ValueKind==JsonValueKind.True;
                             var fp=fm.AddParameter(name,GroupTypeId.Data,spec,instance);parameters.Add(name,fp);
-                            if(kind=="text")fm.Set(fp,S(def,"value"));else if(kind=="length")fm.Set(fp,dimension(def,"value",-30000,30000));else fm.Set(fp,def.GetProperty("value").GetDouble());
+                            if(kind=="text")fm.Set(fp,S(def,"value"));else if(kind=="length")fm.Set(fp,dimension(def,"value",-30000,30000));else if(kind=="integer")fm.Set(fp,def.GetProperty("value").GetInt32());else if(kind=="yes_no")fm.Set(fp,def.GetProperty("value").GetBoolean()?1:0);else if(kind=="angle")fm.Set(fp,UnitUtils.ConvertToInternalUnits(def.GetProperty("value").GetDouble(),UnitTypeId.Degrees));else fm.Set(fp,def.GetProperty("value").GetDouble());
                         }
                     }
                     if(r.TryGetProperty("formulas",out var formulas))foreach(var f in formulas.EnumerateObject()){
@@ -282,6 +323,10 @@ internal static class AdvancedOperations
                     var ca=new CurveArray();for(int i=0;i<4;i++)ca.Append(Line.CreateBound(points[i],points[(i+1)%4]));
                     var profile=new CurveArrArray();profile.Append(ca);
                     var solid=fd.FamilyCreate.NewExtrusion(true,profile,plane,Mm(h));
+                    if(r.TryGetProperty("expectedCategory",out var category)){
+                        string cat=category.GetString()??throw new ArgumentException("Category required");
+                        if(cat is not ("OST_Casework" or "OST_Furniture" or "OST_GenericModel" or "OST_Doors" or "OST_Windows" or "OST_SpecialityEquipment")||!Enum.TryParse<BuiltInCategory>(cat,out var bic)||fd.OwnerFamily.FamilyCategory?.Id.Value!=(long)bic)throw new InvalidOperationException("Installed template category differs from definition");
+                    }
                     var fm=fd.FamilyManager;if(fm.CurrentType==null)fm.NewType("Default");
                     var height=fm.AddParameter("Kalidis_Height",GroupTypeId.Geometry,SpecTypeId.Length,false);
                     var ep=solid.get_Parameter(BuiltInParameter.EXTRUSION_END_PARAM);

@@ -694,6 +694,35 @@
                 "type": "number",
                 "minimum": 10,
                 "maximum": 10000
+              },
+              "axis": {
+                "type": "string",
+                "enum": [
+                  "x",
+                  "y",
+                  "z"
+                ]
+              },
+              "subcategory": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "centerMm": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
               }
             },
             "required": [
@@ -764,6 +793,19 @@
               },
               "void": {
                 "type": "boolean"
+              },
+              "axis": {
+                "type": "string",
+                "enum": [
+                  "x",
+                  "y",
+                  "z"
+                ]
+              },
+              "subcategory": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
               }
             },
             "required": [
@@ -787,7 +829,8 @@
                 "type": "string",
                 "enum": [
                   "x",
-                  "y"
+                  "y",
+                  "z"
                 ]
               },
               "offsetMm": {
@@ -815,7 +858,10 @@
                 "enum": [
                   "length",
                   "number",
-                  "text"
+                  "text",
+                  "integer",
+                  "yes_no",
+                  "angle"
                 ]
               },
               "value": {
@@ -825,6 +871,9 @@
                   },
                   {
                     "type": "string"
+                  },
+                  {
+                    "type": "boolean"
                   }
                 ]
               },
@@ -929,6 +978,19 @@
                     "end"
                   ]
                 }
+              },
+              "axis": {
+                "type": "string",
+                "enum": [
+                  "x",
+                  "y",
+                  "z"
+                ]
+              },
+              "subcategory": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
               }
             },
             "required": [
@@ -937,8 +999,35 @@
             ]
           }
         },
-        "formCuts": {"type":"array","maxItems":50,"items":{"type":"object","properties":{"solidIndex":{"type":"integer","minimum":0},"voidIndices":{"type":"array","minItems":1,"maxItems":10,"uniqueItems":true,"items":{"type":"integer","minimum":0}}},"required":["solidIndex","voidIndices"],"additionalProperties":false}},
-          "voidCuts": {
+        "formCuts": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "properties": {
+              "solidIndex": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "voidIndices": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 10,
+                "uniqueItems": true,
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "required": [
+              "solidIndex",
+              "voidIndices"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "voidCuts": {
           "type": "array",
           "maxItems": 50,
           "items": {
@@ -957,6 +1046,27 @@
             ],
             "additionalProperties": false
           }
+        },
+        "subcategories": {
+          "type": "array",
+          "maxItems": 50,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          }
+        },
+        "expectedCategory": {
+          "type": "string",
+          "enum": [
+            "OST_Casework",
+            "OST_Furniture",
+            "OST_GenericModel",
+            "OST_Doors",
+            "OST_Windows",
+            "OST_SpecialityEquipment"
+          ]
         }
       },
       "required": [
@@ -2540,5 +2650,11 @@
 },
 {"name":"reversible_text_parameters","description":"Atomic explicit instance Comments/Mark compare-and-set, forward/undo/redo. Non-null strings only.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"direction":{"type":"string","enum":["forward","undo","redo"]},"changes":{"type":"array","minItems":1,"maxItems":30,"items":{"type":"object","properties":{"id":{"type":"integer","minimum":1},"uniqueId":{"type":"string","minLength":1},"parameterId":{"type":"integer","enum":[-1010106,-1001203]},"before":{"type":"string","maxLength":200},"after":{"type":"string","maxLength":200}},"required":["id","uniqueId","parameterId","before","after"],"additionalProperties":false}},"commit":{"type":"boolean"}},"required":["expectedPath","direction","changes"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":false,"openWorldHint":false}},
 {"name":"clear_colors","description":"Clear only projection line color and transparency on explicit IDs; guard expected current values, retain other overrides.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"viewId":{"type":"integer","minimum":1},"ids":{"type":"array","minItems":1,"maxItems":50,"uniqueItems":true,"items":{"type":"integer","minimum":1}},"expectedColor":{"type":"object","properties":{"r":{"type":"integer","minimum":0,"maximum":255},"g":{"type":"integer","minimum":0,"maximum":255},"b":{"type":"integer","minimum":0,"maximum":255}},"required":["r","g","b"],"additionalProperties":false},"expectedTransparency":{"type":"integer","minimum":0,"maximum":100},"commit":{"type":"boolean"}},"required":["expectedPath","viewId","ids","expectedColor","expectedTransparency"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":false,"openWorldHint":false}},
-{"name":"zoom_to_elements","description":"Preview or zoom to explicit element bounds in active floor plan; no view switching.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"viewId":{"type":"integer","minimum":1},"ids":{"type":"array","minItems":1,"maxItems":50,"uniqueItems":true,"items":{"type":"integer","minimum":1}},"commit":{"type":"boolean"}},"required":["expectedPath","viewId","ids"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":false,"idempotentHint":false,"openWorldHint":false}}
+{"name":"zoom_to_elements","description":"Preview or zoom to explicit element bounds in active floor plan; no view switching.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"viewId":{"type":"integer","minimum":1},"ids":{"type":"array","minItems":1,"maxItems":50,"uniqueItems":true,"items":{"type":"integer","minimum":1}},"commit":{"type":"boolean"}},"required":["expectedPath","viewId","ids"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":false,"idempotentHint":false,"openWorldHint":false}},
+{"name":"create_spot_elevation","description":"Create native spot elevation on one horizontal top face of an explicit floor in a plan.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"elementId":{"type":"integer","minimum":1},"viewId":{"type":"integer","minimum":1},"point":{"type":"object","properties":{"x":{"type":"number","minimum":-1000000,"maximum":1000000},"y":{"type":"number","minimum":-1000000,"maximum":1000000}},"required":["x","y"],"additionalProperties":false},"commit":{"type":"boolean"}},"required":["expectedPath","elementId","viewId","point"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":false,"openWorldHint":false}},
+{"name":"tag_all_in_view","description":"Tag explicit untagged elements of one category in a floor plan; explicit tag type.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"viewId":{"type":"integer","minimum":1},"typeId":{"type":"integer","minimum":1},"categoryId":{"type":"integer"},"ids":{"type":"array","items":{"type":"integer","minimum":1},"minItems":1,"maxItems":50,"uniqueItems":true},"commit":{"type":"boolean"}},"required":["expectedPath","viewId","typeId","categoryId","ids"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":false,"openWorldHint":false}},
+{"name":"set_level_elevation","description":"Change elevation of empty dedicated KalidisLevel fixture, exact identity and prior elevation.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"id":{"type":"integer","minimum":1},"uniqueId":{"type":"string","minLength":1,"maxLength":128},"expectedMm":{"type":"number","minimum":-1000000,"maximum":1000000},"elevationMm":{"type":"number","minimum":-1000000,"maximum":1000000},"commit":{"type":"boolean"}},"required":["expectedPath","id","uniqueId","expectedMm","elevationMm"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":false,"openWorldHint":false}},
+{"name":"import_parameters","description":"Atomic structured parameter rows with exact identity/prior value; Comments/Mark and selected independent furniture custom length/number instance parameters.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"items":{"type":"array","minItems":1,"maxItems":30,"items":{"type":"object","properties":{"elementId":{"type":"integer","minimum":1},"uniqueId":{"type":"string","minLength":1,"maxLength":128},"parameterId":{"type":"integer"},"kind":{"type":"string","enum":["text","lengthMm","number"]},"before":{"anyOf":[{"type":"number"},{"type":"string","maxLength":200}]},"after":{"anyOf":[{"type":"number"},{"type":"string","maxLength":200}]}},"required":["elementId","uniqueId","parameterId","kind","before","after"],"additionalProperties":false}},"commit":{"type":"boolean"}},"required":["expectedPath","items"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":false,"openWorldHint":false}},
+{"name":"close_document","description":"Close explicitly named inactive saved local test fixture only. Never closes active or unsaved document.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"fileName":{"type":"string","pattern":"^(LinkFixture|CloseFixture)-[a-f0-9]{32}\\.rvt$"},"commit":{"type":"boolean"}},"required":["expectedPath","fileName"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":false,"openWorldHint":false}},
+{"name":"link_file","description":"Link dedicated local current-version LinkFixture RVT; rejects duplicate/open sources. No arbitrary paths.","inputSchema":{"type":"object","properties":{"expectedPath":{"type":"string","minLength":1},"fileName":{"type":"string","pattern":"^LinkFixture-[a-f0-9]{32}\\.rvt$"},"sha256":{"type":"string","pattern":"^[a-fA-F0-9]{64}$"},"commit":{"type":"boolean"}},"required":["expectedPath","fileName","sha256"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":false,"openWorldHint":false}}
 ]

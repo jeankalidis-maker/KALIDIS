@@ -10,7 +10,9 @@ const profile=p=>{if(!Array.isArray(p)||p.length<3||p.length>100)throw Error('3-
 export function reviewFamilySpec(a){
  const shapes=a.shapes,blends=a.blends??[],sweeps=a.sweeps??[];
  if(shapes.length>100||blends.length>50||sweeps.length>50||shapes.length+blends.length+sweeps.length===0)throw Error('Invalid form count');
- const params=new Map();
+ const params=new Map(),subs=new Set();
+ for(const n of a.subcategories??[]){const k=label(n);if(subs.has(k))throw Error('Duplicate subcategory');subs.add(k)}
+ for(const f of [...shapes,...blends,...sweeps]){if(f.axis!==undefined&&!['x','y','z'].includes(f.axis))throw Error('Invalid form axis');if(f.subcategory!==undefined&&!subs.has(label(f.subcategory)))throw Error('Undeclared subcategory')}
  function add(name,kind,initial,shared=false){
   const key=label(name),old=params.get(key);
   if(old){if(shared&&old.kind==='height'&&Math.abs(old.initial-initial)<=.000001)return;throw Error('Duplicate parameter '+name)}
@@ -18,6 +20,8 @@ export function reviewFamilySpec(a){
  }
  for(const s of shapes){
   num(s.zMm,-30000,30000,'zMm');num(s.heightMm,1,30000,'heightMm');
+  if((s.axis??'z')!=='z'&&['baseParameter','endParameter','heightParameter','widthParameter','depthParameter','xParameter','yParameter','radiusParameter'].some(k=>has(s,k)))throw Error('Driving constraints require z extrusion');
+  if(has(s,'centerMm')){if(!has(s,'radiusMm'))throw Error('Center requires circle');point(s.centerMm);if(has(s,'radiusParameter')&&(s.centerMm.x!==0||s.centerMm.y!==0))throw Error('Driven radius must be centered')}
   const circular=has(s,'radiusMm'),relative=has(s,'baseParameter'),rect=has(s,'widthParameter')||has(s,'depthParameter');
   if(circular){num(s.radiusMm,10,10000,'radiusMm');if(has(s,'points')||relative||rect||has(s,'xParameter')||has(s,'yParameter'))throw Error('Conflicting circular profile fields');}
   else{profile(s.points);if(has(s,'radiusParameter'))throw Error('Radius parameter requires circular profile')}
@@ -56,7 +60,7 @@ export function reviewFamilySpec(a){
    last=q;
   }
  }
- for(const p of a.parameters??[]){if(p.kind==='text'){if(typeof p.value!=='string')throw Error('Text parameter value required')}else num(p.value,p.kind==='length'?-30000:-Number.MAX_VALUE,p.kind==='length'?30000:Number.MAX_VALUE,p.name);add(p.name,p.kind,p.value)}
+ for(const p of a.parameters??[]){if(p.kind==='text'){if(typeof p.value!=='string')throw Error('Text parameter value required')}else if(p.kind==='yes_no'){if(typeof p.value!=='boolean')throw Error('Boolean parameter value required')}else if(p.kind==='integer'){if(!Number.isInteger(p.value))throw Error('Integer parameter value required');num(p.value,-2147483648,2147483647,p.name)}else if(p.kind==='angle')num(p.value,-3600,3600,p.name);else num(p.value,p.kind==='length'?-30000:-Number.MAX_VALUE,p.kind==='length'?30000:Number.MAX_VALUE,p.name);add(p.name,p.kind,p.value)}
  for(const [name,formula] of Object.entries(a.formulas??{})){if(!params.has(label(name))||typeof formula!=='string'||!formula.trim())throw Error('Unknown or empty formula target '+name)}
  reviewFormulaDependencies(params,a.formulas);
  const planes=new Set();for(const p of a.referencePlanes??[]){const k=label(p.name);if(planes.has(k))throw Error('Duplicate reference plane');planes.add(k);num(p.offsetMm,-30000,30000,'plane offset')}

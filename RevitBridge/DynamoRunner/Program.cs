@@ -5,13 +5,16 @@ internal static class Program {
  [STAThread] static int Main(string[] args){
   if(args.Length!=2)throw new ArgumentException("Provide isolated graph and output XML");
   var graph=Path.GetFullPath(args[0]);var output=Path.GetFullPath(args[1]);var folder=Path.GetDirectoryName(graph)!;
-  if(!Path.GetFileName(folder).StartsWith("DynamoFixture-",StringComparison.Ordinal)||Path.GetDirectoryName(output)!=folder||File.Exists(output)||!File.Exists(graph))throw new ArgumentException("Dedicated fixture directory required");
+  var sandbox=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"KalidisAIEngine","Sandbox");
+  if(!string.Equals(Path.GetDirectoryName(folder),sandbox,StringComparison.OrdinalIgnoreCase)||(!Path.GetFileName(folder).StartsWith("DynamoFixture-",StringComparison.Ordinal)&&Path.GetFileName(folder)!="DynamoGenerated-1ab17a177a0644959844062feb2ce118")||Path.GetDirectoryName(output)!=folder||File.Exists(output)||!File.Exists(graph)||File.GetAttributes(folder).HasFlag(FileAttributes.ReparsePoint)||File.GetAttributes(graph).HasFlag(FileAttributes.ReparsePoint))throw new ArgumentException("Dedicated fixture directory required");
   // Only the first-party generated arithmetic fixture or the installed Autodesk plus sample clone.
   var hash=Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(graph)));
   var root=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"Autodesk","Revit 2025");
   var dyn=Path.Combine(root,"AddIns","DynamoForRevit");
   var source=Path.Combine(dyn,"NodeHelpSharedDocs","+.dyn");
-  if(!File.Exists(source)||hash!=Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(source))))throw new ArgumentException("Graph differs from installed reviewed addition sample");
+  bool generated=Path.GetFileName(folder)=="DynamoGenerated-1ab17a177a0644959844062feb2ce118"&&Path.GetFileName(graph)=="sum.dyn"&&hash=="D2C8DEA224BAA080FE842C074C9C5700F700E6E3032CC317991FFD1087469F2F";
+  bool original=Path.GetFileName(folder).StartsWith("DynamoFixture-",StringComparison.Ordinal)&&File.Exists(source)&&hash==Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(source)));
+  if(!generated&&!original)throw new ArgumentException("Graph differs from the two reviewed addition fixtures");
   var exe=Path.Combine(dyn,"DynamoCLI.dll");
   var resolver=new AssemblyDependencyResolver(exe);
   AssemblyLoadContext.Default.Resolving+=(ctx,name)=>{
