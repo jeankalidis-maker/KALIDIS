@@ -50,7 +50,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 037 [P] Coordenação interdisciplinar com aberturas e shafts, suportes, isolamento, manutenção e interferências de redes complexas. **Shaft1x1m corta laje superior; tubo vertical sem intersecao (133).**
 
 ## E — Autocorreção geométrica e coordenação
-- [ ] 038 [F] Junção física de paredes e acabamento das extremidades: wall_join_finish / JoinGeometryUtils ainda sem validação positiva. **Join em X aceito; acabamento L e ensaio de sobreposicao pendentes; modal/estado incerto no ultimo ensaio (128).** **Sobreposicao experimental0.7065m3 identificada; acabamento ainda sem resolucao (129).** **Rollback nativo de sobreposicao com aviso registrado, sem modal; acabamento ainda pendente (132).** **Join nativo de L recusado em preview, acabamento continua pendente (135).** **Rehearsal L nativo 0.01->0->0.01->0m3, eixos preservados e rollback, wall_joint_finish compilado com CAS (165); deploy e teste da ferramenta pendentes.**
+- [x] 038 [V] Juncao fisica nativa L reta, wall_joint_finish inspect/preview/commit, separacao e reuniao com eixos preservados e volume independente0.01->0m3, DLL166. Acabamento visual e casos T/X/curvas/dependencias permanecem nos itens proprios.
 - [ ] 039 [P] Reparo de paredes em L/T/X, curvas, múltiplos encontros e dependências de portas, janelas e elementos estruturais. **Join em X sem sobreposicao residual, mas sem prova de correcao de intersecao previa (128).** **Prevencao de paredes paralelas sobrepostas no mesmo lote (129).** **Novo reparo de eixo300mm para zero, ancora preservada (135).** **Rehearsal L reversivel com sobreposicao fisica comprovada (165); T/X/curvas/dependencias pendentes.**
 - [x] 040 [V] Diagnostico de perfis planos orientados em 3D, linhas/arcos, multiplos furos, coplanaridade, intersecoes e correcoes exatas de segmentos; seis ensaios nativos transientes e testes offline aprovados (162). Nao altera elementos existentes nem cobre superficies nao planas/splines.
 - [ ] 041 [P] Autocorreção de mobiliário em ambientes não retangulares, circulação, giro de portas, suportes e acessibilidade.
@@ -114,6 +114,6 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 
 ## Resumo
 
-63 itens abertos: 1 bloqueado, 0 nao validados, 60 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 25 encerrados de 88 (001, 003, 004, 005, 008, 010, 012, 014, 026, 029, 040, 044, 046, 049, 054, 057, 063, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
+62 itens abertos: 1 bloqueado, 0 nao validados, 60 parciais, 1 sem implementacao confirmada, 0 com falha nao resolvida. 26 encerrados de 88 (001, 003, 004, 005, 008, 010, 012, 014, 026, 029, 038, 040, 044, 046, 049, 054, 057, 063, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.
