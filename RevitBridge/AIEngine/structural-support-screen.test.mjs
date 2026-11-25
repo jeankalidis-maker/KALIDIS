@@ -1,0 +1,4 @@
+import assert from 'node:assert/strict';import {screen} from './structural-support-screen.mjs';
+const a={beamIds:[1],supportIds:[2,3],toleranceMm:20};
+const rows=[{id:1,minMm:[0,0,2700],maxMm:[6000,200,3000],curveLengthMm:6000},{id:2,minMm:[-100,-100,0],maxMm:[100,300,3000]},{id:3,minMm:[5900,-100,0],maxMm:[6100,300,3000]}];
+assert.equal(screen(a,rows)[0].state,'candidates_both_ends');assert.equal(screen({...a,supportIds:[2]},rows)[0].state,'review');assert.equal(screen(a,[{...rows[0],curveLengthMm:7000},...rows.slice(1)])[0].state,'inconclusive');assert.throws(()=>screen({...a,supportIds:[1]},rows),/scope/);console.log('STRUCTURAL_SUPPORT_SCREEN_TESTS=PASS');
