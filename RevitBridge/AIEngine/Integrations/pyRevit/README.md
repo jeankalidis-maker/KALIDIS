@@ -4,3 +4,5 @@ Requires a separately installed compatible pyRevit host. Add the parent director
 This is a source-only integration candidate; no pyRevit host was found in the inspected installation locations on the test workstation. Actual host validation pending.
 
 Milestone 141: pyRevit 7.1 installed, loader signature valid, local extension directory registered through the supported CLI. Agent host enabled, policy ask, reckless and user skills disabled. Reload pyRevit or restart Revit to activate; actual ribbon and agent execution tests pending. No remote agent connector registered.
+
+Milestone 142: runtime responding; IronPython and CPython fixed audits, ribbon inventory, and one dry-run rollback verified. pyrevit_reviewed_audit is available through the local MCP for the saved Smoke fixture only; hash-pinned CLI/script, no arbitrary Python or real modify route. Ribbon button is registered and visible; user click/dialogue still pending.
