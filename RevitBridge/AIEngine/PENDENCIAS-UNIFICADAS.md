@@ -62,12 +62,12 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 
 ## F — Famílias RFA e parametrização
 - [ ] 047 [P] Parametrização geométrica generalizada de blends, sweeps, curvas não cilíndricas e geometrias compostas arbitrárias. **Sweep circular em caminho de tres segmentos conferido; flex generalizado pendente (134).** **Tres tipos cilindricos acoplados por formula conferidos; parametrizacao arbitraria ainda pendente (138).**
-- [ ] 048 [P] Restrições entre sólidos, rotação, posições relativas, parâmetros compartilhados e relações de fórmula complexas. **R/H/Driver/Ratio conferidos em tres tipos e ciclos de formula rejeitados em preflight (138).**
+- [ ] 048 [P] Restrições entre sólidos, rotação, posições relativas, parâmetros compartilhados e relações de fórmula complexas. **R/H/Driver/Ratio conferidos em tres tipos e ciclos de formula rejeitados em preflight (138).** **Formulas R/H/Driver/Ratio verificadas em cinco tipos, extremos50/800mm (155); demais restricoes pendentes.**
 - [x] 049 [V] Cortes por void em extrusions, blends e sweeps, multiplos vazios e recortes compostos comprovados em RFA nativo, volume individual e total conferidos (138/141/154). Geometrias arbitrarias nao certificadas.
 - [ ] 050 [P] Sweeps complexos, trajetórias 3D e geometrias de revolução/loft além do escopo já testado. **Sweep reta-arco-reta com erro volumetrico0.00234%, apenas planar (134).** **Grupos de cortes incluem sweeps em fonte compilada, trajetorias 3D e loft ainda pendentes (138).** **DLL formCuts carregada, cortes em blend/sweep ainda pendentes (141).**
 - [ ] 051 [P] Famílias hospedadas, aninhadas, conectores MEP, parâmetros de instância/tipo, materiais e níveis de detalhe. **Parametro de instancia texto de familia sweep conferido (134).** **Doze valores de parametros de tipo em tres tipos auditados (138).**
-- [ ] 052 [P] Edição e atualização controlada de famílias existentes, recarga com preservação de tipos/instâncias e parâmetros. **Copia RFA editada sem recarga (128).** **Copia com tipos Small/Large carregada separadamente, fonte intacta; recarga in-place pendente (138).**
-- [ ] 053 [P] Validação de todos os tipos de cada família, flex extremo, fórmulas e restrições; não apenas a geometria corrente. **Oito simbolos externos inventariados, sete instanciados (128).** **Auditoria de cobertura de tipos, volume, caixa e parametros nativos, tres tipos aprovados por valores/volume; AABB Default divergente, flex automatico pendente (138).**
+- [ ] 052 [P] Edição e atualização controlada de famílias existentes, recarga com preservação de tipos/instâncias e parâmetros. **Copia RFA editada sem recarga (128).** **Copia com tipos Small/Large carregada separadamente, fonte intacta; recarga in-place pendente (138).** **Copia RFA com cinco tipos carregada separadamente, familia original preservada (155); recarga in-place pendente.**
+- [ ] 053 [P] Validação de todos os tipos de cada família, flex extremo, fórmulas e restrições; não apenas a geometria corrente. **Oito simbolos externos inventariados, sete instanciados (128).** **Auditoria de cobertura de tipos, volume, caixa e parametros nativos, tres tipos aprovados por valores/volume; AABB Default divergente, flex automatico pendente (138).** **Flex de cinco tipos, extremos50/800mm, 20 parametros e cinco volumes aprovados, cobertura5/5 da copia (155); auditoria das demais familias pendente.**
 - [ ] 054 [P] Gerar famílias complexas nativas a partir de imagem, desenho ou referência dimensional, com conferência física. **Receita de referencia dimensional sintetica, mesa nativa5 solidos com dimensoes/volume conferidos; referencia real complexa pendente (138).**
 
 ## G — Imagens, plantas e materiais
@@ -79,7 +79,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 060 [P] Materiais PBR completos: mapas de cor, relevo, rugosidade, transparência e propriedades físicas.
 - [ ] 061 [P] Escala UV comercial, orientação, repetição, acabamento e verificação visual de diferentes geometrias.
 - [ ] 062 [P] Renderização fotorealista com iluminação, câmeras, sombras e validação visual independente; modo Realistic básico já testado.
-- [ ] 063 [P] Biblioteca de materiais pesquisável com metadados, licenças, seleção automática e prevenção de caminhos quebrados.
+- [ ] 063 [P] Biblioteca de materiais pesquisável com metadados, licenças, seleção automática e prevenção de caminhos quebrados. **Biblioteca5388 arquivos, busca/recomendacao, stage PNG com hash e verificacao ausente/divergente, material nativo e escala aprovados (155); metadados/licenca, JPEG stage MCP e auditoria global pendentes.**
 
 ## H — Bibliotecas BIM e interoperabilidade
 - [ ] 064 [P] Ampliar catálogo além das quatro famílias de um repositório, com pesquisa real de fornecedores e categorias.
