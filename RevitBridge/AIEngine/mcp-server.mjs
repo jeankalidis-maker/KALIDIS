@@ -1,3 +1,5 @@
+import {planStatus,planStatusTool} from './agent-plan-status.mjs';
+import {pythonBatchTool,pythonBatchAvailable,pythonBatchPreview} from './pyrevit-parameter-preview.mjs';
 import {scopedQuery,scopedQueryTool} from './scoped-parameter-query.mjs';
 import {pyrevitAudit,pyrevitAuditTool,pyrevitAvailable} from './pyrevit-audit.mjs';
 import {agentCatalog,agentCatalogTool} from './agent-command-catalog.mjs';
@@ -82,7 +84,7 @@ async function liveTools(){
  const live=new Set(result.implemented);
  const base=manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
  if(live.has('run_extension')&&live.has('extensions')&&!readonly)for(const x of (await resolvedExtensions()).values())base.push(x.tool);
- return [healthTool,statusTool,preflightTool,...(["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[scopedQueryTool]:[]),...(!readonly&&["project_context","snapshot","list_materials","list_sheets"].every(n=>base.some(t=>t.name===n))&&await pyrevitAvailable(root)?[pyrevitAuditTool]:[]),agentCatalogTool,...(!readonly&&result.cooperativeBatchCancel===true&&["project_context","batch"].every(n=>base.some(t=>t.name===n))?[agentPlanTool]:[]),...portTools.filter(t=>(!readonly||t.annotations.readOnlyHint)&&portNeeds[t.name].every(n=>base.some(x=>x.name===n))),referenceFamilyTool,...(!readonly&&["project_context","family_info","list_family_types","element_info","geometry_review","solid_audit"].every(n=>base.some(t=>t.name===n))?[familyReviewTool]:[]),...(["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[receiptTool]:[]),...(!readonly&&["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[checkpointTool]:[]),inventoryTool,referenceTool,dynamoReviewTool,...(!readonly&&["project_context","geometry_review","solid_audit","rebar_inventory"].every(n=>base.some(t=>t.name===n))?[rebarBoxTool]:[]),...(["snapshot","element_info","selection","native_status"].every(n=>base.some(t=>t.name===n))?[legacyInspectTool]:[]),...(!readonly&&["snapshot","geometry_review","edit_elements"].every(n=>base.some(t=>t.name===n))?[pinTool]:[]),...(!readonly&&["snapshot","element_info","material_takeoff","clash_candidates","solid_clash","sheet_review"].every(n=>base.some(t=>t.name===n))?[scopeAuditTool]:[]),...(["snapshot","elements","element_info","list_categories"].every(n=>base.some(t=>t.name===n))?[legacyTool]:[]),...(["snapshot","get_doors","get_element_rooms","audit_warnings","audit_level_span"].every(n=>base.some(t=>t.name===n))?[architectureAuditTool]:[]),...(!readonly&&base.some(t=>t.name==="mep_topology")?[mepNetworkTool]:[]),...(!readonly&&base.some(t=>t.name==="python_comments")?[pythonWorkflowTool]:[]),...(!readonly&&base.some(t=>t.name==="verified_move")&&base.some(t=>t.name==="geometry_review")?[reversibleMoveTool]:[]),...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>t.name==="batch"?batchSchemaForEngine(t,result):t.name==="create_family_spec"&&result.groupedFamilyCuts!==true?{...t,inputSchema:{...t.inputSchema,properties:Object.fromEntries(Object.entries(t.inputSchema.properties).filter(([k])=>k!=="formCuts"))}}:t).map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
+ return [healthTool,statusTool,preflightTool,...(base.some(t=>t.name==="project_context")?[planStatusTool]:[]),...(!readonly&&["project_context","element_info"].every(n=>base.some(t=>t.name===n))&&await pythonBatchAvailable(root)?[pythonBatchTool]:[]),...(["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[scopedQueryTool]:[]),...(!readonly&&["project_context","snapshot","list_materials","list_sheets"].every(n=>base.some(t=>t.name===n))&&await pyrevitAvailable(root)?[pyrevitAuditTool]:[]),agentCatalogTool,...(!readonly&&result.cooperativeBatchCancel===true&&["project_context","batch"].every(n=>base.some(t=>t.name===n))?[agentPlanTool]:[]),...portTools.filter(t=>(!readonly||t.annotations.readOnlyHint)&&portNeeds[t.name].every(n=>base.some(x=>x.name===n))),referenceFamilyTool,...(!readonly&&["project_context","family_info","list_family_types","element_info","geometry_review","solid_audit"].every(n=>base.some(t=>t.name===n))?[familyReviewTool]:[]),...(["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[receiptTool]:[]),...(!readonly&&["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[checkpointTool]:[]),inventoryTool,referenceTool,dynamoReviewTool,...(!readonly&&["project_context","geometry_review","solid_audit","rebar_inventory"].every(n=>base.some(t=>t.name===n))?[rebarBoxTool]:[]),...(["snapshot","element_info","selection","native_status"].every(n=>base.some(t=>t.name===n))?[legacyInspectTool]:[]),...(!readonly&&["snapshot","geometry_review","edit_elements"].every(n=>base.some(t=>t.name===n))?[pinTool]:[]),...(!readonly&&["snapshot","element_info","material_takeoff","clash_candidates","solid_clash","sheet_review"].every(n=>base.some(t=>t.name===n))?[scopeAuditTool]:[]),...(["snapshot","elements","element_info","list_categories"].every(n=>base.some(t=>t.name===n))?[legacyTool]:[]),...(["snapshot","get_doors","get_element_rooms","audit_warnings","audit_level_span"].every(n=>base.some(t=>t.name===n))?[architectureAuditTool]:[]),...(!readonly&&base.some(t=>t.name==="mep_topology")?[mepNetworkTool]:[]),...(!readonly&&base.some(t=>t.name==="python_comments")?[pythonWorkflowTool]:[]),...(!readonly&&base.some(t=>t.name==="verified_move")&&base.some(t=>t.name==="geometry_review")?[reversibleMoveTool]:[]),...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>t.name==="batch"?batchSchemaForEngine(t,result):t.name==="create_family_spec"&&result.groupedFamilyCuts!==true?{...t,inputSchema:{...t.inputSchema,properties:Object.fromEntries(Object.entries(t.inputSchema.properties).filter(([k])=>k!=="formCuts"))}}:t).map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
 }
 async function callUnjournaled(name,args){
  const t=tools.get(name);
@@ -156,6 +158,13 @@ async function call(name,args){
   });
   return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
  }
+ if(name==='pyrevit_parameter_preview'){
+  if(readonly)throw Error('Read-only session');
+  const result=await pythonBatchPreview(args,async(n,a)=>{
+   const r=await callUnjournaled(n,a);if(r.isError)throw Error(r.content[0].text);return JSON.parse(r.content[0].text);
+  },root);
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
+ }
  if(name==='pyrevit_reviewed_audit'){
   if(readonly)throw Error('Read-only session');
   const result=await pyrevitAudit(args,async(n,a)=>{
@@ -165,6 +174,12 @@ async function call(name,args){
  }
  if(name==='agent_command_catalog'){
   const result=agentCatalog(args,await liveTools());
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
+ }
+ if(name==='agent_plan_status'){
+  const result=await planStatus(args,async(n,a)=>{
+   const r=await call(n,a);if(r.isError)throw Error(r.content[0].text);return JSON.parse(r.content[0].text);
+  },path.join(process.env.LOCALAPPDATA,'KalidisAIEngine','AgentPlans'));
   return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
  }
  if(name==='agent_plan'){
