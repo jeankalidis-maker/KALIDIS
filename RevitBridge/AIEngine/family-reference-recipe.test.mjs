@@ -1,0 +1,3 @@
+import assert from 'node:assert/strict';import {referenceFamily} from './family-reference-recipe.mjs';
+const a={expectedPath:'C:/test.rvt',template:'test.rft',fileName:'TableTest138.rfa',widthMm:1600,depthMm:800,heightMm:750,topThicknessMm:40,legWidthMm:80,legDepthMm:80,insetMm:50,referenceId:'DIM-138',dimensionsConfirmed:true};
+const r=referenceFamily(a);assert.equal(r.spec.shapes.length,5);assert.equal(r.expected.volumeM3,.069376);assert.throws(()=>referenceFamily({...a,dimensionsConfirmed:false}),/confirmation/);assert.throws(()=>referenceFamily({...a,widthMm:300,insetMm:100}),/Overlapping/);console.log('FAMILY_REFERENCE_RECIPE_TESTS=PASS');

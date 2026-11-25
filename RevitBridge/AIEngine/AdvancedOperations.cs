@@ -57,6 +57,7 @@ internal static class AdvancedOperations
                     var fm=fd.FamilyManager;if(fm.CurrentType==null)fm.NewType("Default");
                     var parameters=new Dictionary<string,FamilyParameter>(StringComparer.OrdinalIgnoreCase);
                     var extrusions=new List<Extrusion>();
+                    var allForms=new List<GenericForm>();
                     foreach(var shape in shapes){
                         var z=dimension(shape,"zMm",-30000,30000);
                         var h=dimension(shape,"heightMm",1,30000);
@@ -76,7 +77,7 @@ internal static class AdvancedOperations
                         var profile=new CurveArrArray();profile.Append(ca);
                         bool solid=!shape.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                         var extrusion=fd.FamilyCreate.NewExtrusion(solid,profile,plane,h);
-                        extrusions.Add(extrusion);
+                        extrusions.Add(extrusion);allForms.Add(extrusion);
                         if(circular&&shape.TryGetProperty("radiusParameter",out var rp)){
                             string name=rp.GetString()??throw new ArgumentException("Radius label");
                             if(parameters.ContainsKey(name)||!solid)throw new ArgumentException("Unique solid radius parameter required");
@@ -164,7 +165,7 @@ internal static class AdvancedOperations
                             var plane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,bottom)));
                             bool solid=!spec.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                             var blend=fd.FamilyCreate.NewBlend(solid,topCurves,baseCurves,plane);
-                            if(blend==null)throw new InvalidOperationException("Blend creation failed");
+                            if(blend==null)throw new InvalidOperationException("Blend creation failed");allForms.Add(blend);
                             fd.Regenerate();
                         }
                     }
@@ -203,7 +204,26 @@ internal static class AdvancedOperations
                             var pathPlane=SketchPlane.Create(fd,Plane.CreateByNormalAndOrigin(XYZ.BasisZ,new XYZ(0,0,z)));
                             bool solid=!spec.TryGetProperty("void",out var hole)||hole.ValueKind!=JsonValueKind.True;
                             var sweep=fd.FamilyCreate.NewSweep(solid,path,pathPlane,sweepProfile,0,ProfilePlaneLocation.Start);
-                            if(sweep==null)throw new InvalidOperationException("Sweep failed");
+                            if(sweep==null)throw new InvalidOperationException("Sweep failed");allForms.Add(sweep);
+                            fd.Regenerate();
+                        }
+                    }
+                    if(r.TryGetProperty("formCuts",out var formCuts)){
+                        if(formCuts.GetArrayLength()>50)throw new ArgumentException("Maximum 50 cut groups");
+                        if(formCuts.GetArrayLength()>0&&r.TryGetProperty("voidCuts",out var legacy)&&legacy.GetArrayLength()>0)throw new ArgumentException("Choose formCuts or voidCuts");
+                        var used=new HashSet<int>();
+                        foreach(var cut in formCuts.EnumerateArray()){
+                            int index=cut.GetProperty("solidIndex").GetInt32();
+                            if(index<0||index>=allForms.Count||!used.Add(index)||!allForms[index].IsSolid)throw new ArgumentException("Invalid target form");
+                            var cutters=cut.GetProperty("voidIndices").EnumerateArray().Select(e=>e.GetInt32()).ToArray();
+                            if(cutters.Length<1||cutters.Length>10)throw new ArgumentException("1-10 cutters required");
+                            var members=new CombinableElementArray();members.Append(allForms[index]);
+                            foreach(var i in cutters){
+                                if(i<0||i>=allForms.Count||!used.Add(i)||allForms[i].IsSolid)throw new ArgumentException("Invalid or reused cutter form");
+                                members.Append(allForms[i]);
+                            }
+                            fd.Regenerate();
+                            if(fd.CombineElements(members)==null)throw new InvalidOperationException("Form combination failed");
                             fd.Regenerate();
                         }
                     }

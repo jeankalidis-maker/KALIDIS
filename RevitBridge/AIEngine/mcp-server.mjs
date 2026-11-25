@@ -9,6 +9,8 @@ import {scopeAudit,scopeAuditTool} from './scope-audit.mjs';
 import {reviewEdits} from './edit-preflight.mjs';
 import {verifyDeletePreview} from './delete-guard.mjs';
 import {reviewFamilySpec} from './family-spec-review.mjs';
+import {reviewFamilyInstances,familyReviewTool} from './family-instance-review.mjs';
+import {referenceFamily,referenceFamilyTool} from './family-reference-recipe.mjs';
 import {reviewOrthogonalPlan} from './orthogonal-plan-review.mjs';
 import {checkBatchCapabilities,batchSchemaForEngine,requireCatalog} from './engine-capabilities.mjs';
 import {legacyRead,legacyTool} from './legacy-read.mjs';
@@ -75,7 +77,7 @@ async function liveTools(){
  const live=new Set(result.implemented);
  const base=manifest.filter(t=>live.has(t.name)&&(!readonly||t.annotations.readOnlyHint));
  if(live.has('run_extension')&&live.has('extensions')&&!readonly)for(const x of (await resolvedExtensions()).values())base.push(x.tool);
- return [healthTool,statusTool,preflightTool,...(["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[receiptTool]:[]),...(!readonly&&["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[checkpointTool]:[]),inventoryTool,referenceTool,dynamoReviewTool,...(!readonly&&["project_context","geometry_review","solid_audit","rebar_inventory"].every(n=>base.some(t=>t.name===n))?[rebarBoxTool]:[]),...(["snapshot","element_info","selection","native_status"].every(n=>base.some(t=>t.name===n))?[legacyInspectTool]:[]),...(!readonly&&["snapshot","geometry_review","edit_elements"].every(n=>base.some(t=>t.name===n))?[pinTool]:[]),...(!readonly&&["snapshot","element_info","material_takeoff","clash_candidates","solid_clash","sheet_review"].every(n=>base.some(t=>t.name===n))?[scopeAuditTool]:[]),...(["snapshot","elements","element_info","list_categories"].every(n=>base.some(t=>t.name===n))?[legacyTool]:[]),...(["snapshot","get_doors","get_element_rooms","audit_warnings","audit_level_span"].every(n=>base.some(t=>t.name===n))?[architectureAuditTool]:[]),...(!readonly&&base.some(t=>t.name==="mep_topology")?[mepNetworkTool]:[]),...(!readonly&&base.some(t=>t.name==="python_comments")?[pythonWorkflowTool]:[]),...(!readonly&&base.some(t=>t.name==="verified_move")&&base.some(t=>t.name==="geometry_review")?[reversibleMoveTool]:[]),...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>t.name==="batch"?batchSchemaForEngine(t,result):t).map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
+ return [healthTool,statusTool,preflightTool,referenceFamilyTool,...(!readonly&&["project_context","family_info","list_family_types","element_info","geometry_review","solid_audit"].every(n=>base.some(t=>t.name===n))?[familyReviewTool]:[]),...(["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[receiptTool]:[]),...(!readonly&&["project_context","element_info"].every(n=>base.some(t=>t.name===n))?[checkpointTool]:[]),inventoryTool,referenceTool,dynamoReviewTool,...(!readonly&&["project_context","geometry_review","solid_audit","rebar_inventory"].every(n=>base.some(t=>t.name===n))?[rebarBoxTool]:[]),...(["snapshot","element_info","selection","native_status"].every(n=>base.some(t=>t.name===n))?[legacyInspectTool]:[]),...(!readonly&&["snapshot","geometry_review","edit_elements"].every(n=>base.some(t=>t.name===n))?[pinTool]:[]),...(!readonly&&["snapshot","element_info","material_takeoff","clash_candidates","solid_clash","sheet_review"].every(n=>base.some(t=>t.name===n))?[scopeAuditTool]:[]),...(["snapshot","elements","element_info","list_categories"].every(n=>base.some(t=>t.name===n))?[legacyTool]:[]),...(["snapshot","get_doors","get_element_rooms","audit_warnings","audit_level_span"].every(n=>base.some(t=>t.name===n))?[architectureAuditTool]:[]),...(!readonly&&base.some(t=>t.name==="mep_topology")?[mepNetworkTool]:[]),...(!readonly&&base.some(t=>t.name==="python_comments")?[pythonWorkflowTool]:[]),...(!readonly&&base.some(t=>t.name==="verified_move")&&base.some(t=>t.name==="geometry_review")?[reversibleMoveTool]:[]),...(!readonly&&result.cooperativeBatchCancel===true?[cancelTool]:[]),...base.map(t=>t.name==="batch"?batchSchemaForEngine(t,result):t.name==="create_family_spec"&&result.groupedFamilyCuts!==true?{...t,inputSchema:{...t.inputSchema,properties:Object.fromEntries(Object.entries(t.inputSchema.properties).filter(([k])=>k!=="formCuts"))}}:t).map(t=>!readonly&&!t.annotations.readOnlyHint?{...t,inputSchema:{...t.inputSchema,properties:{...t.inputSchema.properties,requestId:{type:'string',pattern:'^[A-Za-z0-9_-]{8,100}$',description:'Optional unique operation ID; prevents accidental replay across restarts'}}}}:t)];
 }
 async function callUnjournaled(name,args){
  const t=tools.get(name);
@@ -126,7 +128,10 @@ async function callUnjournaled(name,args){
   reviewWallPairs(args.steps,widths);
  }
  if(name==='run_extension'&&args.operation==='family_catalog_load')throw Error('Use named family_catalog_load tool with catalogue provenance and duplicate guard');
- if(name==='create_family_spec')reviewFamilySpec(args);
+ if(name==='create_family_spec'){
+  if(args.formCuts!==undefined&&catalog.result.groupedFamilyCuts!==true)throw Error('Grouped form cuts require a newer loaded Revit engine');
+  reviewFamilySpec(args);
+ }
  if(name==='edit_elements'){
   reviewEdits(args);
   if(args.commit===true&&args.steps.some(s=>s.action==='delete')){
@@ -140,6 +145,17 @@ async function callUnjournaled(name,args){
 }
 async function call(name,args){
  if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Invalid arguments');
+ if(name==='family_reference_recipe'){
+  const result=referenceFamily(args);
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
+ }
+ if(name==='family_instance_review'){
+  if(readonly)throw Error('Read-only session');
+  const result=await reviewFamilyInstances(args,async(n,a)=>{
+   const r=await callUnjournaled(n,a);if(r.isError)throw Error(r.content[0].text);return JSON.parse(r.content[0].text);
+  });
+  return {content:[{type:'text',text:JSON.stringify(result)}],isError:false};
+ }
  if(name==='context_checkpoint'){
   if(readonly)throw Error('Read-only session');
   const result=await checkpoint(args,async(n,a)=>{

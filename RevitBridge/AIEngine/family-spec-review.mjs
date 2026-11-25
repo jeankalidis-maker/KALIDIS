@@ -1,4 +1,6 @@
 import {validateClosedProfile} from './profile-topology.mjs';
+import {reviewFormulaDependencies} from './formula-dependencies.mjs';
+import {reviewFormCuts} from './form-cuts-review.mjs';
 const has=(o,k)=>Object.hasOwn(o,k);
 const num=(v,min,max,k)=>{if(!Number.isFinite(v)||v<min||v>max)throw Error('Invalid '+k);return v};
 const label=(v)=>{if(typeof v!=='string'||!v.trim()||v.length>80)throw Error('Invalid parameter name');return v.toLowerCase()};
@@ -31,6 +33,7 @@ export function reviewFamilySpec(a){
   }else if(has(s,'xParameter')||has(s,'yParameter'))throw Error('Position requires rectangular constraints');
   if(has(s,'heightParameter'))add(s.heightParameter,'height',s.heightMm,true);
  }
+ reviewFormCuts(a);
  const used=new Set();
  for(const c of a.voidCuts??[]){
   const i=c.solidIndex,j=c.voidIndex;
@@ -55,6 +58,7 @@ export function reviewFamilySpec(a){
  }
  for(const p of a.parameters??[]){if(p.kind==='text'){if(typeof p.value!=='string')throw Error('Text parameter value required')}else num(p.value,p.kind==='length'?-30000:-Number.MAX_VALUE,p.kind==='length'?30000:Number.MAX_VALUE,p.name);add(p.name,p.kind,p.value)}
  for(const [name,formula] of Object.entries(a.formulas??{})){if(!params.has(label(name))||typeof formula!=='string'||!formula.trim())throw Error('Unknown or empty formula target '+name)}
+ reviewFormulaDependencies(params,a.formulas);
  const planes=new Set();for(const p of a.referencePlanes??[]){const k=label(p.name);if(planes.has(k))throw Error('Duplicate reference plane');planes.add(k);num(p.offsetMm,-30000,30000,'plane offset')}
  return {forms:shapes.length+blends.length+sweeps.length,parameters:params.size,note:'Static geometry and label checks only; Revit resolves formulas, sketch constraints and solid cuts.'};
 }

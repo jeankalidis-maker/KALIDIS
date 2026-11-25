@@ -61,14 +61,14 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [x] 046 [V] Substituida pela validacao obrigatoria do adaptador (avancos123/126); prototipo C# separado arquivado, sem instalacao.
 
 ## F — Famílias RFA e parametrização
-- [ ] 047 [P] Parametrização geométrica generalizada de blends, sweeps, curvas não cilíndricas e geometrias compostas arbitrárias. **Sweep circular em caminho de tres segmentos conferido; flex generalizado pendente (134).**
-- [ ] 048 [P] Restrições entre sólidos, rotação, posições relativas, parâmetros compartilhados e relações de fórmula complexas.
-- [ ] 049 [P] Cortes por void em blends/sweeps, múltiplos cortes, recortes complexos e verificação de volume resultante.
-- [ ] 050 [P] Sweeps complexos, trajetórias 3D e geometrias de revolução/loft além do escopo já testado. **Sweep reta-arco-reta com erro volumetrico0.00234%, apenas planar (134).**
-- [ ] 051 [P] Famílias hospedadas, aninhadas, conectores MEP, parâmetros de instância/tipo, materiais e níveis de detalhe. **Parametro de instancia texto de familia sweep conferido (134).**
-- [ ] 052 [P] Edição e atualização controlada de famílias existentes, recarga com preservação de tipos/instâncias e parâmetros. **Copia RFA editada sem recarga (128).**
-- [ ] 053 [P] Validação de todos os tipos de cada família, flex extremo, fórmulas e restrições; não apenas a geometria corrente. **Oito simbolos externos inventariados, sete instanciados (128).**
-- [ ] 054 [P] Gerar famílias complexas nativas a partir de imagem, desenho ou referência dimensional, com conferência física.
+- [ ] 047 [P] Parametrização geométrica generalizada de blends, sweeps, curvas não cilíndricas e geometrias compostas arbitrárias. **Sweep circular em caminho de tres segmentos conferido; flex generalizado pendente (134).** **Tres tipos cilindricos acoplados por formula conferidos; parametrizacao arbitraria ainda pendente (138).**
+- [ ] 048 [P] Restrições entre sólidos, rotação, posições relativas, parâmetros compartilhados e relações de fórmula complexas. **R/H/Driver/Ratio conferidos em tres tipos e ciclos de formula rejeitados em preflight (138).**
+- [ ] 049 [P] Cortes por void em blends/sweeps, múltiplos cortes, recortes complexos e verificação de volume resultante. **Dois cortes independentes validados, formCuts de multiplos vazios e blends/sweeps compilado sem deploy (138).**
+- [ ] 050 [P] Sweeps complexos, trajetórias 3D e geometrias de revolução/loft além do escopo já testado. **Sweep reta-arco-reta com erro volumetrico0.00234%, apenas planar (134).** **Grupos de cortes incluem sweeps em fonte compilada, trajetorias 3D e loft ainda pendentes (138).**
+- [ ] 051 [P] Famílias hospedadas, aninhadas, conectores MEP, parâmetros de instância/tipo, materiais e níveis de detalhe. **Parametro de instancia texto de familia sweep conferido (134).** **Doze valores de parametros de tipo em tres tipos auditados (138).**
+- [ ] 052 [P] Edição e atualização controlada de famílias existentes, recarga com preservação de tipos/instâncias e parâmetros. **Copia RFA editada sem recarga (128).** **Copia com tipos Small/Large carregada separadamente, fonte intacta; recarga in-place pendente (138).**
+- [ ] 053 [P] Validação de todos os tipos de cada família, flex extremo, fórmulas e restrições; não apenas a geometria corrente. **Oito simbolos externos inventariados, sete instanciados (128).** **Auditoria de cobertura de tipos, volume, caixa e parametros nativos, tres tipos aprovados por valores/volume; AABB Default divergente, flex automatico pendente (138).**
+- [ ] 054 [P] Gerar famílias complexas nativas a partir de imagem, desenho ou referência dimensional, com conferência física. **Receita de referencia dimensional sintetica, mesa nativa5 solidos com dimensoes/volume conferidos; referencia real complexa pendente (138).**
 
 ## G — Imagens, plantas e materiais
 - [ ] 055 [P] Interpretar plantas PDF vetoriais e rasterizadas, fotos e croquis reais; extrair cotas, escala e evidência.
@@ -84,7 +84,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 ## H — Bibliotecas BIM e interoperabilidade
 - [ ] 064 [P] Ampliar catálogo além das quatro famílias de um repositório, com pesquisa real de fornecedores e categorias.
 - [ ] 065 [P] Verificar licenças, procedência, integridade, versões, dependências e compatibilidade RFA antes de importar. **Quatro RFA auditados isoladamente e gate de proveniencia/auditoria exigido; dependencias/versao de origem pendentes (137).**
-- [ ] 066 [P] Auditar todos os tipos, parâmetros, conectores, geometria e comportamento de famílias externas em projetos isolados. **Sete tipos com solidos medidos; perfil e conectores pendentes (128).**
+- [ ] 066 [P] Auditar todos os tipos, parâmetros, conectores, geometria e comportamento de famílias externas em projetos isolados. **Sete tipos com solidos medidos; perfil e conectores pendentes (128).** **Sete instancias externas reavaliadas; pilares350840 com Z152.4m sinalizados como inadequados sem revisao de medidas (138).**
 - [x] 067 [V] Adaptacao RFA preservando original (128) e deduplicacao do catalogo aprovado por reserva persistente: quatro historicas e novo load em copia com repeticao recusada, hash original preservado (137). Nao dedup global de RFA generico.
 - [x] 068 [V] Exportacao experimental Integrated121 validada em leitor independente web-ifc, geometria, unidades, categorias, propriedades selecionadas e relacoes (avanco126). Fidelidade de estilos e round-trip permanecem no item070.
 - [x] 069 [V] PDF renderizado e inspecionado em leitor independente e DWG aberto/auditado no AutoCAD Core Console, avanco127. Plotagem/fidelidade universal fora do ensaio.
@@ -97,7 +97,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 074 [P] AndreyStartsev: ampliar workflows Python estruturados para outras categorias/parâmetros e integração pyRevit.
 - [x] 075 [V] Encerrado por exclusao justificada do CAD-MCP (licenca TBD no commit fixo), substituido por C# proprio revisado e validado. Nao incorpora codigo upstream (134).
 - [ ] 076 [P] Mvclr: completar revisão de comandos úteis e testes de operações complementares.
-- [ ] 077 [P] FamFab: fluxo de imagem/referência para RFA, integração de recursos úteis e revisão de dependências/API/custo. **Sweep composto RFA confirmado no motor proprio; imagem ainda pendente (134).**
+- [ ] 077 [P] FamFab: fluxo de imagem/referência para RFA, integração de recursos úteis e revisão de dependências/API/custo. **Sweep composto RFA confirmado no motor proprio; imagem ainda pendente (134).** **Fluxo medidas explicitas -> receita -> RFA -> instancia -> auditoria passou para mesa; foto e desenho real pendentes (138).**
 - [ ] 078 [P] Horizun: ampliar funções úteis de arquitetura, estrutura e MEP e verificar limites de licença/versão.
 - [ ] 079 [P] Dynamo: interpretar, construir e validar grafos variados, dependências, bindings, execução e efeitos externos; não executar grafos desconhecidos sem revisão.
 - [x] 080 [V] Operacoes contextuais de ativacao/zoom e restauracao da vista por API nativa com verificacao UIA, sem cliques cegos ou confirmacao automatica de avisos; roundtrip validado (137). UIA somente leitura.

@@ -937,7 +937,8 @@
             ]
           }
         },
-        "voidCuts": {
+        "formCuts": {"type":"array","maxItems":50,"items":{"type":"object","properties":{"solidIndex":{"type":"integer","minimum":0},"voidIndices":{"type":"array","minItems":1,"maxItems":10,"uniqueItems":true,"items":{"type":"integer","minimum":0}}},"required":["solidIndex","voidIndices"],"additionalProperties":false}},
+          "voidCuts": {
           "type": "array",
           "maxItems": 50,
           "items": {
