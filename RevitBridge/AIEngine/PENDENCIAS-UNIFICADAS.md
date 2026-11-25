@@ -37,7 +37,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [x] 026 [V] Filtro nativo: imagens visivel/oculto/restaurado inspecionadas, avanco127.
 - [ ] 027 [P] Topografia complexa, fundações, cortes/aterros e documentação integrada.
 - [ ] 028 [P] Pranchas completas: colisão de viewports, rótulos, tabelas, limites de carimbo, cotas, tags, detalhes e paginação. **Folha A1 de coordenacao corrigida e PNG conferido; ajuste nativo compilado, deploy e acabamento pendentes (133).** **Correcao de viewport em runtime aprovada e PNG conferido; acabamento completo pendente (136).**
-- [ ] 029 [P] Quantitativos completos por disciplina/material/escopo, tratamento de dados ausentes e conferência independente. **Quantitativo de duas lajes,71m2/10.65m3, nove elementos sem material quantificavel explicitados (133).** **Inventario de quatro armaduras com comprimento, massa teorica e folga AABB (134).**
+- [ ] 029 [P] Quantitativos completos por disciplina/material/escopo, tratamento de dados ausentes e conferência independente. **Quantitativo de duas lajes,71m2/10.65m3, nove elementos sem material quantificavel explicitados (133).** **Inventario de quatro armaduras com comprimento, massa teorica e folga AABB (134).** **Reconciliacao por disciplina/categoria/material, oito elementos em quatro disciplinas, tres volumes conferidos e cinco lacunas explicitadas (156); outros quantitativos e cobertura integral pendentes.**
 
 ## D — Estruturas e instalações
 - [ ] 030 [P] Modelagem estrutural integrada de fundações, pilares, vigas, lajes e ligações metálicas em cenários complexos. **Portico com duas sapatas, dois pilares metalicos e viga6m confirmado por solidos, sem ligacoes/calculo (134).**
