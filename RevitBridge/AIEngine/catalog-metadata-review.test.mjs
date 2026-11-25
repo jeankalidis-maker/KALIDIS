@@ -1,0 +1,6 @@
+import assert from 'node:assert/strict';import {verifyMetadata,requireMetadata} from './catalog-metadata-review.mjs';
+const items=Array.from({length:4},(_,i)=>({fileName:'test'+i,sha256:'a'.repeat(63)+i,ready:true,license:'MIT',source:'fixture',revision:'test'})),c={path:'test.rvt'};
+const rows=items.map(x=>({fileName:x.fileName,sha256:x.sha256,format:'2020',current:false,later:false,workshared:false,transmissionState:'read',externalReferences:[]}));
+const r={status:'ok',decision:'rolled_back',changes:{added_count:0,modified_count:0,deleted_count:0},result:{path:c.path,revitVersion:'2025',openedDocuments:0,rows}};
+const good=verifyMetadata(r,c,{items});assert(good.rows.every(x=>x.metadataReady));requireMetadata(good,items[0]);
+rows[0].externalReferences=[{id:1,type:'KeynoteTable',status:'NotFound'}];const bad=verifyMetadata(r,c,{items});assert.throws(()=>requireMetadata(bad,items[0]),/blocked import/);rows[1].format='2026';assert(!verifyMetadata(r,c,{items}).rows[1].metadataReady);rows[2].transmissionState='unavailable';assert(!verifyMetadata(r,c,{items}).rows[2].metadataReady);assert.throws(()=>verifyMetadata({...r,changes:{...r.changes,modified_count:1}},c,{items}),/incomplete/);console.log('CATALOG_METADATA_REVIEW_TESTS=PASS');

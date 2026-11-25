@@ -1,0 +1,6 @@
+import assert from 'node:assert/strict';import {resolveReviewedAlias} from './reviewed-extension-alias.mjs';
+const file='Kalidis.Reviewed.123456789ABC.ABCDEF123456.dll',entry={assembly:file,inspection:true,tool:{name:'inspect',inputSchema:{type:'object',properties:{expectedPath:{type:'string'},ids:{type:'array',minItems:1,items:{type:'integer'}}},required:['expectedPath','ids'],additionalProperties:false}}},entries=new Map([['inspect',entry]]);
+const a={expectedPath:'test.rvt',assembly:file,operation:'inspect',arguments:{ids:[1]}};
+assert.deepEqual(resolveReviewedAlias(a,entries),{name:'inspect',args:{expectedPath:'test.rvt',ids:[1]}});
+for(const b of [{...a,operation:'unregistered'},{...a,assembly:'../'+file},{...a,assembly:'Kalidis.Reviewed.123456789ABC.ABCDEF123457.dll'},{...a,commit:true},{...a,arguments:{ids:[1],expectedPath:'another'}},{...a,arguments:{ids:[]}},{...a,arguments:{ids:[1],action:'edit_elements'}}])assert.throws(()=>resolveReviewedAlias(b,entries));
+console.log('REVIEWED_EXTENSION_ALIAS_TESTS=PASS');
