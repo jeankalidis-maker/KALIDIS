@@ -68,7 +68,7 @@ internal static class PluginCompletionPorts {
      result=new{viewId=view.Id.Value,before,activeInside=!reset,ids=ids.Select(i=>i.Value).ToArray()};break;
     }
     case "array_linear":{
-     var e=E(d,Id(r,"id"));if(e.UniqueId!=r.GetProperty("uniqueId").GetString()||e.Pinned||e.GroupId!=ElementId.InvalidElementId||e is not FamilyInstance f||f.Host!=null||f.Location is not LocationPoint lp||f.MEPModel!=null)throw new ArgumentException("Unhosted ungrouped point family required");
+     var e=E(d,Id(r,"id"));if(e.UniqueId!=r.GetProperty("uniqueId").GetString()||e.Pinned||e.GroupId!=ElementId.InvalidElementId||e is not FamilyInstance f||f.Host!=null||f.Location is not LocationPoint lp||(f.MEPModel?.ConnectorManager?.Connectors.Size??0)>0||f.Category?.Id.Value!=(long)BuiltInCategory.OST_Furniture)throw new ArgumentException("Unhosted ungrouped point furniture without connectors required");
      var count=r.GetProperty("count").GetInt32();var offset=Vector(r.GetProperty("spacing"));if(count<1||count>30||offset.GetLength()<Mm(10)||offset.GetLength()*count>Mm(30000))throw new ArgumentException("Invalid array extent");
      var origin=lp.Point;var copies=new List<long>();
      for(int i=1;i<=count;i++){var ids=ElementTransformUtils.CopyElement(d,e.Id,offset*i);if(ids.Count!=1)throw new InvalidOperationException("Unexpected dependent copies");d.Regenerate();var copy=E(d,ids.Single());if(copy.GetTypeId()!=e.GetTypeId()||copy.Location is not LocationPoint p||p.Point.DistanceTo(origin+offset*i)>Mm(.1))throw new InvalidOperationException("Copy geometry mismatch");copies.Add(copy.Id.Value);}

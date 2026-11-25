@@ -2202,7 +2202,7 @@
 },
 {
   "name": "array_linear",
-  "description": "Copy a single unhosted point family along a vector, independent copies only.",
+  "description": "Copy a single unhosted ungrouped point furniture instance along a vector, independent copies only; no connectors.",
   "inputSchema": {
     "type": "object",
     "properties": {
