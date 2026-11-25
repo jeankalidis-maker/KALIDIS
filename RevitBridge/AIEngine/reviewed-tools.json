@@ -2302,45 +2302,50 @@
     "sourcePrefix": "9CD033DBCAF7",
     "inspection": false,
     "tool": {
-      "name": "bitmap_material",
-      "description": "Duplicate untextured generic material and attach a local TextureFixture PNG in the isolated project directory; verify source and appearance reference. No render quality certification.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "expectedPath": {
-            "type": "string",
-            "minLength": 1
+        "name": "bitmap_material",
+        "description": "Duplicate untextured generic material using a hash-verified staged PNG in the isolated project directory. Verify source and appearance reference; no render-quality certification.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "expectedPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fileName": {
+              "type": "string",
+              "pattern": "^TextureFixture-[a-f0-9]{32}\\.png$"
+            },
+            "commit": {
+              "type": "boolean"
+            },
+            "expectedSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
           },
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string",
-            "minLength": 1
-          },
-          "fileName": {
-            "type": "string",
-            "minLength": 1
-          },
-          "commit": {
-            "type": "boolean"
-          }
+          "required": [
+            "expectedPath",
+            "id",
+            "name",
+            "fileName",
+            "expectedSha256"
+          ],
+          "additionalProperties": false
         },
-        "required": [
-          "expectedPath",
-          "id",
-          "name",
-          "fileName"
-        ],
-        "additionalProperties": false
-      },
-      "annotations": {
-        "readOnlyHint": false,
-        "destructiveHint": true,
-        "idempotentHint": false,
-        "openWorldHint": false
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "idempotentHint": false,
+          "openWorldHint": false
+        }
       }
-    }
   },
   {
     "sourcePrefix": "00118D96D6D2",

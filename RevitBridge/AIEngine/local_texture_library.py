@@ -31,7 +31,7 @@ def stage(relative,sandbox):
 def create_material(engine,p,relative,source_id,name,x_mm,y_mm):
     from reviewed_client import execute
     info=stage(relative,Path(p).parent)
-    a=dict(id=source_id,name=name+" Bitmap "+uuid4().hex[:8],fileName=info["fileName"])
+    a=dict(id=source_id,name=name+" Bitmap "+uuid4().hex[:8],fileName=info["fileName"],expectedSha256=info["sha256"])
     dry=execute(engine,"bitmap_material",a,p);assert dry["dryRun"]
     b=execute(engine,"bitmap_material",a,p,commit=True);assert b["status"]=="Committed"
     a=dict(mode="duplicate",id=b["result"]["id"],name=name+" "+uuid4().hex[:8],sizeXmm=x_mm,sizeYmm=y_mm)

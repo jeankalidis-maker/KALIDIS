@@ -79,7 +79,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 060 [P] Materiais PBR completos: mapas de cor, relevo, rugosidade, transparência e propriedades físicas.
 - [ ] 061 [P] Escala UV comercial, orientação, repetição, acabamento e verificação visual de diferentes geometrias.
 - [ ] 062 [P] Renderização fotorealista com iluminação, câmeras, sombras e validação visual independente; modo Realistic básico já testado.
-- [ ] 063 [P] Biblioteca de materiais pesquisável com metadados, licenças, seleção automática e prevenção de caminhos quebrados. **Biblioteca5388 arquivos, busca/recomendacao, stage PNG com hash e verificacao ausente/divergente, material nativo e escala aprovados (155); metadados/licenca, JPEG stage MCP e auditoria global pendentes.**
+- [x] 063 [V] Biblioteca local instalada gerenciada pelo MCP: busca e metadados, restricoes de uso local, recomendacao, PNG/JPEG stage verificado, gate hash/caminho antes de aplicar, auditoria de170 materiais e classificacao das referencias nao confirmadas (155/161). Sem redistribuicao ou afirmacao de licenca externa, nao repara todos os materiais legados.
 
 ## H — Bibliotecas BIM e interoperabilidade
 - [ ] 064 [P] Ampliar catálogo além das quatro famílias de um repositório, com pesquisa real de fornecedores e categorias.
@@ -114,6 +114,6 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 
 ## Resumo
 
-66 itens abertos: 1 bloqueado, 0 nao validados, 63 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 22 encerrados de 88 (001, 003, 004, 005, 008, 010, 012, 014, 026, 029, 046, 049, 054, 057, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
+65 itens abertos: 1 bloqueado, 0 nao validados, 62 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 23 encerrados de 88 (001, 003, 004, 005, 008, 010, 012, 014, 026, 029, 046, 049, 054, 057, 063, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.
