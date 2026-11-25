@@ -5,7 +5,7 @@ using Autodesk.Revit.UI;
 using System.Text.Json;
 namespace Kalidis.AIEngine;
 internal static class PluginGapPorts {
- internal static readonly string[] Actions={"create_spot_elevation","tag_all_in_view","set_level_elevation","import_parameters","close_document","link_file"};
+ internal static readonly string[] Actions={"create_spot_elevation","tag_all_in_view","set_level_elevation","import_parameters","close_document","link_file","wall_joint_finish"};
  static ElementId Id(JsonElement r,string n)=>new(r.GetProperty(n).GetInt64());
  static double Mm(double n)=>UnitUtils.ConvertToInternalUnits(n,UnitTypeId.Millimeters);
  static double ToMm(double n)=>UnitUtils.ConvertFromInternalUnits(n,UnitTypeId.Millimeters);
@@ -38,6 +38,7 @@ internal static class PluginGapPorts {
   object result;Action verify=()=>{};
   try{
    switch(action){
+    case "wall_joint_finish":{(result,verify)=WallJointOperations.Run(d,r);break;}
     case "create_spot_elevation":{
      var floor=Get<Floor>(d,r,"elementId");var view=Get<ViewPlan>(d,r,"viewId");
      if(view.IsTemplate||view.ViewType!=ViewType.FloorPlan)throw new ArgumentException("Floor plan required");
