@@ -1,0 +1,7 @@
+# Integration priority — owner direction, milestone 143
+
+The owner requests completing external integration work before the remaining general backlog. Work queue: 071 BIMCraft first (agent-first architecture), 073 pyRevit (runtime and extension), 072 KenLP, 076 Mvclr, 074 AndreyStartsev, 077 FamFab, 078 Horizun, 079 Dynamo, 081 legacy. Related work only where necessary to validate a plugin. Items 075 and 082 are closed (exclusion/substitution and inventory decisions respectively); 080 also closed. Nine open integration items out of 73. Closing all nine would leave 64, assuming no new items or other closures.
+
+143 initial exact-source inventory: PLUGIN-COMMAND-INVENTORY-143.csv covers 98 registered KenLP default commands and 48 Mvclr decorated tools at the pinned revisions; 18 and 2 respectively have exact matching names in the current 146-tool Kalidis catalogue. Name matching is not behavioral parity, and differently named commands may already have native equivalents. Every row remains subject to semantic review, transaction and readback tests or justified exclusion. Do not use these counts as missing-function counts.
+
+Acceptance: source feature -> active equivalent or adaptation -> test evidence -> remaining scope or justified exclusion. Preserve licenses, existing native Revit gateway, explicit approvals and local experimental project scope. Do not import incompatible or redundant implementations solely to inflate the tool count.
