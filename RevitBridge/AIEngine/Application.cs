@@ -94,8 +94,8 @@ public sealed class Application : IExternalApplication
                 using var payload=JsonDocument.Parse(await reader.ReadToEndAsync(ct).ConfigureAwait(false));
                 var id=payload.RootElement.GetProperty("jobId").GetString();
                 if(!Guid.TryParseExact(id,"N",out _)){await Reply(c,400,new{ok=false,error="invalid_job_id"});return;}
-                bool accepted=handler!.RequestCancellation(id!);
-                await Reply(c,accepted?200:409,new{ok=accepted,state=accepted?"cancellation_requested":"not_active_or_commit_started",note="Request only; await original batch result and verify rollback."});return;
+                var cancellation=handler!.RequestCancellation(id!);bool accepted=cancellation.accepted;
+                await Reply(c,accepted?200:409,new{ok=accepted,state=accepted?"cancellation_requested":"not_active_or_commit_started",phase=cancellation.phase,note="Request only; await original batch result and verify rollback."});return;
             }
             if (c.Request.HttpMethod != "POST" || c.Request.Url?.AbsolutePath != "/execute")
             { await Reply(c, 404, new { ok=false, error="not_found" }); return; }
@@ -145,10 +145,17 @@ public sealed class Application : IExternalApplication
     {
         private readonly object gate = new();
         private Job? pending,active;
-        internal bool RequestCancellation(string id){
+        internal (bool accepted,string phase) RequestCancellation(string id){
             lock(gate){
-                var j=active??pending;
-                return j!=null&&j.BatchId==id&&j.Cancellation.Request();
+                if(pending is Job waiting&&waiting.BatchId==id&&waiting.Cancel()){
+                    pending=null;
+                    canceled++;
+                    waiting.Cancellation.Finish();
+                    waiting.Done.TrySetResult(new{ok=false,error="Batch canceled before execution",phase="pending",committed=false});
+                    return (true,"pending");
+                }
+                if(active is Job executing&&executing.BatchId==id&&executing.Cancellation.Request())return (true,"running");
+                return (false,"not_active_or_commit_started");
             }
         }
         private bool running;

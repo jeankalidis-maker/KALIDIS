@@ -1,0 +1,202 @@
+{
+  "source": "Analise_Croqui_Planta_Preliminar.pdf R00 p.5 (23/11/2026); transcription only, no field survey",
+  "scaleKnown": false,
+  "toleranceMm": 20,
+  "issues": [
+    {
+      "id": "C1",
+      "question": "Confirmar faces e largura externa",
+      "observations": [
+        "M09=2700",
+        "M12=2600",
+        "M05=5300"
+      ],
+      "alternatives": [
+        {
+          "id": "contiguous",
+          "description": "Parcelas comparáveis; igualdade não comprova faces",
+          "partsMm": [
+            2700,
+            2600
+          ],
+          "totalMm": 5300
+        },
+        {
+          "id": "different",
+          "description": "Referências diferentes, medir novamente"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "question": "Extremos da cadeia do terreno",
+      "observations": [
+        "M05=5300",
+        "M06=2650",
+        "M07=2000",
+        "M01=9500"
+      ],
+      "alternatives": [
+        {
+          "id": "contiguous",
+          "description": "Parcelas contíguas comparáveis",
+          "partsMm": [
+            5300,
+            2650,
+            2000
+          ],
+          "totalMm": 9500
+        },
+        {
+          "id": "different",
+          "description": "Sobreposição ou limites não paralelos; confirmar extremos"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "question": "Alinhamentos de profundidade",
+      "observations": [
+        "M10=3000",
+        "M11=2960",
+        "M13=1400",
+        "M14=4450",
+        "M15=5850?"
+      ],
+      "alternatives": [
+        {
+          "id": "aligned",
+          "description": "Alinhamentos comuns",
+          "partsMm": [
+            3000,
+            2960
+          ],
+          "totalMm": 5850
+        },
+        {
+          "id": "different",
+          "description": "Extremos não comuns; levantamento necessário"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "question": "Faces da cozinha e banheiro",
+      "observations": [
+        "M17=4000",
+        "M19=1530",
+        "M05=5300"
+      ],
+      "alternatives": [
+        {
+          "id": "comparable",
+          "description": "Mesma largura comparável",
+          "partsMm": [
+            4000,
+            1530
+          ],
+          "totalMm": 5300
+        },
+        {
+          "id": "different",
+          "description": "Referências distintas; não adotar diferença como espessura"
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "question": "Extremos E01/E02",
+      "observations": [
+        "M27=4700",
+        "M28=3200",
+        "M26=1450"
+      ],
+      "alternatives": [
+        {
+          "id": "same",
+          "description": "Mesma faixa",
+          "partsMm": [
+            3200
+          ],
+          "totalMm": 4700
+        },
+        {
+          "id": "split",
+          "description": "Hipótese de início na linha com pontos",
+          "partsMm": [
+            1450,
+            3200
+          ],
+          "totalMm": 4700
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "question": "Afastamentos direitos",
+      "observations": [
+        "M07=2000",
+        "M16=2400",
+        "M30=2700"
+      ],
+      "alternatives": [
+        {
+          "id": "different",
+          "description": "Confirmar divisa inclinada, desalinhamento ou referências distintas"
+        }
+      ]
+    },
+    {
+      "id": "C7",
+      "question": "Largura vigente do anexo",
+      "observations": [
+        "M32=2950",
+        "M36=3400?",
+        "M37=3200"
+      ],
+      "alternatives": [
+        {
+          "id": "2950",
+          "description": "Confirmar medida e faces 2950"
+        },
+        {
+          "id": "3400",
+          "description": "Confirmar leitura e faces 3400"
+        },
+        {
+          "id": "3200",
+          "description": "Confirmar medida e faces 3200"
+        }
+      ]
+    },
+    {
+      "id": "C8",
+      "question": "Limites inferiores",
+      "observations": [
+        "M02=8000",
+        "M03=7500"
+      ],
+      "alternatives": [
+        {
+          "id": "different",
+          "description": "Confirmar extremos, ângulos e alinhamento; não impor esquadro"
+        }
+      ]
+    },
+    {
+      "id": "missing",
+      "question": "Confirmar medidas ambíguas e dados ausentes",
+      "observations": [
+        "M08/M15/M18/M21/M22-M25/M31/M34/M36-M38",
+        "Espessuras, vãos, perímetro, diagonais, níveis, cobertura, uso e referências de face ausentes"
+      ],
+      "alternatives": [
+        {
+          "id": "survey",
+          "description": "Anexar levantamento confirmado; não supor medidas"
+        }
+      ]
+    }
+  ],
+  "decisions": []
+}
