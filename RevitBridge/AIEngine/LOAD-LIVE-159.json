@@ -1,0 +1,111 @@
+{
+  "at": "2026-11-25T02:36:11.635Z",
+  "elapsedMs": 27989,
+  "session": "e072d80188a1414395ea440f12837b67",
+  "serial": {
+    "count": 300,
+    "min": 26,
+    "median": 52,
+    "p95": 156,
+    "max": 1327
+  },
+  "parallel": {
+    "count": 200,
+    "min": 8,
+    "median": 40,
+    "p95": 362,
+    "max": 754
+  },
+  "parallelResults": {
+    "ok": 64,
+    "busy": 136,
+    "other": 0
+  },
+  "queueBefore": {
+    "pending": false,
+    "running": false,
+    "started": 450,
+    "completed": 450,
+    "canceled": 0,
+    "activeAction": null,
+    "activeSince": null,
+    "lastAction": "project_context",
+    "lastFinished": "2026-11-25T02:35:44.2809413Z"
+  },
+  "queueAfter": {
+    "pending": false,
+    "running": false,
+    "started": 1194,
+    "completed": 1194,
+    "canceled": 0,
+    "activeAction": null,
+    "activeSince": null,
+    "lastAction": "snapshot",
+    "lastFinished": "2026-11-25T02:36:11.5747102Z"
+  },
+  "epochs": [
+    {
+      "epoch": 0,
+      "elapsedMs": 8660,
+      "queue": {
+        "pending": false,
+        "running": false,
+        "started": 645,
+        "completed": 645,
+        "canceled": 0,
+        "activeAction": null,
+        "activeSince": null,
+        "lastAction": "snapshot",
+        "lastFinished": "2026-11-25T02:35:52.2655966Z"
+      }
+    },
+    {
+      "epoch": 1,
+      "elapsedMs": 13972,
+      "queue": {
+        "pending": false,
+        "running": false,
+        "started": 822,
+        "completed": 822,
+        "canceled": 0,
+        "activeAction": null,
+        "activeSince": null,
+        "lastAction": "snapshot",
+        "lastFinished": "2026-11-25T02:35:57.6175083Z"
+      }
+    },
+    {
+      "epoch": 2,
+      "elapsedMs": 23671,
+      "queue": {
+        "pending": false,
+        "running": false,
+        "started": 1015,
+        "completed": 1015,
+        "canceled": 0,
+        "activeAction": null,
+        "activeSince": null,
+        "lastAction": "snapshot",
+        "lastFinished": "2026-11-25T02:36:07.2248417Z"
+      }
+    },
+    {
+      "epoch": 3,
+      "elapsedMs": 27926,
+      "queue": {
+        "pending": false,
+        "running": false,
+        "started": 1194,
+        "completed": 1194,
+        "canceled": 0,
+        "activeAction": null,
+        "activeSince": null,
+        "lastAction": "snapshot",
+        "lastFinished": "2026-11-25T02:36:11.5747102Z"
+      }
+    }
+  ],
+  "reconnect": "passed",
+  "contextStable": true,
+  "note": "Finite 500-call smoke load on current experimental model; not a multi-hour or large-project qualification."
+}

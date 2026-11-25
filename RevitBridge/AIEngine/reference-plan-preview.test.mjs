@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {inspectReferencePreview,referencePlanPreview} from './reference-plan-preview.mjs';
+const schema=JSON.parse(await readFile('reviewed-tools.json','utf8')).find(x=>x.tool.name==='orthogonal_plan').tool.inputSchema;
+const plan={expectedPath:'test.rvt',levelId:1,wallTypeId:2,floorTypeId:3,doorTypeId:4,heightMm:3000,perimeter:[[0,0],[6000,0],[6000,4000],[0,4000]],partitions:[],rooms:[[3000,2000]],doors:[]};
+const issues=[['W',6000],['D',4000],['H',3000]].map(([id,v])=>({id,question:'Synthetic '+id,observations:['test'],alternatives:[{id:'A',description:'Measured fixture',partsMm:[v],totalMm:v}]}));
+const reference={source:'synthetic acceptance fixture',scaleKnown:true,issues,decisions:issues.map(i=>({issueId:i.id,alternativeId:'A',confirmationReference:'synthetic test',reason:'known fixture dimension'}))};
+const a={plan,reference,bindings:[{issueId:'W',target:'wall',index:0},{issueId:'D',target:'wall',index:1},{issueId:'W',target:'wall',index:2},{issueId:'D',target:'wall',index:3},{issueId:'H',target:'height',index:0}]};
+assert(inspectReferencePreview(a,schema).ready);assert(!inspectReferencePreview({...a,bindings:a.bindings.slice(1)},schema).ready);
+assert(!inspectReferencePreview({...a,plan:{...plan,heightMm:3100}},schema).ready);
+const blocked=await referencePlanPreview({...a,reference:{...reference,decisions:[]}},schema,async()=>{throw Error('Must not call native')});assert(!blocked.executed);
+assert.throws(()=>inspectReferencePreview({...a,plan:{...plan,commit:true}},schema),/unknown/);
+assert.throws(()=>inspectReferencePreview({...a,bindings:[...a.bindings,a.bindings[0]]},schema),/Duplicate/);
+let calls=[];const r=await referencePlanPreview(a,schema,async(n,args)=>{calls.push(n);if(n==='project_context')return {ok:true,path:'test.rvt',session:'s',modified:false,view:{id:1}};assert.equal(args.commit,false);return {ok:true,status:'RolledBack',dryRun:true,result:{wallIds:[1,2,3,4],floorId:5,doorIds:[],roomIds:[6],roomAreasM2:[22]}}});assert(r.executed&&!r.committed);assert.equal(calls.length,3);
+console.log('REFERENCE_PREVIEW_TESTS=PASS');

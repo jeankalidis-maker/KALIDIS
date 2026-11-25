@@ -18,7 +18,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 009 [P] Completar schemas de todas as ferramentas de edição, validação de argumentos e compatibilidade entre versões; preflight em todos os clientes autorizados. **Preflight de formas nativas ampliado (128).** **Largura nativa de parede na prevalidacao de pares novos (129).** **Schema curtain_wall registrado, capacidade ativa verificada (130).**
 - [x] 010 [V] Idempotencia persistente, recibos de criacao recuperados por escopo e presenca de IDs conferida; estados incertos exigem inspecao manual e nunca replay (128/129/135/137), sem garantia exatamente-uma-vez.
 - [ ] 011 [P] Desfazer/refazer para criação, edição, exclusão, tipos, famílias e operações dependentes (hoje movimento e comentário restritos). **Fixacao reversivel com forward/undo/redo confirmada e estado restaurado (130).** **Rollback de comentario via pyRevit dry_run e leitura independente comprovados, nao undo universal (142).** **CAS atomico reversivel de strings Comments/Mark compilado; homologacao pos-stage pendente (145).** **Lote atomico Comments forward/undo/redo/undo validado e stale recusado (146); demais escopos pendentes.**
-- [ ] 012 [P] Fila, controle de concorrência, telemetria, métricas e testes de carga em sessões longas. **Fila ocupada distinguida de ferramenta inexistente em runtime (135).** **engine_health e carga120 sequenciais/100 concorrentes, busy correto e fila drenada (137); longa duracao pendente.**
+- [x] 012 [V] Fila e telemetria verificadas em runtime, carga137 e 500 requisicoes159 em sessao de56min com cinco clientes, busy esperado, reconexao e fila drenada started=completed1194, contexto preservado. Carga continua prolongada e grandes modelos permanecem084.
 - [ ] 013 [P] Planejamento multioperação com dependências, dry-run, checkpoints e verificação posterior, incluindo efeitos externos. **Fluxo de fixacao com previa e readback independente (130).** **Roteiro multioperacao em transacao unica, alias, digest e revisao comprovados; efeitos externos/fluxos arbitrarios pendentes (140).** **Dry-run pyRevit relata mudanca e restaura estado, integracao de efeitos externos pendente (142).** **Estado persistente do plano e recibos de preview/apply recuperados (144); efeitos externos pendentes.**
 - [x] 014 [V] Contexto persistente, unidades mm, identidades, selecao/vista e sinal de revisao validados em checkpoints locais e protecao de sessao/revisao (132/137). Nao e lock multiusuario.
 - [ ] 015 [P] Fluxo autorizado para trabalhar em projetos reais fora do Sandbox, com cópia, escopo, permissões, backup e proteção de documentos. **Copia RVT externa verificada por SHA256, escrita isolada e origem preservada (131).**
@@ -73,7 +73,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 ## G — Imagens, plantas e materiais
 - [ ] 055 [P] Interpretar plantas PDF vetoriais e rasterizadas, fotos e croquis reais; extrair cotas, escala e evidência.
 - [ ] 056 [P] Detectar paredes, portas, janelas, espessuras, símbolos, escadas, níveis, ambientes e elementos curvos.
-- [ ] 057 [P] Reconciliação de cotas conflitantes, incerteza e confirmação de hipóteses antes da modelagem (croqui real ainda não reconstruído). **Ledger reference_resolution_review testado com C1-C8 e cotas reais sem confirmacao, modelagem nao autorizada; confirmacao de hipoteses e reconstrucao pendentes (157).**
+- [x] 057 [V] Reconciliacao de cotas e confirmacoes referenciadas, alternativas e cadeia dimensional, gate de preview nativo com vinculo das medidas eixos/altura/portas, croqui real bloqueado e fixture sintetico confirmado com rollback sem residuos (157/159). Reconstrucao real permanece 058, sem inventar confirmacoes.
 - [ ] 058 [P] Reconstrução multipavimento a partir de documentação real e revisão por sobreposição geométrica e métrica.
 - [ ] 059 [P] Conversão de referências fotográficas em objetos e famílias editáveis, sem inventar medidas ocultas.
 - [ ] 060 [P] Materiais PBR completos: mapas de cor, relevo, rugosidade, transparência e propriedades físicas.
@@ -114,6 +114,6 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 
 ## Resumo
 
-68 itens abertos: 1 bloqueado, 0 nao validados, 65 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 20 encerrados de 88 (001, 003, 004, 005, 008, 010, 014, 026, 029, 046, 049, 054, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
+66 itens abertos: 1 bloqueado, 0 nao validados, 63 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 22 encerrados de 88 (001, 003, 004, 005, 008, 010, 012, 014, 026, 029, 046, 049, 054, 057, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.
