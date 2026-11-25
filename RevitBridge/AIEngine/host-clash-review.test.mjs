@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';import {candidatePairs,verifyClashBatch} from './host-clash-review.mjs';
+const b=(id,minMm,maxMm)=>({id,category:'OST_Walls',minMm,maxMm});
+const rows=[b(3,[10,0,0],[20,10,10]),b(1,[0,0,0],[12,10,10]),b(2,[4,20,0],[8,30,10]),b(4,null,null),b(5,[12,0,0],[15,10,10])];
+const r=candidatePairs(rows);assert.deepEqual(r.pairs,[[1,3],[1,5],[3,5]]);assert.equal(r.omitted.length,1);assert.equal(r.examined,4);assert(candidatePairs(rows,1).limited);assert.equal(candidatePairs(rows,1).pairs.length,0);assert.throws(()=>candidatePairs([...rows,rows[0]]),/inventory/);
+const p={firstId:1,secondId:3,status:'overlap',tests:2,failed:1,maxPairOverlapM3:.1,sumPairOverlapM3:.1};const native={status:'RolledBack',result:{count:1,toleranceM3:.000001,pairs:[p]}};assert.equal(verifyClashBatch([[1,3]],native,.000001)[0].failed,1);assert.throws(()=>verifyClashBatch([[1,2]],native,.000001),/Invalid solid/);assert.throws(()=>verifyClashBatch([[1,3]],{...native,result:{...native.result,pairs:[{...p,status:'inconclusive'}]}},.000001),/classification/);console.log('HOST_CLASH_REVIEW_TESTS=PASS');

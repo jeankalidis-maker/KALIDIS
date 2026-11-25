@@ -56,7 +56,7 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 - [ ] 041 [P] Autocorreção de mobiliário em ambientes não retangulares, circulação, giro de portas, suportes e acessibilidade.
 - [ ] 042 [P] Validar reparo e interferência com vínculos RVT rotacionados/transladados e coordenadas compartilhadas.
 - [ ] 043 [P] Reparo de redes MEP conectadas com restrições e múltiplos obstáculos; ampliar bypass de tubos para outras configurações.
-- [ ] 044 [P] Clash detection global e priorização de conflitos, distinguir interseções intencionais, tolerâncias e falhas booleanas. **Intersecao laje/tubo zero, auditoria de11 elementos sem inconclusivos (133).**
+- [x] 044 [V] Clash global nas categorias fisicas hospedeiras suportadas: inventario completo, sweep AABB, solidos, ranking, tolerancia, intencao declarada e inconclusivos; 260 elementos e216 pares (163). VInculos, categorias nao suportadas e fases/design options explicitamente excluidos; nao certifica ausencia de conflitos.
 - [ ] 045 [P] Reparos em lote com análise de dependências, preservação de elementos, rollback e auditoria antes/depois. **Previa de exclusao com dependentes impediu commit (129).** **Exclusao em cascata bloqueada em teste real; guarda atomica compilada, deploy pendente (135).** **Protecao de dependentes retestada; guarda nativa carregada mas ramo de recusa atomica nao isolado (136).**
 - [x] 046 [V] Substituida pela validacao obrigatoria do adaptador (avancos123/126); prototipo C# separado arquivado, sem instalacao.
 
@@ -114,6 +114,6 @@ Legenda: V = validado/encerrado no escopo indicado; B = bloqueado; N = não vali
 
 ## Resumo
 
-64 itens abertos: 1 bloqueado, 0 nao validados, 61 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 24 encerrados de 88 (001, 003, 004, 005, 008, 010, 012, 014, 026, 029, 040, 046, 049, 054, 057, 063, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
+63 itens abertos: 1 bloqueado, 0 nao validados, 60 parciais, 1 sem implementacao confirmada, 1 com falha nao resolvida. 25 encerrados de 88 (001, 003, 004, 005, 008, 010, 012, 014, 026, 029, 040, 044, 046, 049, 054, 057, 063, 067, 068, 069, 073, 075, 080, 082, 086). Contagem deste checklist, nao percentual da API Revit.
 
 Ordem de execução: A → B → C/D/E/F/G/H/I → J. A e B são prioritários; testes que não dependem da DLL podem prosseguir em paralelo. Licença CAD-MCP indefinida: integração integral não é requisito se alternativa independente satisfizer o objetivo. Dimensionamento e verificações normativas requerem escopo e validação de engenharia.
