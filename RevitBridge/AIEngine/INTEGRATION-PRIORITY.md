@@ -5,3 +5,7 @@ The owner requests completing external integration work before the remaining gen
 143 initial exact-source inventory: PLUGIN-COMMAND-INVENTORY-143.csv covers 98 registered KenLP default commands and 48 Mvclr decorated tools at the pinned revisions; 18 and 2 respectively have exact matching names in the current 146-tool Kalidis catalogue. Name matching is not behavioral parity, and differently named commands may already have native equivalents. Every row remains subject to semantic review, transaction and readback tests or justified exclusion. Do not use these counts as missing-function counts.
 
 Acceptance: source feature -> active equivalent or adaptation -> test evidence -> remaining scope or justified exclusion. Preserve licenses, existing native Revit gateway, explicit approvals and local experimental project scope. Do not import incompatible or redundant implementations solely to inflate the tool count.
+
+## Owner direction at milestone 154 (supersedes the previous order)
+
+Defer the eight still-open plugin integration items 071/072/074/076/077/078/079/081 until the remaining general backlog is addressed. At change of priority: 72 open, 64 general and 8 deferred integration items. Start with acceptance tests for implemented functions and small fixes; keep blocked items honest, do not reduce acceptance criteria simply to mark them closed. Close an item only with recorded evidence, and continue working on general items not dependent on external integrations. Use the unified checklist as the authoritative count.

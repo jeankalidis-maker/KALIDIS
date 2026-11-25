@@ -161,7 +161,7 @@ internal static class AdvancedOperations
                             if(!parameters.TryGetValue(name,out var fp)){
                                 fp=fm.AddParameter(name,GroupTypeId.Geometry,SpecTypeId.Length,false);
                                 parameters.Add(name,fp);fm.Set(fp,h);
-                            }else if(Math.Abs(fm.CurrentType.AsDouble(fp).GetValueOrDefault()-h)>1e-8)throw new ArgumentException("Shared height parameters require identical initial heights");
+                            }else if(Math.Abs((fm.CurrentType??throw new InvalidOperationException("Family type required")).AsDouble(fp).GetValueOrDefault()-h)>1e-8)throw new ArgumentException("Shared height parameters require identical initial heights");
                             var ep=extrusion.get_Parameter(BuiltInParameter.EXTRUSION_END_PARAM);
                             if(ep==null||!fm.CanElementParameterBeAssociated(ep))throw new InvalidOperationException("Cannot associate height");
                             fm.AssociateElementParameterToFamilyParameter(ep,fp);
