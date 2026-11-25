@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';import {verifyPhysicalBounds} from './physical-solid-bounds.mjs';
+const a={expectedPath:'test',elements:[{id:1,uniqueId:'u'}]},s={minMm:[0,0,0],maxMm:[100,200,300],volumeM3:.006,style:'Test'};
+const r={status:'ok',decision:'rolled_back',changes:{added_count:0,modified_count:0,deleted_count:0},result:{path:'test',rows:[{...a.elements[0],minMm:s.minMm,maxMm:s.maxMm,dimensionsMm:s.maxMm,volumeM3:.006,solids:[s]}]}};
+const n={status:'RolledBack',result:{elements:[{id:1,solidCount:1,volumeM3:.006}]}};
+assert(verifyPhysicalBounds(r,a,n).allCrossChecksPassed);assert(!verifyPhysicalBounds(r,a,{...n,result:{elements:[{id:1,solidCount:1,volumeM3:.01}]}}).allCrossChecksPassed);assert.throws(()=>verifyPhysicalBounds({...r,changes:{...r.changes,modified_count:1}},a,n),/Unexpected/);let q=structuredClone(r);q.result.rows[0].dimensionsMm=[1,2,3];assert.throws(()=>verifyPhysicalBounds(q,a,n),/bounds mismatch/);console.log('PHYSICAL_SOLID_BOUNDS_TESTS=PASS');
